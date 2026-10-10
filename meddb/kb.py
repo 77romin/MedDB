@@ -90,7 +90,7 @@ class KB:
         for _ in range(depth):
             next_nodes = set()
             for current in frontier:
-                if current != node and direction=='out' and self.nodes[current]['kind'] in {'Finding','Disease','Test'}: continue
+                if current != node and direction=='out' and self.nodes[current]['kind'] in {'Finding','Test'}: continue
                 if current != node and direction=='in' and self.nodes[current]['kind'] in {'Disease','Exposure'}: continue
                 for a in adjacent.get(current,[]):
                     edges[a['id']]=a

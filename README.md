@@ -40,7 +40,7 @@ Python 3.9 이상, 저장소 루트에서 실행합니다. 기본 서버·조회
 
 `GET /api/data`는 모든 초안을 포함한 압축 원본 탐색 스냅숏입니다. `GET /api/search?q=HP:0001945`, `GET /api/graph?node=nova:fever&direction=in&depth=2&draft=true&source=DisMech`, `POST /api/rank`.
 
-순위 요청: `{"observations":{"nova:vomiting":"present"},"include_draft":true}`. 방향은 `in`/`out`/`both`. 결과에는 데이터 버전과 순위 산출의 근거가 포함됩니다. 원인 방향 탐색은 질병에서, 결과 방향 탐색은 소견·다른 질병에서 멈춥니다. 이는 임상 인과추론이나 확률 모델이 아닙니다.
+순위 요청: `{"observations":{"nova:vomiting":"present"},"include_draft":true}`. 방향은 `in`/`out`/`both`. 결과에는 데이터 버전과 순위 산출의 근거가 포함됩니다. 원인 방향 탐색은 질병에서, 결과 방향 탐색은 소견·검사에서 멈춥니다. 파생질병은 깊이 한도 내에서 계속 탐색합니다. 이는 임상 인과추론이나 확률 모델이 아닙니다.
 
 `KB(version="meddb-2026.10.10.4")`와 `KB.TOOLS`, `kb.call(name,args)`를 사용할 수 있습니다. 배포판은 `data/releases/`에 JSON 또는 JSON.gz로 보존하고 SHA256은 압축 전 파일 내용 기준입니다. 원본 탐색 스냅숏의 HTTP 응답은 gzip으로 전송합니다.
 
@@ -86,3 +86,6 @@ python3 -m meddb serve
 - `GET /api/kcd/mappings?concept=dismech-disease:Wilsons_Disease`: 이름 일치에 따른 검수 전 매핑 후보. 승인된 매핑이나 질병 동등성 주장이 아닙니다.
 
 KCD 접두어에서 계층을 임의 생성하지 않으며 청구 부가정보를 임상 배제 규칙으로 사용하지 않습니다. 현재 테스트는 25개입니다.
+
+
+결과 그래프는 출발 질병 → 기전 1차/파생질병 → 기전 2차/파생질병 → … → 소견으로 배치합니다. 순환이 없는 부분은 표시된 간선의 가장 긴 경로로 단계를 결정하고, 순환 부분은 도달 단계로 배치합니다. 이는 임상적 시간 순서나 인과 검수 완료를 뜻하지 않습니다. 탐색 깊이는 도달 범위이고 화면 열은 그 안의 연결 경로 단계라 서로 다를 수 있습니다. 기본 탐색 깊이는 5이며 긴 그래프는 가로 스크롤하거나 폭 맞춤으로 볼 수 있습니다. 테스트는 26개입니다.
