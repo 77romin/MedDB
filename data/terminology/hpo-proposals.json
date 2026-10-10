@@ -1,0 +1,100 @@
+[
+  {
+    "concept_id": "nova:fever",
+    "target": "HP:0001945",
+    "target_label": "Fever",
+    "relation": "exact",
+    "source_id": "hpo-2026-09-01"
+  },
+  {
+    "concept_id": "nova:vomiting",
+    "target": "HP:0002013",
+    "target_label": "Vomiting",
+    "relation": "exact",
+    "source_id": "hpo-2026-09-01"
+  },
+  {
+    "concept_id": "nova:nausea",
+    "target": "HP:0002018",
+    "target_label": "Nausea",
+    "relation": "exact",
+    "source_id": "hpo-2026-09-01"
+  },
+  {
+    "concept_id": "nova:abdominal-pain",
+    "target": "HP:0002027",
+    "target_label": "Abdominal pain",
+    "relation": "exact",
+    "source_id": "hpo-2026-09-01"
+  },
+  {
+    "concept_id": "nova:diarrhea",
+    "target": "HP:0002014",
+    "target_label": "Diarrhea",
+    "relation": "exact",
+    "source_id": "hpo-2026-09-01"
+  },
+  {
+    "concept_id": "nova:constipation",
+    "target": "HP:0002019",
+    "target_label": "Constipation",
+    "relation": "exact",
+    "source_id": "hpo-2026-09-01"
+  },
+  {
+    "concept_id": "nova:weight-loss",
+    "target": "HP:0001824",
+    "target_label": "Weight loss",
+    "relation": "exact",
+    "source_id": "hpo-2026-09-01"
+  },
+  {
+    "concept_id": "nova:fatigue",
+    "target": "HP:0012378",
+    "target_label": "Fatigue",
+    "relation": "exact",
+    "source_id": "hpo-2026-09-01"
+  },
+  {
+    "concept_id": "nova:flank-pain",
+    "target": "HP:0030157",
+    "target_label": "Flank pain",
+    "relation": "exact",
+    "source_id": "hpo-2026-09-01"
+  },
+  {
+    "concept_id": "nova:early-satiety",
+    "target": "HP:0033842",
+    "target_label": "Early satiety",
+    "relation": "exact",
+    "source_id": "hpo-2026-09-01"
+  },
+  {
+    "concept_id": "nova:chronic-diarrhea",
+    "target": "HP:0002028",
+    "target_label": "Chronic diarrhea",
+    "relation": "exact",
+    "source_id": "hpo-2026-09-01"
+  },
+  {
+    "concept_id": "nova:hematuria",
+    "target": "HP:0000790",
+    "target_label": "Hematuria",
+    "relation": "broad",
+    "source_id": "hpo-2026-09-01"
+  },
+  {
+    "concept_id": "nova:dysuria",
+    "target": "HP:0100518",
+    "target_label": "Dysuria",
+    "relation": "broad",
+    "source_id": "hpo-2026-09-01"
+  },
+  {
+    "concept_id": "nova:bloating",
+    "target": "HP:0003270",
+    "target_label": "Abdominal distention",
+    "relation": "related",
+    "source_id": "hpo-2026-09-01"
+  }
+]

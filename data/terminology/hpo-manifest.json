@@ -1,0 +1,123 @@
+{
+  "source_url": "https://purl.obolibrary.org/obo/hp.obo",
+  "accessed": "2026-10-10",
+  "version": "hp/releases/2026-09-01",
+  "sha256": "93dace952fcb3ec4728818857f6ba76bc2d5312f4d83266519b8694b8e798f22",
+  "mapping_direction": "relation describes target relative to local concept; broad means target is broader",
+  "terms": [
+    {
+      "id": "HP:0001945",
+      "label": "Fever",
+      "obsolete": false,
+      "parents": [
+        "HP:0004370"
+      ]
+    },
+    {
+      "id": "HP:0002013",
+      "label": "Vomiting",
+      "obsolete": false,
+      "parents": [
+        "HP:0002017"
+      ]
+    },
+    {
+      "id": "HP:0002018",
+      "label": "Nausea",
+      "obsolete": false,
+      "parents": [
+        "HP:0002017"
+      ]
+    },
+    {
+      "id": "HP:0002027",
+      "label": "Abdominal pain",
+      "obsolete": false,
+      "parents": [
+        "HP:0011458",
+        "HP:0012531"
+      ]
+    },
+    {
+      "id": "HP:0002014",
+      "label": "Diarrhea",
+      "obsolete": false,
+      "parents": [
+        "HP:0011458"
+      ]
+    },
+    {
+      "id": "HP:0002019",
+      "label": "Constipation",
+      "obsolete": false,
+      "parents": [
+        "HP:0011458"
+      ]
+    },
+    {
+      "id": "HP:0001824",
+      "label": "Weight loss",
+      "obsolete": false,
+      "parents": [
+        "HP:0004325"
+      ]
+    },
+    {
+      "id": "HP:0012378",
+      "label": "Fatigue",
+      "obsolete": false,
+      "parents": [
+        "HP:0025142"
+      ]
+    },
+    {
+      "id": "HP:0030157",
+      "label": "Flank pain",
+      "obsolete": false,
+      "parents": [
+        "HP:0012531"
+      ]
+    },
+    {
+      "id": "HP:0033842",
+      "label": "Early satiety",
+      "obsolete": false,
+      "parents": [
+        "HP:0011458"
+      ]
+    },
+    {
+      "id": "HP:0002028",
+      "label": "Chronic diarrhea",
+      "obsolete": false,
+      "parents": [
+        "HP:0002014"
+      ]
+    },
+    {
+      "id": "HP:0000790",
+      "label": "Hematuria",
+      "obsolete": false,
+      "parents": [
+        "HP:0012211",
+        "HP:0012614"
+      ]
+    },
+    {
+      "id": "HP:0100518",
+      "label": "Dysuria",
+      "obsolete": false,
+      "parents": [
+        "HP:0000009"
+      ]
+    },
+    {
+      "id": "HP:0003270",
+      "label": "Abdominal distention",
+      "obsolete": false,
+      "parents": [
+        "HP:0011458"
+      ]
+    }
+  ]
+}

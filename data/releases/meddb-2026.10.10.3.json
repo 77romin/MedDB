@@ -1,0 +1,1176 @@
+{
+  "version": "meddb-2026.10.10.3",
+  "format": 1,
+  "scope": "abdominal-pain-pilot",
+  "concepts": [
+    {
+      "id": "nova:gallstones",
+      "kind": "Disease",
+      "label_ko": "담석증",
+      "label_en": "Gallstones",
+      "aliases": [],
+      "mappings": []
+    },
+    {
+      "id": "nova:acute-pancreatitis",
+      "kind": "Disease",
+      "label_ko": "급성 췌장염",
+      "label_en": "Acute pancreatitis",
+      "aliases": [],
+      "mappings": []
+    },
+    {
+      "id": "nova:upper-abdominal-pain",
+      "kind": "Finding",
+      "label_ko": "상복부 통증",
+      "label_en": "Upper abdominal pain",
+      "aliases": [
+        "상복부통"
+      ],
+      "mappings": []
+    },
+    {
+      "id": "nova:ruq-pain",
+      "kind": "Finding",
+      "label_ko": "우상복부 통증",
+      "label_en": "Right upper quadrant pain",
+      "aliases": [],
+      "mappings": []
+    },
+    {
+      "id": "nova:back-radiation",
+      "kind": "Finding",
+      "label_ko": "등으로 방사되는 통증",
+      "label_en": "Pain radiating to the back",
+      "aliases": [],
+      "mappings": []
+    },
+    {
+      "id": "nova:fever",
+      "kind": "Finding",
+      "label_ko": "발열",
+      "label_en": "Fever",
+      "aliases": [],
+      "mappings": [
+        {
+          "target": "HP:0001945",
+          "target_label": "Fever",
+          "relation": "exact",
+          "source_id": "hpo-2026-09-01",
+          "source_version": "hp/releases/2026-09-01",
+          "identifier_verified": true,
+          "review_status": "draft",
+          "reviewer": null
+        }
+      ]
+    },
+    {
+      "id": "nova:nausea",
+      "kind": "Finding",
+      "label_ko": "오심",
+      "label_en": "Nausea",
+      "aliases": [
+        "메스꺼움",
+        "구역"
+      ],
+      "mappings": [
+        {
+          "target": "HP:0002018",
+          "target_label": "Nausea",
+          "relation": "exact",
+          "source_id": "hpo-2026-09-01",
+          "source_version": "hp/releases/2026-09-01",
+          "identifier_verified": true,
+          "review_status": "draft",
+          "reviewer": null
+        }
+      ]
+    },
+    {
+      "id": "nova:vomiting",
+      "kind": "Finding",
+      "label_ko": "구토",
+      "label_en": "Vomiting",
+      "aliases": [],
+      "mappings": [
+        {
+          "target": "HP:0002013",
+          "target_label": "Vomiting",
+          "relation": "exact",
+          "source_id": "hpo-2026-09-01",
+          "source_version": "hp/releases/2026-09-01",
+          "identifier_verified": true,
+          "review_status": "draft",
+          "reviewer": null
+        }
+      ]
+    },
+    {
+      "id": "nova:bile-duct-obstruction",
+      "kind": "Mechanism",
+      "label_ko": "담관 폐쇄",
+      "label_en": "Bile duct obstruction",
+      "aliases": [],
+      "mappings": []
+    },
+    {
+      "id": "nova:appendicitis",
+      "kind": "Disease",
+      "label_ko": "충수염",
+      "label_en": "Appendicitis",
+      "aliases": [
+        "맹장염"
+      ],
+      "mappings": []
+    },
+    {
+      "id": "nova:peptic-ulcer",
+      "kind": "Disease",
+      "label_ko": "소화성 궤양",
+      "label_en": "Peptic ulcer",
+      "aliases": [
+        "위궤양",
+        "십이지장궤양"
+      ],
+      "mappings": []
+    },
+    {
+      "id": "nova:ibs",
+      "kind": "Disease",
+      "label_ko": "과민성 장증후군",
+      "label_en": "Irritable bowel syndrome",
+      "aliases": [
+        "IBS"
+      ],
+      "mappings": []
+    },
+    {
+      "id": "nova:viral-gastroenteritis",
+      "kind": "Disease",
+      "label_ko": "바이러스성 위장염",
+      "label_en": "Viral gastroenteritis",
+      "aliases": [
+        "장염"
+      ],
+      "mappings": []
+    },
+    {
+      "id": "nova:kidney-stones",
+      "kind": "Disease",
+      "label_ko": "신장 결석",
+      "label_en": "Kidney stones",
+      "aliases": [
+        "신결석"
+      ],
+      "mappings": []
+    },
+    {
+      "id": "nova:crohns",
+      "kind": "Disease",
+      "label_ko": "크론병",
+      "label_en": "Crohn’s disease",
+      "aliases": [],
+      "mappings": []
+    },
+    {
+      "id": "nova:celiac",
+      "kind": "Disease",
+      "label_ko": "셀리악병",
+      "label_en": "Celiac disease",
+      "aliases": [],
+      "mappings": []
+    },
+    {
+      "id": "nova:abdominal-pain",
+      "kind": "Finding",
+      "label_ko": "복통",
+      "label_en": "Abdominal pain",
+      "aliases": [],
+      "mappings": [
+        {
+          "target": "HP:0002027",
+          "target_label": "Abdominal pain",
+          "relation": "exact",
+          "source_id": "hpo-2026-09-01",
+          "source_version": "hp/releases/2026-09-01",
+          "identifier_verified": true,
+          "review_status": "draft",
+          "reviewer": null
+        }
+      ]
+    },
+    {
+      "id": "nova:rlq-migration",
+      "kind": "Finding",
+      "label_ko": "배꼽 주변에서 우하복부로 이동하는 통증",
+      "label_en": "Periumbilical pain migrating to right lower abdomen",
+      "aliases": [],
+      "mappings": []
+    },
+    {
+      "id": "nova:loss-appetite",
+      "kind": "Finding",
+      "label_ko": "식욕 저하",
+      "label_en": "Loss of appetite",
+      "aliases": [],
+      "mappings": []
+    },
+    {
+      "id": "nova:bloating",
+      "kind": "Finding",
+      "label_ko": "복부 팽만",
+      "label_en": "Bloating",
+      "aliases": [],
+      "mappings": [
+        {
+          "target": "HP:0003270",
+          "target_label": "Abdominal distention",
+          "relation": "related",
+          "source_id": "hpo-2026-09-01",
+          "source_version": "hp/releases/2026-09-01",
+          "identifier_verified": true,
+          "review_status": "draft",
+          "reviewer": null
+        }
+      ]
+    },
+    {
+      "id": "nova:diarrhea",
+      "kind": "Finding",
+      "label_ko": "설사",
+      "label_en": "Diarrhea",
+      "aliases": [],
+      "mappings": [
+        {
+          "target": "HP:0002014",
+          "target_label": "Diarrhea",
+          "relation": "exact",
+          "source_id": "hpo-2026-09-01",
+          "source_version": "hp/releases/2026-09-01",
+          "identifier_verified": true,
+          "review_status": "draft",
+          "reviewer": null
+        }
+      ]
+    },
+    {
+      "id": "nova:constipation",
+      "kind": "Finding",
+      "label_ko": "변비",
+      "label_en": "Constipation",
+      "aliases": [],
+      "mappings": [
+        {
+          "target": "HP:0002019",
+          "target_label": "Constipation",
+          "relation": "exact",
+          "source_id": "hpo-2026-09-01",
+          "source_version": "hp/releases/2026-09-01",
+          "identifier_verified": true,
+          "review_status": "draft",
+          "reviewer": null
+        }
+      ]
+    },
+    {
+      "id": "nova:early-satiety",
+      "kind": "Finding",
+      "label_ko": "조기 포만감",
+      "label_en": "Early satiety",
+      "aliases": [],
+      "mappings": [
+        {
+          "target": "HP:0033842",
+          "target_label": "Early satiety",
+          "relation": "exact",
+          "source_id": "hpo-2026-09-01",
+          "source_version": "hp/releases/2026-09-01",
+          "identifier_verified": true,
+          "review_status": "draft",
+          "reviewer": null
+        }
+      ]
+    },
+    {
+      "id": "nova:belching",
+      "kind": "Finding",
+      "label_ko": "트림",
+      "label_en": "Belching",
+      "aliases": [],
+      "mappings": []
+    },
+    {
+      "id": "nova:defecation-pain",
+      "kind": "Finding",
+      "label_ko": "배변과 관련된 복통",
+      "label_en": "Abdominal pain related to defecation",
+      "aliases": [],
+      "mappings": []
+    },
+    {
+      "id": "nova:watery-diarrhea",
+      "kind": "Finding",
+      "label_ko": "수양성 설사",
+      "label_en": "Watery diarrhea",
+      "aliases": [],
+      "mappings": []
+    },
+    {
+      "id": "nova:flank-pain",
+      "kind": "Finding",
+      "label_ko": "옆구리 통증",
+      "label_en": "Flank pain",
+      "aliases": [],
+      "mappings": [
+        {
+          "target": "HP:0030157",
+          "target_label": "Flank pain",
+          "relation": "exact",
+          "source_id": "hpo-2026-09-01",
+          "source_version": "hp/releases/2026-09-01",
+          "identifier_verified": true,
+          "review_status": "draft",
+          "reviewer": null
+        }
+      ]
+    },
+    {
+      "id": "nova:hematuria",
+      "kind": "Finding",
+      "label_ko": "육안적 혈뇨",
+      "label_en": "Visible blood in urine",
+      "aliases": [],
+      "mappings": [
+        {
+          "target": "HP:0000790",
+          "target_label": "Hematuria",
+          "relation": "broad",
+          "source_id": "hpo-2026-09-01",
+          "source_version": "hp/releases/2026-09-01",
+          "identifier_verified": true,
+          "review_status": "draft",
+          "reviewer": null
+        }
+      ]
+    },
+    {
+      "id": "nova:dysuria",
+      "kind": "Finding",
+      "label_ko": "배뇨통",
+      "label_en": "Pain while urinating",
+      "aliases": [],
+      "mappings": [
+        {
+          "target": "HP:0100518",
+          "target_label": "Dysuria",
+          "relation": "broad",
+          "source_id": "hpo-2026-09-01",
+          "source_version": "hp/releases/2026-09-01",
+          "identifier_verified": true,
+          "review_status": "draft",
+          "reviewer": null
+        }
+      ]
+    },
+    {
+      "id": "nova:weight-loss",
+      "kind": "Finding",
+      "label_ko": "체중 감소",
+      "label_en": "Weight loss",
+      "aliases": [],
+      "mappings": [
+        {
+          "target": "HP:0001824",
+          "target_label": "Weight loss",
+          "relation": "exact",
+          "source_id": "hpo-2026-09-01",
+          "source_version": "hp/releases/2026-09-01",
+          "identifier_verified": true,
+          "review_status": "draft",
+          "reviewer": null
+        }
+      ]
+    },
+    {
+      "id": "nova:fatigue",
+      "kind": "Finding",
+      "label_ko": "피로",
+      "label_en": "Fatigue",
+      "aliases": [],
+      "mappings": [
+        {
+          "target": "HP:0012378",
+          "target_label": "Fatigue",
+          "relation": "exact",
+          "source_id": "hpo-2026-09-01",
+          "source_version": "hp/releases/2026-09-01",
+          "identifier_verified": true,
+          "review_status": "draft",
+          "reviewer": null
+        }
+      ]
+    },
+    {
+      "id": "nova:chronic-diarrhea",
+      "kind": "Finding",
+      "label_ko": "만성 설사",
+      "label_en": "Chronic diarrhea",
+      "aliases": [],
+      "mappings": [
+        {
+          "target": "HP:0002028",
+          "target_label": "Chronic diarrhea",
+          "relation": "exact",
+          "source_id": "hpo-2026-09-01",
+          "source_version": "hp/releases/2026-09-01",
+          "identifier_verified": true,
+          "review_status": "draft",
+          "reviewer": null
+        }
+      ]
+    },
+    {
+      "id": "nova:greasy-stools",
+      "kind": "Finding",
+      "label_ko": "지방성 변",
+      "label_en": "Greasy stools",
+      "aliases": [],
+      "mappings": []
+    }
+  ],
+  "sources": [
+    {
+      "id": "niddk-gallstones",
+      "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/gallstones/symptoms-causes",
+      "title": "Symptoms & Causes of Gallstones",
+      "accessed": "2026-10-10",
+      "version": "accessed-2026-10-10",
+      "redistribution": "not_assessed"
+    },
+    {
+      "id": "niddk-pancreatitis",
+      "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/pancreatitis/symptoms-causes",
+      "title": "Symptoms & Causes of Pancreatitis",
+      "accessed": "2026-10-10",
+      "version": "accessed-2026-10-10",
+      "redistribution": "not_assessed"
+    },
+    {
+      "id": "niddk-appendicitis",
+      "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/appendicitis/symptoms-causes",
+      "title": "Symptoms & Causes of Appendicitis",
+      "accessed": "2026-10-10",
+      "version": "accessed-2026-10-10",
+      "redistribution": "not_assessed"
+    },
+    {
+      "id": "niddk-peptic-ulcer",
+      "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/peptic-ulcers-stomach-ulcers/symptoms-causes",
+      "title": "Symptoms & Causes of Peptic ulcer",
+      "accessed": "2026-10-10",
+      "version": "accessed-2026-10-10",
+      "redistribution": "not_assessed"
+    },
+    {
+      "id": "niddk-ibs",
+      "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/irritable-bowel-syndrome/symptoms-causes",
+      "title": "Symptoms & Causes of Irritable bowel syndrome",
+      "accessed": "2026-10-10",
+      "version": "accessed-2026-10-10",
+      "redistribution": "not_assessed"
+    },
+    {
+      "id": "niddk-viral-gastroenteritis",
+      "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/viral-gastroenteritis/symptoms-causes",
+      "title": "Symptoms & Causes of Viral gastroenteritis",
+      "accessed": "2026-10-10",
+      "version": "accessed-2026-10-10",
+      "redistribution": "not_assessed"
+    },
+    {
+      "id": "niddk-kidney-stones",
+      "url": "https://www.niddk.nih.gov/health-information/urologic-diseases/kidney-stones/symptoms-causes",
+      "title": "Symptoms & Causes of Kidney stones",
+      "accessed": "2026-10-10",
+      "version": "accessed-2026-10-10",
+      "redistribution": "not_assessed"
+    },
+    {
+      "id": "niddk-crohns",
+      "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/crohns-disease/symptoms-causes",
+      "title": "Symptoms & Causes of Crohn’s disease",
+      "accessed": "2026-10-10",
+      "version": "accessed-2026-10-10",
+      "redistribution": "not_assessed"
+    },
+    {
+      "id": "niddk-celiac",
+      "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/celiac-disease/symptoms-causes",
+      "title": "Symptoms & Causes of Celiac disease",
+      "accessed": "2026-10-10",
+      "version": "accessed-2026-10-10",
+      "redistribution": "not_assessed"
+    },
+    {
+      "id": "hpo-2026-09-01",
+      "url": "https://purl.obolibrary.org/obo/hp.obo",
+      "title": "Human Phenotype Ontology",
+      "accessed": "2026-10-10",
+      "version": "hp/releases/2026-09-01",
+      "sha256": "93dace952fcb3ec4728818857f6ba76bc2d5312f4d83266519b8694b8e798f22",
+      "redistribution": "not_assessed"
+    }
+  ],
+  "assertions": [
+    {
+      "id": "assertion:001",
+      "subject": "nova:gallstones",
+      "predicate": "has_phenotype",
+      "object": "nova:ruq-pain",
+      "source_id": "niddk-gallstones",
+      "locator": "What are the symptoms of gallstones?",
+      "context": "담관 폐쇄로 담낭 발작이 발생한 경우",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:002",
+      "subject": "nova:gallstones",
+      "predicate": "has_mechanism",
+      "object": "nova:bile-duct-obstruction",
+      "source_id": "niddk-gallstones",
+      "locator": "What are the symptoms of gallstones?",
+      "context": "담석이 담관을 막는 경우",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:003",
+      "subject": "nova:bile-duct-obstruction",
+      "predicate": "causes",
+      "object": "nova:ruq-pain",
+      "source_id": "niddk-gallstones",
+      "locator": "What are the symptoms of gallstones?",
+      "context": "담낭 발작의 맥락",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:004",
+      "subject": "nova:acute-pancreatitis",
+      "predicate": "has_phenotype",
+      "object": "nova:upper-abdominal-pain",
+      "source_id": "niddk-pancreatitis",
+      "locator": "Acute pancreatitis",
+      "context": "",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:005",
+      "subject": "nova:acute-pancreatitis",
+      "predicate": "has_phenotype",
+      "object": "nova:back-radiation",
+      "source_id": "niddk-pancreatitis",
+      "locator": "Acute pancreatitis",
+      "context": "일부 환자에서 나타날 수 있음",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:006",
+      "subject": "nova:acute-pancreatitis",
+      "predicate": "has_phenotype",
+      "object": "nova:fever",
+      "source_id": "niddk-pancreatitis",
+      "locator": "Acute pancreatitis",
+      "context": "",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:007",
+      "subject": "nova:acute-pancreatitis",
+      "predicate": "has_phenotype",
+      "object": "nova:nausea",
+      "source_id": "niddk-pancreatitis",
+      "locator": "Acute pancreatitis",
+      "context": "",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:008",
+      "subject": "nova:acute-pancreatitis",
+      "predicate": "has_phenotype",
+      "object": "nova:vomiting",
+      "source_id": "niddk-pancreatitis",
+      "locator": "Acute pancreatitis",
+      "context": "",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:009",
+      "subject": "nova:appendicitis",
+      "predicate": "has_phenotype",
+      "object": "nova:abdominal-pain",
+      "source_id": "niddk-appendicitis",
+      "locator": "What are the symptoms of appendicitis?",
+      "context": "전형적 소견이 없는 환자도 있으며 소아에서 특히 비전형적일 수 있음",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:010",
+      "subject": "nova:appendicitis",
+      "predicate": "has_phenotype",
+      "object": "nova:rlq-migration",
+      "source_id": "niddk-appendicitis",
+      "locator": "What are the symptoms of appendicitis?",
+      "context": "전형적 소견이 없는 환자도 있으며 소아에서 특히 비전형적일 수 있음",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:011",
+      "subject": "nova:appendicitis",
+      "predicate": "has_phenotype",
+      "object": "nova:loss-appetite",
+      "source_id": "niddk-appendicitis",
+      "locator": "What are the symptoms of appendicitis?",
+      "context": "전형적 소견이 없는 환자도 있으며 소아에서 특히 비전형적일 수 있음",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:012",
+      "subject": "nova:appendicitis",
+      "predicate": "has_phenotype",
+      "object": "nova:nausea",
+      "source_id": "niddk-appendicitis",
+      "locator": "What are the symptoms of appendicitis?",
+      "context": "전형적 소견이 없는 환자도 있으며 소아에서 특히 비전형적일 수 있음",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:013",
+      "subject": "nova:appendicitis",
+      "predicate": "has_phenotype",
+      "object": "nova:vomiting",
+      "source_id": "niddk-appendicitis",
+      "locator": "What are the symptoms of appendicitis?",
+      "context": "전형적 소견이 없는 환자도 있으며 소아에서 특히 비전형적일 수 있음",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:014",
+      "subject": "nova:appendicitis",
+      "predicate": "has_phenotype",
+      "object": "nova:fever",
+      "source_id": "niddk-appendicitis",
+      "locator": "What are the symptoms of appendicitis?",
+      "context": "전형적 소견이 없는 환자도 있으며 소아에서 특히 비전형적일 수 있음",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:015",
+      "subject": "nova:appendicitis",
+      "predicate": "has_phenotype",
+      "object": "nova:bloating",
+      "source_id": "niddk-appendicitis",
+      "locator": "What are the symptoms of appendicitis?",
+      "context": "전형적 소견이 없는 환자도 있으며 소아에서 특히 비전형적일 수 있음",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:016",
+      "subject": "nova:peptic-ulcer",
+      "predicate": "has_phenotype",
+      "object": "nova:upper-abdominal-pain",
+      "source_id": "niddk-peptic-ulcer",
+      "locator": "What are the symptoms of a peptic ulcer?",
+      "context": "무증상일 수 있으며 증상의 식사 연관성은 환자마다 다름",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:017",
+      "subject": "nova:peptic-ulcer",
+      "predicate": "has_phenotype",
+      "object": "nova:early-satiety",
+      "source_id": "niddk-peptic-ulcer",
+      "locator": "What are the symptoms of a peptic ulcer?",
+      "context": "무증상일 수 있으며 증상의 식사 연관성은 환자마다 다름",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:018",
+      "subject": "nova:peptic-ulcer",
+      "predicate": "has_phenotype",
+      "object": "nova:nausea",
+      "source_id": "niddk-peptic-ulcer",
+      "locator": "What are the symptoms of a peptic ulcer?",
+      "context": "무증상일 수 있으며 증상의 식사 연관성은 환자마다 다름",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:019",
+      "subject": "nova:peptic-ulcer",
+      "predicate": "has_phenotype",
+      "object": "nova:vomiting",
+      "source_id": "niddk-peptic-ulcer",
+      "locator": "What are the symptoms of a peptic ulcer?",
+      "context": "무증상일 수 있으며 증상의 식사 연관성은 환자마다 다름",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:020",
+      "subject": "nova:peptic-ulcer",
+      "predicate": "has_phenotype",
+      "object": "nova:bloating",
+      "source_id": "niddk-peptic-ulcer",
+      "locator": "What are the symptoms of a peptic ulcer?",
+      "context": "무증상일 수 있으며 증상의 식사 연관성은 환자마다 다름",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:021",
+      "subject": "nova:peptic-ulcer",
+      "predicate": "has_phenotype",
+      "object": "nova:belching",
+      "source_id": "niddk-peptic-ulcer",
+      "locator": "What are the symptoms of a peptic ulcer?",
+      "context": "무증상일 수 있으며 증상의 식사 연관성은 환자마다 다름",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:022",
+      "subject": "nova:ibs",
+      "predicate": "has_phenotype",
+      "object": "nova:defecation-pain",
+      "source_id": "niddk-ibs",
+      "locator": "What are the symptoms of IBS?",
+      "context": "만성적 증상 패턴; 설사와 변비는 아형에 따라 다름",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:023",
+      "subject": "nova:ibs",
+      "predicate": "has_phenotype",
+      "object": "nova:diarrhea",
+      "source_id": "niddk-ibs",
+      "locator": "What are the symptoms of IBS?",
+      "context": "만성적 증상 패턴; 설사와 변비는 아형에 따라 다름",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:024",
+      "subject": "nova:ibs",
+      "predicate": "has_phenotype",
+      "object": "nova:constipation",
+      "source_id": "niddk-ibs",
+      "locator": "What are the symptoms of IBS?",
+      "context": "만성적 증상 패턴; 설사와 변비는 아형에 따라 다름",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:025",
+      "subject": "nova:ibs",
+      "predicate": "has_phenotype",
+      "object": "nova:bloating",
+      "source_id": "niddk-ibs",
+      "locator": "What are the symptoms of IBS?",
+      "context": "만성적 증상 패턴; 설사와 변비는 아형에 따라 다름",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:026",
+      "subject": "nova:viral-gastroenteritis",
+      "predicate": "has_phenotype",
+      "object": "nova:watery-diarrhea",
+      "source_id": "niddk-viral-gastroenteritis",
+      "locator": "What are the symptoms of viral gastroenteritis?",
+      "context": "발열은 일부 환자에서 나타남",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:027",
+      "subject": "nova:viral-gastroenteritis",
+      "predicate": "has_phenotype",
+      "object": "nova:abdominal-pain",
+      "source_id": "niddk-viral-gastroenteritis",
+      "locator": "What are the symptoms of viral gastroenteritis?",
+      "context": "발열은 일부 환자에서 나타남",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:028",
+      "subject": "nova:viral-gastroenteritis",
+      "predicate": "has_phenotype",
+      "object": "nova:nausea",
+      "source_id": "niddk-viral-gastroenteritis",
+      "locator": "What are the symptoms of viral gastroenteritis?",
+      "context": "발열은 일부 환자에서 나타남",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:029",
+      "subject": "nova:viral-gastroenteritis",
+      "predicate": "has_phenotype",
+      "object": "nova:vomiting",
+      "source_id": "niddk-viral-gastroenteritis",
+      "locator": "What are the symptoms of viral gastroenteritis?",
+      "context": "발열은 일부 환자에서 나타남",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:030",
+      "subject": "nova:viral-gastroenteritis",
+      "predicate": "has_phenotype",
+      "object": "nova:fever",
+      "source_id": "niddk-viral-gastroenteritis",
+      "locator": "What are the symptoms of viral gastroenteritis?",
+      "context": "발열은 일부 환자에서 나타남",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:031",
+      "subject": "nova:kidney-stones",
+      "predicate": "has_phenotype",
+      "object": "nova:flank-pain",
+      "source_id": "niddk-kidney-stones",
+      "locator": "What are the symptoms of kidney stones?",
+      "context": "통증 위치와 지속 양상은 다양함",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:032",
+      "subject": "nova:kidney-stones",
+      "predicate": "has_phenotype",
+      "object": "nova:hematuria",
+      "source_id": "niddk-kidney-stones",
+      "locator": "What are the symptoms of kidney stones?",
+      "context": "통증 위치와 지속 양상은 다양함",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:033",
+      "subject": "nova:kidney-stones",
+      "predicate": "has_phenotype",
+      "object": "nova:dysuria",
+      "source_id": "niddk-kidney-stones",
+      "locator": "What are the symptoms of kidney stones?",
+      "context": "통증 위치와 지속 양상은 다양함",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:034",
+      "subject": "nova:kidney-stones",
+      "predicate": "has_phenotype",
+      "object": "nova:nausea",
+      "source_id": "niddk-kidney-stones",
+      "locator": "What are the symptoms of kidney stones?",
+      "context": "통증 위치와 지속 양상은 다양함",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:035",
+      "subject": "nova:kidney-stones",
+      "predicate": "has_phenotype",
+      "object": "nova:vomiting",
+      "source_id": "niddk-kidney-stones",
+      "locator": "What are the symptoms of kidney stones?",
+      "context": "통증 위치와 지속 양상은 다양함",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:036",
+      "subject": "nova:crohns",
+      "predicate": "has_phenotype",
+      "object": "nova:diarrhea",
+      "source_id": "niddk-crohns",
+      "locator": "What are the symptoms of Crohn’s disease?",
+      "context": "염증의 위치와 중증도에 따라 증상이 다름",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:037",
+      "subject": "nova:crohns",
+      "predicate": "has_phenotype",
+      "object": "nova:abdominal-pain",
+      "source_id": "niddk-crohns",
+      "locator": "What are the symptoms of Crohn’s disease?",
+      "context": "염증의 위치와 중증도에 따라 증상이 다름",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:038",
+      "subject": "nova:crohns",
+      "predicate": "has_phenotype",
+      "object": "nova:weight-loss",
+      "source_id": "niddk-crohns",
+      "locator": "What are the symptoms of Crohn’s disease?",
+      "context": "염증의 위치와 중증도에 따라 증상이 다름",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:039",
+      "subject": "nova:crohns",
+      "predicate": "has_phenotype",
+      "object": "nova:fatigue",
+      "source_id": "niddk-crohns",
+      "locator": "What are the symptoms of Crohn’s disease?",
+      "context": "염증의 위치와 중증도에 따라 증상이 다름",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:040",
+      "subject": "nova:crohns",
+      "predicate": "has_phenotype",
+      "object": "nova:fever",
+      "source_id": "niddk-crohns",
+      "locator": "What are the symptoms of Crohn’s disease?",
+      "context": "염증의 위치와 중증도에 따라 증상이 다름",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:041",
+      "subject": "nova:crohns",
+      "predicate": "has_phenotype",
+      "object": "nova:nausea",
+      "source_id": "niddk-crohns",
+      "locator": "What are the symptoms of Crohn’s disease?",
+      "context": "염증의 위치와 중증도에 따라 증상이 다름",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:042",
+      "subject": "nova:crohns",
+      "predicate": "has_phenotype",
+      "object": "nova:loss-appetite",
+      "source_id": "niddk-crohns",
+      "locator": "What are the symptoms of Crohn’s disease?",
+      "context": "염증의 위치와 중증도에 따라 증상이 다름",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:043",
+      "subject": "nova:crohns",
+      "predicate": "has_phenotype",
+      "object": "nova:vomiting",
+      "source_id": "niddk-crohns",
+      "locator": "What are the symptoms of Crohn’s disease?",
+      "context": "염증의 위치와 중증도에 따라 증상이 다름",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:044",
+      "subject": "nova:celiac",
+      "predicate": "has_phenotype",
+      "object": "nova:bloating",
+      "source_id": "niddk-celiac",
+      "locator": "What are the symptoms of celiac disease?",
+      "context": "소화기 증상은 성인보다 소아에서 더 흔하며 무증상일 수 있음",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:045",
+      "subject": "nova:celiac",
+      "predicate": "has_phenotype",
+      "object": "nova:chronic-diarrhea",
+      "source_id": "niddk-celiac",
+      "locator": "What are the symptoms of celiac disease?",
+      "context": "소화기 증상은 성인보다 소아에서 더 흔하며 무증상일 수 있음",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:046",
+      "subject": "nova:celiac",
+      "predicate": "has_phenotype",
+      "object": "nova:constipation",
+      "source_id": "niddk-celiac",
+      "locator": "What are the symptoms of celiac disease?",
+      "context": "소화기 증상은 성인보다 소아에서 더 흔하며 무증상일 수 있음",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:047",
+      "subject": "nova:celiac",
+      "predicate": "has_phenotype",
+      "object": "nova:greasy-stools",
+      "source_id": "niddk-celiac",
+      "locator": "What are the symptoms of celiac disease?",
+      "context": "소화기 증상은 성인보다 소아에서 더 흔하며 무증상일 수 있음",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:048",
+      "subject": "nova:celiac",
+      "predicate": "has_phenotype",
+      "object": "nova:nausea",
+      "source_id": "niddk-celiac",
+      "locator": "What are the symptoms of celiac disease?",
+      "context": "소화기 증상은 성인보다 소아에서 더 흔하며 무증상일 수 있음",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:049",
+      "subject": "nova:celiac",
+      "predicate": "has_phenotype",
+      "object": "nova:vomiting",
+      "source_id": "niddk-celiac",
+      "locator": "What are the symptoms of celiac disease?",
+      "context": "소화기 증상은 성인보다 소아에서 더 흔하며 무증상일 수 있음",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:050",
+      "subject": "nova:celiac",
+      "predicate": "has_phenotype",
+      "object": "nova:abdominal-pain",
+      "source_id": "niddk-celiac",
+      "locator": "What are the symptoms of celiac disease?",
+      "context": "소화기 증상은 성인보다 소아에서 더 흔하며 무증상일 수 있음",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    }
+  ]
+}

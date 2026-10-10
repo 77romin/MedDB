@@ -1,0 +1,203 @@
+{
+  "version": "meddb-2026.10.10.1",
+  "format": 1,
+  "scope": "abdominal-pain-pilot",
+  "concepts": [
+    {
+      "id": "nova:gallstones",
+      "kind": "Disease",
+      "label_ko": "담석증",
+      "label_en": "Gallstones",
+      "aliases": [],
+      "mappings": []
+    },
+    {
+      "id": "nova:acute-pancreatitis",
+      "kind": "Disease",
+      "label_ko": "급성 췌장염",
+      "label_en": "Acute pancreatitis",
+      "aliases": [],
+      "mappings": []
+    },
+    {
+      "id": "nova:upper-abdominal-pain",
+      "kind": "Finding",
+      "label_ko": "상복부 통증",
+      "label_en": "Upper abdominal pain",
+      "aliases": [],
+      "mappings": []
+    },
+    {
+      "id": "nova:ruq-pain",
+      "kind": "Finding",
+      "label_ko": "우상복부 통증",
+      "label_en": "Right upper quadrant pain",
+      "aliases": [],
+      "mappings": []
+    },
+    {
+      "id": "nova:back-radiation",
+      "kind": "Finding",
+      "label_ko": "등으로 방사되는 통증",
+      "label_en": "Pain radiating to the back",
+      "aliases": [],
+      "mappings": []
+    },
+    {
+      "id": "nova:fever",
+      "kind": "Finding",
+      "label_ko": "발열",
+      "label_en": "Fever",
+      "aliases": [],
+      "mappings": []
+    },
+    {
+      "id": "nova:nausea",
+      "kind": "Finding",
+      "label_ko": "오심",
+      "label_en": "Nausea",
+      "aliases": [],
+      "mappings": []
+    },
+    {
+      "id": "nova:vomiting",
+      "kind": "Finding",
+      "label_ko": "구토",
+      "label_en": "Vomiting",
+      "aliases": [],
+      "mappings": []
+    },
+    {
+      "id": "nova:bile-duct-obstruction",
+      "kind": "Mechanism",
+      "label_ko": "담관 폐쇄",
+      "label_en": "Bile duct obstruction",
+      "aliases": [],
+      "mappings": []
+    }
+  ],
+  "sources": [
+    {
+      "id": "niddk-gallstones",
+      "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/gallstones/symptoms-causes",
+      "title": "Symptoms & Causes of Gallstones",
+      "accessed": "2026-10-10",
+      "version": "accessed-2026-10-10",
+      "redistribution": "not_assessed"
+    },
+    {
+      "id": "niddk-pancreatitis",
+      "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/pancreatitis/symptoms-causes",
+      "title": "Symptoms & Causes of Pancreatitis",
+      "accessed": "2026-10-10",
+      "version": "accessed-2026-10-10",
+      "redistribution": "not_assessed"
+    }
+  ],
+  "assertions": [
+    {
+      "id": "assertion:001",
+      "subject": "nova:gallstones",
+      "predicate": "has_phenotype",
+      "object": "nova:ruq-pain",
+      "source_id": "niddk-gallstones",
+      "locator": "What are the symptoms of gallstones?",
+      "context": "담관 폐쇄로 담낭 발작이 발생한 경우",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:002",
+      "subject": "nova:gallstones",
+      "predicate": "has_mechanism",
+      "object": "nova:bile-duct-obstruction",
+      "source_id": "niddk-gallstones",
+      "locator": "What are the symptoms of gallstones?",
+      "context": "담석이 담관을 막는 경우",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:003",
+      "subject": "nova:bile-duct-obstruction",
+      "predicate": "causes",
+      "object": "nova:ruq-pain",
+      "source_id": "niddk-gallstones",
+      "locator": "What are the symptoms of gallstones?",
+      "context": "담낭 발작의 맥락",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:004",
+      "subject": "nova:acute-pancreatitis",
+      "predicate": "has_phenotype",
+      "object": "nova:upper-abdominal-pain",
+      "source_id": "niddk-pancreatitis",
+      "locator": "Acute pancreatitis",
+      "context": "",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:005",
+      "subject": "nova:acute-pancreatitis",
+      "predicate": "has_phenotype",
+      "object": "nova:back-radiation",
+      "source_id": "niddk-pancreatitis",
+      "locator": "Acute pancreatitis",
+      "context": "일부 환자에서 나타날 수 있음",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:006",
+      "subject": "nova:acute-pancreatitis",
+      "predicate": "has_phenotype",
+      "object": "nova:fever",
+      "source_id": "niddk-pancreatitis",
+      "locator": "Acute pancreatitis",
+      "context": "",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:007",
+      "subject": "nova:acute-pancreatitis",
+      "predicate": "has_phenotype",
+      "object": "nova:nausea",
+      "source_id": "niddk-pancreatitis",
+      "locator": "Acute pancreatitis",
+      "context": "",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    },
+    {
+      "id": "assertion:008",
+      "subject": "nova:acute-pancreatitis",
+      "predicate": "has_phenotype",
+      "object": "nova:vomiting",
+      "source_id": "niddk-pancreatitis",
+      "locator": "Acute pancreatitis",
+      "context": "",
+      "frequency": null,
+      "extraction_method": "ai_manual_extraction",
+      "review_status": "draft",
+      "reviewer": null
+    }
+  ]
+}
