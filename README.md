@@ -68,3 +68,21 @@ python3 -m venv .venv
 Importer는 로컬 고정 checkout만 읽고 YAML safe loader를 사용합니다. 새 판 이름은 --version으로 지정하며 이미 존재하는 판은 importer가 거부합니다. 원본 파일별 SHA256은 `data/terminology/dismech-manifest.json`에 기록했습니다.
 
 이용 조건과 변환 내역: [THIRD_PARTY_NOTICES](docs/THIRD_PARTY_NOTICES.md). 디자인 참고: https://bbi-bbo.github.io/medagent-kb/ . 해당 팀의 코드·폰트·번들 데이터는 복사하지 않았습니다.
+
+## KCD-9 로컬 조회
+
+HIRA `배포용 상병마스터_260329.xlsx`에서 78,197개 명칭 행과 44,846개 고유 코드를 보존합니다. 활동분류도 포함하므로 코드 수는 질병 개념 수가 아닙니다. 원본과 추출본은 재배포 조건 확인 전까지 Git에서 제외했습니다.
+
+```bash
+# openpyxl을 사용할 수 있는 Python으로 실행
+python tools/import_kcd.py /path/to/배포용\ 상병마스터_260329.xlsx data/terminology/kcd/hira-kcd9-260329.json.gz
+python3 -m meddb serve
+```
+
+테이블 탭의 `KCD-9 상병마스터`에서 한영 명칭과 점 포함 코드로 검색할 수 있습니다. 구조 탭에 독립 컬렉션으로 표시합니다. 로컬 추출본이 없는 환경에서는 KCD API가 503을 반환하며 기존 그래프는 계속 작동합니다.
+
+- `GET /api/kcd?q=윌슨&offset=0&limit=50`: 원문 명칭 행 검색·페이지 처리.
+- `GET /api/kcd/code?code=E83.0`: 코드에 포함된 모든 명칭과 원문 위치.
+- `GET /api/kcd/mappings?concept=dismech-disease:Wilsons_Disease`: 이름 일치에 따른 검수 전 매핑 후보. 승인된 매핑이나 질병 동등성 주장이 아닙니다.
+
+KCD 접두어에서 계층을 임의 생성하지 않으며 청구 부가정보를 임상 배제 규칙으로 사용하지 않습니다. 현재 테스트는 25개입니다.

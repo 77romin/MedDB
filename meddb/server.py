@@ -3,11 +3,13 @@ import gzip
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
+from .kcd import KCD, DEFAULT_KCD
 
 WEB = Path(__file__).resolve().parents[1] / "web" / "index.html"
 
 def serve(kb, port=8765):
     snapshot = gzip.compress(json.dumps(dict(**kb.data, sha256=kb.sha256), ensure_ascii=False, separators=(",", ":")).encode())
+    kcd = KCD() if DEFAULT_KCD.exists() else None
     class Handler(BaseHTTPRequestHandler):
         def do_GET(self):
             query = urlparse(self.path)
@@ -21,6 +23,23 @@ def serve(kb, port=8765):
                     mime = "text/css; charset=utf-8" if file.suffix == ".css" else "application/javascript; charset=utf-8"
                 elif query.path == "/api/data":
                     payload, mime = snapshot, "application/json; charset=utf-8"
+                elif query.path.startswith('/api/kcd'):
+                    if kcd is None:
+                        self.send_error(503, 'Local HIRA KCD snapshot not installed')
+                        return
+                    if query.path == '/api/kcd':
+                        result = kcd.search(args.get('q',[''])[0], int(args.get('offset',['0'])[0]), int(args.get('limit',['50'])[0]))
+                    elif query.path == '/api/kcd/code':
+                        result = kcd.code(args.get('code',[''])[0])
+                    elif query.path == '/api/kcd/mappings':
+                        concept = kb.nodes.get(args.get('concept',[''])[0])
+                        if not concept or concept['kind'] != 'Disease':
+                            raise ValueError('Disease concept required')
+                        result = kcd.candidates(concept)
+                    else:
+                        self.send_error(404)
+                        return
+                    payload, mime = json.dumps(result, ensure_ascii=False).encode(), 'application/json; charset=utf-8'
                 elif query.path == "/api/search":
                     payload, mime = json.dumps(kb.search(args.get("q", [""])[0]), ensure_ascii=False).encode(), "application/json; charset=utf-8"
                 elif query.path == "/api/graph":
