@@ -1,0 +1,36 @@
+@prefix nova: <https://nova.example/ontology/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+nova: a owl:Ontology ; owl:versionInfo "0.1.0" ; rdfs:comment "Prototype namespace; replace before public release." .
+nova:Concept a owl:Class .
+nova:Disease a owl:Class ; rdfs:subClassOf nova:Concept .
+nova:ClassificationCode a owl:Class ; rdfs:subClassOf nova:Concept .
+nova:Finding a owl:Class ; rdfs:subClassOf nova:Concept .
+nova:Mechanism a owl:Class ; rdfs:subClassOf nova:Concept .
+nova:Test a owl:Class ; rdfs:subClassOf nova:Concept .
+nova:Exposure a owl:Class ; rdfs:subClassOf nova:Concept .
+nova:Assertion a owl:Class .
+nova:Source a owl:Class .
+nova:Mapping a owl:Class .
+nova:has_phenotype a owl:ObjectProperty ; rdfs:domain nova:Disease ; rdfs:range nova:Finding .
+nova:has_mechanism a owl:ObjectProperty ; rdfs:domain nova:Disease ; rdfs:range nova:Mechanism .
+nova:causes a owl:ObjectProperty .
+nova:supports_finding a owl:ObjectProperty ; rdfs:domain nova:Test ; rdfs:range nova:Finding .
+nova:subject a owl:ObjectProperty ; rdfs:domain nova:Assertion ; rdfs:range nova:Concept .
+nova:predicate a owl:ObjectProperty ; rdfs:domain nova:Assertion .
+nova:object a owl:ObjectProperty ; rdfs:domain nova:Assertion ; rdfs:range nova:Concept .
+nova:source a owl:ObjectProperty ; rdfs:range nova:Source .
+nova:reviewStatus a owl:DatatypeProperty ; rdfs:range xsd:string .
+nova:locator a owl:DatatypeProperty ; rdfs:range xsd:string .
+nova:context a owl:DatatypeProperty ; rdfs:range xsd:string .
+nova:reviewer a owl:DatatypeProperty ; rdfs:range xsd:string .
+nova:mapping a owl:ObjectProperty ; rdfs:domain nova:Concept ; rdfs:range nova:Mapping .
+nova:target a owl:ObjectProperty ; rdfs:domain nova:Mapping .
+nova:mappingRelation a owl:DatatypeProperty ; rdfs:range xsd:string .
+nova:sourceVersion a owl:DatatypeProperty ; rdfs:range xsd:string .
+nova:targetLabel a owl:DatatypeProperty ; rdfs:range xsd:string .
+nova:extractionMethod a owl:DatatypeProperty ; rdfs:range xsd:string .
+nova:url a owl:DatatypeProperty ; rdfs:range xsd:string .
+nova:dataVersion a owl:DatatypeProperty ; rdfs:range xsd:string .
+nova:sha256 a owl:DatatypeProperty ; rdfs:range xsd:string .

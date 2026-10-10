@@ -1,0 +1,41 @@
+@prefix nova: <https://nova.example/ontology/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+nova:AssertionShape a sh:NodeShape ; sh:targetClass nova:Assertion ;
+ sh:property [ sh:path nova:subject ; sh:minCount 1 ; sh:maxCount 1 ; sh:class nova:Concept ] ;
+ sh:property [ sh:path nova:object ; sh:minCount 1 ; sh:maxCount 1 ; sh:class nova:Concept ] ;
+ sh:property [ sh:path nova:predicate ; sh:minCount 1 ; sh:maxCount 1 ; sh:in (nova:has_phenotype nova:has_mechanism nova:causes nova:supports_finding) ] ;
+ sh:property [ sh:path nova:source ; sh:minCount 1 ; sh:class nova:Source ] ;
+ sh:property [ sh:path nova:locator ; sh:minCount 1 ; sh:datatype xsd:string ; sh:minLength 1 ] ;
+ sh:property [ sh:path nova:reviewStatus ; sh:minCount 1 ; sh:maxCount 1 ; sh:in ("draft" "reviewed" "rejected") ] .
+
+nova:MappingShape a sh:NodeShape ; sh:targetClass nova:Mapping ;
+ sh:property [ sh:path nova:subject ; sh:minCount 1 ; sh:maxCount 1 ; sh:class nova:Concept ] ;
+ sh:property [ sh:path nova:target ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+ sh:property [ sh:path nova:mappingRelation ; sh:minCount 1 ; sh:maxCount 1 ; sh:in ("exact" "broad" "narrow" "related") ] ;
+ sh:property [ sh:path nova:source ; sh:minCount 1 ; sh:class nova:Source ] ;
+ sh:property [ sh:path nova:sourceVersion ; sh:minCount 1 ; sh:datatype xsd:string ; sh:minLength 1 ] ;
+ sh:property [ sh:path nova:reviewStatus ; sh:minCount 1 ; sh:in ("draft" "reviewed" "rejected") ] .
+
+nova:ReviewShape a sh:NodeShape ; sh:targetClass nova:Assertion, nova:Mapping ;
+ sh:sparql [ sh:message "Reviewed claims require a nonempty reviewer." ; sh:select """
+ PREFIX nova: <https://nova.example/ontology/>
+ SELECT $this WHERE {
+   $this nova:reviewStatus "reviewed" .
+   FILTER NOT EXISTS { $this nova:reviewer ?r . FILTER(STRLEN(STR(?r)) > 0) }
+ }
+ """ ] .
+
+nova:EndpointShape a sh:NodeShape ; sh:targetClass nova:Assertion ;
+ sh:sparql [ sh:message "Relation endpoints have incompatible concept types." ; sh:select """
+ PREFIX nova: <https://nova.example/ontology/>
+ SELECT $this WHERE {
+   $this nova:subject ?s ; nova:predicate ?p ; nova:object ?o .
+   FILTER (
+     (?p = nova:has_phenotype && (!EXISTS { ?s a nova:Disease } || !EXISTS { ?o a nova:Finding })) ||
+     (?p = nova:has_mechanism && (!EXISTS { ?s a nova:Disease } || !EXISTS { ?o a nova:Mechanism })) ||
+     (?p = nova:supports_finding && (!EXISTS { ?s a nova:Test } || !EXISTS { ?o a nova:Finding })) ||
+     (?p = nova:causes && (!(EXISTS { ?s a nova:Mechanism } || EXISTS { ?s a nova:Exposure }) || !(EXISTS { ?o a nova:Finding } || EXISTS { ?o a nova:Mechanism } || EXISTS { ?o a nova:Disease })))
+   )
+ }
+ """ ] .

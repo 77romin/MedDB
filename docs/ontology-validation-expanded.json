@@ -1,0 +1,8 @@
+{
+  "conforms": true,
+  "scope": "outgoing neighborhood: dismech-disease:Wilsons_Disease",
+  "version": "meddb-2026.10.10.4",
+  "sha256": "7dcaa614d2c136819a949b60f28c893d52c99f9ab22fd95f2bc4e84300bbd608",
+  "triples": 2424,
+  "report": "Validation Report\nConforms: True\n"
+}
