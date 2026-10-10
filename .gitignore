@@ -2,3 +2,6 @@ __pycache__/
 *.pyc
 .venv/
 build/
+# HIRA original/local extraction: redistribution conditions pending review.
+data/terminology/kcd/*.xlsx
+data/terminology/kcd/*.json.gz

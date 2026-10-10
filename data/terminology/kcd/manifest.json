@@ -1,0 +1,23 @@
+{
+  "source_id": "hira-kcd9-260329",
+  "source_url": "https://www.hira.or.kr/rc/drug/insuadtcrtr/bbsView.do?brdBltNo=53117&brdScnBltNo=4&pgmid=HIRAA030069000400",
+  "publisher": "건강보험심사평가원",
+  "notice_date": "2026-04-07",
+  "downloaded": "2026-10-10",
+  "filename": "배포용 상병마스터_260329.xlsx",
+  "code_system": "KCD-9",
+  "source_version": "HIRA-260329",
+  "sha256": "e7d20278be19ec58fdf442cd4998abf72e2b3feb85fa42c0251581ef878f484e",
+  "bytes": 7705830,
+  "sheets": [
+    "부가정보_신구대비표",
+    "상병분류기호(전체)",
+    "상병분류기호(완전코드)"
+  ],
+  "extracted_rows": 78197,
+  "unique_codes": 44846,
+  "includes_activity_codes": true,
+  "clinical_mappings_created": 0,
+  "redistribution": "not_assessed",
+  "status": "downloaded_and_extracted_not_integrated"
+}

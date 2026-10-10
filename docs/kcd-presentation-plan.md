@@ -32,3 +32,11 @@ BBI-BBO README는 성균관의대 LRC PBL 주호소 스키마를 팀이 자체 �
 출처:
 - https://mods.go.kr/board.es?act=view&bid=246&list_no=437418&mid=a10301150000
 - https://github.com/BBI-BBO/medagent-kb/blob/main/README.md
+
+## 2026-10-10 수입 진행 상황
+
+HIRA 2026-04-07 공지의 `배포용 상병마스터_260329.xlsx`를 공식 다운로드 버튼으로 받았습니다. 파일 SHA256과 공지 URL은 `data/terminology/kcd/manifest.json`에 기록했습니다. 직접 curl 연결은 시간 초과됐지만 브라우저 다운로드 파일은 확인했습니다.
+
+`tools/import_kcd.py`가 전체 시트의 78,197개 명칭 행을 보존하고 44,846개 고유 코드별 원문 행 위치를 묶었습니다. 활동분류코드도 포함하는 원본이므로 고유 코드 수를 질병 개념 수로 해석하지 않습니다. 동일 코드의 여러 명칭 및 행별 청구 부가정보를 보존합니다. 원본과 압축 추출본은 로컬에 저장했고, 재배포 조건 확인 전 Git 업로드에서 제외합니다.
+
+현재 기존 concepts/assertions에 합치지 않았으며 KCD↔MONDO 매핑도 생성하지 않았습니다. 다음 단계는 활동분류 구분, 분류 계층 근거 확보, 재배포 조건 확인 및 질병 코드 매핑입니다.
