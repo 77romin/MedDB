@@ -14,7 +14,26 @@ function metric(value,label){const n=el('div',undefined,'metric');n.append(el('b
 async function show(id,back=false){if(!nodes.has(id))return;if(selected&&selected!==id&&!back)historyNodes.push(selected);selected=id;const n=nodes.get(id);kind=n.kind;document.querySelectorAll('[data-kind]').forEach(b=>b.classList.toggle('active',b.dataset.kind===kind));$('back').disabled=!historyNodes.length;$('trail').textContent=labels[kind]+' / '+n.label_ko;$('selected').textContent=n.label_ko;$('kind-badge').textContent=labels[kind];$('english').textContent=n.label_en;$('code').textContent=code(n)+' · '+n.id;const es=edges(id),out=es.filter(a=>a.subject===id),inc=es.filter(a=>a.object===id);$('metrics').replaceChildren(metric(out.filter(a=>nodes.get(a.object).kind==='Finding').length,'소견'),metric(out.filter(a=>nodes.get(a.object).kind==='Mechanism').length,'기전'),metric(es.length,'연결'),metric(new Set(es.map(a=>a.source_id)).size,'출처'));$('forward-title').textContent=kind==='Disease'?'이 질병의 기전과 소견':'이 '+labels[kind]+'에서 이어지는 것';$('reverse-title').textContent=kind==='Finding'?'이 소견과 연결된 질병·기전':'이 '+labels[kind]+'으로 들어오는 것';list();details();if(innerWidth<=900)closeSidebar();const ticket=++request;const params=`node=${encodeURIComponent(id)}&draft=${$('draft').checked}&depth=${$('depth').value}&source=${$('source-filter').value}`;try{const [fw,bw]=await Promise.all([api('/api/graph?'+params+'&direction=out'),api('/api/graph?'+params+'&direction=in')]);if(ticket!==request)return;graphs={forward:fw,reverse:bw};draw('forward',fw);draw('reverse',bw)}catch(e){if(ticket===request)fail(e)}}
 function svgEl(tag,attrs,text){const n=document.createElementNS(NS,tag);for(const[k,v]of Object.entries(attrs))n.setAttribute(k,v);if(text!==undefined)n.textContent=text;return n}
 function paint(kind){return {Disease:['#de673d','#de673d18'],Mechanism:['#9585d1','#9585d118'],Finding:['#1fae80','#1fae8015'],Test:['#4089da','#4089da18']}[kind]||['#b79857','#b7985715']}
-function draw(which,g){const svg=$(which);svg.replaceChildren();$(which+'-stats').textContent=`노드 ${g.nodes.length} · 연결 ${g.assertions.length}`;$(which+'-kinds').textContent=Object.entries(labels).map(([k,v])=>{const c=g.nodes.filter(n=>n.kind===k).length;return c?v+' '+c:''}).filter(Boolean).join(' · ');if(!g.assertions.length){svg.setAttribute('viewBox','0 0 650 150');svg.style.width='100%';svg.style.height='150px';svg.append(svgEl('text',{x:22,y:75,fill:'var(--muted)','font-size':13},'이 방향의 연결 근거가 아직 없습니다.'));return}
+function chainGraph(g,root){
+ const associations=g.assertions.filter(a=>a.subject===root&&a.predicate==='has_phenotype');
+ let edges=g.assertions.filter(a=>!associations.includes(a));
+ // Remove a shortcut only when another explicit directed path still connects its endpoints.
+ for(const edge of [...edges]){
+  if(edge.subject===edge.object)continue;
+  const rest=edges.filter(a=>a!==edge),seen=new Set([edge.subject]),queue=[edge.subject];
+  while(queue.length&&!seen.has(edge.object)){const id=queue.shift();for(const a of rest)if(a.subject===id&&!seen.has(a.object)){seen.add(a.object);queue.push(a.object)}}
+  if(seen.has(edge.object))edges=rest;
+ }
+ const ids=new Set([root,...edges.flatMap(a=>[a.subject,a.object])]);
+ return {...g,nodes:g.nodes.filter(n=>ids.has(n.id)),assertions:edges,associations,hiddenShortcuts:g.assertions.length-associations.length-edges.length};
+}
+function draw(which,g){
+ if(which==='forward'){
+  g=chainGraph(g,selected);
+  let note=$('chain-associations');if(!note){note=el('details');note.id='chain-associations';$(which+'-box').after(note)}
+  note.replaceChildren();const summary=el('summary',`질병–소견 연관 ${g.associations.length}개 · 별도 보존 / 경로 중복 직통선 ${g.hiddenShortcuts}개 숨김`);note.append(summary,el('p','아래 소견은 질병과의 연관 근거입니다. 기전 사슬의 결과로 자동 연결하지 않습니다. 숨긴 직통선은 근거 테이블에서 확인할 수 있습니다.','sub'));const chips=el('div',undefined,'chain-findings');for(const a of g.associations){const b=el('button',nodes.get(a.object).label_ko);b.onclick=()=>show(a.object);chips.append(b)}note.append(chips);
+ }
+ const svg=$(which);svg.replaceChildren();$(which+'-stats').textContent=`노드 ${g.nodes.length} · 연결 ${g.assertions.length}`;$(which+'-kinds').textContent=Object.entries(labels).map(([k,v])=>{const c=g.nodes.filter(n=>n.kind===k).length;return c?v+' '+c:''}).filter(Boolean).join(' · ');if(!g.assertions.length){svg.setAttribute('viewBox','0 0 650 150');svg.style.width='100%';svg.style.height='150px';svg.append(svgEl('text',{x:22,y:75,fill:'var(--muted)','font-size':13},which==='forward'?'기전 사슬로 이어지는 연결 근거가 없습니다. 질병–소견 연관은 아래 목록에서 확인하세요.':'이 방향의 연결 근거가 아직 없습니다.'));return}
 const forward=which==='forward',dist=new Map([[selected,0]]);let queue=[selected];while(queue.length){const id=queue.shift();for(const a of g.assertions){if((forward?a.subject:a.object)!==id)continue;const to=forward?a.object:a.subject;if(!dist.has(to)){dist.set(to,dist.get(id)+1);queue.push(to)}}}
 // Longest explicit chain determines stages; disease-to-mechanism membership
 // does not flatten downstream mechanisms into the first stage.

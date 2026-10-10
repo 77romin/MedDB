@@ -1,0 +1,11 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const source=fs.readFileSync('web/app.js','utf8');
+const helper=source.slice(source.indexOf('function chainGraph('),source.indexOf('function draw('));
+const ctx={};vm.createContext(ctx);vm.runInContext(helper,ctx);
+const edge=(subject,object,predicate='causes')=>({subject,object,predicate});
+const g={nodes:['d','m1','m2','f'].map(id=>({id})),assertions:[edge('d','m1','has_mechanism'),edge('d','m2','has_mechanism'),edge('m1','m2'),edge('m2','f'),edge('d','f','has_phenotype')]};
+const result=ctx.chainGraph(g,'d');assert.equal(result.assertions.length,3);assert.equal(result.associations.length,1);assert.equal(result.hiddenShortcuts,1);assert.equal(g.assertions.length,5);
+assert.ok(result.assertions.some(a=>a.subject==='m2'&&a.object==='f'));
+const noMechanism=ctx.chainGraph({nodes:g.nodes,assertions:[edge('d','f','has_phenotype')]},'d');assert.equal(noMechanism.assertions.length,0);assert.equal(noMechanism.nodes.length,1);
+const cycle=ctx.chainGraph({nodes:g.nodes,assertions:[edge('d','m1'),edge('m1','m2'),edge('m2','m1')]},'d');assert.equal(cycle.assertions.length,3);
+console.log('Chain display: shortcut reduction, association separation, original preservation, cycle checks passed');
