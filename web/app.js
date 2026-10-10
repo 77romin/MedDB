@@ -1,3 +1,4 @@
+if(new URLSearchParams(location.search).get('capture')==='graph')document.body.classList.add('graph-capture');
 const $=id=>document.getElementById(id),NS='http://www.w3.org/2000/svg';
 const labels={Disease:'질병',Finding:'소견',Mechanism:'기전',Test:'검사',Exposure:'노출',ClassificationCode:'분류 코드'},relations={has_phenotype:'표현형',has_mechanism:'기전 관계',causes:'일으킴',supports_finding:'검사 판정'};
 let data,nodes,sources,selected,kind='Disease',tab='explore',detailTab='relations',historyNodes=[],request=0,rankRequest=0,tablePage=0,observationState=new Map(),adj=new Map(),graphs={},graphScale={forward:1,reverse:1};
