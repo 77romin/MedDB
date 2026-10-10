@@ -1,0 +1,64 @@
+import json
+import gzip
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+from urllib.parse import parse_qs, urlparse
+
+WEB = Path(__file__).resolve().parents[1] / "web" / "index.html"
+
+def serve(kb, port=8765):
+    snapshot = gzip.compress(json.dumps(dict(**kb.data, sha256=kb.sha256), ensure_ascii=False, separators=(",", ":")).encode())
+    class Handler(BaseHTTPRequestHandler):
+        def do_GET(self):
+            query = urlparse(self.path)
+            args = parse_qs(query.query)
+            try:
+                if query.path == "/":
+                    payload, mime = WEB.read_bytes(), "text/html; charset=utf-8"
+                elif query.path in {"/app.css", "/app.js"}:
+                    file = WEB.parent / query.path[1:]
+                    payload = file.read_bytes()
+                    mime = "text/css; charset=utf-8" if file.suffix == ".css" else "application/javascript; charset=utf-8"
+                elif query.path == "/api/data":
+                    payload, mime = snapshot, "application/json; charset=utf-8"
+                elif query.path == "/api/search":
+                    payload, mime = json.dumps(kb.search(args.get("q", [""])[0]), ensure_ascii=False).encode(), "application/json; charset=utf-8"
+                elif query.path == "/api/graph":
+                    payload, mime = json.dumps(kb.graph(args.get("node", [""])[0], args.get("draft", ["false"])[0] == "true", int(args.get("depth", ["2"])[0]), args.get("direction", ["both"])[0], None if args.get("source",["all"])[0]=="all" else args["source"][0]), ensure_ascii=False).encode(), "application/json; charset=utf-8"
+                else:
+                    self.send_error(404)
+                    return
+            except ValueError as exc:
+                self.send_error(400, str(exc))
+                return
+            self.send_response(200)
+            self.send_header("Content-Type", mime)
+            if query.path == "/api/data": self.send_header("Content-Encoding", "gzip")
+            self.send_header("Content-Length", str(len(payload)))
+            self.end_headers()
+            self.wfile.write(payload)
+        def do_POST(self):
+            if self.path != "/api/rank":
+                self.send_error(404)
+                return
+            try:
+                size = int(self.headers.get("Content-Length", "0"))
+                if not 0 < size <= 65536:
+                    raise ValueError("Invalid body size")
+                body = json.loads(self.rfile.read(size))
+                if not isinstance(body, dict) or not isinstance(body.get("include_draft", False), bool):
+                    raise ValueError("Invalid request")
+                result = kb.rank(body.get("observations", {}), body.get("include_draft", False), body.get("limit", 30))
+            except (ValueError, TypeError) as exc:
+                self.send_error(400, str(exc))
+                return
+            payload = json.dumps(result, ensure_ascii=False).encode()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(payload)))
+            self.end_headers()
+            self.wfile.write(payload)
+        def log_message(self, *args):
+            pass
+    print(f"MedDB: http://127.0.0.1:{port}", flush=True)
+    ThreadingHTTPServer(("127.0.0.1", port), Handler).serve_forever()
