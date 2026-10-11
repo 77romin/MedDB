@@ -6,7 +6,7 @@
     "slots": ["onset", "pain_character", "aggravating"],
     "ask": ["diaphoresis", "dyspnea"],
     "exams": ["ex_heart_ausc", "ex_lung_ausc"],
-    "diseases": ["mi", "unstable_angina", "aortic_dissection", "pulmonary_embolism", "pneumothorax", "pericarditis", "gerd", "costochondritis", "pneumonia", "panic_attack"]
+    "diseases": ["mi", "unstable_angina", "aortic_dissection", "pulmonary_embolism", "pneumothorax", "pericarditis", "gerd", "costochondritis", "pneumonia", "panic_attack", "stable_angina", "myocarditis", "rib_fracture", "boerhaave"]
   },
   {
     "id": "dyspnea",
@@ -15,7 +15,7 @@
     "slots": ["onset", "course", "aggravating"],
     "ask": ["cough", "fever", "orthopnea", "leg_swelling", "wheeze_sx"],
     "exams": ["ex_lung_ausc", "ex_heart_ausc"],
-    "diseases": ["heart_failure", "asthma", "copd_exacerbation", "pneumonia", "pulmonary_embolism", "pneumothorax", "mi", "anemia", "panic_attack"]
+    "diseases": ["heart_failure", "asthma", "copd_exacerbation", "pneumonia", "pulmonary_embolism", "pneumothorax", "mi", "anemia", "panic_attack", "pulmonary_edema", "anaphylaxis", "myocarditis"]
   },
   {
     "id": "abdominal_pain",
@@ -24,7 +24,7 @@
     "slots": ["onset", "location", "pain_character", "aggravating", "lmp"],
     "ask": ["nausea_vomiting", "fever", "diarrhea", "bloody_stool"],
     "exams": ["ex_abd_palp"],
-    "diseases": ["appendicitis", "cholecystitis", "biliary_colic", "cholangitis", "pancreatitis", "peptic_ulcer", "perforated_ulcer", "gastroenteritis", "bowel_obstruction", "ureteral_stone", "diverticulitis", "ectopic_pregnancy", "ovarian_torsion", "pid", "aaa_rupture"]
+    "diseases": ["appendicitis", "cholecystitis", "biliary_colic", "cholangitis", "pancreatitis", "peptic_ulcer", "perforated_ulcer", "gastroenteritis", "bowel_obstruction", "ureteral_stone", "diverticulitis", "ectopic_pregnancy", "ovarian_torsion", "pid", "aaa_rupture", "inguinal_hernia", "pancreatic_cancer"]
   },
   {
     "id": "headache",
@@ -42,7 +42,7 @@
     "slots": ["onset", "course"],
     "ask": ["cough", "sore_throat", "dysuria", "diarrhea"],
     "exams": ["ex_throat", "ex_lung_ausc"],
-    "diseases": ["uri", "influenza", "tonsillitis", "pneumonia", "pyelonephritis", "gastroenteritis", "cellulitis", "meningitis", "sepsis", "tuberculosis"]
+    "diseases": ["uri", "influenza", "tonsillitis", "pneumonia", "pyelonephritis", "gastroenteritis", "cellulitis", "meningitis", "sepsis", "tuberculosis", "viral_pharyngitis", "otitis_media", "acute_hiv", "infectious_mononucleosis", "sle"]
   },
   {
     "id": "dizziness",
@@ -51,7 +51,7 @@
     "slots": ["onset", "character", "duration", "aggravating"],
     "ask": ["vertigo", "hearing_loss_tinnitus", "nausea_vomiting"],
     "exams": ["ex_nystagmus", "ex_gait"],
-    "diseases": ["bppv", "vestibular_neuritis", "meniere", "ischemic_stroke", "orthostatic_hypotension", "arrhythmia", "anemia", "hypoglycemia"]
+    "diseases": ["bppv", "vestibular_neuritis", "meniere", "ischemic_stroke", "orthostatic_hypotension", "arrhythmia", "anemia", "hypoglycemia", "atrial_fibrillation"]
   },
   {
     "id": "back_pain",
@@ -69,7 +69,7 @@
     "slots": ["onset", "course"],
     "ask": ["sputum", "fever", "dyspnea", "rhinorrhea"],
     "exams": ["ex_lung_ausc", "ex_throat"],
-    "diseases": ["uri", "acute_bronchitis", "pneumonia", "asthma", "copd_exacerbation", "allergic_rhinitis", "gerd", "tuberculosis", "lung_cancer", "ace_cough", "heart_failure"]
+    "diseases": ["uri", "acute_bronchitis", "pneumonia", "asthma", "copd_exacerbation", "allergic_rhinitis", "gerd", "tuberculosis", "lung_cancer", "ace_cough", "heart_failure", "pertussis", "bronchiectasis", "chronic_sinusitis", "laryngitis", "sarcoidosis"]
   },
   {
     "id": "vomiting_diarrhea",
@@ -88,5 +88,59 @@
     "ask": ["dysuria", "frequency_urgency", "hematuria", "fever", "flank_pain"],
     "exams": ["ex_cva", "ex_abd_palp"],
     "diseases": ["cystitis", "pyelonephritis", "urethritis", "prostatitis", "bph", "ureteral_stone", "bladder_cancer", "vaginitis", "pid"]
+  },
+  {
+    "id": "sore_throat",
+    "ko": "인후통",
+    "alias": ["목이 아", "목이 따가", "목이 부", "침 삼킬 때", "인후통", "목구멍", "목이 쉬"],
+    "slots": ["onset", "course"],
+    "ask": ["fever", "cough", "rhinorrhea", "dysphagia", "hoarseness"],
+    "exams": ["ex_throat", "ex_neck_nodes"],
+    "diseases": ["viral_pharyngitis", "tonsillitis", "uri", "influenza", "laryngitis", "epiglottitis", "peritonsillar_abscess", "infectious_mononucleosis", "gerd"]
+  },
+  {
+    "id": "palpitations",
+    "ko": "두근거림",
+    "alias": ["가슴이 두근", "두근거", "심장이 빨리", "심장이 뛰", "심장이 쿵"],
+    "slots": ["onset", "duration", "aggravating"],
+    "ask": ["abrupt_onset_offset", "irregular_palpitation", "lightheaded", "dyspnea", "stimulant_use"],
+    "exams": ["ex_pulse", "ex_heart_ausc"],
+    "diseases": ["psvt", "atrial_fibrillation", "arrhythmia", "panic_attack", "anemia", "hyperthyroidism", "hypoglycemia"]
+  },
+  {
+    "id": "weakness",
+    "ko": "근력 약화·마비",
+    "alias": ["힘이 빠", "힘이 없", "마비", "힘이 안 들어", "팔다리에 힘", "입이 돌아"],
+    "slots": ["onset", "location", "course"],
+    "ask": ["focal_weakness", "bilateral_weakness", "facial_weakness", "speech_disturbance", "paresthesia"],
+    "exams": ["ex_motor", "ex_face", "ex_reflex"],
+    "diseases": ["ischemic_stroke", "ich", "gbs", "myasthenia_gravis", "bell_palsy", "hypokalemia", "hypoglycemia", "cauda_equina", "spinal_metastasis", "subdural_hematoma"]
+  },
+  {
+    "id": "syncope",
+    "ko": "실신",
+    "alias": ["쓰러졌", "쓰러져", "기절", "실신", "정신을 잃", "의식을 잃"],
+    "slots": ["onset", "circumstances"],
+    "ask": ["vasovagal_prodrome", "palpitations", "exertional_syncope", "tongue_bite_incontinence", "postictal_confusion"],
+    "exams": ["ex_heart_ausc", "ex_orthostatic_bp"],
+    "diseases": ["vasovagal_syncope", "orthostatic_hypotension", "arrhythmia", "atrial_fibrillation", "aortic_stenosis", "seizure_disorder", "pulmonary_embolism", "hypoglycemia", "sah", "upper_gi_bleeding", "ectopic_pregnancy"]
+  },
+  {
+    "id": "altered_mental",
+    "ko": "의식 변화",
+    "alias": ["헛소리", "정신이 없", "의식이 흐", "횡설수설", "사람을 못 알아", "자꾸 자려", "깨워도", "멍해", "정신이 이상"],
+    "slots": ["onset", "course"],
+    "ask": ["fever", "head_trauma", "heavy_alcohol", "diabetes_medication", "focal_weakness"],
+    "exams": ["ex_mental", "ex_neck_flex", "ex_motor"],
+    "diseases": ["sepsis", "hypoglycemia", "dka", "ischemic_stroke", "ich", "subdural_hematoma", "meningitis", "seizure_disorder", "alcohol_intoxication", "hepatic_encephalopathy", "drug_intoxication"]
+  },
+  {
+    "id": "rash",
+    "ko": "발진",
+    "alias": ["발진", "두드러기", "피부에 뭐가", "가려워", "가려움", "가렵", "물집", "피부가 빨갛", "반점"],
+    "slots": ["onset", "location", "course"],
+    "ask": ["itching", "fever", "new_drug", "allergen_exposure"],
+    "exams": ["ex_rash"],
+    "diseases": ["urticaria", "anaphylaxis", "contact_dermatitis", "drug_eruption", "herpes_zoster", "viral_exanthem", "cellulitis", "sle", "meningitis", "acute_hiv"]
   }
 ]

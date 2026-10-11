@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+from collections import Counter
 from pathlib import Path
 
 from .api import MedDB
@@ -29,7 +30,10 @@ def main(argv: list[str]) -> int:
         print(json.dumps({"complaints": len(db.complaints), "diseases": len(db.diseases),
                           "red_flag_diseases": sum(d["red_flag"] for d in db.diseases.values()),
                           "findings": len(db.findings), "exams": len(db.exams), "slots": len(db.slots),
-                          "disease_finding_links": sum(len(r) for r in db.roles.values())}, ensure_ascii=False))
+                          "disease_finding_links": sum(len(r) for r in db.roles.values()),
+                          "links_by_source": dict(Counter(v for d in db.sources.values() for v in d.values())),
+                          "diseases_with_prevalence": sum(db.prior(d) is not None for d in db.diseases)},
+                         ensure_ascii=False))
         return 0
     if cmd == "demo":
         db = MedDB.open()

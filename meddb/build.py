@@ -1,6 +1,7 @@
 """JSON 원본(meddb/data/*.json)을 읽어 검증하고 SQLite로 적재한다. 표준 라이브러리만 사용."""
 from __future__ import annotations
 
+import gzip
 import json
 import re
 import sqlite3
@@ -38,7 +39,8 @@ CREATE TABLE disease(
   dispo TEXT NOT NULL);
 CREATE TABLE disease_finding(
   disease_id TEXT NOT NULL REFERENCES disease(id), finding_id TEXT NOT NULL REFERENCES finding(id),
-  role TEXT NOT NULL, rule_out INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(disease_id, finding_id));
+  role TEXT NOT NULL, rule_out INTEGER NOT NULL DEFAULT 0, source TEXT NOT NULL DEFAULT 'team',
+  PRIMARY KEY(disease_id, finding_id));
 CREATE TABLE disease_plan(
   disease_id TEXT NOT NULL REFERENCES disease(id), kind TEXT NOT NULL, seq INTEGER NOT NULL, text TEXT NOT NULL);
 CREATE TABLE complaint(id TEXT PRIMARY KEY, ko TEXT NOT NULL);
@@ -53,14 +55,34 @@ CREATE TABLE alias(kind TEXT NOT NULL, ref_id TEXT NOT NULL, text TEXT NOT NULL)
 CREATE TABLE vital_rule(finding_id TEXT NOT NULL REFERENCES finding(id), vital TEXT NOT NULL, op TEXT NOT NULL,
   value REAL NOT NULL);
 CREATE TABLE phrase(kind TEXT NOT NULL, seq INTEGER NOT NULL, text TEXT NOT NULL);
+CREATE TABLE kcd(code TEXT NOT NULL, ko TEXT NOT NULL, en TEXT NOT NULL, main INTEGER NOT NULL);
+CREATE TABLE hira(code TEXT NOT NULL, sex TEXT NOT NULL, age_group INTEGER NOT NULL, patients INTEGER NOT NULL);
+CREATE INDEX idx_kcd_code ON kcd(code);
 CREATE INDEX idx_df_finding ON disease_finding(finding_id);
 CREATE INDEX idx_alias ON alias(kind, ref_id);
 """
 
 
-def load_sources(data_dir: Path | str = DATA_DIR) -> dict:
+def _read_tsv_gz(path: Path) -> list[list[str]]:
+    if not path.exists():
+        return []
+    with gzip.open(path, "rt", encoding="utf-8") as f:
+        return [line.rstrip("\n").split("\t") for line in f if line.strip()]
+
+
+def load_sources(data_dir: Path | str = DATA_DIR, with_kcd: bool = True) -> dict:
+    """팀이 쓴 JSON 여섯 개와, 있으면 외부 자료에서 만든 파일(tools/ 참고)을 읽는다.
+      ext_ddxplus.json  DDXPlus 질환–소견 연결
+      kcd.tsv.gz        상병마스터 (코드, 한글명, 영문명, 대표 여부)
+      hira_prev.tsv.gz  KCD 3자리 × 성 × 연령군 환자수
+    """
     data_dir = Path(data_dir)
-    return {name: json.loads((data_dir / f"{name}.json").read_text(encoding="utf-8")) for name in FILES}
+    data = {name: json.loads((data_dir / f"{name}.json").read_text(encoding="utf-8")) for name in FILES}
+    ext = data_dir / "ext_ddxplus.json"
+    data["ext_ddxplus"] = json.loads(ext.read_text(encoding="utf-8")) if ext.exists() else {"meta": {}, "links": {}}
+    data["kcd"] = _read_tsv_gz(data_dir / "kcd.tsv.gz") if with_kcd else []
+    data["hira"] = _read_tsv_gz(data_dir / "hira_prev.tsv.gz")
+    return data
 
 
 def _age(obj: dict) -> tuple[int | None, int | None]:
@@ -99,6 +121,7 @@ def validate(data: dict) -> tuple[list[str], list[str]]:
     exam_ids = ids(data["exams"], "exams")
     finding_ids = ids(data["findings"], "findings")
     disease_ids = ids(data["diseases"], "diseases")
+    kcd_codes = {row[0] for row in data.get("kcd", [])}
     ids(data["complaints"], "complaints")
     for a, b, la, lb in ((slot_ids, finding_ids, "slots", "findings"), (exam_ids, finding_ids, "exams", "findings"),
                          (slot_ids, exam_ids, "slots", "exams")):
@@ -134,6 +157,8 @@ def validate(data: dict) -> tuple[list[str], list[str]]:
         did = d["id"]
         if d.get("kcd") is not None and not _KCD.match(d["kcd"]):
             errors.append(f"diseases.{did}: KCD 형식 오류 '{d['kcd']}'")
+        if kcd_codes and d.get("kcd") and d["kcd"].replace(".", "") not in kcd_codes:
+            errors.append(f"diseases.{did}: 상병마스터에 없는 KCD 코드 '{d['kcd']}'")
         if d.get("urgency") not in URGENCY:
             errors.append(f"diseases.{did}: urgency 오류 '{d.get('urgency')}'")
         if d.get("freq") not in (1, 2, 3):
@@ -190,6 +215,14 @@ def validate(data: dict) -> tuple[list[str], list[str]]:
         if not c.get("alias"):
             errors.append(f"complaints.{cid}: alias 없음")
 
+    for did, fids in data.get("ext_ddxplus", {}).get("links", {}).items():
+        if did not in disease_ids:
+            errors.append(f"ext_ddxplus: 없는 질환 '{did}'")
+        for fid in fids:
+            if fid not in finding_ids:
+                errors.append(f"ext_ddxplus.{did}: 없는 소견 '{fid}'")
+            used.add(fid)
+
     common = data["common"]
     for item in common.get("background", []):
         if item not in slot_ids and item not in finding_ids:
@@ -236,14 +269,25 @@ def build(conn: sqlite3.Connection, data: dict) -> None:
                       f.get("ask"), f.get("exam"), f.get("sex"), *_age(f)))
         for text in f.get("alias", []):
             conn.execute("INSERT INTO alias VALUES('finding',?,?)", (f["id"], text))
+    ext_links = data.get("ext_ddxplus", {}).get("links", {})
+    for key, value in data.get("ext_ddxplus", {}).get("meta", {}).items():
+        conn.execute("INSERT INTO meta VALUES(?,?)", (f"ddxplus.{key}", str(value)))
     for d in data["diseases"]:
         conn.execute("INSERT INTO disease VALUES(?,?,?,?,?,?,?,?,?,?,?)",
                      (d["id"], d["ko"], d["en"], d.get("kcd"), d["urgency"], int(bool(d.get("red_flag"))),
                       d["freq"], d.get("sex"), *_age(d), d["dispo"]))
         rule_out = set(d.get("rule_out", []))
+        external = set(ext_links.get(d["id"], []))
+        curated: set[str] = set()
         for role in ("key", "support", "against"):
             for fid in d.get(role, []):
-                conn.execute("INSERT INTO disease_finding VALUES(?,?,?,?)", (d["id"], fid, role, int(fid in rule_out)))
+                curated.add(fid)
+                # 팀이 쓴 연결을 DDXPlus도 지지하면 출처에 함께 적는다. 반대 소견은 팀 판단을 그대로 둔다.
+                source = "team+ddxplus" if fid in external and role != "against" else "team"
+                conn.execute("INSERT INTO disease_finding VALUES(?,?,?,?,?)",
+                             (d["id"], fid, role, int(fid in rule_out), source))
+        for fid in sorted(external - curated):  # DDXPlus에만 있는 연결은 보조 소견으로 넣는다
+            conn.execute("INSERT INTO disease_finding VALUES(?,?,?,?,?)", (d["id"], fid, "support", 0, "ddxplus"))
         for kind in PLAN_KINDS:
             for seq, text in enumerate(d["plan"].get(kind, [])):
                 conn.execute("INSERT INTO disease_plan VALUES(?,?,?,?)", (d["id"], kind, seq, text))
@@ -268,6 +312,9 @@ def build(conn: sqlite3.Connection, data: dict) -> None:
     for kind, texts in common.get("phrases", {}).items():
         for seq, text in enumerate(texts):
             conn.execute("INSERT INTO phrase VALUES(?,?,?)", (kind, seq, text))
+    conn.executemany("INSERT INTO kcd VALUES(?,?,?,?)", [(r[0], r[1], r[2], int(r[3])) for r in data.get("kcd", [])])
+    conn.executemany("INSERT INTO hira VALUES(?,?,?,?)",
+                     [(r[0], r[1], int(r[2]), int(r[3])) for r in data.get("hira", [])])
     conn.commit()
 
 

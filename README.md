@@ -9,18 +9,24 @@ N.O.V.A. 2026 대화형 의료 진단 AI 에이전트 대회용 **주호소 중�
 - 원본은 사람이 고치는 JSON(`meddb/data/`), 실행 시에는 SQLite로 적재
 - 질문 문장은 모두 30자 이하·물음표 하나, 진찰 문장은 동작 하나 — 검증기가 강제
 
-## 지금 들어 있는 것 (v0.1.0)
+## 지금 들어 있는 것 (v0.2.0)
 
 | 항목 | 수 |
 |---|---|
-| 주호소 | 10 (흉통, 호흡곤란, 복통, 두통, 발열, 어지럼, 요통, 기침, 구토·설사, 배뇨 증상) |
-| 질환 | 77 (그중 반드시 배제할 red flag 27) |
-| 소견 (증상·병력·진찰 소견·활력징후) | 172 |
-| 진찰 동작 | 33 |
-| 자유 응답 문진 항목(슬롯) | 15 |
-| 질환–소견 연결 | 533 |
+| 주호소 | 16 (흉통, 호흡곤란, 복통, 두통, 발열, 어지럼, 요통, 기침, 구토·설사, 배뇨 증상, 인후통, 두근거림, 근력 약화·마비, 실신, 의식 변화, 발진) |
+| 질환 | 115 (그중 반드시 배제할 red flag 36) |
+| 소견 (증상·병력·진찰 소견·활력징후) | 238 |
+| 진찰 동작 | 41 |
+| 자유 응답 문진 항목(슬롯) | 16 |
+| 질환–소견 연결 | 960 (팀 작성 652, 팀 작성 + DDXPlus 일치 179, DDXPlus에서만 129) |
+| 상병마스터 이름 | 47,640 (KCD 코드 21,299개) |
+| 진료 통계 | KCD 3자리 × 성별 × 5세 연령군 환자수 |
 
-> **임상 검수 전 초안입니다.** 내용과 KCD 코드는 [docs/SOURCES.md](docs/SOURCES.md)의 검수 절차를 거쳐야 합니다.
+외부 자료는 건강보험심사평가원 상병마스터·진료 통계(공공누리 제1유형)와 DDXPlus(CC BY 4.0)입니다.
+질문 문장, 위험 질환 지정, 검사·처치 계획은 어느 자료에도 없어 팀이 직접 썼습니다.
+
+> **임상 검수 전 초안입니다.** 팀이 쓴 내용은 [docs/SOURCES.md](docs/SOURCES.md)의 검수 절차를 거쳐야 합니다.
+> KCD 코드는 상병마스터와 대조를 마쳤습니다 (검증기가 매번 확인).
 
 ## 빠른 시작
 
@@ -34,7 +40,7 @@ python -m unittest discover -s tests
 ```python
 from meddb import MedDB
 
-db = MedDB.open()                                  # 패키지 안 JSON을 메모리에 적재 (약 15ms)
+db = MedDB.open()                                  # 패키지 안 원본을 메모리에 적재 (약 0.2초)
 cid = db.match_complaint("58세 남자입니다. 가슴이 너무 아파서 왔어요.")[0]["id"]   # "chest_pain"
 present = db.vital_flags({"BP": "150/90", "HR": 102, "RR": 20, "BT": 36.8, "SpO2": 96})
 
@@ -45,7 +51,8 @@ db.ready(cid, **state)                             # 진단해도 되는지 + �
 db.plan("mi")                                      # SOAP의 P 재료와 설명용 SAY 문장
 ```
 
-제출 ZIP에는 `meddb/` 폴더만 복사해 넣으면 됩니다 (약 150KB).
+제출 ZIP에는 `meddb/` 폴더만 복사해 넣으면 됩니다 (약 1.3MB).
+`python -m meddb build`로 만든 SQLite 파일(약 7MB)을 `MedDB.open("dist/meddb.sqlite")`로 열면 더 빨리 열립니다 (약 0.1초).
 
 ## API
 
@@ -60,11 +67,14 @@ db.plan("mi")                                      # SOAP의 P 재료와 설명�
 | `match_findings(text)` | 위 작업의 규칙 기반 보조 | `{present, absent}` (표현 사전 휴리스틱) |
 | `next_actions(complaint, ...)` | 다음 행동 선택 | `[{type, text, stage, target, resolves, why}]` |
 | `red_flags_pending(complaint, ...)` | 진단 전 안전 점검 | `[{id, ko, unchecked}]` |
-| `candidates(complaint, present, absent, age, sex, k)` | 감별진단 | `[{id, ko, kcd, score, share, matched, against, unknown_key}]` |
+| `candidates(complaint, present, absent, age, sex, k)` | 감별진단 | `[{id, ko, kcd, score, prior, share, matched, against, unknown_key}]` |
+| `prior(disease, age, sex)` | 성·연령별 사전확률 점수 | −2 ~ 1.5, 통계가 없으면 `None` |
 | `ready(complaint, ...)` | 진단 시점 판단 | `{ready, pending, top, margin}` |
 | `plan(disease)` | SOAP P, 설명 SAY | `{test, treat, dispo, edu, explain, unsafe}` |
 | `describe(ids)` | SOAP S·O를 코드로 조립 | `[{id, ko, kind, soap, sys}]` |
-| `normalize_diagnosis(text)` | 진단명 → 질환·KCD (채점기) | 질환 dict 또는 `None` |
+| `normalize_diagnosis(text)` | 진단명 → 질환·KCD (채점기) | 질환 dict. KB에 없으면 상병마스터에서 찾은 `{id: None, ko, kcd}`, 그래도 없으면 `None` |
+| `kcd_lookup(text)` | 상병마스터 이름 → KCD 코드 | `{id: None, ko, kcd}` 또는 `None` |
+| `disease(id)` | 질환 한 건 전체 | 소견별 출처(`sources`) 포함 |
 | `rubric(complaint, disease)` | 자체 채점 기준 초안 | `{must_ask, must_exam, expected_plan, unsafe, ...}` |
 
 `next_actions`의 단계(stage)와 순서:
@@ -76,9 +86,24 @@ db.plan("mi")                                      # SOAP의 P 재료와 설명�
 5. `discriminate` — 상위 후보를 가르는 소견 (1순위 비중이 0.6 이상이면 1순위의 미확인 핵심 소견만)
 6. `background` — 과거력·약물·알레르기·가족력·흡연·음주
 
-`discriminate`를 뺀 단계가 모두 비면 `ready`가 참이 됩니다. 필수 단계만 따라가면 주호소별로 13~22턴입니다.
+`discriminate`를 뺀 단계가 모두 비면 `ready`가 참이 됩니다. 필수 단계만 따라가면 주호소별로 14~22턴입니다.
 
-`candidates`의 `score`는 소견 겹침 점수이고 `share`는 후보 사이의 상대 비중입니다. **확률이 아닙니다.**
+`candidates`의 `score`는 소견 겹침 점수에 사전확률을 더한 값이고 `share`는 후보 사이의 상대 비중입니다. **확률이 아닙니다.**
+
+사전확률(`prior`)은 건강보험 진료 통계에서 그 성·연령 칸의 전체 환자 중 해당 KCD 3자리가 차지하는 비중입니다.
+3자리 단위라 같은 코드를 쓰는 질환(예: 대동맥 박리와 복부 대동맥류 파열)은 구분하지 못하고, 외래에서 오래 다니는 만성 질환이 높게 나옵니다.
+그래서 가중치를 낮게 두고(0.5) 팀이 준 `freq`와 함께 씁니다.
+
+## 외부 자료 갱신
+
+원본 파일은 저장소에 넣지 않습니다. 받아서 아래 도구로 `meddb/data/`의 가공 파일을 다시 만듭니다.
+
+```bash
+python tools/import_hira.py --kcd <상병마스터.csv> --stats <주부상병 3단 성별 연령군별 진료 통계.csv>
+python tools/import_ddxplus.py --conditions release_conditions.json --evidences release_evidences.json
+```
+
+DDXPlus 문진 항목과 KB 소견의 대응은 `tools/ddxplus_map.json`에 있습니다. 팀이 반대 소견으로 둔 연결과 충돌하면 팀 판단을 유지하고 도구가 충돌 목록을 출력합니다.
 
 ## 데이터 구조
 
@@ -102,7 +127,8 @@ db.plan("mi")                                      # SOAP의 P 재료와 설명�
 
 ## 알려진 한계
 
-- 주호소 10개 밖의 내원 이유(두근거림, 실신, 발진, 소아 증례 등)는 아직 없습니다.
-- 활력징후 기준은 성인용입니다.
-- 질환별 유병률 사전확률은 `freq` 1~3의 거친 값입니다.
+- 주호소 16개 밖의 내원 이유(관절통, 부종, 황달, 혈변, 질 출혈, 눈·귀 증상, 외상, 정신과 증상 등)는 아직 없습니다.
+- 소아 증례는 다루지 않습니다. 활력징후 기준도 성인용입니다.
+- DDXPlus는 호흡기·흉부 질환 49개 위주라 그 밖의 질환에는 외부 자료의 뒷받침이 없습니다.
+- 사전확률은 KCD 3자리 단위의 진료 통계라 위에 적은 한계가 있습니다.
 - `rubric`으로 자체 채점 기준을 만들 수는 있지만, **가상 증례를 이 KB로 만들면 점수가 부풀려집니다.** 증례는 다른 출처로 만듭니다.

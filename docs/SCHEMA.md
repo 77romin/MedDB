@@ -1,6 +1,7 @@
 # 스키마
 
-원본은 `meddb/data/`의 JSON 여섯 개이고, `meddb/build.py`가 검증한 뒤 아래 SQLite 표로 적재합니다.
+팀이 쓰는 원본은 `meddb/data/`의 JSON 여섯 개이고, 외부 자료에서 만든 파일 세 개가 함께 있습니다.
+`meddb/build.py`가 검증한 뒤 아래 SQLite 표로 적재합니다.
 
 ## 원본 JSON
 
@@ -77,12 +78,30 @@
 - `phrases` — 공감·마무리 문장 (30자 이하)
 - `meta` — 판, 검수 상태
 
+## 외부 자료에서 만든 파일
+
+손으로 고치지 않고 `tools/`의 도구로 다시 만듭니다. 출처와 라이선스는 [SOURCES.md](SOURCES.md).
+
+| 파일 | 내용 | 만드는 도구 |
+|---|---|---|
+| `ext_ddxplus.json` | `links`: 질환 id → DDXPlus가 그 질환에 연결한 소견 id 목록 | `tools/import_ddxplus.py` + `tools/ddxplus_map.json` |
+| `kcd.tsv.gz` | 코드, 한글명, 영문명, 대표 여부(1 = 그 코드의 공식 이름, 0 = 포함 용어) | `tools/import_hira.py --kcd` |
+| `hira_prev.tsv.gz` | KCD 3자리, 성별(M/F), 연령군(1~18, 5세 단위, 18 = 85세 이상), 환자수 | `tools/import_hira.py --stats` |
+
+DDXPlus 연결을 합치는 규칙:
+
+- 팀이 `key`·`support`로 둔 연결을 DDXPlus도 갖고 있으면 출처를 `team+ddxplus`로 적습니다.
+- DDXPlus에만 있는 연결은 `support`(출처 `ddxplus`)로 넣습니다.
+- 팀이 `against`로 둔 연결은 DDXPlus에 있어도 그대로 둡니다.
+
 ## SQLite 표
 
 | 표 | 내용 |
 |---|---|
 | `slot`, `exam`, `finding`, `disease`, `complaint` | 위 항목 |
-| `disease_finding(disease_id, finding_id, role, rule_out)` | 질환–소견 연결 |
+| `disease_finding(disease_id, finding_id, role, rule_out, source)` | 질환–소견 연결. `source`는 `team` · `team+ddxplus` · `ddxplus` |
+| `kcd(code, ko, en, main)` | 상병마스터 |
+| `hira(code, sex, age_group, patients)` | 진료 통계 |
 | `disease_plan(disease_id, kind, seq, text)` | 계획 |
 | `complaint_item(complaint_id, kind, ref_id, seq)` | 주호소의 슬롯·소견·진찰 |
 | `complaint_disease(complaint_id, disease_id, seq)` | 주호소–질환 |
@@ -99,4 +118,6 @@
 - EXAM 문장: 병렬 표현(`그리고`, `및`, 쉼표 등) 없음
 - 지시문처럼 읽힐 수 있는 표현 없음 (프롬프트 인젝션으로 오해받지 않도록)
 - 질환: 핵심 소견 2개 이상, 계획 항목 채워짐, red flag면 `rule_out` 있음
+- 질환의 KCD 코드가 상병마스터에 있는지
+- `ext_ddxplus.json`이 가리키는 질환·소견이 실제로 있는지
 - 쓰이지 않는 소견·질환·진찰은 경고

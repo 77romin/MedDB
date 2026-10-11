@@ -38,9 +38,13 @@ class Query(unittest.TestCase):
     def test_sqlite_file_matches_memory_build(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = build_file(Path(tmp) / "meddb.sqlite")
-            self.assertEqual(sqlite3.connect(path).execute("SELECT count(*) FROM disease").fetchone()[0],
-                             len(self.db.diseases))
+            conn = sqlite3.connect(path)
+            try:
+                self.assertEqual(conn.execute("SELECT count(*) FROM disease").fetchone()[0], len(self.db.diseases))
+            finally:
+                conn.close()
             other = MedDB.open(path)
+            self.assertEqual(other.kcd_lookup("콜레라"), self.db.kcd_lookup("콜레라"))
         self.assertEqual(other.candidates("chest_pain", ["pressure_chest_pain"]),
                          self.db.candidates("chest_pain", ["pressure_chest_pain"]))
 
@@ -73,6 +77,16 @@ class Query(unittest.TestCase):
             ("back_pain", ["bowel_bladder_dysfunction", "saddle_anesthesia"], "cauda_equina", 50, "M"),
             ("fever", ["fever", "flank_pain", "cva_tenderness", "dysuria"], "pyelonephritis", 33, "F"),
             ("urinary", ["dysuria", "frequency_urgency"], "cystitis", 28, "F"),
+            ("palpitations", ["abrupt_onset_offset", "palpitations"], "psvt", 30, "F"),
+            ("syncope", ["vasovagal_prodrome", "standing_trigger"], "vasovagal_syncope", 20, "F"),
+            ("syncope", ["exertional_syncope", "murmur"], "aortic_stenosis", 72, "M"),
+            ("rash", ["allergen_exposure", "angioedema", "dyspnea"], "anaphylaxis", 30, "F"),
+            ("rash", ["dermatomal_pain", "vesicular_dermatomal"], "herpes_zoster", 65, "M"),
+            ("weakness", ["ascending_weakness", "bilateral_weakness", "recent_uri"], "gbs", 40, "M"),
+            ("weakness", ["facial_weakness", "facial_droop"], "bell_palsy", 35, "F"),
+            ("sore_throat", ["drooling", "muffled_voice", "stridor_sx"], "epiglottitis", 45, "M"),
+            ("altered_mental", ["liver_disease", "altered_mental", "asterixis"], "hepatic_encephalopathy", 60, "M"),
+            ("cough", ["paroxysmal_cough", "whooping", "posttussive_vomiting"], "pertussis", 30, "F"),
         ]
         for complaint, present, expected, age, sex in cases:
             top = self.db.candidates(complaint, present, age=age, sex=sex)
@@ -122,6 +136,25 @@ class Query(unittest.TestCase):
         self.assertIn("cough", got["present"])
         self.assertIn("purulent_sputum", got["present"])
         self.assertEqual(got["absent"], ["dyspnea"])
+
+    def test_prevalence_prior_follows_age_and_sex(self):
+        self.assertGreater(self.db.prior("mi", 70, "M"), self.db.prior("mi", 25, "F"))
+        self.assertGreater(self.db.prior("uri"), self.db.prior("gbs"))
+        self.assertIsNone(self.db.prior("ace_cough"))  # KCD 코드가 없는 질환
+
+    def test_kcd_codes_and_lookup(self):
+        self.assertEqual(self.db.kcd_lookup("상세불명의 급성 췌장염")["kcd"], "K85.9")
+        self.assertEqual(self.db.normalize_diagnosis("콜레라"), {"id": None, "ko": "콜레라", "kcd": "A00"})
+        for d in self.db.diseases.values():
+            if d["kcd"]:
+                self.assertIn(d["kcd"].replace(".", ""), self.db.kcd_names, d["id"])
+
+    def test_external_links_keep_their_source(self):
+        sources = self.db.disease("pneumonia")["sources"]
+        self.assertEqual(sources["crackles"], "team")          # 진찰 소견은 DDXPlus에 없음
+        self.assertEqual(sources["cough"], "team+ddxplus")     # 양쪽 모두
+        self.assertIn("ddxplus", set(sources.values()))        # DDXPlus에만 있던 연결
+        self.assertEqual(self.db.roles["uri"]["purulent_sputum"], "against")  # 충돌 시 팀 판단 유지
 
     def test_plan_and_rubric(self):
         plan = self.db.plan("mi")

@@ -15,11 +15,14 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Iterable
 
-from .build import build, load_sources
+from .build import DATA_DIR, _read_tsv_gz, build, load_sources
 
 W_PRESENT = {"key": 3.0, "support": 1.0, "against": -2.0}
 W_ABSENT = {"key": -1.5, "support": -0.3, "against": 0.0}
 W_FREQ = 0.5
+W_PREV = 0.5       # 진료 통계 사전확률 가중치
+PREV_ZERO = 3.0    # 해당 성·연령 칸에서 전체의 0.1%를 차지하면 0점
+PREV_CLIP = (-2.0, 1.5)
 AGE_PENALTY = 3.0
 STAGE_ORDER = ("hpi", "red_flag", "core", "exam", "discriminate", "background")
 
@@ -40,7 +43,9 @@ def _loose(alias: str) -> re.Pattern:
 
 
 class MedDB:
-    def __init__(self, conn: sqlite3.Connection):
+    def __init__(self, conn: sqlite3.Connection, path: str | Path | None = None):
+        self._path = path  # 상병마스터는 처음 쓸 때 읽는다 (4만여 행이라 여는 시간을 줄이려고)
+        self._kcd_loaded = False
         conn.row_factory = sqlite3.Row
         q = lambda sql: [dict(r) for r in conn.execute(sql)]  # noqa: E731
         self.meta = {r["key"]: r["value"] for r in q("SELECT * FROM meta")}
@@ -50,9 +55,11 @@ class MedDB:
         self.diseases = {r["id"]: r for r in q("SELECT * FROM disease")}
         self.complaints = {r["id"]: r for r in q("SELECT * FROM complaint")}
         self.roles: dict[str, dict[str, str]] = defaultdict(dict)  # disease -> finding -> role
+        self.sources: dict[str, dict[str, str]] = defaultdict(dict)  # disease -> finding -> 출처
         self.rule_out: dict[str, list[str]] = defaultdict(list)
         for r in q("SELECT * FROM disease_finding"):
             self.roles[r["disease_id"]][r["finding_id"]] = r["role"]
+            self.sources[r["disease_id"]][r["finding_id"]] = r["source"]
             if r["rule_out"]:
                 self.rule_out[r["disease_id"]].append(r["finding_id"])
         self.plans: dict[str, dict[str, list[str]]] = defaultdict(lambda: defaultdict(list))
@@ -80,6 +87,16 @@ class MedDB:
                 self.aliases[kind].append((norm(row["ko"]), rid))
                 if row.get("en"):
                     self.aliases[kind].append((norm(row["en"]), rid))
+        self.kcd_names: dict[str, str] = {}    # 코드 → 대표 이름
+        self.kcd_by_name: dict[str, str] = {}  # 정규화한 이름 → 코드 (대표 이름 우선)
+        # 진료 통계: KB 질환의 KCD 3자리만 남긴다. cell = (성별, 연령군 1~18)
+        wanted = {d["kcd"][:3] for d in self.diseases.values() if d["kcd"]}
+        self.prev: dict[str, dict[tuple[str, int], int]] = defaultdict(dict)
+        self.prev_total: dict[tuple[str, int], int] = defaultdict(int)
+        for code, sex_, group, patients in conn.execute("SELECT code, sex, age_group, patients FROM hira"):
+            self.prev_total[(sex_, group)] += patients
+            if code in wanted:
+                self.prev[code][(sex_, group)] = patients
         self.exam_findings: dict[str, list[str]] = defaultdict(list)
         for fid, f in self.findings.items():
             if f["exam_id"]:
@@ -93,11 +110,30 @@ class MedDB:
             conn = sqlite3.connect(f"file:{Path(path)}?mode=ro", uri=True)
         else:
             conn = sqlite3.connect(":memory:")
-            build(conn, load_sources())
+            build(conn, load_sources(with_kcd=False))
         try:
-            return cls(conn)
+            return cls(conn, path)
         finally:
             conn.close()
+
+    def _load_kcd(self) -> None:
+        if self._kcd_loaded:
+            return
+        self._kcd_loaded = True
+        if self._path is not None:
+            conn = sqlite3.connect(f"file:{Path(self._path)}?mode=ro", uri=True)
+            try:
+                rows = conn.execute("SELECT code, ko, en, main FROM kcd").fetchall()
+            finally:
+                conn.close()
+        else:
+            rows = [(r[0], r[1], r[2], int(r[3])) for r in _read_tsv_gz(DATA_DIR / "kcd.tsv.gz")]
+        for code, ko, en, main in sorted(rows, key=lambda r: (-r[3], len(r[0]))):
+            if main:
+                self.kcd_names.setdefault(code, ko)
+            for name in (ko, en):
+                if name:
+                    self.kcd_by_name.setdefault(norm(name), code)
 
     # ---- 내부 도우미 -------------------------------------------------------
     @staticmethod
@@ -110,6 +146,31 @@ class MedDB:
             if row.get("age_max") is not None and age > row["age_max"]:
                 return False
         return True
+
+    def prior(self, disease_id: str, age: int | None = None, sex: str | None = None) -> float | None:
+        """건강보험 진료 통계로 본 사전확률 점수. 그 성·연령 칸의 전체 환자 중 이 질환 KCD 3자리가 차지하는
+        비중의 상용로그를 0.1% = 0점으로 맞춘 값(-2 ~ 1.5). 통계가 없으면 None.
+        KCD 3자리 단위라 같은 코드를 쓰는 질환끼리는 구분하지 못하고, 외래 만성 질환이 높게 나온다."""
+        code = (self.diseases[disease_id]["kcd"] or "")[:3]
+        if not self.prev_total or code not in self.prev:
+            return None
+        group = None if age is None else min(int(age) // 5 + 1, 18)
+        cells = [c for c in self.prev_total if (sex is None or c[0] == sex) and (group is None or c[1] == group)]
+        total = sum(self.prev_total[c] for c in cells)
+        if not total:
+            return None
+        share = sum(self.prev[code].get(c, 0) for c in cells) / total
+        z = PREV_CLIP[0] if share <= 0 else math.log10(share) + PREV_ZERO
+        return round(max(PREV_CLIP[0], min(PREV_CLIP[1], z)), 2)
+
+    def kcd_lookup(self, text: str) -> dict | None:
+        """상병마스터에서 이름이 정확히 같은(공백·문장부호 무시) 항목을 찾는다."""
+        self._load_kcd()
+        code = self.kcd_by_name.get(norm(text))
+        if code is None:
+            return None
+        dotted = code if len(code) <= 3 else f"{code[:3]}.{code[3:]}"
+        return {"id": None, "ko": self.kcd_names.get(code, text), "kcd": dotted}
 
     def _known(self, present: Iterable[str], absent: Iterable[str], exams_done: Iterable[str]) -> set[str]:
         known = set(present) | set(absent)
@@ -161,7 +222,8 @@ class MedDB:
         return {"present": present, "absent": [f for f in absent if f not in present]}
 
     def normalize_diagnosis(self, text: str) -> dict | None:
-        """진단명 문자열을 KB 질환으로 맞춘다. 정확히 같은 이름 → 포함 관계(긴 이름 우선) 순."""
+        """진단명 문자열을 KB 질환으로 맞춘다. 정확히 같은 이름 → 포함 관계(긴 이름 우선) 순.
+        KB에 없으면 상병마스터에서 같은 이름을 찾아 {id: None, ko, kcd}를 돌려준다."""
         t = norm(text)
         if not t:
             return None
@@ -170,7 +232,7 @@ class MedDB:
             return self.disease(exact[0])
         partial = [(len(alias), did) for alias, did in self.aliases["disease"]
                    if len(alias) >= 2 and (alias in t or t in alias)]
-        return self.disease(max(partial)[1]) if partial else None
+        return self.disease(max(partial)[1]) if partial else self.kcd_lookup(text)
 
     def vital_flags(self, vitals: dict) -> list[str]:
         """활력징후에서 바로 알 수 있는 소견. 키: SBP, DBP, HR, RR, BT, SpO2 또는 BP="150/90". 성인 기준."""
@@ -199,6 +261,7 @@ class MedDB:
         for role in ("key", "support", "against"):
             d[role] = [f for f, r in roles.items() if r == role]
         d["rule_out"] = list(self.rule_out.get(disease_id, []))
+        d["sources"] = dict(self.sources[disease_id])
         d["plan"] = {k: list(v) for k, v in self.plans[disease_id].items()}
         return d
 
@@ -240,13 +303,14 @@ class MedDB:
             if sex and d["sex"] and d["sex"] != sex:
                 continue
             roles = self.roles[did]
-            score = W_FREQ * d["freq"]
+            prior = self.prior(did, age, sex)
+            score = W_FREQ * d["freq"] + W_PREV * (prior or 0.0)
             score += sum(W_PRESENT[roles[f]] for f in present if f in roles)
             score += sum(W_ABSENT[roles[f]] for f in absent if f in roles)
             if not self._fits(d, age, None):
                 score -= AGE_PENALTY
             rows.append({
-                "id": did, "ko": d["ko"], "kcd": d["kcd"], "score": round(score, 2),
+                "id": did, "ko": d["ko"], "kcd": d["kcd"], "score": round(score, 2), "prior": prior,
                 "red_flag": bool(d["red_flag"]), "urgency": d["urgency"],
                 "matched": [f for f in roles if f in present and roles[f] != "against"],
                 "against": [f for f in roles if (f in present and roles[f] == "against")
