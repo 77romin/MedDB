@@ -55,6 +55,8 @@ CREATE TABLE alias(kind TEXT NOT NULL, ref_id TEXT NOT NULL, text TEXT NOT NULL)
 CREATE TABLE vital_rule(finding_id TEXT NOT NULL REFERENCES finding(id), vital TEXT NOT NULL, op TEXT NOT NULL,
   value REAL NOT NULL);
 CREATE TABLE phrase(kind TEXT NOT NULL, seq INTEGER NOT NULL, text TEXT NOT NULL);
+CREATE TABLE guideline(kind TEXT NOT NULL, ref_id TEXT NOT NULL, seq INTEGER NOT NULL, file TEXT NOT NULL,
+  title TEXT NOT NULL, org TEXT, year TEXT, lang TEXT, type TEXT, license TEXT NOT NULL);
 CREATE TABLE kcd(code TEXT NOT NULL, ko TEXT NOT NULL, en TEXT NOT NULL, main INTEGER NOT NULL);
 CREATE TABLE hira(code TEXT NOT NULL, sex TEXT NOT NULL, age_group INTEGER NOT NULL, patients INTEGER NOT NULL);
 CREATE INDEX idx_kcd_code ON kcd(code);
@@ -73,6 +75,7 @@ def _read_tsv_gz(path: Path) -> list[list[str]]:
 def load_sources(data_dir: Path | str = DATA_DIR, with_kcd: bool = True) -> dict:
     """팀이 쓴 JSON 여섯 개와, 있으면 외부 자료에서 만든 파일(tools/ 참고)을 읽는다.
       ext_ddxplus.json  DDXPlus 질환–소견 연결
+      ext_guidelines.json  대회 진료지침 코퍼스 중 주호소·질환에 해당하는 문서의 서지 정보
       kcd.tsv.gz        상병마스터 (코드, 한글명, 영문명, 대표 여부)
       hira_prev.tsv.gz  KCD 3자리 × 성 × 연령군 환자수
     """
@@ -80,6 +83,8 @@ def load_sources(data_dir: Path | str = DATA_DIR, with_kcd: bool = True) -> dict
     data = {name: json.loads((data_dir / f"{name}.json").read_text(encoding="utf-8")) for name in FILES}
     ext = data_dir / "ext_ddxplus.json"
     data["ext_ddxplus"] = json.loads(ext.read_text(encoding="utf-8")) if ext.exists() else {"meta": {}, "links": {}}
+    ext = data_dir / "ext_guidelines.json"
+    data["ext_guidelines"] = json.loads(ext.read_text(encoding="utf-8")) if ext.exists() else {}
     data["kcd"] = _read_tsv_gz(data_dir / "kcd.tsv.gz") if with_kcd else []
     data["hira"] = _read_tsv_gz(data_dir / "hira_prev.tsv.gz")
     return data
@@ -223,6 +228,15 @@ def validate(data: dict) -> tuple[list[str], list[str]]:
                 errors.append(f"ext_ddxplus.{did}: 없는 소견 '{fid}'")
             used.add(fid)
 
+    complaint_ids = {c["id"] for c in data["complaints"]}
+    for group, known in (("diseases", disease_ids), ("complaints", complaint_ids)):
+        for ref, docs in data.get("ext_guidelines", {}).get(group, {}).items():
+            if ref not in known:
+                errors.append(f"ext_guidelines.{group}: 없는 항목 '{ref}'")
+            for doc in docs:
+                if not doc.get("file") or not doc.get("license"):
+                    errors.append(f"ext_guidelines.{group}.{ref}: 파일명·라이선스가 빠진 문서")
+
     common = data["common"]
     for item in common.get("background", []):
         if item not in slot_ids and item not in finding_ids:
@@ -312,6 +326,12 @@ def build(conn: sqlite3.Connection, data: dict) -> None:
     for kind, texts in common.get("phrases", {}).items():
         for seq, text in enumerate(texts):
             conn.execute("INSERT INTO phrase VALUES(?,?,?)", (kind, seq, text))
+    for group, kind in (("complaints", "complaint"), ("diseases", "disease")):
+        for ref, docs in data.get("ext_guidelines", {}).get(group, {}).items():
+            for seq, doc in enumerate(docs):
+                conn.execute("INSERT INTO guideline VALUES(?,?,?,?,?,?,?,?,?,?)",
+                             (kind, ref, seq, doc["file"], doc["title"], doc.get("org"), doc.get("year"),
+                              doc.get("lang"), doc.get("type"), doc["license"]))
     conn.executemany("INSERT INTO kcd VALUES(?,?,?,?)", [(r[0], r[1], r[2], int(r[3])) for r in data.get("kcd", [])])
     conn.executemany("INSERT INTO hira VALUES(?,?,?,?)",
                      [(r[0], r[1], int(r[2]), int(r[3])) for r in data.get("hira", [])])

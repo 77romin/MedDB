@@ -156,6 +156,45 @@ class Query(unittest.TestCase):
         self.assertIn("ddxplus", set(sources.values()))        # DDXPlus에만 있던 연결
         self.assertEqual(self.db.roles["uri"]["purulent_sputum"], "against")  # 충돌 시 팀 판단 유지
 
+    def test_record_has_official_fields_and_only_confirmed_facts(self):
+        from meddb.api import NOTE_FIELDS
+        note = self.db.record(
+            "chest_pain", present=["pressure_chest_pain", "smoker"], absent=["dyspnea"],
+            answers={"onset": "2시간 전"}, turns={"ex_lung_ausc": 7},
+            vitals={"BP": "150/90", "HR": 102}, exam_results={"ex_lung_ausc": "양측 깨끗함"})
+        self.assertEqual({k: tuple(v) for k, v in note.items()}, NOTE_FIELDS)
+        self.assertIn("발생 시점: 2시간 전", note["S"]["hpi"])
+        self.assertIn("악화 요인 ( )", note["S"]["hpi"])           # 묻지 않은 슬롯
+        self.assertIn("호흡곤란 (-)", note["S"]["ros"])            # 물어서 없다고 확인
+        self.assertIn("식은땀 ( )", note["S"]["ros"])              # 필수 문진인데 아직 안 물음
+        self.assertNotIn("방사통", note["S"]["ros"])               # 넘겨받지 않은 소견은 적지 않는다
+        self.assertIn("흡연 (+)", note["S"]["sh"])
+        self.assertIn("폐 청진: 양측 깨끗함 (턴 7)", note["O"]["exam"])
+        self.assertEqual(note["O"]["tests"], "")
+
+    def test_assessment_plan_separates_absent_from_unchecked(self):
+        ap = self.db.assessment_plan("chest_pain", "mi", present=["pressure_chest_pain"],
+                                     absent=["tearing_pain_back"], turns={"pressure_chest_pain": 4}, age=58, sex="M")
+        self.assertIn("압박성 흉통 (턴 4)", ap["A"]["evidence"])
+        self.assertIn("r/o 대동맥 박리 : 찢어지는 듯한 등 방사통 없음", ap["A"]["differential"])
+        self.assertIn("r/o 기흉 : 한쪽 호흡음 감소 미확인", ap["A"]["differential"])
+        self.assertTrue(ap["P"]["tests"] and ap["P"]["disposition"])
+
+    def test_guideline_documents(self):
+        docs = self.db.guidelines("chest_pain")
+        self.assertEqual(docs[0]["title"], "흉통")
+        self.assertTrue(all(d["license"] and d["file"] for d in docs))
+        self.assertTrue(all(self.db.guidelines(d) for d in self.db.diseases))
+        self.assertEqual([d["lang"] for d in self.db.guidelines("mi", lang="ko")], ["ko"])
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / docs[0]["file"]
+            path.parent.mkdir(parents=True)
+            path.write_text("---\ntitle: 흉통\n---\n본문", encoding="utf-8")
+            found = self.db.guidelines("chest_pain", root=tmp)[0]
+            self.assertEqual(found["path"], str(path))
+            self.assertEqual(self.db.read_guideline(found["path"], max_chars=7), "---\ntit")
+        self.assertIsNone(self.db.read_guideline("/no/such/file.md"))
+
     def test_plan_and_rubric(self):
         plan = self.db.plan("mi")
         for key in ("test", "treat", "edu", "explain", "unsafe", "dispo"):

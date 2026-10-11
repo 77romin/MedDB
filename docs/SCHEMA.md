@@ -85,6 +85,7 @@
 | 파일 | 내용 | 만드는 도구 |
 |---|---|---|
 | `ext_ddxplus.json` | `links`: 질환 id → DDXPlus가 그 질환에 연결한 소견 id 목록 | `tools/import_ddxplus.py` + `tools/ddxplus_map.json` |
+| `ext_guidelines.json` | `complaints`·`diseases`: id → 진료지침 문서의 서지 정보(파일명, 제목, 발행기관, 연도, 언어, 유형, 라이선스) | `tools/map_guidelines.py` + `tools/guideline_terms.json` |
 | `kcd.tsv.gz` | 코드, 한글명, 영문명, 대표 여부(1 = 그 코드의 공식 이름, 0 = 포함 용어) | `tools/import_hira.py --kcd` |
 | `hira_prev.tsv.gz` | KCD 3자리, 성별(M/F), 연령군(1~18, 5세 단위, 18 = 85세 이상), 환자수 | `tools/import_hira.py --stats` |
 
@@ -100,6 +101,7 @@ DDXPlus 연결을 합치는 규칙:
 |---|---|
 | `slot`, `exam`, `finding`, `disease`, `complaint` | 위 항목 |
 | `disease_finding(disease_id, finding_id, role, rule_out, source)` | 질환–소견 연결. `source`는 `team` · `team+ddxplus` · `ddxplus` |
+| `guideline(kind, ref_id, seq, file, title, org, year, lang, type, license)` | 진료지침 문서 연결 |
 | `kcd(code, ko, en, main)` | 상병마스터 |
 | `hira(code, sex, age_group, patients)` | 진료 통계 |
 | `disease_plan(disease_id, kind, seq, text)` | 계획 |
@@ -108,6 +110,22 @@ DDXPlus 연결을 합치는 규칙:
 | `background_item(kind, ref_id, seq)` | 공통 병력 항목 |
 | `alias(kind, ref_id, text)` | 표현 사전 |
 | `vital_rule`, `phrase`, `meta` | |
+
+## 공식 기록 칸과의 대응
+
+| KB의 항목 | 공식 칸 |
+|---|---|
+| 주호소 | `S.cc` |
+| 슬롯 `S.현병력`, 병력 소견 중 `soap`이 `S.현병력`인 것 | `S.hpi` |
+| 슬롯·병력 소견 `S.과거력` · `S.약물` · `S.알레르기` | `S.pmh` |
+| 슬롯 `S.가족력` | `S.fh` |
+| 병력 소견 `S.사회력` | `S.sh` |
+| 증상 소견 (계통별) | `S.ros` |
+| 진찰 소견, 활력징후 | `O.exam` |
+| (예선에서는 비움) | `O.tests` |
+| 질환명, 확인된 소견, 감별 후보 | `A.diagnosis`, `A.evidence`, `A.differential` |
+| `plan.test`, `plan.treat`, `dispo` | `P.tests`, `P.treatment`, `P.disposition` |
+| `plan.edu` 중 재내원·추적 안내 / 나머지 | `P.follow_up` / `P.education` |
 
 ## 검증 규칙
 

@@ -9,6 +9,7 @@
 from __future__ import annotations
 
 import math
+import os
 import re
 import sqlite3
 from collections import defaultdict
@@ -25,6 +26,14 @@ PREV_ZERO = 3.0    # 해당 성·연령 칸에서 전체의 0.1%를 차지하면
 PREV_CLIP = (-2.0, 1.5)
 AGE_PENALTY = 3.0
 STAGE_ORDER = ("hpi", "red_flag", "core", "exam", "discriminate", "background")
+
+# 공식 초진 기록(SOAP)의 칸. 칸이 빠지거나 다른 칸이 있으면 제출이 거절된다(INVALID_RECORD_FIELDS).
+NOTE_FIELDS = {"S": ("cc", "hpi", "pmh", "fh", "sh", "ros"), "O": ("exam", "tests"),
+               "A": ("diagnosis", "evidence", "differential"),
+               "P": ("tests", "treatment", "disposition", "follow_up", "education")}
+_SOAP_TO_FIELD = {"S.현병력": "hpi", "S.과거력": "pmh", "S.약물": "pmh", "S.알레르기": "pmh", "S.가족력": "fh",
+                  "S.사회력": "sh", "O.진찰": "exam", "O.활력징후": "exam"}
+_VITAL_ORDER = ("BP", "SBP", "DBP", "HR", "RR", "BT", "SpO2")
 
 _NEG = ("없", "않", "아니", "안 ", "못 ", "모르")
 _CLAUSE = re.compile(r"[.!?,\n]|(?<=[가-힣])(?:고|며|면서|지만|는데|으나)\s")
@@ -97,6 +106,9 @@ class MedDB:
             self.prev_total[(sex_, group)] += patients
             if code in wanted:
                 self.prev[code][(sex_, group)] = patients
+        self.guideline_docs: dict[str, list[dict]] = defaultdict(list)
+        for r in q("SELECT * FROM guideline ORDER BY kind, ref_id, seq"):
+            self.guideline_docs[r["ref_id"]].append({k: r[k] for k in ("file", "title", "org", "year", "lang", "type", "license")})
         self.exam_findings: dict[str, list[str]] = defaultdict(list)
         for fid, f in self.findings.items():
             if f["exam_id"]:
@@ -265,8 +277,21 @@ class MedDB:
         d["plan"] = {k: list(v) for k, v in self.plans[disease_id].items()}
         return d
 
+    def note_field(self, item_id: str) -> str:
+        """슬롯·소견·진찰이 공식 기록의 어느 칸에 들어가는지 ("S.hpi", "S.ros", "O.exam" 등).
+        증상은 계통 문진(ros), 병력·약물·알레르기는 pmh, 흡연·음주 등은 sh, 진찰 소견과 활력징후는 exam."""
+        if item_id in self.exams:
+            return "O.exam"
+        if item_id in self.slots:
+            return "S." + _SOAP_TO_FIELD[self.slots[item_id]["soap"]]
+        f = self.findings[item_id]
+        if f["kind"] == "symptom":
+            return "S.ros"
+        field = _SOAP_TO_FIELD[f["soap"]]
+        return ("O." if field == "exam" else "S.") + field
+
     def describe(self, ids: Iterable[str]) -> list[dict]:
-        """슬롯·소견·진찰 id의 한국어 이름과 SOAP 위치. SOAP의 S·O를 코드로 조립할 때 쓴다."""
+        """슬롯·소견·진찰 id의 한국어 이름과 기록 위치. note는 공식 기록의 칸."""
         out = []
         for i in ids:
             if i in self.slots:
@@ -277,7 +302,138 @@ class MedDB:
                 out.append({"id": i, "ko": f["ko"], "kind": f["kind"], "soap": f["soap"], "sys": f["sys"]})
             elif i in self.exams:
                 out.append({"id": i, "ko": self.exams[i]["ko"], "kind": "exam", "soap": "O.진찰", "sys": None})
+            else:
+                continue
+            out[-1]["note"] = self.note_field(i)
         return out
+
+    # ---- 초진 기록(SOAP) -----------------------------------------------------
+    @staticmethod
+    def empty_note() -> dict[str, dict[str, str]]:
+        """공식 칸을 모두 갖춘 빈 기록. 제출 형식(중첩 여부·키 이름)은 nova_sdk로 확인할 것."""
+        return {section: {field: "" for field in fields} for section, fields in NOTE_FIELDS.items()}
+
+    def record(self, complaint: str, present: Iterable[str] = (), absent: Iterable[str] = (),
+               answers: dict[str, str] | None = None, turns: dict[str, int] | None = None,
+               vitals: dict | None = None, exam_results: dict[str, str] | None = None) -> dict[str, dict[str, str]]:
+        """확인한 사실만으로 S·O 칸을 채운 기록 초안.
+          answers       슬롯 id → 환자가 한 답 (예: {"onset": "2시간 전"})
+          turns         슬롯·소견·진찰 id → 답을 받은 턴 번호
+          exam_results  진찰 id → 받은 결과 문장 (있으면 그 문장을 그대로 적는다)
+        표기: 있음 (+), 없음 (-), 묻지 않음 ( ). 넘겨받지 않은 것은 적지 않으므로,
+        물어본 것을 present/absent/answers에 빠짐없이 넣어야 기록에 남는다."""
+        present, absent = list(dict.fromkeys(present)), list(dict.fromkeys(absent))
+        answers, turns, exam_results = answers or {}, turns or {}, exam_results or {}
+        known = {**{f: "+" for f in present}, **{f: "-" for f in absent if f not in present}}
+        items = self.items[complaint]
+        note = self.empty_note()
+
+        def turn(i: str) -> str:
+            return f" (턴 {turns[i]})" if i in turns else ""
+
+        def mark(fid: str) -> str:
+            return f"{self.findings[fid]['ko']} ({known.get(fid, ' ')})"
+
+        def slot_line(sid: str) -> str:
+            return f"{self.slots[sid]['ko']}: {answers[sid]}" if sid in answers else f"{self.slots[sid]['ko']} ( )"
+
+        by_field: dict[str, list[str]] = defaultdict(list)
+        for fid in known:
+            if fid in self.findings and self.findings[fid]["kind"] in ("history",):
+                by_field[self.note_field(fid).split(".")[1]].append(mark(fid))
+        background = [ref for _k, ref in self.background]
+        for ref in background:  # 공통 병력 중 묻지 않은 것은 빈 괄호로 남긴다
+            if ref in self.findings and ref not in known:
+                by_field[self.note_field(ref).split(".")[1]].append(mark(ref))
+
+        note["S"]["cc"] = self.complaints[complaint]["ko"]
+        hpi = [slot_line(s) for s in items["slot"] if self.note_field(s) == "S.hpi"]
+        positives = [self.findings[f]["ko"] for f in present if self.findings[f]["kind"] == "symptom"]
+        if positives:
+            hpi.append("동반 증상: " + ", ".join(positives))
+        note["S"]["hpi"] = "\n".join(hpi + by_field["hpi"])
+        pmh_slots = [s for s in dict.fromkeys(list(answers) + background) if s in self.slots and self.note_field(s) == "S.pmh"]
+        note["S"]["pmh"] = "\n".join([slot_line(s) for s in pmh_slots] + by_field["pmh"])
+        fh_slots = [s for s in dict.fromkeys(list(answers) + background) if s in self.slots and self.note_field(s) == "S.fh"]
+        note["S"]["fh"] = "\n".join([slot_line(s) for s in fh_slots] + by_field["fh"])
+        note["S"]["sh"] = "\n".join(by_field["sh"])
+        ros: dict[str, list[str]] = defaultdict(list)
+        symptoms = [f for f in known if self.findings[f]["kind"] == "symptom"]
+        symptoms += [f for f in items["finding"] if f not in known and self.findings[f]["kind"] == "symptom"]
+        for fid in symptoms:
+            ros[self.findings[fid]["sys"]].append(mark(fid))
+        note["S"]["ros"] = "\n".join(f"{system}: " + ", ".join(marks) for system, marks in ros.items())
+
+        exam: list[str] = []
+        if vitals:
+            shown = [f"{k} {vitals[k]}" for k in _VITAL_ORDER if k in vitals and not (k in ("SBP", "DBP") and "BP" in vitals)]
+            exam.append("활력징후(내원 시): " + ", ".join(shown))
+        for eid, text in exam_results.items():
+            exam.append(f"{self.exams[eid]['ko']}: {text}{turn(eid)}")
+        for fid in known:  # 결과 문장을 따로 받지 않은 진찰 소견
+            f = self.findings[fid]
+            if f["kind"] == "sign" and f["exam_id"] not in exam_results:
+                exam.append(f"{mark(fid)}{turn(fid) or turn(f['exam_id'])}")
+        note["O"]["exam"] = "\n".join(exam)
+        return note
+
+    def assessment_plan(self, complaint: str, disease_id: str, present: Iterable[str] = (),
+                        absent: Iterable[str] = (), turns: dict[str, int] | None = None,
+                        age: int | None = None, sex: str | None = None, differentials: int = 3) -> dict[str, dict[str, str]]:
+        """A·P 칸의 초안. 근거에는 확인한 소견만, 감별진단에는 무엇이 없었고 무엇을 확인하지 못했는지 적는다.
+        P는 KB의 계획이므로 '앞으로 할 일'이다. 이미 한 것처럼 고쳐 쓰지 말 것."""
+        present, absent, turns = set(present), set(absent), turns or {}
+        roles = self.roles[disease_id]
+        name = lambda f: self.findings[f]["ko"] + (f" (턴 {turns[f]})" if f in turns else "")  # noqa: E731
+        support = [name(f) for f in roles if f in present and roles[f] != "against"]
+        lines = [f"#1. {self.diseases[disease_id]['ko']}", "- 근거 : " + (", ".join(support) if support else "확인된 소견 부족")]
+        negatives = [self.findings[f]["ko"] for f in roles if f in absent and roles[f] == "key"]
+        if negatives:
+            lines.append("- 맞지 않는 점 : " + ", ".join(negatives) + " 없음")
+        others = [c for c in self.candidates(complaint, present, absent, age, sex, k=differentials + 1) if c["id"] != disease_id]
+        flagged = [d for d in self.complaint_diseases[complaint]
+                   if self.diseases[d]["red_flag"] and d != disease_id and self._fits(self.diseases[d], age, sex)]
+        ddx: list[str] = []
+        for did in list(dict.fromkeys([c["id"] for c in others[:differentials]] + flagged)):
+            r = self.roles[did]
+            checks = self.rule_out[did] or [f for f in r if r[f] == "key"]
+            none = [self.findings[f]["ko"] for f in checks if f in absent]
+            unknown = [self.findings[f]["ko"] for f in checks if f not in absent and f not in present]
+            found = [self.findings[f]["ko"] for f in checks if f in present]
+            parts = ([", ".join(found) + " 있음"] if found else []) + ([", ".join(none) + " 없음"] if none else []) \
+                + ([", ".join(unknown) + " 미확인"] if unknown else [])
+            ddx.append(f"r/o {self.diseases[did]['ko']} : " + "; ".join(parts))
+        plan = self.plan(disease_id)
+        follow = [t for t in plan.get("edu", []) if "내원" in t or "추적" in t or "알리" in t]
+        teach = [t for t in plan.get("edu", []) if t not in follow]
+        note = {"A": {"diagnosis": self.diseases[disease_id]["ko"], "evidence": "\n".join(lines),
+                      "differential": "\n".join(ddx)},
+                "P": {"tests": "\n".join(plan.get("test", [])), "treatment": "\n".join(plan.get("treat", [])),
+                      "disposition": plan["dispo"], "follow_up": "\n".join(follow), "education": "\n".join(teach)}}
+        return note
+
+    # ---- 진료지침 문서 -------------------------------------------------------
+    def guidelines(self, item_id: str, lang: str | None = None, root: str | Path | None = None) -> list[dict]:
+        """주호소·질환에 해당하는 대회 진료지침 문서(서지 정보). 제목으로 고른 것이라 앞쪽일수록 믿을 만하다.
+        root 또는 환경변수 NOVA_GUIDELINES_DIR 아래에 파일이 있으면 path를 함께 돌려준다."""
+        base = Path(root or os.environ.get("NOVA_GUIDELINES_DIR", "") or ".")
+        out = []
+        for doc in self.guideline_docs.get(item_id, []):
+            if lang and doc["lang"] != lang:
+                continue
+            path = base / doc["file"]
+            out.append({**doc, "path": str(path) if path.is_file() else None})
+        return out
+
+    @staticmethod
+    def read_guideline(path: str | Path, max_chars: int | None = None) -> str | None:
+        """문서 본문을 읽는다(머리의 출처·라이선스 포함). 파일이 없으면 None.
+        원문을 바꾼 결과물은 배포할 수 없는 문서가 많으므로 읽은 내용은 실행 중에만 쓴다."""
+        try:
+            text = Path(path).read_text(encoding="utf-8")
+        except OSError:
+            return None
+        return text if max_chars is None else text[:max_chars]
 
     def vocabulary(self, complaint: str) -> list[dict]:
         """이 주호소에서 쓰이는 소견 목록(id·이름). LLM이 환자 답변을 소견 id로 옮길 때 선택지로 준다."""

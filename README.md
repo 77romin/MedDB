@@ -9,7 +9,7 @@ N.O.V.A. 2026 대화형 의료 진단 AI 에이전트 대회용 **주호소 중�
 - 원본은 사람이 고치는 JSON(`meddb/data/`), 실행 시에는 SQLite로 적재
 - 질문 문장은 모두 30자 이하·물음표 하나, 진찰 문장은 동작 하나 — 검증기가 강제
 
-## 지금 들어 있는 것 (v0.2.0)
+## 지금 들어 있는 것 (v0.3.0)
 
 | 항목 | 수 |
 |---|---|
@@ -21,6 +21,7 @@ N.O.V.A. 2026 대화형 의료 진단 AI 에이전트 대회용 **주호소 중�
 | 질환–소견 연결 | 960 (팀 작성 652, 팀 작성 + DDXPlus 일치 179, DDXPlus에서만 129) |
 | 상병마스터 이름 | 47,640 (KCD 코드 21,299개) |
 | 진료 통계 | KCD 3자리 × 성별 × 5세 연령군 환자수 |
+| 진료지침 문서 연결 | 주호소 16개·질환 115개 모두, 문서 405개 (대회 제공 코퍼스의 서지 정보) |
 
 외부 자료는 건강보험심사평가원 상병마스터·진료 통계(공공누리 제1유형)와 DDXPlus(CC BY 4.0)입니다.
 질문 문장, 위험 질환 지정, 검사·처치 계획은 어느 자료에도 없어 팀이 직접 썼습니다.
@@ -71,7 +72,12 @@ db.plan("mi")                                      # SOAP의 P 재료와 설명�
 | `prior(disease, age, sex)` | 성·연령별 사전확률 점수 | −2 ~ 1.5, 통계가 없으면 `None` |
 | `ready(complaint, ...)` | 진단 시점 판단 | `{ready, pending, top, margin}` |
 | `plan(disease)` | SOAP P, 설명 SAY | `{test, treat, dispo, edu, explain, unsafe}` |
-| `describe(ids)` | SOAP S·O를 코드로 조립 | `[{id, ko, kind, soap, sys}]` |
+| `record(complaint, present, absent, answers, turns, vitals, exam_results)` | 공식 기록의 S·O 칸 초안 | `{S: {cc, hpi, pmh, fh, sh, ros}, O: {exam, tests}, A: {...}, P: {...}}` |
+| `assessment_plan(complaint, disease, present, absent, turns, age, sex)` | 공식 기록의 A·P 칸 초안 | `{A: {diagnosis, evidence, differential}, P: {tests, treatment, disposition, follow_up, education}}` |
+| `empty_note()` | 공식 칸을 모두 갖춘 빈 기록 | 위와 같은 구조, 값은 빈 문자열 |
+| `describe(ids)`, `note_field(id)` | 항목이 기록의 어느 칸에 들어가는지 | `[{id, ko, kind, soap, sys, note}]`, `"S.ros"` 등 |
+| `guidelines(id, lang, root)` | 주호소·질환의 대회 진료지침 문서 | `[{file, title, org, year, lang, type, license, path}]` |
+| `read_guideline(path, max_chars)` | 지침 본문 읽기 (실행 환경) | 문자열 또는 `None` |
 | `normalize_diagnosis(text)` | 진단명 → 질환·KCD (채점기) | 질환 dict. KB에 없으면 상병마스터에서 찾은 `{id: None, ko, kcd}`, 그래도 없으면 `None` |
 | `kcd_lookup(text)` | 상병마스터 이름 → KCD 코드 | `{id: None, ko, kcd}` 또는 `None` |
 | `disease(id)` | 질환 한 건 전체 | 소견별 출처(`sources`) 포함 |
@@ -94,6 +100,31 @@ db.plan("mi")                                      # SOAP의 P 재료와 설명�
 3자리 단위라 같은 코드를 쓰는 질환(예: 대동맥 박리와 복부 대동맥류 파열)은 구분하지 못하고, 외래에서 오래 다니는 만성 질환이 높게 나옵니다.
 그래서 가중치를 낮게 두고(0.5) 팀이 준 `freq`와 함께 씁니다.
 
+## 초진 기록(SOAP)
+
+`record`와 `assessment_plan`은 대회 문서의 기록 원칙에 맞춘 초안을 만듭니다.
+
+- 넘겨받은 사실만 적습니다. 있음 `(+)`, 없음 `(-)`, 필수 항목인데 묻지 않은 것은 `( )`.
+- 진찰은 받은 결과 문장을 그대로 적고 턴 번호를 붙입니다: `폐 청진: 양측 깨끗함 (턴 13)`.
+- 감별진단에는 무엇이 없었고 무엇을 확인하지 못했는지 구분해 적습니다: `r/o 대동맥 박리 : 찢어지는 듯한 등 방사통 없음`.
+- P는 KB의 계획(앞으로 할 일)입니다. 예선에는 검사가 없으므로 `O.tests`는 빈 문자열입니다.
+
+칸 이름은 대회 문서를 따랐지만, **제출할 때의 정확한 자료 형태(중첩 여부 등)는 `nova_sdk.py`로 확인해야 합니다.**
+A·P의 문장은 LLM이 다듬을 재료로 쓰는 것을 전제로 합니다.
+
+## 진료지침 문서
+
+대회가 실행 환경(`NOVA_GUIDELINES_DIR`)에 넣어 주는 진료지침 15,904개 중, 주호소·질환에 해당하는 문서를 목록의 제목으로 골라 연결했습니다.
+
+```python
+for doc in db.guidelines("chest_pain"):          # 앞쪽일수록 제목이 정확히 맞는 문서
+    text = db.read_guideline(doc["path"], max_chars=4000) if doc["path"] else None
+```
+
+- KB에는 파일명·제목·발행기관·라이선스 같은 서지 정보만 있습니다. 본문은 실행 중에 읽습니다.
+- 제목만 보고 골랐으므로 본문이 맞는지는 확인되지 않았습니다. 뒤쪽 문서일수록 빗나갈 수 있습니다.
+- 연결된 문서의 대부분이 변경 금지 조건(CC BY-NC-ND, 공공누리 제4유형)입니다. 본문을 요약·번역해 저장소에 넣지 않습니다.
+
 ## 외부 자료 갱신
 
 원본 파일은 저장소에 넣지 않습니다. 받아서 아래 도구로 `meddb/data/`의 가공 파일을 다시 만듭니다.
@@ -101,7 +132,10 @@ db.plan("mi")                                      # SOAP의 P 재료와 설명�
 ```bash
 python tools/import_hira.py --kcd <상병마스터.csv> --stats <주부상병 3단 성별 연령군별 진료 통계.csv>
 python tools/import_ddxplus.py --conditions release_conditions.json --evidences release_evidences.json
+python tools/map_guidelines.py --catalog <진료지침 코퍼스의 catalog.csv>
 ```
+
+진료지침 검색어와 제외어는 `tools/guideline_terms.json`에 있습니다.
 
 DDXPlus 문진 항목과 KB 소견의 대응은 `tools/ddxplus_map.json`에 있습니다. 팀이 반대 소견으로 둔 연결과 충돌하면 팀 판단을 유지하고 도구가 충돌 목록을 출력합니다.
 
