@@ -9,7 +9,7 @@ N.O.V.A. 2026 대화형 의료 진단 AI 에이전트 대회용 **주호소 중�
 - 원본은 사람이 고치는 JSON(`meddb/data/`), 실행 시에는 SQLite로 적재
 - 질문 문장은 모두 30자 이하·물음표 하나, 진찰 문장은 동작 하나 — 검증기가 강제
 
-## 지금 들어 있는 것 (v0.3.0)
+## 지금 들어 있는 것 (v0.3.1)
 
 | 항목 | 수 |
 |---|---|
@@ -73,8 +73,10 @@ db.plan("mi")                                      # SOAP의 P 재료와 설명�
 | `ready(complaint, ...)` | 진단 시점 판단 | `{ready, pending, top, margin}` |
 | `plan(disease)` | SOAP P, 설명 SAY | `{test, treat, dispo, edu, explain, unsafe}` |
 | `record(complaint, present, absent, answers, turns, vitals, exam_results)` | 공식 기록의 S·O 칸 초안 | `{S: {cc, hpi, pmh, fh, sh, ros}, O: {exam, tests}, A: {...}, P: {...}}` |
-| `assessment_plan(complaint, disease, present, absent, turns, age, sex)` | 공식 기록의 A·P 칸 초안 | `{A: {diagnosis, evidence, differential}, P: {tests, treatment, disposition, follow_up, education}}` |
-| `empty_note()` | 공식 칸을 모두 갖춘 빈 기록 | 위와 같은 구조, 값은 빈 문자열 |
+| `assessment_plan(complaint, disease, present, absent, turns, age, sex)` | 공식 기록의 A·P 칸 초안과 주진단 | `{A: {evidence, differential}, P: {tests, treatment, disposition, follow_up, education}, diagnosis}` |
+| `build_note(record, assessment)` | 위 둘을 합쳐 제출할 값으로 | `(note, diagnosis)` → `client.diagnose(note=note, diagnosis=diagnosis)` |
+| `empty_note()` | 공식 칸을 모두 갖춘 빈 기록 | `nova_sdk.empty_record()`와 같은 구조 |
+| `parse_vitals(vitals)` | 활력징후 문자열·dict를 표준 키로 | `{BP, SBP, DBP, HR, RR, BT, SpO2}` |
 | `describe(ids)`, `note_field(id)` | 항목이 기록의 어느 칸에 들어가는지 | `[{id, ko, kind, soap, sys, note}]`, `"S.ros"` 등 |
 | `guidelines(id, lang, root)` | 주호소·질환의 대회 진료지침 문서 | `[{file, title, org, year, lang, type, license, path}]` |
 | `read_guideline(path, max_chars)` | 지침 본문 읽기 (실행 환경) | 문자열 또는 `None` |
@@ -109,8 +111,27 @@ db.plan("mi")                                      # SOAP의 P 재료와 설명�
 - 감별진단에는 무엇이 없었고 무엇을 확인하지 못했는지 구분해 적습니다: `r/o 대동맥 박리 : 찢어지는 듯한 등 방사통 없음`.
 - P는 KB의 계획(앞으로 할 일)입니다. 예선에는 검사가 없으므로 `O.tests`는 빈 문자열입니다.
 
-칸 이름은 대회 문서를 따랐지만, **제출할 때의 정확한 자료 형태(중첩 여부 등)는 `nova_sdk.py`로 확인해야 합니다.**
-A·P의 문장은 LLM이 다듬을 재료로 쓰는 것을 전제로 합니다.
+칸 구성은 `nova_sdk` 1.0.0의 `RECORD_FIELDS`와 같고, `build_note`의 결과가 `Client.diagnose`의 형식 검사를 통과하는 것을 확인했습니다.
+주진단은 기록 안이 아니라 `diagnose`의 별도 인자입니다. A·P의 문장은 LLM이 다듬을 재료로 쓰는 것을 전제로 합니다.
+
+## 대회 SDK에 붙이기
+
+`examples/consult_skeleton.py`가 `prepare()` / `consult(client, state)` 형태의 연동 예시입니다.
+
+```python
+from nova_sdk import run_agent
+from examples.consult_skeleton import prepare, consult
+run_agent(prepare, consult)
+```
+
+- `prepare()`에서 `MedDB.open()`을 부릅니다. 파일을 쓰지 않으므로 읽기 전용 실행 환경에서도 열립니다.
+- `session["initial"]["opening"]`으로 주호소를 찾고, `session["initial"]["vital_signs"]`를 `vital_flags`에 넘깁니다.
+- `client.say()`의 답은 `reply["content"]`, `client.exam()`의 결과는 `reply["result"]`입니다.
+- 예선은 증례마다 `client.chat()`을 1회 이상 불러야 합니다(없으면 0점). 예시는 주호소 확인에 한 번 씁니다.
+- 뼈대일 뿐입니다. 프롬프트, 오류 재시도, 시간 관리, 감별 질문, 문장 다듬기는 코어 에이전트 몫입니다.
+
+아직 확인하지 못한 것: `vital_signs`의 실제 형식(문자열과 dict를 모두 받게 해 두었습니다), KB의 진찰 문장이
+`EXAM_NOT_RECOGNIZED` 없이 받아들여지는지. 둘 다 공개 샘플을 한 번 돌려 봐야 압니다.
 
 ## 진료지침 문서
 

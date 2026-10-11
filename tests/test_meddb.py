@@ -1,4 +1,5 @@
 """python -m unittest discover -s tests"""
+import json
 import sqlite3
 import tempfile
 import unittest
@@ -163,6 +164,7 @@ class Query(unittest.TestCase):
             answers={"onset": "2시간 전"}, turns={"ex_lung_ausc": 7},
             vitals={"BP": "150/90", "HR": 102}, exam_results={"ex_lung_ausc": "양측 깨끗함"})
         self.assertEqual({k: tuple(v) for k, v in note.items()}, NOTE_FIELDS)
+        self.assertEqual(note["S"]["cc"], "C.C : 흉통 / Onset : 2시간 전")
         self.assertIn("발생 시점: 2시간 전", note["S"]["hpi"])
         self.assertIn("악화 요인 ( )", note["S"]["hpi"])           # 묻지 않은 슬롯
         self.assertIn("호흡곤란 (-)", note["S"]["ros"])            # 물어서 없다고 확인
@@ -179,6 +181,28 @@ class Query(unittest.TestCase):
         self.assertIn("r/o 대동맥 박리 : 찢어지는 듯한 등 방사통 없음", ap["A"]["differential"])
         self.assertIn("r/o 기흉 : 한쪽 호흡음 감소 미확인", ap["A"]["differential"])
         self.assertTrue(ap["P"]["tests"] and ap["P"]["disposition"])
+        self.assertEqual(ap["diagnosis"], "급성 심근경색")
+
+    def test_build_note_passes_the_sdk_check(self):
+        # nova_sdk 1.0.0의 RECORD_FIELDS와 Client.diagnose의 검사를 그대로 옮긴 것
+        sdk_fields = {"S": ("cc", "hpi", "pmh", "fh", "sh", "ros"), "O": ("exam", "tests"),
+                      "A": ("evidence", "differential"),
+                      "P": ("tests", "treatment", "disposition", "follow_up", "education")}
+        record = self.db.record("chest_pain", present=["pressure_chest_pain"], answers={"onset": "2시간 전"})
+        note, diagnosis = self.db.build_note(record, self.db.assessment_plan("chest_pain", "mi", ["pressure_chest_pain"]))
+        self.assertTrue(isinstance(note, dict) and set(note) == set(sdk_fields))
+        for section, fields in sdk_fields.items():
+            self.assertEqual(set(note[section]), set(fields))
+            self.assertTrue(all(isinstance(v, str) for v in note[section].values()))
+        self.assertEqual(diagnosis, "급성 심근경색")
+        self.assertLess(len(json.dumps(note, ensure_ascii=False).encode("utf-8")), 100_000)
+
+    def test_vitals_accept_text_and_loose_keys(self):
+        from meddb import parse_vitals
+        self.assertEqual(parse_vitals("BP 150/90, HR 102, RR 20, BT 36.8, SpO2 96%")["SBP"], 150.0)
+        self.assertEqual(self.db.vital_flags("혈압 85/50 mmHg, 맥박 118회, 체온 38.4"), ["fever", "tachycardia", "hypotension"])
+        self.assertEqual(self.db.vital_flags({"bp": "150/90", "hr": 102}), ["tachycardia"])
+        self.assertEqual(self.db.vital_flags(None), [])
 
     def test_guideline_documents(self):
         docs = self.db.guidelines("chest_pain")
@@ -207,3 +231,54 @@ class Query(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class FakeClient:
+    """nova_sdk.Client의 응답 모양(session/say/exam/chat/diagnose)만 흉내 낸 가짜. 환자는 정해진 말만 한다."""
+
+    def __init__(self, opening, vitals, yes=()):
+        self.opening, self.vitals, self.yes = opening, vitals, yes
+        self.log, self.chats, self.submitted, self.turns = [], 0, None, 50
+
+    def session(self):
+        return {"initial": {"opening": self.opening, "vital_signs": self.vitals}, "turns_remaining": self.turns}
+
+    def say(self, content):
+        assert 0 < len(content) <= 30, content
+        self.turns -= 1
+        self.log.append(("SAY", content))
+        answer = "네, 그래요." if any(k in content for k in self.yes) else "아니요, 없어요."
+        return {"content": answer, "turns_remaining": self.turns}
+
+    def exam(self, content):
+        assert 0 < len(content) <= 30, content
+        self.turns -= 1
+        self.log.append(("EXAM", content))
+        return {"result": "특이 소견 없음", "turns_remaining": self.turns}
+
+    def chat(self, messages, max_tokens=2048):
+        self.chats += 1
+        return {"choices": [{"message": {"content": "chest_pain"}}]}
+
+    def diagnose(self, note, diagnosis):
+        self.submitted = (note, diagnosis)
+        return {"ok": True}
+
+
+class Integration(unittest.TestCase):
+    def test_skeleton_runs_a_case_end_to_end(self):
+        from examples.consult_skeleton import consult, prepare
+        from meddb import NOTE_FIELDS
+        client = FakeClient("58세 남자 김철수입니다. 가슴이 너무 아파서 왔어요.", "BP 150/90, HR 102, RR 20, BT 36.8, SpO2 96",
+                            yes=("누르거나", "팔이나 턱", "식은땀", "담배"))
+        consult(client, prepare())
+        note, diagnosis = client.submitted
+        self.assertEqual(diagnosis, "급성 심근경색")
+        self.assertEqual({k: tuple(v) for k, v in note.items()}, NOTE_FIELDS)
+        self.assertGreaterEqual(client.chats, 1)                # 예선: 증례마다 모델 호출 1회 이상
+        self.assertLessEqual(len(client.log), 26)
+        self.assertEqual(len(client.log), len(set(client.log)))  # 같은 말을 두 번 하지 않는다
+        self.assertIn("팔·턱 방사통 (+)", note["S"]["ros"])
+        self.assertIn("찢어지는 듯한 등 방사통 (-)", note["S"]["ros"])
+        self.assertIn("특이 소견 없음 (턴", note["O"]["exam"])
+        self.assertIn("r/o 대동맥 박리", note["A"]["differential"])

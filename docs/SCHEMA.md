@@ -123,7 +123,8 @@ DDXPlus 연결을 합치는 규칙:
 | 증상 소견 (계통별) | `S.ros` |
 | 진찰 소견, 활력징후 | `O.exam` |
 | (예선에서는 비움) | `O.tests` |
-| 질환명, 확인된 소견, 감별 후보 | `A.diagnosis`, `A.evidence`, `A.differential` |
+| 확인된 소견, 감별 후보 | `A.evidence`, `A.differential` |
+| 질환명 | 기록 밖의 주진단 인자 (`client.diagnose(note=..., diagnosis=...)`) |
 | `plan.test`, `plan.treat`, `dispo` | `P.tests`, `P.treatment`, `P.disposition` |
 | `plan.edu` 중 재내원·추적 안내 / 나머지 | `P.follow_up` / `P.education` |
 

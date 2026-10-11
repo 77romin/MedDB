@@ -27,13 +27,47 @@ PREV_CLIP = (-2.0, 1.5)
 AGE_PENALTY = 3.0
 STAGE_ORDER = ("hpi", "red_flag", "core", "exam", "discriminate", "background")
 
-# 공식 초진 기록(SOAP)의 칸. 칸이 빠지거나 다른 칸이 있으면 제출이 거절된다(INVALID_RECORD_FIELDS).
+# 공식 초진 기록의 칸 (nova_sdk 1.0.0의 RECORD_FIELDS와 같다). 칸이 빠지거나 다른 칸이 있으면 제출이 거절된다.
+# 주진단은 기록 안이 아니라 client.diagnose(note=..., diagnosis=...)의 별도 인자다.
 NOTE_FIELDS = {"S": ("cc", "hpi", "pmh", "fh", "sh", "ros"), "O": ("exam", "tests"),
-               "A": ("diagnosis", "evidence", "differential"),
+               "A": ("evidence", "differential"),
                "P": ("tests", "treatment", "disposition", "follow_up", "education")}
 _SOAP_TO_FIELD = {"S.현병력": "hpi", "S.과거력": "pmh", "S.약물": "pmh", "S.알레르기": "pmh", "S.가족력": "fh",
                   "S.사회력": "sh", "O.진찰": "exam", "O.활력징후": "exam"}
 _VITAL_ORDER = ("BP", "SBP", "DBP", "HR", "RR", "BT", "SpO2")
+_VITAL_KEYS = {"bp": "BP", "혈압": "BP", "sbp": "SBP", "dbp": "DBP", "hr": "HR", "pr": "HR", "pulse": "HR", "맥박": "HR",
+               "심박수": "HR", "rr": "RR", "호흡수": "RR", "bt": "BT", "temp": "BT", "temperature": "BT", "체온": "BT",
+               "spo2": "SpO2", "sao2": "SpO2", "산소포화도": "SpO2"}
+_VITAL_TEXT = re.compile(r"(혈압|맥박|심박수|호흡수|체온|산소포화도|bp|sbp|dbp|hr|pr|rr|bt|spo2|sao2)\s*[:=]?\s*"
+                         r"(\d+(?:\.\d+)?(?:\s*/\s*\d+(?:\.\d+)?)?)", re.I)
+
+
+def parse_vitals(vitals) -> dict:
+    """활력징후를 {BP, SBP, DBP, HR, RR, BT, SpO2} 키로 맞춘다. dict(키 대소문자·한글 무관)나
+    "BP 150/90, HR 102" 같은 문자열을 받는다. 대회 세션의 vital_signs 형식은 샘플로 확인이 필요하다."""
+    out: dict = {}
+    if isinstance(vitals, str):
+        pairs = [(m.group(1), m.group(2)) for m in _VITAL_TEXT.finditer(vitals)]
+    elif isinstance(vitals, dict):
+        pairs = list(vitals.items())
+    else:
+        return out
+    for key, value in pairs:
+        name = _VITAL_KEYS.get(str(key).strip().lower().replace(" ", "").replace("_", ""))
+        if name is None or value is None:
+            continue
+        text = str(value).strip()
+        if name == "BP" and "/" in text:
+            out["BP"] = text.replace(" ", "")
+            try:
+                out["SBP"], out["DBP"] = (float(x) for x in out["BP"].split("/")[:2])
+            except ValueError:
+                pass
+            continue
+        number = re.search(r"\d+(?:\.\d+)?", text)
+        if number:
+            out[name] = float(number.group())
+    return out
 
 _NEG = ("없", "않", "아니", "안 ", "못 ", "모르")
 _CLAUSE = re.compile(r"[.!?,\n]|(?<=[가-힣])(?:고|며|면서|지만|는데|으나)\s")
@@ -247,13 +281,8 @@ class MedDB:
         return self.disease(max(partial)[1]) if partial else self.kcd_lookup(text)
 
     def vital_flags(self, vitals: dict) -> list[str]:
-        """활력징후에서 바로 알 수 있는 소견. 키: SBP, DBP, HR, RR, BT, SpO2 또는 BP="150/90". 성인 기준."""
-        v = dict(vitals)
-        if isinstance(v.get("BP"), str) and "/" in v["BP"]:
-            try:
-                v["SBP"], v["DBP"] = (float(x) for x in v["BP"].split("/")[:2])
-            except ValueError:
-                pass
+        """활력징후에서 바로 알 수 있는 소견. dict나 문자열을 받는다(parse_vitals). 성인 기준."""
+        v = parse_vitals(vitals)
         out: list[str] = []
         for rule in self.vital_rules:
             try:
@@ -310,12 +339,12 @@ class MedDB:
     # ---- 초진 기록(SOAP) -----------------------------------------------------
     @staticmethod
     def empty_note() -> dict[str, dict[str, str]]:
-        """공식 칸을 모두 갖춘 빈 기록. 제출 형식(중첩 여부·키 이름)은 nova_sdk로 확인할 것."""
+        """공식 칸을 모두 갖춘 빈 기록. nova_sdk.empty_record()와 같은 구조다."""
         return {section: {field: "" for field in fields} for section, fields in NOTE_FIELDS.items()}
 
     def record(self, complaint: str, present: Iterable[str] = (), absent: Iterable[str] = (),
                answers: dict[str, str] | None = None, turns: dict[str, int] | None = None,
-               vitals: dict | None = None, exam_results: dict[str, str] | None = None) -> dict[str, dict[str, str]]:
+               vitals=None, exam_results: dict[str, str] | None = None) -> dict[str, dict[str, str]]:
         """확인한 사실만으로 S·O 칸을 채운 기록 초안.
           answers       슬롯 id → 환자가 한 답 (예: {"onset": "2시간 전"})
           turns         슬롯·소견·진찰 id → 답을 받은 턴 번호
@@ -346,7 +375,8 @@ class MedDB:
             if ref in self.findings and ref not in known:
                 by_field[self.note_field(ref).split(".")[1]].append(mark(ref))
 
-        note["S"]["cc"] = self.complaints[complaint]["ko"]
+        cc = "C.C : " + self.complaints[complaint]["ko"]
+        note["S"]["cc"] = cc + (f" / Onset : {answers['onset']}" if "onset" in answers else " / Onset : ( )")
         hpi = [slot_line(s) for s in items["slot"] if self.note_field(s) == "S.hpi"]
         positives = [self.findings[f]["ko"] for f in present if self.findings[f]["kind"] == "symptom"]
         if positives:
@@ -365,9 +395,13 @@ class MedDB:
         note["S"]["ros"] = "\n".join(f"{system}: " + ", ".join(marks) for system, marks in ros.items())
 
         exam: list[str] = []
-        if vitals:
-            shown = [f"{k} {vitals[k]}" for k in _VITAL_ORDER if k in vitals and not (k in ("SBP", "DBP") and "BP" in vitals)]
-            exam.append("활력징후(내원 시): " + ", ".join(shown))
+        if isinstance(vitals, str) and vitals.strip():
+            exam.append("V/S(내원 시): " + vitals.strip())
+        elif vitals:
+            v = parse_vitals(vitals)
+            shown = [f"{k} {v[k]:g}" if isinstance(v[k], float) else f"{k} {v[k]}"
+                     for k in _VITAL_ORDER if k in v and not (k in ("SBP", "DBP") and "BP" in v)]
+            exam.append("V/S(내원 시): " + ", ".join(shown))
         for eid, text in exam_results.items():
             exam.append(f"{self.exams[eid]['ko']}: {text}{turn(eid)}")
         for fid in known:  # 결과 문장을 따로 받지 않은 진찰 소견
@@ -379,8 +413,9 @@ class MedDB:
 
     def assessment_plan(self, complaint: str, disease_id: str, present: Iterable[str] = (),
                         absent: Iterable[str] = (), turns: dict[str, int] | None = None,
-                        age: int | None = None, sex: str | None = None, differentials: int = 3) -> dict[str, dict[str, str]]:
-        """A·P 칸의 초안. 근거에는 확인한 소견만, 감별진단에는 무엇이 없었고 무엇을 확인하지 못했는지 적는다.
+                        age: int | None = None, sex: str | None = None, differentials: int = 3) -> dict:
+        """A·P 칸의 초안과 주진단: {"A": {evidence, differential}, "P": {...}, "diagnosis": 주진단}.
+        근거에는 확인한 소견만, 감별진단에는 무엇이 없었고 무엇을 확인하지 못했는지 적는다.
         P는 KB의 계획이므로 '앞으로 할 일'이다. 이미 한 것처럼 고쳐 쓰지 말 것."""
         present, absent, turns = set(present), set(absent), turns or {}
         roles = self.roles[disease_id]
@@ -406,11 +441,22 @@ class MedDB:
         plan = self.plan(disease_id)
         follow = [t for t in plan.get("edu", []) if "내원" in t or "추적" in t or "알리" in t]
         teach = [t for t in plan.get("edu", []) if t not in follow]
-        note = {"A": {"diagnosis": self.diseases[disease_id]["ko"], "evidence": "\n".join(lines),
-                      "differential": "\n".join(ddx)},
+        return {"A": {"evidence": "\n".join(lines), "differential": "\n".join(ddx)},
                 "P": {"tests": "\n".join(plan.get("test", [])), "treatment": "\n".join(plan.get("treat", [])),
-                      "disposition": plan["dispo"], "follow_up": "\n".join(follow), "education": "\n".join(teach)}}
-        return note
+                      "disposition": plan["dispo"], "follow_up": "\n".join(follow), "education": "\n".join(teach)},
+                "diagnosis": self.diseases[disease_id]["ko"]}
+
+    def build_note(self, record: dict, assessment: dict) -> tuple[dict[str, dict[str, str]], str]:
+        """record()와 assessment_plan()의 결과를 합쳐 client.diagnose(note=..., diagnosis=...)에 넣을 값을 만든다.
+        빠진 칸은 빈 문자열로 채우고, 공식 칸이 아닌 것은 버린다."""
+        note = self.empty_note()
+        for source in (record, assessment):
+            for section, fields in NOTE_FIELDS.items():
+                for field in fields:
+                    value = (source.get(section) or {}).get(field)
+                    if value:
+                        note[section][field] = str(value)
+        return note, str(assessment.get("diagnosis") or "").strip()
 
     # ---- 진료지침 문서 -------------------------------------------------------
     def guidelines(self, item_id: str, lang: str | None = None, root: str | Path | None = None) -> list[dict]:
