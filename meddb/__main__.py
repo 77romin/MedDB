@@ -1,4 +1,4 @@
-"""python -m meddb validate | build [경로] | stats | demo "환자 첫마디" | kcd-check <상병마스터 파일>"""
+"""python -m meddb validate | build [경로] | stats | demo "환자 첫마디" | page [경로] | kcd-check <상병마스터 파일>"""
 from __future__ import annotations
 
 import json
@@ -45,6 +45,11 @@ def main(argv: list[str]) -> int:
             for a in db.next_actions(cid, limit=8):
                 print(f"  [{a['stage']:<12}] {a['type']:<4} {a['text']}  ({a['why']})")
             print("후보:", [(c["ko"], c["score"]) for c in db.candidates(cid)])
+        return 0
+    if cmd == "page":
+        from .viewer import write
+        path = write(argv[1] if len(argv) > 1 else "docs/viewer.html")
+        print(f"{path} ({path.stat().st_size / 1024:.0f} KB) — 브라우저로 열면 됩니다")
         return 0
     if cmd == "kcd-check" and len(argv) > 1:
         # 상병마스터(CSV/TSV, 공공데이터포털)에서 코드 꼴의 문자열을 모두 모아 KB의 KCD 코드와 대조한다.

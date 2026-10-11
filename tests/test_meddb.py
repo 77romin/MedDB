@@ -1,6 +1,8 @@
 """python -m unittest discover -s tests"""
 import json
+import shutil
 import sqlite3
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -282,3 +284,52 @@ class Integration(unittest.TestCase):
         self.assertIn("찢어지는 듯한 등 방사통 (-)", note["S"]["ros"])
         self.assertIn("특이 소견 없음 (턴", note["O"]["exam"])
         self.assertIn("r/o 대동맥 박리", note["A"]["differential"])
+
+
+class Viewer(unittest.TestCase):
+    """화면(JS)의 계산이 api.py와 같은 답을 내는지. Node가 없으면 건너뛴다."""
+
+    STATES = [
+        ("chest_pain", [], [], [], [], 58, "M"),
+        ("chest_pain", ["tachycardia", "pressure_chest_pain", "radiation_arm_jaw"], ["tearing_pain_back", "dyspnea"],
+         ["onset", "pmh"], ["ex_lung_ausc"], 58, "M"),
+        ("abdominal_pain", ["rlq_migration", "anorexia"], ["diarrhea"], ["onset", "location"], [], 28, "F"),
+        ("headache", ["thunderclap", "sudden_onset"], [], [], [], None, None),
+        ("syncope", ["vasovagal_prodrome"], ["palpitations", "exertional_syncope"], ["onset"], ["ex_heart_ausc"], 20, "F"),
+        ("rash", ["itching"], ["fever"], [], ["ex_rash"], 70, None),
+        ("urinary", [], [], [], [], 66, "M"),
+    ]
+
+    def test_page_is_self_contained(self):
+        from meddb.viewer import render
+        html = render(MedDB.open())
+        self.assertNotIn("http://", html.split("<script id=\"data\"")[0])   # 외부 스크립트·글꼴 없이 열린다
+        self.assertNotIn("<script src", html)
+        self.assertIn("급성 심근경색", html)
+
+    @unittest.skipUnless(shutil.which("node"), "node 없음")
+    def test_js_matches_python(self):
+        from meddb.viewer import CORE_JS, export_data
+        db = MedDB.open()
+        script = CORE_JS + """
+const D = JSON.parse(require("fs").readFileSync(0, "utf8"));
+const out = D.states.map(([c, p, a, asked, exams, age, sex]) => ({
+  cands: candidates(D.data, c, p, a, age, sex, 8).map(r => [r.id, r.score, r.matched, r.against]),
+  acts: nextActions(D.data, c, p, a, asked, exams, age, sex).map(x => [x.stage, x.type, x.text, x.target]),
+  flags: redFlagsPending(D.data, c, p, a, exams, age, sex).map(r => [r.id, r.unchecked]),
+}));
+console.log(JSON.stringify(out));
+"""
+        payload = json.dumps({"data": export_data(db), "states": self.STATES}, ensure_ascii=False)
+        result = subprocess.run(["node", "-e", script], input=payload, capture_output=True, text=True, check=True)
+        for state, js in zip(self.STATES, json.loads(result.stdout)):
+            c, present, absent, asked, exams, age, sex = state
+            py_cands = db.candidates(c, present, absent, age, sex, k=8)
+            self.assertEqual([r[0] for r in js["cands"]], [r["id"] for r in py_cands], state)
+            for (did, score, matched, against), py in zip(js["cands"], py_cands):
+                self.assertAlmostEqual(score, py["score"], delta=0.011, msg=did)
+                self.assertEqual((matched, against), (py["matched"], py["against"]), did)
+            py_acts = db.next_actions(c, present, absent, asked, exams, age, sex)
+            self.assertEqual(js["acts"], [[a["stage"], a["type"], a["text"], a["target"]] for a in py_acts], state)
+            py_flags = db.red_flags_pending(c, present, absent, exams, age, sex)
+            self.assertEqual(js["flags"], [[r["id"], r["unchecked"]] for r in py_flags], state)

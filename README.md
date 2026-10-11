@@ -29,12 +29,25 @@ N.O.V.A. 2026 대화형 의료 진단 AI 에이전트 대회용 **주호소 중�
 > **임상 검수 전 초안입니다.** 팀이 쓴 내용은 [docs/SOURCES.md](docs/SOURCES.md)의 검수 절차를 거쳐야 합니다.
 > KCD 코드는 상병마스터와 대조를 마쳤습니다 (검증기가 매번 확인).
 
+## 화면으로 보기
+
+[`docs/viewer.html`](docs/viewer.html)을 내려받아 브라우저로 열면 됩니다. 서버도 설치도 필요 없습니다.
+
+- **진료 흐름 따라가기**: 주호소·나이·성별을 고르고 환자의 답(있음/없음)을 누르면, 다음에 할 질문·진찰과 감별 순위,
+  아직 배제하지 못한 위험 질환이 바뀝니다. KB가 진료 중에 무엇을 해 주는지 그대로 보여 줍니다.
+- **검수용 표**: 주호소별로 항상 확인하는 것과 감별 질환의 핵심·보조·반대 소견을 한 표로 봅니다. 질환을 누르면 계획과 출처가 나옵니다.
+- **구성과 출처**: 규모, 무엇이 어디서 왔는지, 점수 계산식, 제출 기록의 칸.
+
+화면의 계산은 `meddb/api.py`와 같은 식을 옮긴 것이고, 둘이 같은 답을 내는지 테스트로 확인합니다.
+데이터를 고친 뒤에는 `python -m meddb page`로 다시 만듭니다.
+
 ## 빠른 시작
 
 ```bash
 python -m meddb validate            # 원본 검증 (오류가 있으면 종료 코드 1)
 python -m meddb demo "가슴이 너무 아파서 왔어요."
 python -m meddb build               # dist/meddb.sqlite 생성 (선택)
+python -m meddb page                # docs/viewer.html 다시 만들기
 python -m unittest discover -s tests
 ```
 
