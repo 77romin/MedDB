@@ -4,3 +4,5 @@ __pycache__/
 .venv/
 .DS_Store
 local/out/
+local/cases/samples/
+samples/
