@@ -33,6 +33,42 @@ def pick(parts, word):
     raise SystemExit(f"case.md 에 '{word}' 섹션이 없습니다")
 
 
+def find_diagnosis(folder):
+    """같은 폴더의 model_record.json / model_record.md 에서 모범 주진단을 찾는다."""
+    js = Path(folder) / "model_record.json"
+    if js.exists():
+        def walk(v):
+            if isinstance(v, dict):
+                for k, x in v.items():
+                    if "diagnos" in k.lower() and isinstance(x, str) and x.strip():
+                        return x.strip()
+                for x in v.values():
+                    r = walk(x)
+                    if r:
+                        return r
+            elif isinstance(v, list):
+                for x in v:
+                    r = walk(x)
+                    if r:
+                        return r
+            return None
+        r = walk(json.loads(js.read_text(encoding="utf-8-sig")))
+        if r:
+            return r
+    md = Path(folder) / "model_record.md"
+    if md.exists():
+        lines = md.read_text(encoding="utf-8-sig").splitlines()
+        for i, line in enumerate(lines):
+            if re.search(r"주\s*진단|최종\s*진단|Diagnosis", line, re.I):
+                rest = re.split(r"[:：]", line, 1)
+                if len(rest) == 2 and rest[1].strip(" *#|"):
+                    return rest[1].strip(" *#|")
+                for nxt in lines[i + 1:i + 4]:
+                    if nxt.strip(" -*#|>"):
+                        return nxt.strip(" -*#|>")
+    return ""
+
+
 def convert(path, case_id=None, answer=""):
     text = Path(path).read_text(encoding="utf-8-sig")
     parts = sections(text)
@@ -55,6 +91,7 @@ def convert(path, case_id=None, answer=""):
         if len(cells) == 2 and cells[0] not in ("진찰", "") and not set(cells[0]) <= set("-: "):
             exams[cells[0]] = cells[1]
 
+    answer = find_diagnosis(Path(path).parent) or answer
     title = re.search(r"^#\s+(.+)$", text, re.M)
     cid = case_id or (title.group(1).split()[-1] if title else Path(path).stem)
     return {"id": cid, "_source": f"대회 공개 샘플 {cid} case.md 변환 (로컬 시험 전용, 재배포 금지)",
