@@ -37,14 +37,15 @@ def ask_model(client, prompt: str, max_tokens: int = 1024) -> str:
     return reply["choices"][0]["message"]["content"] or ""
 
 
-def pick_complaint(client, db: MedDB, opening: str) -> str:
+def pick_complaint(client, db: MedDB, opening: str) -> str | None:
     """표현 사전으로 못 찾으면 모델에게 고르게 한다. 예선은 증례마다 모델 호출이 1회 이상 있어야 하므로
-    사전으로 찾았더라도 확인을 겸해 한 번 묻는다."""
+    사전으로 찾았더라도 확인을 겸해 한 번 묻는다. KB에 맞는 주호소가 없으면 None."""
     hits = db.match_complaint(opening)
     options = ", ".join(f"{c['id']}({c['ko']})" for c in db.complaints.values())
-    answer = ask_model(client, f"환자의 첫마디: {opening}\n주호소를 다음 중 하나의 id로만 답하세요: {options}")
+    answer = ask_model(client, f"환자의 첫마디: {opening}\n주호소를 다음 중 하나의 id로만 답하세요. "
+                               f"맞는 것이 없으면 none: {options}")
     chosen = next((cid for cid in db.complaints if cid in answer), None)
-    return hits[0]["id"] if hits else (chosen or "fever")
+    return hits[0]["id"] if hits else chosen
 
 
 def read_answer(client, question: str, answer: str) -> str:
@@ -59,11 +60,16 @@ def read_answer(client, question: str, answer: str) -> str:
     return verdict[:1] if verdict[:1] in "+-?" else "?"
 
 
-def consult(client, db: MedDB):
+def consult(client, db: MedDB, fallback=None):
+    """fallback: KB에 없는 주호소일 때 넘길 consult 함수(예: 시작 패키지의 기본 에이전트)."""
     session = client.session()
     opening, vitals = session["initial"]["opening"], session["initial"]["vital_signs"]
     age, sex = demographics(opening)
     complaint = pick_complaint(client, db, opening)
+    if complaint is None:
+        if fallback is not None:
+            return fallback(client, None)
+        complaint = "fever"  # 대비책이 없으면 가장 넓은 주호소로
 
     present: list[str] = db.vital_flags(vitals)
     absent: list[str] = []

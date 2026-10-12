@@ -159,6 +159,21 @@ for doc in db.guidelines("chest_pain"):          # 앞쪽일수록 제목이 정
 - 제목만 보고 골랐으므로 본문이 맞는지는 확인되지 않았습니다. 뒤쪽 문서일수록 빗나갈 수 있습니다.
 - 연결된 문서의 대부분이 변경 금지 조건(CC BY-NC-ND, 공공누리 제4유형)입니다. 본문을 요약·번역해 저장소에 넣지 않습니다.
 
+## 내 PC에서 진료 돌려 보기 (Ollama)
+
+대회 서버 없이 gpt-oss-20b로 진료 한 건을 처음부터 기록 제출까지 돌립니다. `local/local_run.py` 참고.
+
+```bash
+ollama pull gpt-oss:20b                     # 한 번만 (약 13GB, GPU 메모리 16GB 권장)
+python local/local_run.py --case local/cases/C01_insomnia.json --agent baseline   # 시작 패키지 기본 에이전트
+python local/local_run.py --case local/cases/C01_insomnia.json --agent meddb      # 온톨로지 사용
+```
+
+- 시작 패키지 폴더(`run.py`, `nova_sdk.py`가 있는 곳)에 `meddb/`, `examples/`, `local/`을 복사해 그 안에서 실행합니다.
+- 가상 환자와 진찰 판정도 gpt-oss-20b가 대신하므로 대회 서버와 답이 다릅니다. 채점은 하지 않습니다.
+- `C01_insomnia`는 대회 발표 자료의 공개 샘플 진료 예시에서 환자 답을 옮긴 것이고, `T01_chest_pain`은 연결 시험용입니다
+  (온톨로지와 같은 쪽에서 만들었으므로 성능 비교에 쓰지 않습니다).
+
 ## 외부 자료 갱신
 
 원본 파일은 저장소에 넣지 않습니다. 받아서 아래 도구로 `meddb/data/`의 가공 파일을 다시 만듭니다.
