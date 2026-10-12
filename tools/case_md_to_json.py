@@ -60,7 +60,7 @@ def find_diagnosis(folder):
         lines = md.read_text(encoding="utf-8-sig").splitlines()
         for i, line in enumerate(lines):
             if re.search(r"주\s*진단|최종\s*진단|Diagnosis", line, re.I):
-                rest = re.split(r"[:：]", line, 1)
+                rest = re.split(r"[:：]", line, maxsplit=1)
                 if len(rest) == 2 and rest[1].strip(" *#|"):
                     return rest[1].strip(" *#|")
                 for nxt in lines[i + 1:i + 4]:
