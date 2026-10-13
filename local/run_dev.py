@@ -66,6 +66,9 @@ def main():
             continue
         if not (folder / "case.md").exists():
             continue
+        if not (folder / "model_record.md").exists():
+            print(f"{cid}: 생성 실패한 증례(model_record.md 없음) — 건너뜀")
+            continue
         case = convert(folder / "case.md", f"dev_{cid}", spec.get("diagnosis", ""))
         case_json = HERE / "cases" / "dev" / f"{cid}.json"
         case_json.parent.mkdir(parents=True, exist_ok=True)

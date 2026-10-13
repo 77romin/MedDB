@@ -78,6 +78,14 @@ def convert(path, case_id=None, answer=""):
     opening = " ".join(l.lstrip("> ").strip() for l in start.splitlines() if l.startswith(">")).strip()
     vitals = [l.strip() for l in start.splitlines() if l.strip() and not l.startswith(">")]
     vital_signs = "\n".join(v.rstrip() for v in vitals)
+    if not re.search(r"혈압|맥박|BP|HR", vital_signs):
+        # 활력징후를 별도 제목(## 활력징후)이나 목록·인용문 안에 쓴 경우도 찾는다
+        before = text.split("가상 환자", 1)[0]
+        found = [re.sub(r"^[>\-\s|]+", "", l.replace("*", "")).strip(" |") for l in before.splitlines()
+                 if re.search(r"^[>\-*\s|]*\**\s*(혈압|맥박|호흡|체온|산소포화도|BP|HR|RR|BT|SpO2)", l)]
+        if found:
+            vital_signs = "\n".join(found)
+            opening = re.sub(r"\s*(혈압|맥박|호흡|체온)\s*[:：].*$", "", opening).strip()
 
     script = pick(parts, "가상 환자")
     paragraphs = [p.strip().replace("\n", " ") for p in re.split(r"\n\s*\n", script) if p.strip()]
