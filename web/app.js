@@ -3,7 +3,7 @@ const $=id=>document.getElementById(id),NS='http://www.w3.org/2000/svg';
 const labels={Disease:'질병',Finding:'소견',Mechanism:'기전',Test:'검사',Exposure:'노출',ClassificationCode:'분류 코드'},relations={has_phenotype:'표현형',has_mechanism:'기전 관계',causes:'일으킴',supports_finding:'검사 판정'};
 let data,nodes,sources,selected,kind='Disease',tab='explore',detailTab='relations',historyNodes=[],request=0,rankRequest=0,tablePage=0,observationState=new Map(),adj=new Map(),graphs={},graphScale={forward:1,reverse:1};
 const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n};
-function fail(e){$('error').hidden=false;$('error').textContent='데이터를 불러오지 못했습니다. '+e.message}
+function fail(e){$('error').hidden=false;$('error').textContent='데이터를 불러오지 못했습니다. '+e.message;if(!data&&$('boot-status'))$('boot-status').textContent='데이터를 불러오지 못했습니다. 서버 실행 상태를 확인하고 새로고침하세요.'}
 async function api(url,options){const r=await fetch(url,options);if(!r.ok)throw Error('HTTP '+r.status);return r.json()}
 function sourceAllowed(a){const f=$('source-filter').value;return f==='all'||(f==='DisMech'?a.source_id.startsWith('dismech:'):a.source_id.startsWith('niddk-'))}
 function visible(a){return sourceAllowed(a)&&(a.review_status==='reviewed'||($('draft').checked&&a.review_status==='draft'))}
@@ -105,6 +105,7 @@ async function rank(){
 for(const id of ['patient-age','patient-sex','patient-category'])$(id).oninput=clearRank;
 function populatePatientCategories(){const select=$('patient-category');for(const category of [...new Set(data.concepts.filter(n=>n.kind==='Disease').map(n=>n.category).filter(Boolean))].sort()){const option=el('option',category);option.value=category;select.append(option)}}
 const patientCategoryObserver=new MutationObserver(()=>{if(data&&$('patient-category').options.length===1){populatePatientCategories();patientCategoryObserver.disconnect()}});patientCategoryObserver.observe($('dataset-count'),{childList:true});
+const bootStatusObserver=new MutationObserver(()=>{if(data){$('boot-status').hidden=true;bootStatusObserver.disconnect()}});bootStatusObserver.observe($('dataset-count'),{childList:true});
 function table(){if($('table-select').value==='kcd'){kcdTable();return}const q=$('table-search').value.toLowerCase(),rows=data[$('table-select').value].filter(r=>!q||JSON.stringify(r).toLowerCase().includes(q)),max=Math.max(1,Math.ceil(rows.length/50));tablePage=Math.max(0,Math.min(tablePage,max-1));$('table-page').textContent=`${tablePage+1} / ${max} · ${rows.length.toLocaleString()}행`;$('table-prev').disabled=tablePage===0;$('table-next').disabled=tablePage>=max-1;$('table').replaceChildren();if(!rows.length)return;const t=el('table'),thead=el('thead'),tr=el('tr'),cols=Object.keys(rows[0]);cols.forEach(c=>tr.append(el('th',c)));thead.append(tr);t.append(thead);const body=el('tbody');for(const r of rows.slice(tablePage*50,tablePage*50+50)){const row=el('tr');cols.forEach(c=>row.append(el('td',typeof r[c]==='object'?JSON.stringify(r[c]):String(r[c]))));body.append(row)}t.append(body);$('table').append(t)}
 function schema(){buildSchemaExplorer()}
 

@@ -52,3 +52,9 @@ class AgentRouteTests(unittest.TestCase):
         self.assertEqual(code,200)
         self.assertIn(b'renderAgentRecommendations',body)
         self.assertTrue(headers['Content-Type'].startswith('application/javascript'))
+
+    def test_health_identifies_ready_service(self):
+        code,body,headers=self.request('/api/health')
+        self.assertEqual(code,200)
+        self.assertEqual(json.loads(body),{'service':'nova-meddb','status':'ready','version':'meddb-2026.10.10.3'})
+        self.assertEqual(headers['Cache-Control'],'no-store')

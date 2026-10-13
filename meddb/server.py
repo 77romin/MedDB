@@ -17,6 +17,8 @@ def serve(kb, port=8765):
             try:
                 if query.path == "/":
                     payload, mime = WEB.read_bytes(), "text/html; charset=utf-8"
+                elif query.path == '/api/health':
+                    payload, mime = json.dumps({'service':'nova-meddb','status':'ready','version':kb.version}).encode(), 'application/json; charset=utf-8'
                 elif query.path in {"/app.css", "/app.js", "/agent-ui.js"}:
                     file = WEB.parent / query.path[1:]
                     payload = file.read_bytes()
@@ -52,6 +54,7 @@ def serve(kb, port=8765):
                 return
             self.send_response(200)
             self.send_header("Content-Type", mime)
+            self.send_header('Cache-Control','no-store')
             if query.path == "/api/data": self.send_header("Content-Encoding", "gzip")
             self.send_header("Content-Length", str(len(payload)))
             self.end_headers()
@@ -86,5 +89,7 @@ def serve(kb, port=8765):
             self.wfile.write(payload)
         def log_message(self, *args):
             pass
-    print(f"MedDB: http://127.0.0.1:{port}", flush=True)
-    ThreadingHTTPServer(("127.0.0.1", port), Handler).serve_forever()
+    server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
+    address = getattr(server,'server_address',('127.0.0.1',port))
+    print(f"MedDB: http://{address[0]}:{address[1]}", flush=True)
+    server.serve_forever()

@@ -3,6 +3,7 @@ __pycache__/
 .venv/
 build/
 dist/
+.run/
 # Official corpora remain local; document-specific redistribution restrictions apply.
 data/external/
 data/agent/guideline-links.json.gz
