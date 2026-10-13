@@ -15,7 +15,7 @@
   {"id": "cancer_history", "ko": "암 병력", "kind": "history", "sys": "전신", "ask": "암 진단을 받은 적 있나요?"},
   {"id": "cv_risk", "ko": "심혈관 위험인자(고혈압·당뇨·고지혈증)", "kind": "history", "sys": "심혈관", "ask": "고혈압이나 당뇨가 있으세요?", "alias": ["고혈압", "당뇨", "고지혈증"]},
   {"id": "smoker", "ko": "흡연", "kind": "history", "sys": "전신", "ask": "담배를 피우시나요?", "alias": ["담배", "흡연"], "soap": "S.사회력", "age": [13, null]},
-  {"id": "heavy_alcohol", "ko": "과음", "kind": "history", "sys": "전신", "ask": "술을 자주 많이 드시나요?", "alias": ["술을 많이", "매일 술"], "soap": "S.사회력", "age": [13, null]},
+  {"id": "heavy_alcohol", "ko": "과음", "kind": "history", "sys": "전신", "ask": "술을 많이 드시는 편인가요?", "alias": ["술을 많이", "매일 술"], "soap": "S.사회력", "age": [13, null]},
   {"id": "immobilization", "ko": "최근 수술·장기 부동", "kind": "history", "sys": "심혈관", "ask": "최근 수술이나 장거리 여행 했나요?"},
   {"id": "trauma_fall", "ko": "외상·낙상", "kind": "history", "sys": "근골격", "ask": "넘어지거나 다친 적이 있나요?", "soap": "S.현병력"},
   {"id": "head_trauma", "ko": "두부 외상", "kind": "history", "sys": "신경", "ask": "최근 머리를 다친 적 있나요?", "soap": "S.현병력"},

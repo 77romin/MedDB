@@ -65,7 +65,7 @@ immunocompromised|면역 저하 상태|history|전신|면역이 떨어지는 병
 cancer_history|암 병력|history|전신|암 진단을 받은 적 있나요?|
 cv_risk|심혈관 위험인자(고혈압·당뇨·고지혈증)|history|심혈관|고혈압이나 당뇨가 있으세요?|고혈압;당뇨;고지혈증
 smoker|흡연|history|전신|담배를 피우시나요?|담배;흡연|soap=S.사회력,age=13-
-heavy_alcohol|과음|history|전신|술을 자주 많이 드시나요?|술을 많이;매일 술|soap=S.사회력,age=13-
+heavy_alcohol|과음|history|전신|술을 많이 드시는 편인가요?|술을 많이;매일 술|soap=S.사회력,age=13-
 immobilization|최근 수술·장기 부동|history|심혈관|최근 수술이나 장거리 여행 했나요?|
 trauma_fall|외상·낙상|history|근골격|넘어지거나 다친 적이 있나요?||soap=S.현병력
 head_trauma|두부 외상|history|신경|최근 머리를 다친 적 있나요?||soap=S.현병력

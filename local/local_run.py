@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 import time
 import unicodedata
@@ -127,8 +128,10 @@ class LocalClient:
                        max_tokens=1024, reasoning_effort="low")
         verdict = parse_json(reply["choices"][0]["message"].get("content")) or {}
         kind = verdict.get("verdict")
-        if kind == "row" and verdict.get("name") in self.case["exams"]:
-            result = self.case["exams"][verdict["name"]]
+        row = self._row(verdict.get("name")) if kind in ("row", "unlisted") else None
+        if row:
+            kind = "row"
+            result = self.case["exams"][row]
         elif kind in ("row", "unlisted"):
             result = self.case.get("default_exam", "특이 소견 없음")
         else:
@@ -143,6 +146,20 @@ class LocalClient:
         return {"status": "completed", "turn": self.turn}
 
     # --- 내부 ------------------------------------------------------------------
+    def _row(self, name):
+        """판정 모델이 돌려준 이름을 진찰표 행으로 맞춘다. "갑상선 촉진"과 "갑상선 촉진 (Thyroid palpation)"은 같은 행."""
+        if not name:
+            return None
+        name = unicodedata.normalize("NFC", str(name)).strip()
+        if name in self.case["exams"]:
+            return name
+        squash = lambda t: re.sub(r"[\s·()]", "", t).lower()
+        for key in self.case["exams"]:
+            ko, _, en = key.partition(" (")
+            if squash(name) in (squash(ko), squash(en.rstrip(")")), squash(key)):
+                return key
+        return None
+
     def _check(self, content):
         text = unicodedata.normalize("NFC", str(content))
         if not text or len(text) > 30:
