@@ -1,5 +1,6 @@
 // Proposed mappings require a deliberate apply action; patient text is never stored.
 const agentInputSection=el('section'),agentText=el('textarea'),agentPreview=el('div'),agentNormalizeButton=el('button','표현 해석');
+agentPreview.id='normalization-preview';
 agentText.id='patient-text';agentText.rows=4;agentText.placeholder='환자의 말을 증상별로 한 줄씩 입력하세요.\n열이 없어요\n기침이 있어요';agentText.setAttribute('aria-label','환자 표현');
 agentInputSection.append(el('h2','환자 표현에서 소견 찾기'),agentText,agentNormalizeButton,agentPreview);
 $('finding-search').before(agentInputSection);

@@ -1,169 +1,239 @@
 # NOVA 의료 agent 지식 DB
 
-참고 의료 KB의 탐색 구성을 바탕으로 자체 구현한 지식 그래프 탐색기입니다. 촘촘한 개념 목록, 방향별 그래프, 연결 근거 테이블, 진료·구조·테이블 탭을 제공합니다. 밝은/어두운 테마와 모바일 목록 접기를 지원합니다.
+NOVA 대화형 의료 진단 에이전트 개발을 위한 출처 기반 지식 DB입니다. 질환·소견·기전의 관계를 탐색하고, 확인한 환자 정보로 후보와 추가 확인 항목을 조회합니다. Python 조회 도구와 로컬 웹 화면을 제공합니다.
+
+현재 의료 지식은 **검수 전 초안**입니다. 후보 점수는 진단 확률이 아니며, 실제 에이전트의 진단 정확도 개선은 아직 검증하지 않았습니다.
 
 ## 빠른 시작
 
-Windows에서는 저장소 폴더에서 `./Start-MedDB.ps1`을 실행하면 서버를 숨김 창으로 계속 실행하고 실제 접속 주소를 표시합니다. 이미 실행 중이면 재사용하며 다른 프로그램이 포트를 사용하면 빈 포트를 선택합니다. 로그와 실행 정보는 `.run/`에 있습니다.
-
-Python 3.9 이상을 준비한 뒤 저장소를 내려받아 실행합니다.
+Python 3.9 이상이 필요합니다. 저장소의 데이터·웹 자산을 함께 사용하며 기본 실행에는 추가 패키지가 필요 없습니다.
 
 ```bash
-git clone https://github.com/SSAFY16-S11-NOVA2026/MedDB.git
+git clone https://github.com/77romin/MedDB.git
 cd MedDB
-python3 -m meddb serve
+python -m meddb serve
 ```
 
-브라우저에서 [관계 그래프](http://127.0.0.1:8765/#explore)를 엽니다. 서버 종료는 실행한 터미널에서 `Ctrl+C`입니다. 기본 데이터가 크므로 첫 화면 로딩에 시간이 걸릴 수 있습니다.
+[사이트 열기](http://127.0.0.1:8765/) · [관계 그래프](http://127.0.0.1:8765/#explore) · [진료](http://127.0.0.1:8765/#diagnosis)
 
-포트가 이미 사용 중이면 `python3 -m meddb serve --port 8766`으로 실행하고 `http://127.0.0.1:8766/`을 엽니다.
+터미널 실행은 `Ctrl+C`로 종료합니다. 기본 포트를 다른 프로그램이 사용하면 `python -m meddb serve --port 8766`으로 실행합니다.
 
-### 명령줄 조회
+Windows에서 터미널을 닫아도 서버를 유지하려면 다음을 실행합니다.
 
-```bash
-python3 -m meddb serve
-# http://127.0.0.1:8765/#explore
-python3 -m meddb validate
-python3 -m meddb search 윌슨병
-python3 -m meddb graph dismech-disease:Wilsons_Disease --include-draft
-python3 -m meddb validate --version meddb-2026.10.10.4
+```powershell
+.\Start-MedDB.ps1
 ```
 
-Python 3.9 이상, 저장소 루트에서 실행합니다. 기본 서버·조회는 외부 패키지가 필요 없습니다. pip 패키지에는 데이터와 웹 자산이 포함되지 않습니다. 로컬 서버만 제공하며 환자 입력을 저장하지 않습니다.
+숨김 창으로 서버를 시작하고 준비 완료를 확인합니다. 실행 중인 MedDB는 재사용하며, 다른 프로그램이 포트를 사용하면 8766~8775에서 빈 포트를 선택합니다. 실제 주소·PID·로그는 `.run/server.json`에 기록합니다. PC 재시작 후에는 다시 실행하세요. `GET /api/health`로 준비 상태와 데이터 버전을 확인할 수 있습니다.
 
-## 화면과 사용법
+## 현재 화면
 
-아래 캡처는 현재 로컬 실행 화면입니다. KCD 화면은 별도 HIRA 자료를 설치한 환경입니다.
+2026-10-13에 실제 로컬 사이트에서 다시 캡처했습니다. 진료 예시는 기능 설명용 가상 입력이며 임상 정확도 평가 결과가 아닙니다. 이미지를 누르면 해당 캡처의 원본 또는 전체 화면을 볼 수 있습니다.
 
 ### 1. 관계 그래프
 
-[![질병에서 기전 1–7차와 소견까지 이어지는 전체 온톨로지 그래프](docs/readme-graph.png)](docs/readme-graph-full.png)
+[![질환·기전 관계 탐색 화면](docs/readme-graph.jpg)](docs/readme-graph-full.jpg)
 
-윌슨병의 기전 1–7차와 결과 소견 열이 한 화면에 보이도록 캡처했습니다. 위 미리보기는 상단 경로이며, 이미지를 클릭하면 69개 노드·70개 연결을 모두 담은 전체 캡처를 원본 크기로 볼 수 있습니다.
+윌슨병의 방향 그래프입니다. 화면 캡처에는 일부 경로가 보이며, 링크의 전체 그래프에는 69개 노드와 70개 연결이 있습니다.
 
-1. 왼쪽 목록에서 질병·소견·기전 종류를 선택하고 한글명, 영어명, 동의어 또는 HPO·MONDO 코드로 검색합니다. 작은 화면에서는 왼쪽 위 메뉴 버튼으로 목록을 엽니다.
-2. 질병을 선택하면 결과 방향 그래프가 `질병 → 기전 1차/파생질병 → 기전 2차/파생질병 → … → 소견`으로 표시됩니다. 파생질병 레코드와 연결 근거가 있는 경우 탐색을 이어갑니다.
-3. 노드를 누르면 해당 개념으로 이동합니다. 이전 개념으로 돌아가려면 제목 위 뒤로 버튼을 누릅니다. 선을 누르면 연결 근거 행으로 이동합니다.
-4. 긴 그래프는 그래프 안에서 가로·세로 스크롤합니다. `− / ＋`, `폭 맞춤`, `전체 보기`로 크기를 조절합니다.
-5. `필터`에서 탐색 깊이(기본 5), 출처, 초안 포함 여부를 선택합니다. 초안을 끄면 현재 대부분의 연결은 숨겨집니다.
-6. 그래프 아래 `질병–소견 연관`을 펼치면 직접 연관된 소견을 볼 수 있습니다. 기전 사슬과는 별도로 보존하며, 모든 원본 연결은 `연결 근거` 표에서 확인합니다.
+- 한국어명·영어명·별칭·HPO/MONDO 코드로 개념을 찾습니다. 한국어명이 없는 항목은 영어명이나 ID로 검색하세요.
+- 노드를 누르면 해당 개념으로 이동하고, 연결선을 누르면 근거 행을 확인합니다. `이전 개념`으로 돌아갈 수 있습니다.
+- `필터`에서 깊이(기본 5), 출처, 초안 포함 여부를 설정합니다. 긴 그래프는 스크롤·확대/축소·폭 맞춤으로 탐색합니다.
+- 질병의 직접 `has_phenotype` 연관은 아래 별도 목록에 보존합니다. 다른 경로가 있는 중복 직통선은 화면에서만 숨기며 원본 주장은 유지합니다.
 
-기전 사슬에 이미 다른 경로로 연결된 직통선은 화면에서 숨깁니다. 원본 데이터는 삭제하지 않습니다. 화면의 단계는 표시된 관계 경로이며 임상적 시간 순서를 뜻하지 않습니다. 들어오는 방향 그래프는 선택한 개념으로 이어지는 관계를 보여줍니다.
+**기전 단계는 저장된 관계 경로의 배치입니다.** 임상적 시간 순서나 진단 확정 단계가 아닙니다. 중간 기전에서 소견으로 직접 이어지는 선도 있을 수 있습니다. 마지막 열의 `관찰 가능한 소견`은 증상·소견을 뜻하며 최종 진단을 뜻하지 않습니다. 반대 방향으로 연결을 따라갔다고 질환이 확정되는 것도 아닙니다.
 
-### 2. 진료 — 소견으로 후보 탐색
+### 2. 진료: 증상·조건과 근거 확인
 
-![소견 있음·없음·미확인 입력 화면](docs/readme-diagnosis.png)
+[![환자 표현을 확인하고 후보·지지·반박 근거를 조회한 화면](docs/readme-diagnosis.jpg)](docs/readme-diagnosis-full.jpg)
 
-1. 상단 `진료` 탭을 엽니다.
-2. `소견 찾기`에서 소견명이나 HPO ID를 검색합니다. 예: `발열`, `구토`, `HP:0001945`.
-3. 소견마다 `있음 / 없음 / 미확인`을 선택합니다. 검색어를 바꿔도 선택한 소견은 유지됩니다.
-4. 후보 조회 버튼을 눌러 일치 소견과 어긋나는 소견, 출처 근거를 확인합니다. 현재 자료를 탐색하려면 초안 포함 설정이 필요합니다.
+1. 환자 표현을 증상별로 한 줄씩 입력하고 `표현 해석`을 누릅니다.
+2. 제안된 개념과 `있음 / 없음 / 미확인` 상태를 확인한 뒤 적용합니다. 직접 소견명·HPO ID로 검색해 선택할 수도 있습니다.
+3. 나이·성별·질환 범주·사춘기 지연 평가 맥락을 입력하고 사용할 자료 범위를 선택합니다.
+4. 후보 조회로 점수, 지지·반박 근거, 동점 순위, 추가 확인 소견과 질문·진찰 제안을 확인합니다.
 
-순위는 소견의 구별력과 지지·반박 근거를 반영한 점수이며 진단 확률이 아닙니다. 미확인은 점수에 반영하지 않고, ‘없음’도 질병의 확정 배제를 뜻하지 않습니다. 동점은 같은 순위로 표시합니다. 질환 범주를 제한할 수 있으며 나이·성별은 검수된 적용 조건이 있을 때만 반영합니다. 현재 배포판에는 나이·성별 적용 조건이 없습니다. 환자 입력은 서버나 파일에 저장하지 않습니다. 계산 방식과 API는 [후보 조회 설명](docs/evidence-ranking.md)을 참고하세요.
+한국어 표현 사전은 24항목이며 전체 한국어를 이해하는 모델이 아닙니다. 과거·가족력·부정 범위가 모호하거나 표현이 상충하면 미확인으로 남깁니다. 기간 표현은 보존하지만 점수 규칙으로 자동 변환하지 않습니다.
 
-### 3. 구조 — 스키마 원리 이해
+| 설정 | 처리 |
+|---|---|
+| 있음·없음 | 소견의 데이터 내 구별력과 지지·반박 근거를 반영 |
+| 미확인 | 점수에 반영하지 않음 |
+| EXCLUDED | 원본의 부정 의미로 처리; 상충 관계는 점수에서 제외 |
+| 나이·성별 | 검수된 질환 적용 조건이 있는 경우에만 필터링; 현재 해당 규칙 없음 |
+| 사춘기 지연 평가 맥락 | 평가 대상이 아니라고 확인한 경우 관련 소견을 점수·추천에서 제외 |
+| 질환 범주 | 사용자가 선택한 자료 범위를 제한 |
 
-![현재 저장 구조와 참조 관계를 보여주는 ERD](docs/readme-schema.png)
+사춘기 평가의 적절성은 나이 숫자만으로 자동 판정하지 않습니다. 미확인일 때 직접 사춘기 지연 질문의 실행 템플릿은 보류합니다. 이 설정은 질환 자체를 제외하는 규칙이 아닙니다.
 
-1. `구조` 탭에서 `폭 맞춤 / 전체 맞춤 / 100%`로 도표 크기를 조절합니다.
-2. 카드에 마우스를 올리거나 키보드로 포커스를 옮기면 연결선과 이웃 카드가 강조됩니다.
-3. 카드를 누르면 아래 설명으로 이동합니다. 필드 의미와 현재 데이터의 JSON 예시를 확인합니다.
-4. `읽는 방법`에서 PK·FK, 중첩 배열, 유형별 뷰의 의미를 확인합니다.
+점수는 **진단 확률·정확도·신뢰도 퍼센트가 아닙니다.** 부정 소견도 확정 배제를 뜻하지 않습니다. 소견이 자료에 기록되지 않았다는 것은 환자에게 그 소견이 없다는 의미가 아닙니다. 웹 입력은 서버나 파일에 저장하지 않습니다. [계산 방식](docs/evidence-ranking.md) · [맥락·진료 지식](docs/clinical-pathways.md)
 
-현재 저장소는 JSON입니다. `concepts`, `assertions`, `sources`가 중심이며, `mappings`는 개념 내부 배열입니다. Disease·Finding·Mechanism 카드는 같은 개념 목록을 유형별로 나눈 뷰입니다. 독립 SQL 테이블이 설치된 것은 아닙니다. 자세한 설명은 [스키마 문서](docs/schema.md)를 참고하세요.
+### 3. 공식 진료지침 검색
 
-### 4. 테이블 — 원문 레코드 검색
+[![출처·연도·라이선스와 원문 위치를 표시한 지침 검색](docs/readme-guidelines.jpg)](docs/readme-guidelines.jpg)
 
-![KCD 상병마스터에서 E83.0을 검색한 화면](docs/readme-kcd.png)
+진료 화면 아래에서 한국어 또는 영어로 지침을 찾습니다. 결과에는 기관·연도·라이선스·출처 URL·원본 경로·행 위치와 원문 일부가 붙습니다. 제목·기관·문서 유형의 어휘 검색이며, 검색 결과가 개별 환자에게 적용되는 의학적 근거라는 판정은 아닙니다.
 
-1. `테이블` 탭의 선택 메뉴에서 개념·근거 관계·출처·KCD-9 상병마스터를 고릅니다.
-2. 검색어를 입력하고 `← / →`로 50행씩 조회합니다.
-3. KCD에서는 `윌슨`, `Wilson`, `E83.0`으로 명칭·코드를 검색할 수 있습니다. 같은 코드의 여러 명칭과 원본 Excel 행 번호를 보존합니다.
+공식 문서 15,904개의 원문과 이용 조건은 로컬에서 보존합니다. 질환 791개에 대한 문서 제목 참고 연결 2,686개는 의료 주장과 분리해 관리합니다. 본문 전체를 자동으로 검수된 임상 관계로 변환한 것은 아닙니다.
 
-KCD 자료는 저장소에 포함되지 않습니다. 아래 [KCD-9 로컬 조회](#kcd-9-로컬-조회) 절에 따라 먼저 설치하세요. KCD 명칭 검색 결과와 기존 질병의 이름 일치 후보는 승인된 의학적 매핑이 아닙니다.
+로컬에서는 [NOVA 개발 가이드](https://nova.snubhai.org/docs/#guidelines)의 지침 ZIP을 내려받아 풀고 경로를 설정합니다.
 
-상단 테마 버튼으로 밝은/어두운 화면을 전환하고, `DB 정보`에서 데이터 버전·규모·출처를 확인할 수 있습니다.
-
-## 현재 데이터
-
-기본 판: `meddb-2026.10.13.1`. 질병 3,341개, 소견 5,613개, 기전 23,631개, 관계 114,092개, 표준 용어 매핑 8,448개입니다. 기존 `meddb-2026.10.10.4`는 변경하지 않고 보존했습니다. 새 판에는 독립 출처를 근거로 사용장애·체질성 성장지연 관련 개념 3개와 초안 관계 4개를 추가했습니다. [변경 근거](docs/targeted-release.json)를 확인하세요.
-
-- DisMech의 3,333개 YAML 항목을 commit `0cfe4bd579700d42c13d5fcc147e785e52c97966`에 고정해 수입했습니다. 질병→기전, 질병→표현형, 원본에서 명시한 기전 downstream 관계만 변환합니다. 동일 질병으로 명시한 소수의 기존 파일럿 개념을 합쳤고, 질병별 기전 ID는 출처 범위를 유지합니다.
-- HPO 공식 `hp/releases/2026-09-01`에서 유효한 표현형 ID를 확인해 동일 ID의 소견을 공유합니다. 이름은 공식 용어로 정규화합니다. HPOA는 수입하지 않았습니다.
-- DisMech가 제공한 MONDO 매핑은 출처 그대로 보존하고 별도 확인 완료로 표시하지 않습니다. KCD는 별도 로컬 조회 컬렉션으로 연결했습니다. 기존 질병과의 승인된 KCD 매핑, LOINC 및 검사 지식은 아직 없습니다.
-- NIDDK 파일럿 9질병의 원문 근거 관계도 보존합니다. 모든 의학 관계와 의미 매핑은 로컬 의학 검수 전 초안입니다.
-- 한국어 이름을 작성한 일부 개념에는 AI 번역 초안임을 기록합니다. 번역되지 않은 용어는 영어 원문을 표시합니다.
-
-탐색 화면은 초안을 기본 표시하되 표시 상태를 알립니다. agent API·RDF export는 초안을 기본 제외합니다. 숫자가 커졌다고 의학적 타당성 검수가 완료된 것은 아닙니다. DisMech는 AI가 정리한 연구용 지식이며 원본의 검수와 우리 검수는 별도입니다. 원문 문헌 인용문은 복제하지 않고 근거 참조 ID 및 원문 파일 위치를 보존합니다. 빈도는 원본 분류 문자열만 보존하고 진단 확률로 변환하지 않습니다.
-
-## 탐색 기능
-
-- 검색 목록: 질병·소견·기전·검사, 한국어/영어/동의어/표준 코드, 연결 수·이름·코드 정렬. 상위 200개를 렌더링하고 전체 검색 가능.
-- 방향 그래프: 출발→결과와 들어오는 관계→선택 개념을 분리. 단계·출처·초안 필터, 확대·축소·폭 맞춤·전체 보기. 노드 선택으로 상세 이동, 간선 선택으로 근거 행 강조, 이전 개념으로 복귀.
-- 연결 근거: 들어오는/나가는 관계, 원본 위치·맥락·출처·문헌 링크. 그래프는 명시된 관계만 따라가며 표현형 연관을 인과로 바꾸지 않음.
-- 진료: 검색 가능한 소견 입력, 있음·없음·미확인, 직접 표현형 공통점 후보와 근거. 미확인은 점수에 반영하지 않으며 부정은 확정 배제가 아님.
-- 구조: 개념·주장·출처·표준 매핑의 구조 표시.
-- 테이블: 전체 행 검색과 50행 페이지 처리.
-
-## API와 agent
-
-단계별 점검·지식 보강·출처 기반 조회 규약·오프라인 비교 기록은 [최신 개발 기록](docs/staged-development-2026-10-13.md)을 참고하세요. 팀 연결용 `POST /api/assist`는 확인한 소견·환자 조건과 실제 응답 이벤트의 연결을 요구합니다.
-
-한국어 표현 제안, 데이터 사용 정책, 다음 문진·진찰 제안 및 비교 평가는 [에이전트 연결 문서](docs/agent-integration.md)를 참고하세요. `POST /api/normalize`, `POST /api/suggest`, `kb.normalize(text)`, `kb.suggest(observations, profile="research")`를 지원합니다. 기본 정책은 검수 완료만 포함하며 개발용 초안 정책은 명시적으로 선택합니다.
-
-공식 진료지침 15,904개는 [문서 근거층과 런타임 검색](docs/nova-guidelines-integration.md)으로 연결했습니다. `kb.guidelines("hypnotic insomnia")`와 `POST /api/guidelines`를 사용할 수 있습니다. 대회에서는 `NOVA_GUIDELINES_DIR`의 원문을 읽으며 실행 ZIP에 지침 전체를 넣지 않습니다.
-
-`GET /api/data`는 모든 초안을 포함한 압축 원본 탐색 스냅숏입니다. `GET /api/search?q=HP:0001945`, `GET /api/graph?node=nova:fever&direction=in&depth=2&draft=true&source=DisMech`, `POST /api/rank`.
-
-순위 요청: `{"observations":{"nova:vomiting":"present"},"include_draft":true}`. 방향은 `in`/`out`/`both`. 결과에는 데이터 버전과 순위 산출의 근거가 포함됩니다. 원인 방향 탐색은 질병에서, 결과 방향 탐색은 소견·검사에서 멈춥니다. 파생질병은 깊이 한도 내에서 계속 탐색합니다. 이는 임상 인과추론이나 확률 모델이 아닙니다.
-
-`KB(version="meddb-2026.10.10.4")`와 `KB.TOOLS`, `kb.call(name,args)`를 사용할 수 있습니다. 배포판은 `data/releases/`에 JSON 또는 JSON.gz로 보존하고 SHA256은 압축 전 파일 내용 기준입니다. 원본 탐색 스냅숏의 HTTP 응답은 gzip으로 전송합니다.
-
-## 검증
-
-```bash
-python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements-ontology.txt
-.venv/bin/python -m unittest discover -s tests -v
-.venv/bin/python -m meddb validate-rdf --version meddb-2026.10.10.3 --include-draft
-.venv/bin/python -m meddb validate-rdf --node dismech-disease:Wilsons_Disease --include-draft
+```powershell
+$env:NOVA_GUIDELINES_DIR = 'C:\path\to\guidelines'
+python -m meddb serve
 ```
 
-26개 Python 테스트: 초안 기본 제외, 미확인·부정 분리, 버전 재현, 방향 탐색, 출처 보존, RDF/SHACL, 잘못된 끝점·근거 누락·검수자 없는 승인 거부. 외부 패키지가 없는 기본 Python에서 SHACL 테스트는 skip됩니다.
+현재 작업 폴더의 기본 로컬 경로는 `data/external/guidelines/guidelines`입니다. 공식 대회 컨테이너에서는 `NOVA_GUIDELINES_DIR`가 `/opt/nova/guidelines`를 가리킵니다. 실행 중 인터넷 다운로드를 하지 않고 이 경로를 읽으므로 지침 전체를 제출 ZIP에 넣을 필요가 없습니다.
 
-전체 최신 JSON은 Python 구조 검증을 통과했습니다. 최신 RDF/SHACL은 윌슨병 결과 방향의 2단계 범위에서 2,424 triple을 검증했습니다(`docs/ontology-validation-expanded.json`). 이전 소규모 판은 전체 RDF 검증했습니다(`docs/ontology-validation.json`). 최신 11만 관계 전체에 대한 SHACL 실행이나 의학적 검수 완료를 의미하지 않습니다.
+원문·증례·SDK 다운로드는 Git에서 제외되어 새 clone에 포함되지 않습니다. 문서별 출처와 라이선스를 유지하며, 변경본 재배포를 제한하는 자료는 원문을 보존해 사용합니다. [자료 구성과 처리 내역](docs/nova-guidelines-integration.md)
 
-## 데이터 재수입
+### 4. 구조: 저장 스키마
 
-```bash
-.venv/bin/python -m pip install PyYAML==6.0.3
-.venv/bin/python tools/import_dismech.py /path/to/pinned/dismech /path/to/hp.obo --version meddb-YYYY.MM.DD.N
+[![현재 개념·관계·출처·매핑 구조](docs/readme-schema.jpg)](docs/readme-schema.jpg)
+
+`구조` 탭에서 확대·폭 맞춤·전체 맞춤을 사용하고, 카드를 눌러 필드 설명과 실제 레코드를 확인합니다. 마우스 또는 키보드 포커스로 연결된 카드를 강조할 수 있습니다.
+
+현재 의료 데이터는 버전별 압축 JSON입니다. `concepts`, `assertions`, `sources`가 중심이며 외부 `mappings`는 개념 내부 배열입니다. 질병·소견·기전 카드는 같은 개념 목록을 나눈 뷰입니다. 독립 SQL 의료 테이블이 설치된 것은 아닙니다. 지침 검색의 작은 메모리 SQLite 인덱스는 이 의료 저장 구조와 별개입니다. [스키마 설명](docs/schema.md)
+
+### 5. 테이블: 원문 레코드 검색
+
+[![Graves 질환 개념과 매핑 원문 조회](docs/readme-table.jpg)](docs/readme-table.jpg)
+
+`테이블` 탭에서 개념·근거 관계·출처를 선택하고 이름·ID·원문 필드로 검색합니다. 한 페이지에 50행씩 표시합니다. 캡처는 `dismech-disease:Graves_Disease` 개념의 원문 조회입니다.
+
+KCD-9는 별도로 설치하는 로컬 컬렉션입니다. 현재 캡처 환경에는 없으며, 설치하지 않은 경우 KCD 조회는 503을 반환합니다. 기존 의료 그래프와 조회는 계속 작동합니다.
+
+## 데이터와 검수 상태
+
+기본 판은 `meddb-2026.10.13.1`입니다. 과거 판은 `data/releases/`에서 그대로 보존하며 중복된 비압축 스냅숏은 제거했습니다.
+
+| 항목 | 개수 |
+|---|---:|
+| 질병 | 3,341 |
+| 소견 | 5,613 |
+| 기전 | 23,631 |
+| 개념 전체 | 32,585 |
+| 의료 관계 | 114,092 |
+| HPO·MONDO 매핑 | 8,448 |
+| 의료 출처 | 3,345 |
+| 검수 완료 의료 관계 | 0 |
+
+- DisMech 3,333개 YAML 항목을 commit `0cfe4bd579700d42c13d5fcc147e785e52c97966`에 고정해 수입했습니다. 명시된 질병–기전·표현형·downstream 관계를 가져오며 임의의 인과 사슬을 생성하지 않습니다.
+- HPO `hp/releases/2026-09-01`의 유효 ID·이름을 확인하고 같은 ID의 소견을 공유합니다. HPOA는 수입하지 않았습니다.
+- DisMech의 MONDO 매핑은 별도 의미 검수 완료로 표시하지 않습니다. 한국어 이름·표현 매핑의 일부도 AI 번역 초안입니다.
+- NIDDK 복통 파일럿 9질병의 원문 근거를 유지합니다. 최신 판에는 독립 출처를 근거로 개념 3개·초안 관계 4개를 추가했습니다. [변경 근거](docs/targeted-release.json)
+- 승인된 KCD 매핑과 LOINC 검사 지식은 아직 없습니다. `Test` 등의 타입이 있다고 실제 검사 자료가 채워진 것은 아닙니다.
+
+출처·원문 위치·맥락·문헌 참조·검수 상태를 관계마다 추적합니다. 숫자 빈도·질환 사전확률은 구현하지 않았고 원본 빈도 문자열을 진단 확률로 바꾸지 않습니다. 원본 수입과 독립 임상 검수는 별개의 작업입니다.
+
+## 에이전트 연결
+
+### 자료 사용 정책
+
+| profile | 범위 | 현재 관계 |
+|---|---|---:|
+| reviewed | 검수 완료만, API 기본값 | 0 |
+| pilot | NIDDK 복통 파일럿 초안 | 50 |
+| research | 전체 연구용 초안 | 114,092 |
+
+웹은 초안을 명시적으로 포함하는 개발 화면입니다. API와 RDF export는 의료 관계의 초안을 기본 제외합니다. 기본 후보가 비어 있다고 질병이 없다는 뜻은 아닙니다.
+
+### 출처가 있는 조회 규약
+
+```python
+from examples.knowledge_session import KnowledgeSession
+
+session = KnowledgeSession(profile='research')
+event = session.record_result('say', 1, '잠을 잘 못 자요')
+# 에이전트/검수자가 실제 응답과 의미 매핑을 확인한 후 적용
+session.confirm_observation('hpo:HP:0100785', 'present', [event])
+support = session.support()
 ```
 
-Importer는 로컬 고정 checkout만 읽고 YAML safe loader를 사용합니다. 새 판 이름은 --version으로 지정하며 이미 존재하는 판은 importer가 거부합니다. 원본 파일별 SHA256은 `data/terminology/dismech-manifest.json`에 기록했습니다.
+`prepare()`에서 KB를 로드하고 증례마다 세션을 새로 만듭니다. `initial/say/exam/test` 이벤트에는 제공된 시작 정보 또는 성공한 SDK 응답만 기록합니다. 알고 있는 소견·환자 조건·문진 완료 상태는 이벤트 출처가 필요합니다. 질문만 보냈거나 요청이 실패한 기록을 환자 사실로 사용하지 않습니다. 예선에서는 검사 결과를 입력할 수 없습니다.
 
-이용 조건과 변환 내역: [THIRD_PARTY_NOTICES](docs/THIRD_PARTY_NOTICES.md). 디자인 참고: https://bbi-bbo.github.io/medagent-kb/ . 해당 팀의 코드·폰트·번들 데이터는 복사하지 않았습니다.
+응답은 후보·근거·추가 확인 소견과 함께, 출처 기반 문진·감별·계획 요구사항을 제공합니다. 불면·수면제 사용, 아동 성장, 갑상선 과다 기능의 3개 보조 경로에 요구사항 12개가 있습니다. 모두 초안 제안이며 자동 진단·치료 규칙이 아닙니다.
 
-## KCD-9 로컬 조회
+계약 검증은 참조와 형식을 검사하며 문장의 의학적 의미가 참인지 판정하지 않습니다. 원문과 의미 매핑의 대조, 모델 호출·재시도·남은 턴·마감·SOAP 작성·DIAGNOSE는 에이전트가 관리합니다. 일반 의료 지식을 환자에게 관찰된 사실처럼 기록하지 않습니다.
 
-[HIRA 공식 배포 페이지](https://www.hira.or.kr/rc/drug/insuadtcrtr/bbsView.do?brdBltNo=53117&brdScnBltNo=4&pgmid=HIRAA030069000400)의 `배포용 상병마스터_260329.xlsx`에서 78,197개 명칭 행과 44,846개 고유 코드를 보존합니다. 활동분류도 포함하므로 코드 수는 질병 개념 수가 아닙니다. 원본과 추출본은 재배포 조건 확인 전까지 Git에서 제외했습니다.
+[조회 규약과 JSON 스키마](docs/agent-contract.md) · [연결 예제](examples/agent_knowledge.py) · [단계별 개발 기록](docs/staged-development-2026-10-13.md)
+
+### API
+
+| 경로 | 기능 |
+|---|---|
+| `GET /api/health` | 서비스 준비·데이터 버전 |
+| `GET /api/data` | 초안 포함 탐색 스냅숏, gzip 전송 |
+| `GET /api/search?q=HP:0001945` | 개념 검색 |
+| `GET /api/graph?node=nova:fever&direction=in&depth=2&draft=true` | 명시된 방향 관계 탐색 |
+| `POST /api/normalize` | 한국어 표현의 확인 전 매핑 제안 |
+| `POST /api/rank` | 소견·조건의 근거 점수 |
+| `POST /api/suggest` | 후보와 다음 확인 항목 |
+| `POST /api/assist` | 이벤트 출처를 요구하는 팀 연결 규약 |
+| `POST /api/guidelines` | 라이선스·출처가 붙은 원문 지침 검색 |
+
+`KB(version='meddb-2026.10.13.1')`, `KB.TOOLS`, `kb.call(name, args)`로 직접 호출할 수도 있습니다. 그래프 방향은 in/out/both, 깊이는 0~5입니다. 결과 방향은 소견·검사에서 멈추고 파생질병은 깊이 범위 안에서 계속 탐색합니다. 관계 탐색은 임상 인과추론 엔진이 아닙니다.
+
+### 오프라인 전달 번들
 
 ```bash
-python3 -m venv .venv
-.venv/bin/python -m pip install openpyxl
-.venv/bin/python tools/import_kcd.py "/path/to/배포용 상병마스터_260329.xlsx" data/terminology/kcd/hira-kcd9-260329.json.gz
-python3 -m meddb serve
+python tools/package_agent_knowledge.py
 ```
 
-테이블 탭의 `KCD-9 상병마스터`에서 한영 명칭과 점 포함 코드로 검색할 수 있습니다. 구조 탭에 독립 컬렉션으로 표시합니다. 로컬 추출본이 없는 환경에서는 KCD API가 503을 반환하며 기존 그래프는 계속 작동합니다.
+`dist/nova-knowledge-bundle.zip`에 Python 코드, 의료 데이터 한 판, 정책·사전·보조 경로, 조회 규약과 연결 예제를 담습니다. 압축을 풀어 별도 Python 프로세스에서 로딩·조회·해시를 확인합니다. 공개 증례 정답·대본·평가용 점검표·지침 원문은 포함하지 않습니다.
 
-- `GET /api/kcd?q=윌슨&offset=0&limit=50`: 원문 명칭 행 검색·페이지 처리.
-- `GET /api/kcd/code?code=E83.0`: 코드에 포함된 모든 명칭과 원문 위치.
-- `GET /api/kcd/mappings?concept=dismech-disease:Wilsons_Disease`: 이름 일치에 따른 검수 전 매핑 후보. 승인된 매핑이나 질병 동등성 주장이 아닙니다.
+**완성된 대회 제출물은 아닙니다.** 에이전트 팀이 공식 SDK, run.py, requirements.txt와 연결해야 합니다. 실행 중 다운로드를 하지 않는 로컬 경로를 사용합니다. `pip` 패키지만 설치하면 의료 데이터·웹 자산은 포함되지 않습니다.
 
-KCD 접두어에서 계층을 임의 생성하지 않으며 청구 부가정보를 임상 배제 규칙으로 사용하지 않습니다. KCD 조회는 코드당 여러 명칭 보존·페이지 처리·검수 전 후보 반환을 테스트합니다.
+## 검증과 비교
 
+```bash
+python -m unittest discover -s tests -v
+node --check web/app.js
+node --check web/agent-ui.js
+node tests/test_chain_graph.cjs
+python tools/build_public_checklists.py
+python tools/compare_knowledge_offline.py
+```
 
-결과 그래프는 출발 질병 → 기전 1차/파생질병 → 기전 2차/파생질병 → … → 소견으로 배치합니다. 순환이 없는 부분은 표시된 간선의 가장 긴 경로로 단계를 결정하고, 순환 부분은 도달 단계로 배치합니다. 이는 임상적 시간 순서나 인과 검수 완료를 뜻하지 않습니다. 탐색 깊이는 도달 범위이고 화면 열은 그 안의 연결 경로 단계라 서로 다를 수 있습니다. 기본 탐색 깊이는 5이며 긴 그래프는 가로 스크롤하거나 폭 맞춤으로 볼 수 있습니다. 기전 단계와 파생질병 탐색을 포함한 Python 테스트는 26개입니다.
+최근 Python 실행 결과는 **총 72개 중 68개 통과, RDF/SHACL 관련 4개 skip**입니다. 구조·출처·초안 정책·부정/미확인·환자 맥락·조회 계약·HTTP handler·버전 재현 등을 확인합니다. 웹의 그래프·표현 해석·후보 조회·지침 검색을 실제 브라우저에서도 확인했습니다.
 
-기전 사슬 화면은 질병의 직접 has_phenotype 연관을 아래 별도 목록에 보존합니다. 다른 명시 경로로 도달할 수 있는 중복 직통선은 화면에서만 숨기며 원본 주장과 근거 테이블은 유지합니다. 새 인과 관계를 생성하지 않습니다. 표시 로직 검증: `node tests/test_chain_graph.cjs`.
+공개 증례 3건의 19항목 점검표와 9회의 고정 버전 KB 비교를 만들었습니다. 비교는 시작 정보와 일부 진찰표 소견을 평가자가 직접 제공한 **오프라인 참고 사실 재생**입니다. 모델 호출은 0회이며 실제 진단 정확도·진료 턴·모델 비용·SOAP 점수를 측정하지 않았습니다. 추가 정보가 생겼지만 응답 크기도 증가했으므로 성능·효율 개선으로 단정하지 않습니다.
+
+[점검표](docs/public-case-checklists.md) · [비교 결과](docs/offline-knowledge-comparison.md) · [실제 비교 실행 도구](docs/agent-ablation.md)
+
+RDF 검증은 별도 의존성이 필요합니다.
+
+```bash
+python -m pip install -r requirements-ontology.txt
+python -m meddb validate-rdf --node dismech-disease:Wilsons_Disease --include-draft
+```
+
+이전 판의 전체 검증과 윌슨병 일부 범위의 RDF/SHACL 기록은 `docs/ontology-validation*.json`에 보존합니다. 최신 관계 전체의 SHACL 또는 임상 검수 완료를 의미하지 않습니다. 데이터 SHA256은 압축 해제한 파일 바이트를 기준으로 하며 코드·정책 버전도 실험 기록에 함께 남깁니다.
+
+## KCD-9 별도 설치
+
+[HIRA 공식 자료](https://www.hira.or.kr/rc/drug/insuadtcrtr/bbsView.do?brdBltNo=53117&brdScnBltNo=4&pgmid=HIRAA030069000400)의 상병마스터는 재배포 조건 확인 전까지 원본·추출본을 Git에서 제외합니다. 기존 기록은 78,197개 명칭 행과 44,846개 고유 코드를 보존하며 활동분류도 포함하므로 고유 코드 수가 질병 수는 아닙니다.
+
+```bash
+python -m pip install openpyxl
+python tools/import_kcd.py "/path/to/배포용 상병마스터_260329.xlsx" data/terminology/kcd/hira-kcd9-260329.json.gz
+python -m meddb serve
+```
+
+- `GET /api/kcd?q=윌슨&offset=0&limit=50`: 명칭 행 검색.
+- `GET /api/kcd/code?code=E83.0`: 같은 코드의 여러 명칭과 원문 위치.
+- `GET /api/kcd/mappings?concept=dismech-disease:Wilsons_Disease`: 이름 일치 기반 검수 전 후보.
+
+명칭 일치를 승인된 질병 동등성으로 보지 않습니다. 코드 접두어로 계층을 임의 생성하거나 청구 부가정보를 임상 배제 규칙으로 사용하지 않습니다.
+
+## 데이터 재수입과 출처
+
+```bash
+python -m pip install PyYAML==6.0.3
+python tools/import_dismech.py /path/to/pinned/dismech /path/to/hp.obo --version meddb-YYYY.MM.DD.N
+```
+
+로컬 고정 checkout과 YAML safe loader를 사용하며 기존 릴리스 덮어쓰기를 거부합니다. 새 수입은 설명·참조를 길이 제한으로 자르지 않고 원본 조건을 보존합니다. 이미 수입된 과거 판의 잘린 정보를 소급 복원한 것은 아닙니다. 원본 파일 해시는 `data/terminology/dismech-manifest.json`에 있습니다.
+
+[이용 조건·변환 내역](docs/THIRD_PARTY_NOTICES.md) · [분석과 남은 작업](docs/ontology-review-2026-10-13.md) · [사이트 실행 문제](docs/site-restoration.md)
+
+화면 구성은 [참고 KB 탐색기](https://bbi-bbo.github.io/medagent-kb/)를 참고해 자체 구현했습니다. 해당 팀의 코드·폰트·번들 데이터는 복사하지 않았습니다. 발표 자료의 원본과 추출 파일은 `docs/nova_competition/`에 보존합니다.
