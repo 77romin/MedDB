@@ -185,6 +185,34 @@ python tools/package_agent_knowledge.py
 
 ## 검증과 비교
 
+### 팀 임상 KB와 통합 실행
+
+팀 PR #1의 주호소 중심 `MedDB`를 출처·기전 중심 `KB`와 함께 제공합니다. 임상 KB는 주호소 19개, 질환 134개, 소견 289개, 진찰 56개를 포함하며 모두 임상 검수 전입니다. [통합 설계와 변경 내역](docs/clinical-integration.md) · [임상 출처 기록](docs/SOURCES.md)
+
+```powershell
+python -m meddb clinical validate
+python -m meddb clinical stats
+python -m meddb clinical demo "기침이 있어요"
+python -m meddb clinical page docs/viewer.html
+python tools/compare_integrated_knowledge.py
+```
+
+기존 `python -m meddb serve`와 웹 화면은 유지합니다. [임상 흐름 탐색 화면](docs/viewer.html)은 별도 HTML입니다. [임상 스키마](docs/clinical-schema.md)와 [온톨로지 스키마](docs/ontology-schema.md)를 구분했습니다.
+
+하이브리드 에이전트는 `clinical`(기존 기본), `ontology`, `integrated` 모드를 제공합니다. 명시적인 소견 매핑 5개는 모두 초안이며 `research` 프로필에서만 사용합니다. 기본 `reviewed`에서는 초안 매핑을 적용하지 않습니다. 두 KB의 점수는 각각 제공하며 합산하지 않습니다.
+
+공식 starter와 SDK가 로컬에 있다면 실행 코드를 포함한 통합 ZIP을 생성할 수 있습니다.
+
+```powershell
+python tools/make_submission.py --starter data/external/starter/run.py --agent hybrid --knowledge-mode integrated --reference-profile research
+```
+
+`dist/submission_hybrid.zip`은 압축 해제한 별도 환경에서 `run.prepare()`와 두 KB·매핑 로딩을 확인합니다. 공개 샘플·정답·평가 자료·PPT·진료지침 본문은 포함하지 않습니다. ZIP 생성과 로딩 검증은 실제 대회 실행 성공이나 임상 검수 완료를 뜻하지 않습니다. starter/SDK는 새 clone에 포함되지 않으며, 외부 임상 데이터의 이용 조건은 [팀 출처 장부](docs/SOURCES.md)에 기록되어 있습니다.
+
+[통합 오프라인 재생 결과](docs/integrated-knowledge-replay.json)는 경계 사례 3개 × 지식 입력 3종의 9회 조회입니다. 모델 호출 0회로, 실제 진단 정확도·SOAP 점수·턴 수·모델 비용은 측정하지 않았습니다.
+
+### 자동 검증
+
 ```bash
 python -m unittest discover -s tests -v
 node --check web/app.js
@@ -194,7 +222,7 @@ python tools/build_public_checklists.py
 python tools/compare_knowledge_offline.py
 ```
 
-최근 Python 실행 결과는 **총 72개 중 68개 통과, RDF/SHACL 관련 4개 skip**입니다. 구조·출처·초안 정책·부정/미확인·환자 맥락·조회 계약·HTTP handler·버전 재현 등을 확인합니다. 웹의 그래프·표현 해석·후보 조회·지침 검색을 실제 브라우저에서도 확인했습니다.
+최근 Python 실행 결과는 **총 120개 중 116개 통과, RDF/SHACL 관련 4개 skip**입니다. 구조·출처·초안 정책·부정/미확인·환자 맥락·조회 계약·HTTP handler·버전 재현 및 임상 KB 통합을 확인합니다. 웹의 그래프·표현 해석·후보 조회·지침 검색을 실제 브라우저에서도 확인했습니다.
 
 공개 증례 3건의 19항목 점검표와 9회의 고정 버전 KB 비교를 만들었습니다. 비교는 시작 정보와 일부 진찰표 소견을 평가자가 직접 제공한 **오프라인 참고 사실 재생**입니다. 모델 호출은 0회이며 실제 진단 정확도·진료 턴·모델 비용·SOAP 점수를 측정하지 않았습니다. 추가 정보가 생겼지만 응답 크기도 증가했으므로 성능·효율 개선으로 단정하지 않습니다.
 

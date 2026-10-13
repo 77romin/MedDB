@@ -115,6 +115,7 @@ class Tracker:
         self.vitals = vitals
         self.unknown: set[str] = set()
         self.conflicts: set[str] = set()
+        self.conflict_turns: dict[str, int] = {}
         self.events: list[dict] = []
         self.exam_attempts: list[dict] = []
         for fid in db.vital_flags(vitals):
@@ -134,9 +135,13 @@ class Tracker:
         self.events.append({"finding_id": fid, "state": verdict, "turn": turn, "content": content, "kind": kind})
         if old != "?" and verdict != "?" and old != verdict:
             self.conflicts.add(fid)
+            self.conflict_turns[fid] = turn
             verdict = "?"  # Reconcile contradictory statements before using either.
         elif old == '?' and verdict in {'+', '-'}:
-            self.conflicts.discard(fid)
+            if fid in self.conflicts and turn <= self.conflict_turns[fid]:
+                verdict = '?'  # Parsing the same reply twice is not reconfirmation.
+            else:
+                self.conflicts.discard(fid)
         for bucket in (self.present, self.absent):
             if fid in bucket:
                 bucket.remove(fid)

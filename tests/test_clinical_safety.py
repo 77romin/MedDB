@@ -48,6 +48,12 @@ class ClinicalSafety(unittest.TestCase):
         self.assertIn('fever', tracker.unknown)
         self.assertEqual([e['turn'] for e in tracker.events], [1, 2])
         self.assertEqual(tracker.turns['fever'], 2)
+        tracker.mark('fever', '-', 2)
+        self.assertIn('fever', tracker.unknown)
+        self.assertIn('fever', tracker.conflicts)
+        tracker.mark('fever', '-', 3)
+        self.assertIn('fever', tracker.absent)
+        self.assertNotIn('fever', tracker.conflicts)
 
     def test_changed_diagnosis_regenerates_assessment_and_plan(self):
         tracker = Tracker(self.db, 'chest_pain', 58, 'M', '', {})
