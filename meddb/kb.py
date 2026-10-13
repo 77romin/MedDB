@@ -174,8 +174,19 @@ class KB:
         result.update({'original_query':query,'query_alias_sha256':digest,'query_expansion_status':'draft; search terms only, not confirmed diagnosis mappings'})
         return result
 
+    def assist(self, observations, events, patient=None, patient_evidence=None, history=None, profile='reviewed', phase='preliminary', limit=5):
+        from .assist import assist
+        return assist(self, observations, events, patient, patient_evidence, history, profile, phase, limit)
+
     TOOLS += [
         {'name':'guidelines','description':'Retrieve original guideline excerpts with licenses and source URLs from NOVA_GUIDELINES_DIR; titles match is tentative.','input_schema':{'type':'object','properties':{'query':{'type':'string','minLength':1,'maxLength':500},'limit':{'type':'integer','minimum':1,'maximum':10}},'required':['query'],'additionalProperties':False}},
         {'name':'normalize','description':'Propose Korean phrase mappings; user/agent must confirm before observation update.','input_schema':{'type':'object','properties':{'text':{'type':'string','minLength':1,'maxLength':10000}},'required':['text'],'additionalProperties':False}},
         {'name':'suggest','description':'Rank and propose evidence-bearing next questions/exams under an explicit knowledge profile. No diagnostic probabilities.','input_schema':{'type':'object','properties':{'observations':{'type':'object','additionalProperties':{'type':'string','enum':['present','absent','unknown']}},'profile':{'type':'string','enum':['reviewed','pilot','research']},'patient':{'type':'object','properties':{'age':{'type':'number','minimum':0,'maximum':130},'sex':{'type':'string','enum':['female','male','unknown']}},'additionalProperties':False},'category':{'type':'string'},'limit':{'type':'integer','minimum':1,'maximum':20}},'required':['observations'],'additionalProperties':False}}
     ]
+    from .workflow import resource as _tool_resource
+    TOOLS += [{'name':'assist','description':'Versioned compact knowledge support. Known observations/history/patient context need event provenance; no question-only evidence or preliminary test results.','input_schema':_tool_resource('assist-schema.json')[0]}]
+    del _tool_resource
+    for _tool in TOOLS:
+        if _tool['name'] in {'rank','suggest'}:
+            _tool['input_schema']['properties']['patient']['properties']['puberty_assessment']={'type':'string','enum':['appropriate','not_age_appropriate','unknown']}
+    del _tool

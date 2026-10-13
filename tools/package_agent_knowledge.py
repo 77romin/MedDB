@@ -24,11 +24,11 @@ def run():
         if hashlib.sha256(raw).hexdigest()!=kb.sha256:
             raise ValueError('Source snapshot changed during packaging')
         archive.writestr(f'data/releases/{kb.version}.json.gz',gzip.compress(raw,mtime=0))
-        for name in ('examples/agent_knowledge.py','docs/agent-integration.md','docs/THIRD_PARTY_NOTICES.md','docs/licenses/DisMech-BSD-3-Clause.txt'):
+        for name in ('examples/agent_knowledge.py','examples/knowledge_session.py','docs/agent-integration.md','docs/agent-contract.md','docs/THIRD_PARTY_NOTICES.md','docs/licenses/DisMech-BSD-3-Clause.txt'):
             archive.write(root/name,name)
     with tempfile.TemporaryDirectory() as temporary:
         with zipfile.ZipFile(target) as archive:archive.extractall(temporary)
-        checked=subprocess.check_output([sys.executable,'-c',"import json; from meddb import KB; from examples.agent_knowledge import knowledge_tools; k=KB(); r=knowledge_tools(k,{'nova:vomiting':'present'},profile='pilot'); print(json.dumps({'sha256':k.sha256,'candidates':len(r['candidates']),'recommendations':len(r['next_actions'])}))"],cwd=temporary,text=True)
+        checked=subprocess.check_output([sys.executable,'-c',"import json; from meddb import KB; from examples.agent_knowledge import knowledge_tools; from examples.knowledge_session import KnowledgeSession; k=KB(); r=knowledge_tools(k,{'nova:vomiting':'present'},profile='pilot'); session=KnowledgeSession(k,profile='research'); event=session.record_result('say',1,'잠을 잘 못 자요'); session.confirm_observation('hpo:HP:0100785','present',[event]); contract=session.support()['contract_version']; print(json.dumps({'sha256':k.sha256,'candidates':len(r['candidates']),'recommendations':len(r['next_actions']),'contract':contract}))"],cwd=temporary,text=True)
         validation=json.loads(checked)
         if validation['sha256']!=kb.sha256 or not validation['candidates']:
             raise ValueError('Extracted bundle verification failed')

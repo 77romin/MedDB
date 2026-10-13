@@ -58,3 +58,9 @@ class AgentRouteTests(unittest.TestCase):
         self.assertEqual(code,200)
         self.assertEqual(json.loads(body),{'service':'nova-meddb','status':'ready','version':'meddb-2026.10.10.3'})
         self.assertEqual(headers['Cache-Control'],'no-store')
+
+    def test_assist_contract_route(self):
+        code,body,_=self.request('/api/assist',{'observations':[],'events':[]})
+        self.assertEqual(code,200)
+        self.assertEqual(json.loads(body)['contract_version'],'nova-knowledge-contract-1')
+        self.assertEqual(self.request('/api/assist',{'observations':[{'finding_id':'nova:fever','state':'present'}],'events':[]})[0],400)

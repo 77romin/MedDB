@@ -60,7 +60,7 @@ def serve(kb, port=8765):
             self.end_headers()
             self.wfile.write(payload)
         def do_POST(self):
-            if self.path not in {"/api/rank", "/api/normalize", "/api/suggest", "/api/guidelines"}:
+            if self.path not in {"/api/rank", "/api/normalize", "/api/suggest", "/api/guidelines", "/api/assist"}:
                 self.send_error(404)
                 return
             try:
@@ -70,7 +70,11 @@ def serve(kb, port=8765):
                 body = json.loads(self.rfile.read(size))
                 if not isinstance(body, dict) or not isinstance(body.get("include_draft", False), bool):
                     raise ValueError("Invalid request")
-                if self.path == '/api/guidelines':
+                if self.path == '/api/assist':
+                    allowed={'observations','events','patient','patient_evidence','history','profile','phase','limit'}
+                    if set(body)-allowed:raise ValueError('Unknown assist field')
+                    result=kb.assist(**body)
+                elif self.path == '/api/guidelines':
                     result = kb.guidelines(body.get('query'),body.get('limit',3))
                 elif self.path == '/api/normalize':
                     result = kb.normalize(body.get('text'))
