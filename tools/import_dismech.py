@@ -70,7 +70,7 @@ def run(repo, hpo_path, version_name, limit=None):
                 if tid:assertion(patho[m['name']],'causes',tid,sid,f'pathophysiology[{i}].downstream[{j}]',target)
         manifest.append(dict(file=file.name,sha256=sources[sid]['sha256']))
     d['concepts']=list(nodes.values());d['sources']=list(sources.values())
-    text=json.dumps(d,ensure_ascii=False,separators=(',',':'))+'\n';(root/'data/abdominal-pain.json').write_text(text);(root/'data/releases'/f'{d["version"]}.json.gz').write_bytes(gzip.compress(text.encode(),mtime=0))
+    text=json.dumps(d,ensure_ascii=False,separators=(',',':'))+'\n';(root/'data/releases'/f'{d["version"]}.json.gz').write_bytes(gzip.compress(text.encode(),mtime=0))
     (root/'data/terminology/dismech-manifest.json').write_text(json.dumps(dict(repository='https://github.com/monarch-initiative/dismech',commit=version,files=manifest,transform='Explicit disease-to-mechanism, phenotype and downstream links only; citations retained, quotations omitted; local review remains draft'),indent=2)+'\n')
     print('Imported',len(manifest),'files;',len(nodes),'concepts;',len(d['assertions']),'assertions')
 if __name__=='__main__':

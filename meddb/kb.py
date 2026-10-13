@@ -2,7 +2,8 @@ import hashlib
 import json
 from pathlib import Path
 
-DEFAULT_DATA = Path(__file__).resolve().parents[1] / "data" / "abdominal-pain.json"
+DATA_ROOT = Path(__file__).resolve().parents[1] / 'data'
+DEFAULT_DATA = DATA_ROOT / 'releases' / 'meddb-2026.10.10.4.json.gz'
 DEFAULT_VERSION = 'meddb-2026.10.13.1'
 KINDS = {"Disease", "ClassificationCode", "Finding", "Mechanism", "Test", "Exposure"}
 RELATIONS = {"has_phenotype": ({"Disease"}, {"Finding"}), "has_mechanism": ({"Disease"}, {"Mechanism"}), "causes": ({"Mechanism", "Exposure"}, {"Finding", "Mechanism", "Disease"}), "supports_finding": ({"Test"}, {"Finding"})}
@@ -11,12 +12,12 @@ class KB:
     def __init__(self, path=None, version=None):
         if path is None:
             path = DEFAULT_DATA
-            if version is None and (DEFAULT_DATA.parent/'releases'/(DEFAULT_VERSION+'.json.gz')).exists():
+            if version is None and (DATA_ROOT/'releases'/(DEFAULT_VERSION+'.json.gz')).exists():
                 version = DEFAULT_VERSION
         if version is not None:
             if not isinstance(version, str) or not __import__('re').fullmatch(r'meddb-\d{4}\.\d{2}\.\d{2}\.\d+', version):
                 raise ValueError("Invalid data version")
-            path = DEFAULT_DATA.parent / "releases" / (version + ".json")
+            path = DATA_ROOT / "releases" / (version + ".json")
         path = Path(path)
         if not path.exists() and path.with_suffix(path.suffix + ".gz").exists():
             path = path.with_suffix(path.suffix + ".gz")

@@ -23,7 +23,7 @@ def run():
         if kb.path.suffix=='.gz':raw=gzip.decompress(raw)
         if hashlib.sha256(raw).hexdigest()!=kb.sha256:
             raise ValueError('Source snapshot changed during packaging')
-        archive.writestr('data/abdominal-pain.json.gz',gzip.compress(raw,mtime=0))
+        archive.writestr(f'data/releases/{kb.version}.json.gz',gzip.compress(raw,mtime=0))
         for name in ('examples/agent_knowledge.py','docs/agent-integration.md','docs/THIRD_PARTY_NOTICES.md','docs/licenses/DisMech-BSD-3-Clause.txt'):
             archive.write(root/name,name)
     with tempfile.TemporaryDirectory() as temporary:
