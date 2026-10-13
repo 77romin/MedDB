@@ -20,6 +20,10 @@ from .build import DATA_DIR, _read_tsv_gz, build, load_sources
 
 W_PRESENT = {"key": 3.0, "support": 1.0, "against": -2.0}
 W_ABSENT = {"key": -1.5, "support": -0.3, "against": 0.0}
+# 아래 두 감점은 tools/eval_kb.py 로 비교해 보니 정확도를 떨어뜨려(71% → 61~69%) 0으로 둔다.
+# 정답 질환도 아직 묻지 않은 핵심 소견을 갖는 경우가 많기 때문. 근거 없는 후보는 최종 선택 단계에서 거른다.
+W_UNKNOWN_KEY = 0.0  # 아직 확인하지 않은 핵심 소견 하나당 감점
+W_NO_EVIDENCE = 0.0  # 확인된 핵심 소견이 하나도 없는 질환의 추가 감점
 W_FREQ = 0.5
 W_PREV = 0.5       # 진료 통계 사전확률 가중치
 PREV_ZERO = 3.0    # 해당 성·연령 칸에서 전체의 0.1%를 차지하면 0점
@@ -509,6 +513,10 @@ class MedDB:
             score = W_FREQ * d["freq"] + W_PREV * (prior or 0.0)
             score += sum(W_PRESENT[roles[f]] for f in present if f in roles)
             score += sum(W_ABSENT[roles[f]] for f in absent if f in roles)
+            keys = [f for f, r in roles.items() if r == "key"]
+            score -= W_UNKNOWN_KEY * sum(1 for f in keys if f not in present and f not in absent)
+            if not any(f in present for f in keys):
+                score -= W_NO_EVIDENCE
             if not self._fits(d, age, None):
                 score -= AGE_PENALTY
             rows.append({

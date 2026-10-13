@@ -324,6 +324,20 @@ class SkeletonHelpers(unittest.TestCase):
             self.assertIn(ex["ko"].split()[0], ex["action"], eid)
 
 
+class KBSelfConsistency(unittest.TestCase):
+    def test_agent_reaches_each_disease_from_its_own_findings(self):
+        """KB 전체(주호소×질환)를 가상 환자로 돌린다. 공개 샘플과 무관한 회귀 기준."""
+        import contextlib
+        import io
+        import sys
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
+        import eval_kb
+        with contextlib.redirect_stdout(io.StringIO()):
+            r = eval_kb.run(seeds=1, keep=0.7, show_misses=False)
+        self.assertGreaterEqual(r["top1"], 0.75)
+        self.assertGreaterEqual(r["top3"], 0.88)
+
+
 class Integration(unittest.TestCase):
     def test_skeleton_runs_a_case_end_to_end(self):
         from examples.consult_skeleton import consult, prepare

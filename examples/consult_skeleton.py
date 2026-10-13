@@ -23,7 +23,7 @@ except ImportError:  # pragma: no cover
 
 TURN_BUDGET = 30        # 필수 단계 14~22턴 + 감별 질문 + 설명 2턴. 한도 50턴에 여유가 있다
 EXPLAIN_TURNS = 2
-DISCRIMINATE_MAX = 4    # 필수 단계가 끝난 뒤 상위 후보를 가르는 질문·진찰을 최대 몇 번 더 할지
+DISCRIMINATE_MAX = 10   # 필수 단계 뒤 감별 행동 최대 수. tools/eval_kb.py 비교: 4→71%, 8→79%, 10→81% (평균 +1턴)
 TIME_MARGIN = 180      # 마감 3분 전부터는 기록 작성으로 넘어간다
 RETRY_CODES = {"PROVIDER_UNAVAILABLE", "PROVIDER_RESPONSE_INVALID", "PATIENT_RESPONSE_INVALID",
                "EXAMINER_RESPONSE_INVALID", "API_UNAVAILABLE"}   # 서버 쪽 일시 오류, 턴을 쓰지 않음
@@ -108,7 +108,7 @@ def pick_complaint(client, db: MedDB, opening: str) -> str | None:
     return hits[0]["id"] if hits else chosen
 
 
-def read_answer(client, question: str, answer: str) -> str:
+def read_answer(client, question: str, answer: str, finding: str | None = None) -> str:
     """환자 답을 '+'(있음), '-'(없음), '?'(알 수 없음)로 읽는다. 뻔한 답은 규칙으로, 나머지는 모델로.
     "약을 안 먹으면 불안해요"처럼 부정어가 들어간 긍정 답이 있으므로 짧은 답만 규칙으로 판정한다."""
     text = answer.strip()
@@ -118,7 +118,10 @@ def read_answer(client, question: str, answer: str) -> str:
     if any(text.startswith(w) for w in YES):
         return "+"
     try:
-        verdict = ask_model(client, f"의사: {question}\n환자: {answer}\n환자의 답이 '있다'면 +, '없다'면 -, "
+        target = (f"[소견] {finding}\n이 소견이 환자에게 있으면 +, 없으면 -" if finding
+                  else "환자의 답이 '있다'면 +, '없다'면 -")
+        # 질문 문장만 주면 "한 달에 한두 번 마셔요"를 과음(+)으로 읽는 일이 있어 판단할 소견 이름을 함께 준다
+        verdict = ask_model(client, f"의사: {question}\n환자: {answer}\n{target}, "
                                     "알 수 없으면 ? 한 글자만 출력하세요.").strip()
     except NovaError:
         return "?"  # 모델 호출이 끝내 실패해도 진료는 이어 간다
@@ -145,6 +148,18 @@ def read_exam(client, result: str, findings: list[dict]) -> dict[str, str]:
             v = "?"
         verdicts[f["id"]] = v if v in "+-?" else "?"
     return verdicts
+
+
+REQUIRE_EVIDENCE = True  # 확인된 근거가 없는 후보는 최종 진단으로 고르지 않는다 (eval_kb: +1%p, C03 같은 오진 방지)
+
+
+def final_choice(ranked: list[dict]) -> dict:
+    """최종 진단: 확인된 근거(matched)가 있는 후보 중 1위. 모두 근거가 없으면 원래 1위."""
+    if REQUIRE_EVIDENCE:
+        for row in ranked:
+            if row["matched"]:
+                return row
+    return ranked[0]
 
 
 def consult(client, db: MedDB, fallback=None):
@@ -205,7 +220,8 @@ def consult(client, db: MedDB, fallback=None):
                 if act["target"] in db.slots:
                     answers[act["target"]] = reply["content"]
                 else:
-                    verdict = read_answer(client, act["text"], reply["content"])
+                    verdict = read_answer(client, act["text"], reply["content"],
+                                          db.findings.get(act["target"], {}).get("ko"))
                     if verdict == "+":
                         present.append(act["target"])
                     elif verdict == "-":
@@ -231,7 +247,7 @@ def consult(client, db: MedDB, fallback=None):
             stopped = True                      # 턴·시간 소진, 계속된 장애: 지금까지의 기록으로 마무리
             break
 
-    top = db.candidates(complaint, present, absent, age, sex, k=1)[0]
+    top = final_choice(db.candidates(complaint, present, absent, age, sex, k=5))
     if not stopped:
         for sentence in db.plan(top["id"]).get("explain", [])[:EXPLAIN_TURNS]:
             try:
