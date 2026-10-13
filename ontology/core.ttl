@@ -24,6 +24,10 @@ nova:source a owl:ObjectProperty ; rdfs:range nova:Source .
 nova:reviewStatus a owl:DatatypeProperty ; rdfs:range xsd:string .
 nova:locator a owl:DatatypeProperty ; rdfs:range xsd:string .
 nova:context a owl:DatatypeProperty ; rdfs:range xsd:string .
+nova:polarity a owl:DatatypeProperty ; rdfs:range xsd:string .
+nova:frequencyLabel a owl:DatatypeProperty ; rdfs:range xsd:string .
+nova:references a owl:DatatypeProperty ; rdfs:range xsd:string .
+nova:upstreamConditions a owl:DatatypeProperty ; rdfs:range xsd:string .
 nova:reviewer a owl:DatatypeProperty ; rdfs:range xsd:string .
 nova:mapping a owl:ObjectProperty ; rdfs:domain nova:Concept ; rdfs:range nova:Mapping .
 nova:target a owl:ObjectProperty ; rdfs:domain nova:Mapping .

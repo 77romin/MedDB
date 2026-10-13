@@ -2,6 +2,10 @@ __pycache__/
 *.pyc
 .venv/
 build/
+dist/
+# Official corpora remain local; document-specific redistribution restrictions apply.
+data/external/
+data/agent/guideline-links.json.gz
 # HIRA original/local extraction: redistribution conditions pending review.
 data/terminology/kcd/*.xlsx
 data/terminology/kcd/*.json.gz

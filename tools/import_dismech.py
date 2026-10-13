@@ -28,14 +28,18 @@ def run(repo, hpo_path, version_name, limit=None):
         return id
     def assertion(s,p,o,sid,loc,entry):
         refs=[e['reference'] for e in entry.get('evidence',[]) if isinstance(e,dict) and e.get('supports')=='SUPPORT' and e.get('reference')]
-        d['assertions'].append(dict(id=f'dismech-assertion:{len(d["assertions"]):06}',subject=s,predicate=p,object=o,source_id=sid,locator=loc,context=str(entry.get('description') or entry.get('notes') or '')[:1200],frequency=None,frequency_label=entry.get('frequency'),references=list(dict.fromkeys(refs))[:8],extraction_method='upstream_import',review_status='draft',reviewer=None))
+        row = dict(id=f'dismech-assertion:{len(d["assertions"]):06}',subject=s,predicate=p,object=o,source_id=sid,locator=loc,context=str(entry.get('description') or entry.get('notes') or ''),frequency=None,frequency_label=entry.get('frequency'),references=list(dict.fromkeys(refs)),extraction_method='upstream_import',review_status='draft',reviewer=None)
+        if p == 'has_phenotype':
+            row['polarity'] = 'excluded' if str(entry.get('frequency','')).strip().upper()=='EXCLUDED' else 'associated'
+        row['upstream_conditions'] = {key:entry[key] for key in ('modifier','onset','severity','sex','notes') if key in entry}
+        d['assertions'].append(row)
     files=sorted((repo/'kb/disorders').glob('*.yaml'))
     if limit:files=files[:limit]
     for file in files:
         raw=file.read_bytes();obj=yaml.load(raw,Loader=yaml.CSafeLoader)
         if not isinstance(obj,dict) or not obj.get('name'):continue
         name=str(obj['name']);sid='dismech:'+file.stem;did=merge.get(name,'dismech-disease:'+file.stem)
-        addnode(did,'Disease',name,names_ko.get(name));nodes[did]['description']=str(obj.get('description') or '')[:1600];nodes[did]['category']=str(obj.get('category') or '')
+        addnode(did,'Disease',name,names_ko.get(name));nodes[did]['description']=str(obj.get('description') or '');nodes[did]['category']=str(obj.get('category') or '')
         sources[sid]=dict(id=sid,url=f'https://github.com/monarch-initiative/dismech/blob/{version}/kb/disorders/{file.name}',title='DisMech · '+name,accessed='2026-10-10',version=version,sha256=hashlib.sha256(raw).hexdigest(),redistribution='CC-BY-4.0 data; BSD-3-Clause repository notice retained')
         term=(obj.get('disease_term') or {}).get('term') or {}
         if term.get('id','').startswith('MONDO:'):
@@ -45,7 +49,7 @@ def run(repo, hpo_path, version_name, limit=None):
         patho={};phenos={}
         for i,m in enumerate(obj.get('pathophysiology',[]) or []):
             if not isinstance(m,dict) or not m.get('name'):continue
-            mid='dismech-mechanism:'+file.stem+':'+str(i);mn=str(m['name']);addnode(mid,'Mechanism',mn,mechko.get(mn));nodes[mid]['description']=str(m.get('description') or '')[:1600];patho[mn]=mid
+            mid='dismech-mechanism:'+file.stem+':'+str(i);mn=str(m['name']);addnode(mid,'Mechanism',mn,mechko.get(mn));nodes[mid]['description']=str(m.get('description') or '');patho[mn]=mid
             assertion(did,'has_mechanism',mid,sid,f'pathophysiology[{i}]',m)
         for i,p in enumerate(obj.get('phenotypes',[]) or []):
             if not isinstance(p,dict) or not p.get('name'):continue

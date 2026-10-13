@@ -56,14 +56,55 @@ function highlight(svg,g,id){const neighbors=new Set([id]);for(const a of g.asse
 function resizeGraph(which){const svg=$(which);if(!svg.dataset.width)return;svg.style.width=Number(svg.dataset.width)*graphScale[which]+'px';svg.style.height=Number(svg.dataset.height)*graphScale[which]+'px'}
 function focusEvidence(id){detailTab='relations';setDetailTabs();details();const row=document.getElementById('e-'+id);if(row){row.classList.add('highlight');row.scrollIntoView({behavior:'smooth',block:'center'})}}
 function linkNode(id){const n=nodes.get(id),b=el('button',undefined,'node-link');b.append(el('span',n.label_ko),el('small',n.label_en));b.onclick=()=>show(id);return b}
-function claimTable(rows,focusId=selected){const wrap=el('div',undefined,'tablewrap'),t=el('table'),head=el('thead'),hr=el('tr');for(const text of ['관계','연결 개념','출처','근거·적용 조건'])hr.append(el('th',text));head.append(hr);t.append(head);const body=el('tbody');for(const a of rows){const tr=el('tr',undefined,'evidence-row');tr.id='e-'+a.id;tr.append(el('td',relations[a.predicate]));const target=el('td');target.append(linkNode(a.subject===focusId?a.object:a.subject),el('span','검수 전','tag'));tr.append(target);const src=el('td'),s=sources.get(a.source_id),link=el('a',s.title.startsWith('DisMech')?'DisMech':'NIDDK');link.href=s.url;link.target='_blank';link.rel='noopener';src.append(link);if(a.frequency_label)src.append(el('div','빈도: '+a.frequency_label,'muted'));tr.append(src);const evidence=el('td');evidence.append(el('div',a.locator,'mono'),el('div',a.context||'적용 조건 미기재'));for(const ref of a.references||[]){if(ref.startsWith('PMID:')){const l=el('a',ref+' ↗');l.href='https://pubmed.ncbi.nlm.nih.gov/'+ref.slice(5)+'/';l.target='_blank';l.rel='noopener';evidence.append(l,document.createTextNode(' '))}}tr.append(evidence);body.append(tr)}t.append(body);wrap.append(t);return wrap}
+function claimTable(rows,focusId=selected){
+ const wrap=el('div',undefined,'tablewrap'),t=el('table'),head=el('thead'),hr=el('tr');
+ for(const text of ['관계','연결 개념','출처','근거·적용 조건'])hr.append(el('th',text));head.append(hr);t.append(head);const body=el('tbody');
+ for(const a of rows){
+  const tr=el('tr',undefined,'evidence-row');tr.id='e-'+a.id;tr.append(el('td',relations[a.predicate]));
+  const target=el('td');target.append(linkNode(a.subject===focusId?a.object:a.subject),el('span',a.review_status==='reviewed'?'검수 완료':'검수 전','tag'));tr.append(target);
+  const src=el('td'),s=sources.get(a.source_id),title=s.title.startsWith('DisMech')?'DisMech':a.source_id.startsWith('niddk-')?'NIDDK':s.title,link=el('a',title);
+  if(/^https?:\/\//.test(s.url))link.href=s.url;link.target='_blank';link.rel='noopener';src.append(link);
+  if(a.frequency_label)src.append(el('div','빈도: '+a.frequency_label,'muted'));tr.append(src);
+  const evidence=el('td');evidence.append(el('div',a.locator,'mono'),el('div',a.context||'적용 조건 미기재'));
+  for(const ref of a.references||[]){let url;if(ref.startsWith('PMID:'))url='https://pubmed.ncbi.nlm.nih.gov/'+ref.slice(5)+'/';if(ref.startsWith('PMCID:'))url='https://pmc.ncbi.nlm.nih.gov/articles/'+ref.slice(6)+'/';if(url){const l=el('a',ref+' ↗');l.href=url;l.target='_blank';l.rel='noopener';evidence.append(l,document.createTextNode(' '))}}
+  tr.append(evidence);body.append(tr);
+ }t.append(body);wrap.append(t);return wrap;
+}
 function setDetailTabs(){document.querySelectorAll('[data-detail]').forEach(b=>b.classList.toggle('active',b.dataset.detail===detailTab))}
 function details(){const n=nodes.get(selected);$('evidence').replaceChildren();if(detailTab==='metadata'){if(n.description)$('evidence').append(el('p',n.description,'sub'));$('evidence').append(el('p','동의어: '+(n.aliases.join(', ')||'미등록'),'sub'));for(const m of n.mappings){const card=el('div',undefined,'evidence-card');card.append(el('strong',m.target+' · '+m.target_label),el('p',({exact:'동일 개념 후보',broad:'더 넓은 표준 개념',narrow:'더 좁은 표준 개념',related:'관련 개념'})[m.relation]+' · 매핑 검수 전'),el('div',m.source_version,'mono'));$('evidence').append(card)}return}const rows=edges(selected);for(const [direction,title]of [['in','들어오는 연결 (이 노드가 결과)'],['out','나가는 연결 (이 노드가 출발)']]){const es=rows.filter(a=>(direction==='in'?a.object:a.subject)===selected);if(!es.length)continue;$('evidence').append(el('h2',title+' '+es.length+'개'),claimTable(es))}if(!rows.length)$('evidence').append(el('p','현재 필터에 해당하는 관계가 없습니다.','graph-empty'))}
 function closeSidebar(){document.body.classList.remove('sidebar-open');$('scrim').hidden=true}function toggleSidebar(){if(innerWidth<=900){const open=document.body.classList.toggle('sidebar-open');$('scrim').hidden=!open}else document.body.classList.toggle('sidebar-hidden')}
 function switchTab(name){tab=name;document.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===name));for(const id of ['explore','diagnosis','structure','tables'])$(id).hidden=id!==name;document.body.classList.toggle('other-tab',name!=='explore');closeSidebar();history.replaceState(null,'','#'+name);if(name==='diagnosis')observations();if(name==='structure')requestAnimationFrame(()=>schemaFit('width'))}
 function clearRank(){++rankRequest;$('results').textContent='소견이 바뀌었습니다. 후보를 다시 조회하세요.'}
 function observations(){if(!data)return;const q=$('finding-search').value.toLowerCase();let findings=data.concepts.filter(n=>n.kind==='Finding'&&(match(n,q)||observationState.has(n.id)));findings.sort((a,b)=>(observationState.has(b.id)?1:0)-(observationState.has(a.id)?1:0)||edges(b.id).length-edges(a.id).length);$('observations').replaceChildren();for(const n of findings.slice(0,100)){const label=el('label',n.label_ko,'observation'),s=el('select');s.dataset.finding=n.id;s.setAttribute('aria-label',n.label_ko);for(const[v,t]of [['unknown','미확인'],['present','있음'],['absent','없음']]){const o=el('option',t);o.value=v;s.append(o)}s.value=observationState.get(n.id)||'unknown';s.onchange=()=>{if(s.value==='unknown')observationState.delete(n.id);else observationState.set(n.id,s.value);clearRank()};label.append(s);$('observations').append(label)}if(findings.length>100)$('observations').append(el('p','상위 100개 소견 표시 · 검색으로 추가하세요.','muted'))}
-async function rank(){const ticket=++rankRequest,obs={};for(const[id,state]of observationState)obs[id]=state;$('results').textContent='조회 중…';try{const r=await api('/api/rank',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({observations:obs,include_draft:$('rank-draft').checked})});if(ticket!==rankRequest)return;$('results').replaceChildren();$('results').append(el('p',r.total_candidates+'개 후보 · 상위 '+r.candidates.length+'개 표시','sub'));for(const c of r.candidates.slice(0,30)){const card=el('div',undefined,'candidate'),title=el('button',c.disease.label_ko,'node-link');title.onclick=()=>{switchTab('explore');show(c.disease.id)};card.append(title,el('p',`일치 ${c.matched.length} · 어긋남 ${c.conflicts.length}`));const detail=el('details');detail.append(el('summary','출처와 근거 '+c.evidence.length+'개'),claimTable(c.evidence,c.disease.id));card.append(detail);$('results').append(card)}if(!r.candidates.length)$('results').append(el('p','후보 없음은 질병이 없다는 의미가 아닙니다.','sub'))}catch(e){fail(e)}}
+async function rank(){
+ const ticket=++rankRequest,obs={},patient={};for(const[id,state]of observationState)obs[id]=state;
+ if(!$('patient-age').checkValidity()){$('patient-age').reportValidity();return}
+ if($('patient-age').value!=='')patient.age=Number($('patient-age').value);
+ if($('patient-sex').value!=='unknown')patient.sex=$('patient-sex').value;
+ $('results').textContent='조회 중…';
+ try{
+  const workflow=await api('/api/suggest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({observations:obs,patient,category:$('patient-category').value||null,profile:$('rank-draft').checked?$('knowledge-profile').value:'reviewed',limit:5})});
+  const r=workflow.ranking;
+  if(ticket!==rankRequest)return;$('results').replaceChildren();
+  $('results').append(el('p',r.total_candidates+'개 후보 · 상위 '+r.candidates.length+'개 표시 · 점수는 진단 확률이 아닙니다','sub'));
+  for(const warning of r.warnings||[])$('results').append(el('p',warning.startsWith('No reviewed')?'현재 데이터에 검수된 나이·성별 조건이 없어 해당 조건은 후보 필터링에 반영되지 않았습니다.':'검수 전 초안 근거가 포함된 결과입니다.','notice'));
+  for(const c of r.candidates){
+   const card=el('div',undefined,'candidate'),title=el('button',`${c.rank}위 · ${c.disease.label_ko}`,'node-link');
+   title.onclick=()=>{switchTab('explore');show(c.disease.id)};
+   card.append(title,el('p',`근거 점수 ${c.score.toFixed(3)} · 지지 ${c.matched.length} · 반박 ${c.conflicts.length}`));
+   for(const x of c.explanations||[])card.append(el('p',`${x.contribution>=0?'지지':'반박'}: ${nodes.get(x.finding)?.label_ko||x.finding} (${x.observed==='present'?'있음':'없음'}${x.relation_polarity==='excluded'?' · 제외 소견':''})`));
+   if(c.uncertain?.length)card.append(el('p','자료에 양성·부정 관계가 함께 있어 점수에서 제외한 소견: '+c.uncertain.map(f=>nodes.get(f)?.label_ko||f).join(', '),'notice'));
+   if(c.next_findings?.length)card.append(el('p','추가 확인할 소견: '+c.next_findings.map(f=>f.label).join(', ')));
+   const detail=el('details');detail.append(el('summary','출처와 근거 '+c.evidence.length+'개'),claimTable(c.evidence,c.disease.id));card.append(detail);$('results').append(card);
+  }
+  if(!r.candidates.length)$('results').append(el('p','지지 근거를 가진 후보가 없습니다. 소견·범주·초안 설정을 확인하세요. 후보 없음은 질병이 없다는 의미가 아닙니다.','sub'));
+  renderAgentRecommendations(workflow);
+ }catch(e){if(ticket===rankRequest){$('results').textContent='조회에 실패했습니다. 입력을 확인하고 다시 조회하세요.';fail(e)}}
+}
+
+for(const id of ['patient-age','patient-sex','patient-category'])$(id).oninput=clearRank;
+function populatePatientCategories(){const select=$('patient-category');for(const category of [...new Set(data.concepts.filter(n=>n.kind==='Disease').map(n=>n.category).filter(Boolean))].sort()){const option=el('option',category);option.value=category;select.append(option)}}
+const patientCategoryObserver=new MutationObserver(()=>{if(data&&$('patient-category').options.length===1){populatePatientCategories();patientCategoryObserver.disconnect()}});patientCategoryObserver.observe($('dataset-count'),{childList:true});
 function table(){if($('table-select').value==='kcd'){kcdTable();return}const q=$('table-search').value.toLowerCase(),rows=data[$('table-select').value].filter(r=>!q||JSON.stringify(r).toLowerCase().includes(q)),max=Math.max(1,Math.ceil(rows.length/50));tablePage=Math.max(0,Math.min(tablePage,max-1));$('table-page').textContent=`${tablePage+1} / ${max} · ${rows.length.toLocaleString()}행`;$('table-prev').disabled=tablePage===0;$('table-next').disabled=tablePage>=max-1;$('table').replaceChildren();if(!rows.length)return;const t=el('table'),thead=el('thead'),tr=el('tr'),cols=Object.keys(rows[0]);cols.forEach(c=>tr.append(el('th',c)));thead.append(tr);t.append(thead);const body=el('tbody');for(const r of rows.slice(tablePage*50,tablePage*50+50)){const row=el('tr');cols.forEach(c=>row.append(el('td',typeof r[c]==='object'?JSON.stringify(r[c]):String(r[c]))));body.append(row)}t.append(body);$('table').append(t)}
 function schema(){buildSchemaExplorer()}
 

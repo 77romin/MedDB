@@ -1,0 +1,25 @@
+{
+  "version":"action-templates-2026.10.13.1",
+  "entries":[
+    {"id":"nova:fever","action":"SAY","content":"열이 나나요?","review_status":"draft","source":"기존 소견 Fever의 존재 확인"},
+    {"id":"nova:vomiting","action":"SAY","content":"토한 적이 있나요?","review_status":"draft","source":"기존 소견 Vomiting의 존재 확인"},
+    {"id":"nova:nausea","action":"SAY","content":"속이 메스꺼운가요?","review_status":"draft","source":"기존 소견 Nausea의 존재 확인"},
+    {"id":"nova:diarrhea","action":"SAY","content":"설사를 하나요?","review_status":"draft","source":"기존 소견 Diarrhea의 존재 확인"},
+    {"id":"nova:constipation","action":"SAY","content":"변비가 있나요?","review_status":"draft","source":"기존 소견 Constipation의 존재 확인"},
+    {"id":"nova:abdominal-pain","action":"SAY","content":"배가 아픈가요?","review_status":"draft","source":"기존 소견 Abdominal pain의 존재 확인"},
+    {"id":"nova:upper-abdominal-pain","action":"SAY","content":"명치 쪽이 아픈가요?","review_status":"draft","source":"기존 소견 Upper abdominal pain의 존재 확인"},
+    {"id":"nova:ruq-pain","action":"SAY","content":"오른쪽 윗배가 아픈가요?","review_status":"draft","source":"기존 소견 Right upper quadrant pain의 존재 확인"},
+    {"id":"nova:rlq-migration","action":"SAY","content":"배꼽의 통증이 오른쪽 아래로 옮겼나요?","review_status":"draft","source":"기존 소견 nova:rlq-migration의 존재 확인"},
+    {"id":"nova:back-radiation","action":"SAY","content":"통증이 등으로 퍼지나요?","review_status":"draft","source":"기존 소견 Back radiation의 존재 확인"},
+    {"id":"nova:hematuria","action":"SAY","content":"소변에 피가 보이나요?","review_status":"draft","source":"기존 소견 Gross hematuria의 존재 확인"},
+    {"id":"nova:dysuria","action":"SAY","content":"소변을 볼 때 아픈가요?","review_status":"draft","source":"기존 소견 Dysuria의 존재 확인"},
+    {"english":"Cough","action":"SAY","content":"기침을 하나요?","review_status":"draft","source":"기존 소견 Cough의 존재 확인"},
+    {"english":"Dyspnea","action":"SAY","content":"숨이 차나요?","review_status":"draft","source":"기존 소견 Dyspnea의 존재 확인"},
+    {"english":"Headache","action":"SAY","content":"머리가 아픈가요?","review_status":"draft","source":"기존 소견 Headache의 존재 확인"},
+    {"english":"Insomnia","action":"SAY","content":"잠을 잘 못 자나요?","review_status":"draft","source":"기존 소견 Insomnia의 존재 확인"},
+    {"english":"Wheezing","action":"EXAM","content":"양쪽 폐를 청진하여 천명을 확인합니다","review_status":"draft","source":"기존 소견 Wheezing 확인을 위한 진찰 제안; 대회 서버 인정 여부 미검증"},
+    {"id":"nova:sedative-craving","action":"SAY","content":"수면제를 찾고 싶은 충동이 있나요?","review_status":"draft","source":"SAMHSA 2.5.7 craving 연관. 단독으로 사용장애 확정 아님."},
+    {"english":"Short stature","action":"SAY","content":"키가 또래보다 작은 편인가요?","review_status":"draft","source":"기존 소견 Short stature 확인. 객관적 성장 평가를 대체하지 않음."},
+    {"english":"Delayed puberty","action":"SAY","content":"사춘기 변화가 또래보다 늦나요?","review_status":"draft","source":"기존 소견 Delayed puberty 확인. 환자 표현은 진찰 확정 결과가 아님."}
+  ]
+}

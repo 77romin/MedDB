@@ -1,0 +1,7 @@
+{
+  "version":"targeted-checklists-2026.10.13.1",
+  "entries":[
+    {"id":"sleep-medication-history","trigger_all":["hpo:HP:0100785"],"title":"불면 문진 보완","action":"SAY","content":"수면제 이름은 무엇인가요?","review_status":"draft","source":{"path":"docs/nova_competition/deck_01/slides.md","locator":"슬라이드 17, 11번 SAY 및 수면제 의존 단서","description":"공개 예시의 문진 단서를 질문 제안에만 사용. 질환 확정 규칙 아님."}},
+    {"id":"upper-abdominal-pain-dyspnea","trigger_all":["nova:upper-abdominal-pain","hpo:HP:0002094"],"title":"복통의 위험 신호 검토","plan":"상복부 통증에 호흡곤란이 함께 확인됐습니다. 신속한 의료 평가가 필요한 상태인지 우선 검토하세요. 췌장염 확정 진단을 뜻하지 않습니다.","review_status":"draft","source":{"url":"https://www.niddk.nih.gov/health-information/digestive-diseases/pancreatitis/symptoms-causes","locator":"Seek care right away for pancreatitis","accessed":"2026-10-13","description":"공식 안내의 호흡곤란 등 위험 증상을 바탕으로 구성한 개발용 조합 규칙. 로컬 임상 검수 전."}}
+  ]
+}

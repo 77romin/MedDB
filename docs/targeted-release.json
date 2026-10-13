@@ -1,0 +1,15 @@
+{
+  "version": "meddb-2026.10.13.1",
+  "sha256": "bc699e785eea76bad45f6e152d95f9942021fa6011a83815701bb92d6f3da81f",
+  "base_version": "meddb-2026.10.10.4",
+  "new_concepts": 3,
+  "new_diseases": 2,
+  "new_assertions": 4,
+  "review_status": "all draft",
+  "source_basis": [
+    "https://www.ncbi.nlm.nih.gov/books/NBK519702/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC8944060/"
+  ],
+  "sample_answers_used_to_create_relations": false,
+  "diagnostic_accuracy_claim": null
+}

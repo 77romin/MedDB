@@ -1,0 +1,28 @@
+{
+  "source_url": "https://nova.snubhai.org/docs/",
+  "downloaded": "2026-10-13",
+  "official_archive_hash_verified": true,
+  "all_original_parts_verified": true,
+  "documents": 15904,
+  "title_links": 2686,
+  "linked_diseases": 791,
+  "samples": [
+    {
+      "case": "C01",
+      "reference_diagnosis": "수면제 의존 (Sedative-Hypnotic Use Disorder)",
+      "evaluation_only": true
+    },
+    {
+      "case": "C03",
+      "reference_diagnosis": "체질성 성장지연",
+      "evaluation_only": true
+    },
+    {
+      "case": "C10",
+      "reference_diagnosis": "갑상샘항진증(그레이브스병)",
+      "evaluation_only": true
+    }
+  ],
+  "notes": "Original guidelines, SDK and sample answers are local-only. Samples are excluded from runtime knowledge bundle.",
+  "base_version": "meddb-2026.10.13.1"
+}

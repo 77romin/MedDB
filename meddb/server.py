@@ -17,7 +17,7 @@ def serve(kb, port=8765):
             try:
                 if query.path == "/":
                     payload, mime = WEB.read_bytes(), "text/html; charset=utf-8"
-                elif query.path in {"/app.css", "/app.js"}:
+                elif query.path in {"/app.css", "/app.js", "/agent-ui.js"}:
                     file = WEB.parent / query.path[1:]
                     payload = file.read_bytes()
                     mime = "text/css; charset=utf-8" if file.suffix == ".css" else "application/javascript; charset=utf-8"
@@ -57,7 +57,7 @@ def serve(kb, port=8765):
             self.end_headers()
             self.wfile.write(payload)
         def do_POST(self):
-            if self.path != "/api/rank":
+            if self.path not in {"/api/rank", "/api/normalize", "/api/suggest", "/api/guidelines"}:
                 self.send_error(404)
                 return
             try:
@@ -67,7 +67,14 @@ def serve(kb, port=8765):
                 body = json.loads(self.rfile.read(size))
                 if not isinstance(body, dict) or not isinstance(body.get("include_draft", False), bool):
                     raise ValueError("Invalid request")
-                result = kb.rank(body.get("observations", {}), body.get("include_draft", False), body.get("limit", 30))
+                if self.path == '/api/guidelines':
+                    result = kb.guidelines(body.get('query'),body.get('limit',3))
+                elif self.path == '/api/normalize':
+                    result = kb.normalize(body.get('text'))
+                elif self.path == '/api/suggest':
+                    result = kb.suggest(body.get('observations', {}), body.get('profile','reviewed'),body.get('patient'),body.get('category'),body.get('limit',5))
+                else:
+                    result = kb.rank(body.get("observations", {}), body.get("include_draft", False), body.get("limit", 30), body.get("patient"), body.get("category"))
             except (ValueError, TypeError) as exc:
                 self.send_error(400, str(exc))
                 return

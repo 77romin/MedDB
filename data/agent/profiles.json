@@ -1,0 +1,8 @@
+{
+  "version": "agent-policy-2026.10.13.1",
+  "profiles": {
+    "reviewed": {"include_draft": false, "description": "검수 완료 관계만 사용. 현재 관계 0개이며 결과 없음은 명시적으로 처리한다."},
+    "pilot": {"include_draft": true, "source_prefix": "niddk-", "description": "기존 복통 파일럿 출처만 포함하는 개발 실험. 임상 검수 완료가 아니다."},
+    "research": {"include_draft": true, "description": "전체 연구용 초안 포함. 대회 성능 비교용이며 검수 완료 지식이 아니다."}
+  }
+}
