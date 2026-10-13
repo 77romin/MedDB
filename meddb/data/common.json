@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "kb_version": "0.4.0",
+    "language": "ko",
+    "author": "병명백백 (N.O.V.A. 2026)",
+    "review": "임상 검수 전 초안",
+    "license_note": "팀 자체 작성. 외부 자료의 문장·표를 옮기지 않음. docs/SOURCES.md 참고"
+  },
+  "background": ["pmh", "meds", "allergy", "family", "smoker", "heavy_alcohol"],
+  "vital_rules": [
+    {"finding": "fever", "vital": "BT", "op": ">=", "value": 38.0},
+    {"finding": "tachycardia", "vital": "HR", "op": ">", "value": 100},
+    {"finding": "hypotension", "vital": "SBP", "op": "<", "value": 90},
+    {"finding": "severe_hypertension", "vital": "SBP", "op": ">=", "value": 180},
+    {"finding": "severe_hypertension", "vital": "DBP", "op": ">=", "value": 120},
+    {"finding": "tachypnea", "vital": "RR", "op": ">=", "value": 22},
+    {"finding": "hypoxia", "vital": "SpO2", "op": "<", "value": 94}
+  ],
+  "phrases": {
+    "empathy": ["많이 힘드셨겠어요.", "걱정이 많으셨겠어요.", "말씀해 주셔서 감사합니다."],
+    "closing": ["궁금한 점은 편하게 물어보세요.", "증상이 심해지면 바로 오세요."]
+  }
+}

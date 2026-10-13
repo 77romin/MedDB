@@ -1,0 +1,796 @@
+{
+  "meta": {"source": "N.O.V.A. 2026 진료지침 코퍼스 catalog.csv", "note": "서지 정보만 담음. 제목 일치로 고른 것이라 본문 적합성은 확인되지 않음. 문서를 쓸 때 라이선스와 출처를 함께 표시할 것.", "catalog_documents": 15904, "documents_linked": 460, "diseases_with_documents": 134, "complaints_with_documents": 19},
+  "complaints": {
+    "chest_pain": [
+      {"file": "KR_HealthInfo/health_kdca_5337.md", "title": "흉통", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-19382.md", "title": "Chest Pain (Archived)", "org": "StatPearls Publishing", "year": "2022", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-17555.md", "title": "Chest Pain: Evaluation and Exclusion of Myocardial Infarction and Angina", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "dyspnea": [
+      {"file": "US_StatPearls/statpearls_article-20808.md", "title": "Dyspnea", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_HealthInfo/health_kdca_5253.md", "title": "노인 호흡곤란", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-20809.md", "title": "Dyspnea on Exertion (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-40870.md", "title": "Case Study: 60-Year-Old Female Presenting With Shortness of Breath (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "abdominal_pain": [
+      {"file": "KR_HealthInfo/health_kdca_1081.md", "title": "복통", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-17142.md", "title": "Acute Abdomen", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-41441.md", "title": "Case Study: 32-Year-Old Male Presenting with Right Lower Quadrant Abdominal Pain (Archived)", "org": "StatPearls Publishing", "year": "2022", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "headache": [
+      {"file": "KR_HealthInfo/health_kdca_5830.md", "title": "두통", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-22610.md", "title": "Acute Headache", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-30696.md", "title": "Turtle Headache", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-22613.md", "title": "Cluster Headache", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "fever": [
+      {"file": "KR_HealthInfo/health_kdca_5285.md", "title": "불명열", "org": "질병관리청", "year": "2025", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-21718.md", "title": "Fever of Unknown Origin", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-20347.md", "title": "Dengue Fever", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-115412.md", "title": "Trench Fever", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "dizziness": [
+      {"file": "KR_HealthInfo/health_kdca_6550.md", "title": "어지럼", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_HealthInfo/health_kdca_6766.md", "title": "노인 어지럼증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-131323.md", "title": "Persistent Postural-Perceptual Dizziness", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-19151.md", "title": "Central Vertigo", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "back_pain": [
+      {"file": "KR_HealthInfo/health_kdca_3796.md", "title": "요통", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_NCBI-Bookshelf/bookshelf_NBK572334.md", "title": "Low Back Pain", "org": "Michigan Medicine University of Michigan", "year": "2020", "lang": "en", "type": "진료지침", "license": "CC BY-NC-SA"},
+      {"file": "US_StatPearls/statpearls_article-18089.md", "title": "Low Back Pain: Evaluation and Management", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-28194.md", "title": "Radicular Back Pain", "org": "StatPearls Publishing", "year": "2022", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "cough": [
+      {"file": "US_StatPearls/statpearls_article-20074.md", "title": "Chronic Cough", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-25915.md", "title": "Nocturnal Cough", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-20073.md", "title": "Cough: Evaluation and Management", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_EuropePMC/europepmc_PMC6182199.md", "title": "KAAACI Evidence-Based Clinical Practice Guidelines for Chronic Cough in Adults and Children in Korea", "org": "Allergy, asthma & immunology research", "year": "2018", "lang": "en", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "vomiting_diarrhea": [
+      {"file": "KR_HealthInfo/health_kdca_1667.md", "title": "설사", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-20482.md", "title": "Diarrhea (Archived)", "org": "StatPearls Publishing", "year": "2022", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-19525.md", "title": "Chronic Diarrhea", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-30554.md", "title": "Travelers' Diarrhea", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "urinary": [
+      {"file": "US_StatPearls/statpearls_article-40407.md", "title": "Dysuria", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-22710.md", "title": "Gross and Microscopic Hematuria", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "sore_throat": [
+      {"file": "US_StatPearls/statpearls_article-27104.md", "title": "Pharyngitis (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-27105.md", "title": "Acute Pharyngitis", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-29526.md", "title": "Streptococcal Pharyngitis", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_EuropePMC/europepmc_PMC7593338.md", "title": "Diagnostic Methods, Clinical Guidelines, and Antibiotic Treatment for Group A Streptococcal Pharyngitis: A Narrative Review", "org": "Frontiers in cellular and infection microbiology", "year": "2020", "lang": "en", "type": "진료지침", "license": "CC BY"}
+    ],
+    "palpitations": [
+      {"file": "KR_HealthInfo/health_kdca_6.md", "title": "두근거림", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-26551.md", "title": "Palpitation (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "weakness": [
+      {"file": "KR_HealthInfo/health_kdca_1201.md", "title": "얼굴마비", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_HealthInfo/health_kdca_3789.md", "title": "얼굴마비(중추성 마비)", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_HealthInfo/health_kdca_3790.md", "title": "얼굴마비(말초성 마비)", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"}
+    ],
+    "syncope": [
+      {"file": "KR_HealthInfo/health_kdca_5853.md", "title": "실신", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-29805.md", "title": "Syncope", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_EuropePMC/europepmc_PMC7252783.md", "title": "Evaluation and Management of Syncope: Comparing the Guidelines of the American College of Cardiology/American Heart Association/Heart Rhythm Society and the European Society of Cardiology", "org": "American College of Cardiology/American Heart Association/Heart Rhythm Society", "year": "2018", "lang": "en", "type": "진료지침", "license": "CC BY"},
+      {"file": "US_StatPearls/statpearls_article-38171.md", "title": "Cardiac Syncope (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "altered_mental": [
+      {"file": "US_StatPearls/statpearls_article-20325.md", "title": "Delirium", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-19750.md", "title": "Coma", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-23340.md", "title": "ICU Delirium", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-27529.md", "title": "Postoperative Delirium", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "rash": [
+      {"file": "KR_HealthInfo/health_kdca_6581.md", "title": "두드러기", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_HealthInfo/health_kdca_5695.md", "title": "가려움증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_HealthInfo/health_kdca_6552.md", "title": "항문 가려움증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_Journals/kr_journal_10.5124_jkma.2019.62.1.37.md", "title": "만성두드러기의 최신 치료 가이드라인", "org": "건강보험심사평가원", "year": "2019", "lang": "ko", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "insomnia": [
+      {"file": "US_StatPearls/statpearls_article-19531.md", "title": "Chronic Insomnia", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-23557.md", "title": "Short-Term Insomnia", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-21637.md", "title": "Fatal Familial Insomnia", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_EuropePMC/europepmc_PMC7711116.md", "title": "Korean Clinical Practice Guideline for the Diagnosis and Treatment of Insomnia in Adults", "org": "Psychiatry investigation", "year": "2020", "lang": "en", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "weight_loss": [
+      {"file": "KR_HealthInfo/health_kdca_6546.md", "title": "체중 감소", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"}
+    ],
+    "short_stature": [
+      {"file": "KR_HealthInfo/health_kdca_5415.md", "title": "저신장", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-87579.md", "title": "Short Stature", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_HealthInfo/health_kdca_6616.md", "title": "특발성 저신장에서 성장호르몬 효과와 주의사항", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-21616.md", "title": "Familial Short Stature (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ]
+  },
+  "diseases": {
+    "mi": [
+      {"file": "US_StatPearls/statpearls_article-17160.md", "title": "Acute Myocardial Infarction", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-25460.md", "title": "Myocardial Infarction", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-20023.md", "title": "Acute Coronary Syndrome", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_HealthInfo/health_kdca_6770.md", "title": "급성 심근경색증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"}
+    ],
+    "unstable_angina": [
+      {"file": "KR_HealthInfo/health_kdca_6566.md", "title": "협심증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-17559.md", "title": "Unstable Angina", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-20023.md", "title": "Acute Coronary Syndrome", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-177.md", "title": "Acute Coronary Syndrome Catheter Interventions", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "aortic_dissection": [
+      {"file": "KR_HealthInfo/health_kdca_5856.md", "title": "대동맥 박리", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-20603.md", "title": "Aortic Dissection", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "pulmonary_embolism": [
+      {"file": "KR_HealthInfo/health_kdca_6540.md", "title": "폐 색전증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-42576.md", "title": "Acute Pulmonary Embolism", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_Journals/kr_journal_J_Korean_Orthop_Assoc_KM2336245.md", "title": "Guideline for the Prophylaxis of Venous Thromboembolism in Hip Surgery Patients", "org": "대한고관절학회", "year": "2011", "lang": "ko", "type": "진료지침", "license": "CC BY-NC"},
+      {"file": "KR_EuropePMC/europepmc_PMC2966990.md", "title": "Korean Guidelines for the Prevention of Venous Thromboembolism", "org": "Journal of Korean medical science", "year": "2010", "lang": "en", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "pneumothorax": [
+      {"file": "KR_HealthInfo/health_kdca_5493.md", "title": "기흉", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-27370.md", "title": "Pneumothorax", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-31796.md", "title": "EMS Pneumothorax", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-27373.md", "title": "Tension Pneumothorax", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "pericarditis": [
+      {"file": "KR_HealthInfo/health_kdca_2967.md", "title": "심낭염", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-26955.md", "title": "Pericarditis", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_HealthInfo/health_kdca_2970.md", "title": "심낭염(심장눌림증)", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_HealthInfo/health_kdca_2968.md", "title": "심낭염(급성 심낭염)", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"}
+    ],
+    "gerd": [
+      {"file": "KR_HealthInfo/health_kdca_2057.md", "title": "위식도역류질환", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_Journals/kr_journal_10.4166_kjg.2019.73.2.70.md", "title": "위식도역류질환", "org": "대한소화기기능성질 환·운동학회", "year": "2019", "lang": "ko", "type": "합의문", "license": "CC BY-NC"},
+      {"file": "US_StatPearls/statpearls_article-22098.md", "title": "Gastroesophageal Reflux Disease (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-28304.md", "title": "Gastroesophageal Reflux Disease (GERD)", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "costochondritis": [
+      {"file": "US_StatPearls/statpearls_article-20071.md", "title": "Costochondritis", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "pneumonia": [
+      {"file": "US_StatPearls/statpearls_article-27357.md", "title": "Community-Acquired Pneumonia", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-27367.md", "title": "Viral Pneumonia", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-79293.md", "title": "Lipoid Pneumonia", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-27356.md", "title": "Bacterial Pneumonia", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "panic_attack": [
+      {"file": "US_StatPearls/statpearls_article-26587.md", "title": "Panic Disorder", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_Journals/kr_journal_10.5124_jkma.2018.61.8.493.md", "title": "공황장애의 한국형 최신 치료지침", "org": "Korean Association of Anxiety Disorders", "year": "2018", "lang": "ko", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "heart_failure": [
+      {"file": "KR_HealthInfo/health_kdca_3828.md", "title": "심부전", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-28595.md", "title": "Right Heart Failure", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-20486.md", "title": "Heart Failure and Ejection Fraction", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-22661.md", "title": "Heart Failure (Congestive Heart Failure)", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "asthma": [
+      {"file": "KR_HealthInfo/health_kdca_6784.md", "title": "천식", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-17920.md", "title": "Asthma", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_NCBI-Bookshelf/bookshelf_NBK579412.md", "title": "Asthma", "org": "Michigan Medicine University of Michigan", "year": "2021", "lang": "en", "type": "진료지침", "license": "CC BY-NC-SA"},
+      {"file": "US_StatPearls/statpearls_article-36763.md", "title": "Asthma Medications", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "copd_exacerbation": [
+      {"file": "KR_HealthInfo/health_kdca_6536.md", "title": "만성폐쇄성폐질환", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_NCBI-Bookshelf/bookshelf_NBK568512.md", "title": "Chronic Obstructive Pulmonary Disease", "org": "Michigan Medicine University of Michigan", "year": "2020", "lang": "en", "type": "진료지침", "license": "CC BY-NC-SA"},
+      {"file": "US_StatPearls/statpearls_article-26083.md", "title": "Chronic Obstructive Pulmonary Disease (COPD)", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-31703.md", "title": "EMS Field Identification of Chronic Obstructive Pulmonary Disease (COPD)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "anemia": [
+      {"file": "KR_HealthInfo/health_kdca_1104.md", "title": "빈혈", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-17527.md", "title": "Anemia", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-17530.md", "title": "Acute Anemia", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-45071.md", "title": "Aplastic Anemia", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "appendicitis": [
+      {"file": "KR_HealthInfo/health_kdca_5318.md", "title": "급성 충수염", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-17784.md", "title": "Appendicitis", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-73619.md", "title": "Appendicitis in Pregnancy", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_EuropePMC/europepmc_PMC6461136.md", "title": "American Association for the Surgery of Trauma emergency general surgery guideline summaries 2018: acute appendicitis, acute cholecystitis, acute diverticulitis, acute pancreatitis, and small bowel obstruction", "org": "American Association", "year": "2019", "lang": "en", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "cholecystitis": [
+      {"file": "KR_HealthInfo/health_kdca_5820.md", "title": "담낭염", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-19448.md", "title": "Acute Cholecystitis", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-19521.md", "title": "Chronic Cholecystitis", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-17050.md", "title": "Acalculous Cholecystitis", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "biliary_colic": [
+      {"file": "KR_HealthInfo/health_kdca_6735.md", "title": "담석증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-18274.md", "title": "Biliary Colic (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-19456.md", "title": "Cholelithiasis (Archived)", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-22041.md", "title": "Gallstones (Cholelithiasis)", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "cholangitis": [
+      {"file": "KR_HealthInfo/health_kdca_5821.md", "title": "담관염", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-89675.md", "title": "Cholangitis", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-27738.md", "title": "Primary Sclerosing Cholangitis", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_EuropePMC/europepmc_PMC11051285.md", "title": "Clinical Utility of the Tokyo Guidelines 2018 for Acute Cholangitis in the Emergency Department and Comparison with Novel Markers (Neutrophil-to-Lymphocyte and Blood Nitrogen Urea-to-Albumin Ratios)", "org": "Emergency Department and Comparison", "year": "2024", "lang": "en", "type": "진료지침", "license": "CC BY"}
+    ],
+    "pancreatitis": [
+      {"file": "KR_HealthInfo/health_kdca_5248.md", "title": "췌장염", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-26578.md", "title": "Acute Pancreatitis", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-26577.md", "title": "Pancreatitis (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-26580.md", "title": "Chronic Pancreatitis", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "peptic_ulcer": [
+      {"file": "US_StatPearls/statpearls_article-26913.md", "title": "Peptic Ulcer Disease", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_HealthInfo/health_kdca_6708.md", "title": "위십이지장 궤양", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_Journals/kr_journal_10.4166_kjg.2009.54.5.298.md", "title": "Guidelines of Treatment for Bleeding Peptic Ulcer Disease", "org": "대한소화기학회", "year": "2009", "lang": "ko", "type": "진료지침", "license": "CC BY-NC"},
+      {"file": "KR_Journals/kr_journal_10.4166_kjg.2009.54.5.285.md", "title": "Guidelines of Treatment for Non-bleeding Peptic Ulcer Disease", "org": "대한소화기학회", "year": "2009", "lang": "ko", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "perforated_ulcer": [
+      {"file": "US_StatPearls/statpearls_article-22075.md", "title": "Gastric Perforation", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "gastroenteritis": [
+      {"file": "KR_HealthInfo/health_kdca_5280.md", "title": "급성 세균성 장염", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-22095.md", "title": "Viral Gastroenteritis", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-20483.md", "title": "Bacterial Gastroenteritis", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-21184.md", "title": "Eosinophilic Gastroenteritis", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "bowel_obstruction": [
+      {"file": "US_StatPearls/statpearls_article-18481.md", "title": "Bowel Obstruction (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-26081.md", "title": "Small Bowel Obstruction", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-26080.md", "title": "Large Bowel Obstruction", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_NCBI-Bookshelf/bookshelf_NBK572336.md", "title": "Evaluation and Management of Mechanical Small Bowel Obstruction in Adults", "org": "Michigan Medicine University of Michigan", "year": "2021", "lang": "en", "type": "진료지침", "license": "CC BY-NC-SA"}
+    ],
+    "ureteral_stone": [
+      {"file": "KR_HealthInfo/health_kdca_6861.md", "title": "신장결석", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-30818.md", "title": "Ureterolithiasis", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-74865.md", "title": "Urolithiasis", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-28339.md", "title": "Renal Calculi, Nephrolithiasis", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "diverticulitis": [
+      {"file": "KR_HealthInfo/health_kdca_3447.md", "title": "대장게실증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_EuropePMC/europepmc_PMC13434530.md", "title": "Evidence-based clinical practice guidelines for diagnosis and medical management of acute colonic diverticulitis developed by the Korean Association for the Study of Intestinal Diseases (KASID)", "org": "Korean Association", "year": "2026", "lang": "en", "type": "진료지침", "license": "CC BY-NC"},
+      {"file": "US_NCBI-Bookshelf/bookshelf_NBK563756.md", "title": "Management of Colonic Diverticulitis", "org": "Agency for Healthcare Research and Quality (US)", "year": "2020", "lang": "en", "type": "근거 리뷰", "license": "공공 도메인"},
+      {"file": "US_EuropePMC/europepmc_PMC3877957.md", "title": "Position paper: management of perforated sigmoid diverticulitis", "org": "World journal of emergency surgery : WJES", "year": "2013", "lang": "en", "type": "진료지침", "license": "CC BY"}
+    ],
+    "ectopic_pregnancy": [
+      {"file": "KR_HealthInfo/health_kdca_2727.md", "title": "자궁외 임신", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-27633.md", "title": "Ectopic Pregnancy", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_Journals/kr_journal_Korean_J_Obstet_Gynecol_KM2272736.md", "title": "Clinical Guidelines for Methotrexate in Conservative Treatment for Ectopic Pregnancy", "org": "Korean J Obstet Gynecol", "year": "2005", "lang": "ko", "type": "진료지침", "license": "CC BY-NC"},
+      {"file": "US_EuropePMC/europepmc_PMC5714431.md", "title": "Spontaneous abortion and ectopic pregnancy: Case definition & guidelines for data collection, analysis, and presentation of maternal immunization safety data", "org": "Vaccine", "year": "2017", "lang": "en", "type": "진료지침", "license": "CC BY"}
+    ],
+    "ovarian_torsion": [
+      {"file": "US_StatPearls/statpearls_article-95361.md", "title": "Ovarian Torsion", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "pid": [
+      {"file": "US_StatPearls/statpearls_article-26865.md", "title": "Pelvic Inflammatory Disease", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "aaa_rupture": [
+      {"file": "KR_HealthInfo/health_kdca_1746.md", "title": "대동맥류", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-17011.md", "title": "Abdominal Aortic Aneurysm", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_EuropePMC/europepmc_PMC10000315.md", "title": "Houston Methodist Ruptured Abdominal Aortic Aneurysm Guidelines", "org": "Methodist DeBakey cardiovascular journal", "year": "2023", "lang": "en", "type": "진료지침", "license": "CC BY"},
+      {"file": "US_USPSTF/uspstf_abdominal-aortic-aneurysm-screening.md", "title": "Abdominal Aortic Aneurysm: Screening", "org": "U.S. Preventive Services Task Force (USPSTF) / AHRQ", "year": "2019", "lang": "en", "type": "권고문", "license": "USPSTF 저작권 고지"}
+    ],
+    "tension_headache": [
+      {"file": "US_StatPearls/statpearls_article-22615.md", "title": "Muscle Contraction Tension Headache", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "migraine": [
+      {"file": "KR_HealthInfo/health_kdca_6557.md", "title": "편두통", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_NCBI-Bookshelf/bookshelf_NBK544082.md", "title": "Migraine", "org": "Johns Hopkins University", "year": "2019", "lang": "en", "type": "진료지침", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-22614.md", "title": "Migraine Headache", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-25145.md", "title": "Migraine With Aura", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "cluster_headache": [
+      {"file": "US_StatPearls/statpearls_article-22613.md", "title": "Cluster Headache", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_Journals/kr_journal_10.62087_hpr.2026.0011.md", "title": "Guideline for the Treatment of Cluster Headache: A Clinical Practice Guideline from the Korean Headache Society", "org": "the Korean Headache Society", "year": "2026", "lang": "en", "type": "진료지침", "license": "CC BY-NC"},
+      {"file": "US_EuropePMC/europepmc_PMC12550881.md", "title": "Non‐Invasive Vagus Nerve Stimulation in Cluster Headache: A Clinical Practice Guideline", "org": "Pain practice : the official journal of World Institute of Pain", "year": "2025", "lang": "en", "type": "진료지침", "license": "CC BY"}
+    ],
+    "sah": [
+      {"file": "US_StatPearls/statpearls_article-29607.md", "title": "Subarachnoid Hemorrhage", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_EuropePMC/europepmc_PMC5853198.md", "title": "Korean Clinical Practice Guidelines for Aneurysmal Subarachnoid Hemorrhage", "org": "Korean Society of Cerebrovascular Surgeons", "year": "2018", "lang": "en", "type": "진료지침", "license": "CC BY-NC"},
+      {"file": "KR_EuropePMC/europepmc_PMC12790917.md", "title": "Clinical Practice Guideline for the Prehospital Stage of Acute Stroke: III. Initial Decision for Primary Treatment in Subarachnoid Hemorrhage", "org": "Journal of Korean Neurosurgical Society", "year": "2026", "lang": "en", "type": "진료지침", "license": "CC BY-NC"},
+      {"file": "US_StatPearls/statpearls_article-29606.md", "title": "Acute Subarachnoid Hemorrhage (Archived)", "org": "StatPearls Publishing", "year": "2022", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "meningitis": [
+      {"file": "KR_HealthInfo/health_kdca_5284.md", "title": "뇌수막염", "org": "질병관리청", "year": "2025", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-24962.md", "title": "Meningitis", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-24970.md", "title": "Viral Meningitis", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-24964.md", "title": "Aseptic Meningitis", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "brain_tumor": [
+      {"file": "US_StatPearls/statpearls_article-18526.md", "title": "Brain Metastasis", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-22272.md", "title": "Glioblastoma Multiforme", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_EuropePMC/europepmc_PMC10183254.md", "title": "Korean Brain Tumor Society Consensus Review for the Practical Recommendations on Glioma Management in Korea", "org": "Korean Brain Tumor Society", "year": "2023", "lang": "en", "type": "합의문", "license": "CC BY-NC"},
+      {"file": "KR_EuropePMC/europepmc_PMC8082286.md", "title": "The Korean Society for Neuro-Oncology (KSNO) Guideline for Antiepileptic Drug Usage of Brain Tumor: Version 2021.1", "org": "Korean Society for Neuro-Oncology", "year": "2021", "lang": "en", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "ich": [
+      {"file": "US_StatPearls/statpearls_article-23693.md", "title": "Intracranial Hemorrhage Overview", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-90188.md", "title": "Hemorrhagic Stroke Overview", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-23683.md", "title": "Intracerebral Hemorrhagic Stroke", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_EuropePMC/europepmc_PMC4217052.md", "title": "Clinical Practice Guidelines for the Medical and Surgical Management of Primary Intracerebral Hemorrhage in Korea", "org": "Quality Control Committee", "year": "2014", "lang": "en", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "subdural_hematoma": [
+      {"file": "US_StatPearls/statpearls_article-29623.md", "title": "Subdural Hematoma", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "temporal_arteritis": [
+      {"file": "US_StatPearls/statpearls_article-29921.md", "title": "Giant Cell Arteritis (Temporal Arteritis)", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "acute_glaucoma": [
+      {"file": "KR_HealthInfo/health_kdca_6690.md", "title": "녹내장", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-22261.md", "title": "Acute Angle-Closure Glaucoma", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "sinusitis": [
+      {"file": "US_StatPearls/statpearls_article-29065.md", "title": "Acute Sinusitis", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_HealthInfo/health_kdca_1101.md", "title": "비부비동염", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-35995.md", "title": "Recurrent Acute Rhinosinusitis", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_EuropePMC/europepmc_PMC8901942.md", "title": "Clinical Practice Guideline: Nasal Irrigation for Chronic Rhinosinusitis in Adults", "org": "Korean Society of Otorhinolaryngology-Head and Neck Surgery and Korean Rhinologic Society", "year": "2022", "lang": "en", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "uri": [
+      {"file": "KR_HealthInfo/health_kdca_5423.md", "title": "감기", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-30801.md", "title": "Upper Respiratory Tract Infections With Focus on The Common Cold", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_KDCA/kdca_b55_227602_259115.md", "title": "성인 급성 상기도 감염 항생제 사용지침", "org": "질병관리청", "year": "2017", "lang": "ko", "type": "진료지침", "license": "공공누리 제4유형"},
+      {"file": "KR_KDCA/kdca_b55_310916_306853.md", "title": "2026년 다빈도 감염증 5종 항생제 적정사용을 위한 실무지침 — 2026 급성 상기도 감염 항생제 적정사용을 위한 실무지침", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "진료지침", "license": "공공누리 제0유형"}
+    ],
+    "influenza": [
+      {"file": "KR_HealthInfo/health_kdca_5232.md", "title": "인플루엔자", "org": "질병관리청", "year": "2025", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-23512.md", "title": "Influenza", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-23513.md", "title": "Influenza Vaccine", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_Journals/kr_journal_10.3904_kjm.2014.86.1.116.md", "title": "중증 인플루엔자 치료 지침", "org": "대한감염학회", "year": "2014", "lang": "ko", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "tonsillitis": [
+      {"file": "KR_HealthInfo/health_kdca_5707.md", "title": "편도염", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_HealthInfo/health_kdca_5726.md", "title": "인두편도염", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-30256.md", "title": "Tonsillitis", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "pyelonephritis": [
+      {"file": "US_StatPearls/statpearls_article-28095.md", "title": "Acute Pyelonephritis", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_Journals/kr_journal_10.14777_uti.2017.12.2.55.md", "title": "The Clinical Guidelines for Acute Uncomplicated Cystitis and Acute Uncomplicated Pyelonephritis", "org": "Korean Association of Urogenital Tract Infection and Inflammation", "year": "2017", "lang": "en", "type": "진료지침", "license": "CC BY-NC"},
+      {"file": "US_EuropePMC/europepmc_PMC2941245.md", "title": "A guideline for the inpatient care of children with pyelonephritis", "org": "American Academy of Pediatrics", "year": "2010", "lang": "en", "type": "진료지침", "license": "CC BY"}
+    ],
+    "cellulitis": [
+      {"file": "US_StatPearls/statpearls_article-19114.md", "title": "Cellulitis", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_HealthInfo/health_kdca_5779.md", "title": "연조직염과 종기", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_HealthInfo/health_kdca_5238.md", "title": "연조직염(봉와직염)", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_HealthInfo/health_kdca_6493.md", "title": "연조직염과 종기(종기)", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"}
+    ],
+    "sepsis": [
+      {"file": "KR_HealthInfo/health_kdca_6755.md", "title": "패혈증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-28981.md", "title": "Septic Shock", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-28901.md", "title": "Bacterial Sepsis", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-145900.md", "title": "Laboratory Evaluation of Sepsis", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "tuberculosis": [
+      {"file": "KR_HealthInfo/health_kdca_6561.md", "title": "결핵", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-156824.md", "title": "Latent Tuberculosis", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-96753.md", "title": "Ocular Tuberculosis", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-25159.md", "title": "Miliary Tuberculosis", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "bppv": [
+      {"file": "US_StatPearls/statpearls_article-38044.md", "title": "Benign Paroxysmal Positional Vertigo", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_Journals/kr_journal_10.21790_rvs.2020.19.4.111.md", "title": "Benign Paroxysmal Positional Vertigo: Diagnostic Criteria and Updated Practice Guideline in Diagnosis", "org": "Res Vestib Sci", "year": "2020", "lang": "ko", "type": "진료지침", "license": "CC BY-NC"},
+      {"file": "KR_Journals/kr_journal_10.21790_rvs.2017.16.2.47.md", "title": "Update of Treatment for Horizontal Canal Benign Paroxysmal Positional Vertigo: Evidence-Based Approach", "org": "Res Vestib Sci", "year": "2017", "lang": "ko", "type": "요약본", "license": "CC BY-NC"}
+    ],
+    "vestibular_neuritis": [
+      {"file": "US_StatPearls/statpearls_article-31140.md", "title": "Vestibular Neuronitis", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "meniere": [
+      {"file": "KR_HealthInfo/health_kdca_5964.md", "title": "메니에르병", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-24956.md", "title": "Meniere Disease", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "ischemic_stroke": [
+      {"file": "KR_HealthInfo/health_kdca_5495.md", "title": "뇌졸중", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-23776.md", "title": "Ischemic Stroke", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_HealthInfo/health_kdca_6474.md", "title": "뇌졸중 환자의 재활", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-17174.md", "title": "Acute Stroke: Evaluation and Management", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "orthostatic_hypotension": [
+      {"file": "US_StatPearls/statpearls_article-26349.md", "title": "Orthostatic Hypotension", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_EuropePMC/europepmc_PMC5533816.md", "title": "The recommendations of a consensus panel for the screening, diagnosis, and treatment of neurogenic orthostatic hypotension and associated supine hypertension", "org": "Journal of neurology", "year": "2017", "lang": "en", "type": "합의문", "license": "CC BY"}
+    ],
+    "arrhythmia": [
+      {"file": "KR_HealthInfo/health_kdca_1102.md", "title": "부정맥", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-143276.md", "title": "Evaluation of Suspected Cardiac Arrhythmia", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_Journals/kr_journal_10.3904_kjm.2018.93.2.133.md", "title": "2018 대한부정맥학회 심방세동 환자의 심박수 조절 지침", "org": "대한부정맥학회", "year": "2018", "lang": "ko", "type": "진료지침", "license": "CC BY-NC"},
+      {"file": "KR_Journals/kr_journal_10.3904_kjm.2018.93.4.336.md", "title": "2018 대한부정맥학회 심방세동 환자의 통합적 관리 지침", "org": "대한부정맥학회", "year": "2018", "lang": "ko", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "hypoglycemia": [
+      {"file": "US_StatPearls/statpearls_article-23267.md", "title": "Hypoglycemia", "org": "StatPearls Publishing", "year": "2022", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_HealthInfo/health_kdca_6900.md", "title": "당뇨병 합병증(급성 합병증_저혈당)", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-37214.md", "title": "Factitious Hypoglycemia", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-131735.md", "title": "Non-Diabetic Hypoglycemia", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "lumbar_strain": [
+      {"file": "US_StatPearls/statpearls_article-24813.md", "title": "Mechanical Back Strain", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_NCBI-Bookshelf/bookshelf_NBK572334.md", "title": "Low Back Pain", "org": "Michigan Medicine University of Michigan", "year": "2020", "lang": "en", "type": "진료지침", "license": "CC BY-NC-SA"},
+      {"file": "US_StatPearls/statpearls_article-18089.md", "title": "Low Back Pain: Evaluation and Management", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_Journals/kr_journal_10.22730_jmls.2025.22.1.16.md", "title": "Summary of recommendations of pain intervention for low back pain with radiculopathy", "org": "Journal of Medicine and Life Science", "year": "2025", "lang": "en", "type": "요약본", "license": "CC BY-NC"}
+    ],
+    "disc_herniation": [
+      {"file": "KR_HealthInfo/health_kdca_3512.md", "title": "좌골신경통", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-24453.md", "title": "Lumbar Disc Herniation", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_HealthInfo/health_kdca_3348.md", "title": "추간판탈출증(디스크)", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-19225.md", "title": "Cervical Disc Herniation", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "cauda_equina": [
+      {"file": "US_StatPearls/statpearls_article-19025.md", "title": "Cauda Equina and Conus Medullaris Syndromes", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_Journals/kr_journal_10.32587_jnic.2019.00136.md", "title": "Guidelines for Cauda Equina Syndrome Management", "org": "Korean Neurointensive Care Society", "year": "2019", "lang": "en", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "compression_fracture": [
+      {"file": "KR_HealthInfo/health_kdca_5833.md", "title": "골다공증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-31121.md", "title": "Vertebral Fracture", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_KDCA/kdca_b49_219103_246763.md", "title": "일차 의료용 근거기반 골다공증 권고요약본", "org": "질병관리청", "year": "2024", "lang": "ko", "type": "요약본", "license": "공공누리 제4유형"},
+      {"file": "KR_EuropePMC/europepmc_PMC4691591.md", "title": "Osteoporotic Fracture: 2015 Position Statement of the Korean Society for Bone and Mineral Research", "org": "Korean Society for Bone and Mineral Research", "year": "2015", "lang": "en", "type": "권고문", "license": "CC BY-NC"}
+    ],
+    "spinal_infection": [
+      {"file": "US_StatPearls/statpearls_article-26400.md", "title": "Vertebral Osteomyelitis", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-29338.md", "title": "Spinal Epidural Abscess", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_NCBI-Bookshelf/bookshelf_NBK547443.md", "title": "Vertebral Osteomyelitis, Discitis, and Spinal Epidural Abscess in Adults", "org": "Michigan Medicine University of Michigan", "year": "2018", "lang": "en", "type": "진료지침", "license": "CC BY-NC-SA"}
+    ],
+    "spinal_metastasis": [
+      {"file": "US_StatPearls/statpearls_article-29345.md", "title": "Spinal Metastasis", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-29311.md", "title": "Spinal Cord Compression", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "ankylosing_spondylitis": [
+      {"file": "KR_HealthInfo/health_kdca_6555.md", "title": "강직척추염", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-17609.md", "title": "Ankylosing Spondylitis", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_EuropePMC/europepmc_PMC10351367.md", "title": "Korean treatment recommendations for patients with axial spondyloarthritis", "org": "Journal of rheumatic diseases", "year": "2023", "lang": "en", "type": "권고문", "license": "CC BY-NC"},
+      {"file": "KR_EuropePMC/europepmc_PMC10493447.md", "title": "Korean treatment recommendations for patients with axial spondyloarthritis", "org": "The Korean journal of internal medicine", "year": "2023", "lang": "en", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "acute_bronchitis": [
+      {"file": "US_StatPearls/statpearls_article-18645.md", "title": "Acute Bronchitis", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "allergic_rhinitis": [
+      {"file": "US_StatPearls/statpearls_article-17370.md", "title": "Allergic Rhinitis", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_Journals/kr_journal_10.3904_kjm.2017.92.5.429.md", "title": "내과의사를 위한 알레르기비염 진료지침", "org": "the Korean Academy of Asthma", "year": "2017", "lang": "ko", "type": "진료지침", "license": "CC BY-NC"},
+      {"file": "KR_Journals/kr_journal_10.5124_jkma.2017.60.1.81.md", "title": "임상의를 위한 알레르기비염 진료지침: 진단", "org": "대한천식알레르기학회", "year": "2017", "lang": "ko", "type": "진료지침", "license": "CC BY-NC"},
+      {"file": "KR_Journals/kr_journal_10.5124_jkma.2017.60.2.183.md", "title": "임상의를 위한 알레르기비염 진료지침: 내과적 치료", "org": "대한천식알레르기학회", "year": "2017", "lang": "ko", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "lung_cancer": [
+      {"file": "US_StatPearls/statpearls_article-24489.md", "title": "Lung Cancer", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-24494.md", "title": "Small Cell Lung Cancer", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-29417.md", "title": "Squamous Cell Lung Cancer", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-24492.md", "title": "Non–Small Cell Lung Cancer", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "ace_cough": [
+      {"file": "US_StatPearls/statpearls_article-17070.md", "title": "ACE Inhibitors", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-17584.md", "title": "Angiotensin-Converting Enzyme Inhibitors (ACEI)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_NCBI-Bookshelf/bookshelf_NBK43073.md", "title": "Comparative Effectiveness of Angiotensin-Converting Enzyme Inhibitors (ACEIs) and Angiotensin II Receptor Antagonists (ARBs) for Treating Essential Hypertension", "org": "Agency for Healthcare Research and Quality (US)", "year": "2007", "lang": "en", "type": "근거 리뷰", "license": "공공 도메인"},
+      {"file": "US_NCBI-Bookshelf/bookshelf_NBK61789.md", "title": "Angiotensin-Converting Enzyme Inhibitors (ACEIs), Angiotensin II Receptor Antagonists (ARBs), and Direct Renin Inhibitors for Treating Essential Hypertension: An Update", "org": "Agency for Healthcare Research and Quality (US)", "year": "2011", "lang": "en", "type": "근거 리뷰", "license": "공공 도메인"}
+    ],
+    "food_poisoning": [
+      {"file": "KR_HealthInfo/health_kdca_5239.md", "title": "식중독", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"}
+    ],
+    "upper_gi_bleeding": [
+      {"file": "US_StatPearls/statpearls_article-30795.md", "title": "Upper Gastrointestinal Bleeding", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-22101.md", "title": "Gastrointestinal Bleeding (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-22102.md", "title": "Gastrointestinal Bleeding Scan", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_Journals/kr_journal_10.4166_kjg.2019.73.1.16.md", "title": "비정맥류 상부위장관 출혈 2018 아시아-태평양 가이드라인 소개", "org": "Korean Society of Gastroenterology", "year": "2019", "lang": "en", "type": "근거 리뷰", "license": "CC BY-NC"}
+    ],
+    "dka": [
+      {"file": "US_StatPearls/statpearls_article-74978.md", "title": "Adult Diabetic Ketoacidosis", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-61065.md", "title": "Euglycemic Diabetic Ketoacidosis", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_EuropePMC/europepmc_PMC6304293.md", "title": "Guidelines and controversies in the management of diabetic ketoacidosis – A mini-review", "org": "World journal of diabetes", "year": "2018", "lang": "en", "type": "진료지침", "license": "CC BY-NC"},
+      {"file": "US_EuropePMC/europepmc_PMC13284666.md", "title": "Diabetic Ketoacidosis: Considerations and Residual Controversies in Management After the 2024 ADA, EASD, JBDS, AACE, and DST Joint Consensus", "org": "American Diabetes Association", "year": "2026", "lang": "en", "type": "합의문", "license": "CC BY"}
+    ],
+    "c_diff_colitis": [
+      {"file": "US_StatPearls/statpearls_article-19632.md", "title": "Clostridioides difficile infection", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_Journals/kr_journal_10.5145_acm.2024.27.1.2.md", "title": "Laboratory diagnosis of Clostridioides difficile infection: guidelines and status of practice in Korea", "org": "Annals of Clinical Microbiology", "year": "2024", "lang": "en", "type": "진료지침", "license": "CC BY-NC"},
+      {"file": "KR_Journals/kr_journal_10.12771_emj.2026.01256.md", "title": "과민성장증후군, 기능성 변비 및 클로스트리디오이데스 디피실리(Clostridioides difficile) 감염 환자에서 성별 차이를 고려한 프로바이오틱스(probiotics) 사용에 대한 임상지침 및 실용적 권고", "org": "the Korean Society for Neurogastroenterology and Motility", "year": "2026", "lang": "ko", "type": "근거 리뷰", "license": "CC BY-NC"},
+      {"file": "KR_EuropePMC/europepmc_PMC13071424.md", "title": "Clinical Guidance and Practical Recommendations for Probiotic Use in Patients With Irritable Bowel Syndrome, Functional Constipation, and Clostridioides difficile Infection Considering Sex-based Differences", "org": "Journal of neurogastroenterology and motility", "year": "2026", "lang": "en", "type": "권고문", "license": "CC BY-NC"}
+    ],
+    "ulcerative_colitis": [
+      {"file": "US_StatPearls/statpearls_article-30729.md", "title": "Ulcerative Colitis", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_Journals/kr_journal_10.4166_kjg.2012.59.2.118.md", "title": "궤양성 대장염 치료 가이드라인", "org": "the Korean Association for the Study of Intestinal Diseases", "year": "2012", "lang": "ko", "type": "진료지침", "license": "CC BY-NC"},
+      {"file": "KR_Journals/kr_journal_10.4166_kjg.2017.69.1.1.md", "title": "궤양성 대장염 치료 가이드라인 개정판", "org": "the Korean Association for the Study of Intestinal Diseases", "year": "2017", "lang": "ko", "type": "진료지침", "license": "CC BY-NC"},
+      {"file": "KR_Societies/kr_society_KASID_55da6b458f-55da6b.md", "title": "궤양성 대장염 치료 가이드라인 개정판 (2017, 한글판)", "org": "대한장연구학회", "year": "2017", "lang": "ko", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "hyperemesis": [
+      {"file": "KR_HealthInfo/health_kdca_5430.md", "title": "입덧", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-27636.md", "title": "Hyperemesis Gravidarum", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "cystitis": [
+      {"file": "KR_HealthInfo/health_kdca_5968.md", "title": "방광염", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_HealthInfo/health_kdca_6674.md", "title": "요로감염", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-17151.md", "title": "Acute Cystitis", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_NCBI-Bookshelf/bookshelf_NBK572335.md", "title": "Urinary Tract Infection", "org": "Michigan Medicine University of Michigan", "year": "2021", "lang": "en", "type": "진료지침", "license": "CC BY-NC-SA"}
+    ],
+    "urethritis": [
+      {"file": "US_StatPearls/statpearls_article-30837.md", "title": "Urethritis", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-25957.md", "title": "Nongonococcal Urethritis (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "prostatitis": [
+      {"file": "US_StatPearls/statpearls_article-27857.md", "title": "Acute Bacterial Prostatitis", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-141950.md", "title": "Chronic Prostatitis and Chronic Pelvic Pain Syndrome in Men", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_Journals/kr_journal_10.3947_ic.2011.43.1.1.md", "title": "Clinical Guideline for the Diagnosis and Treatment of Urinary Tract Infections: Asymptomatic Bacteriuria, Uncomplicated & Complicated Urinary Tract Infections, Bacterial Prostatitis", "org": "Korean Society of Infectious Diseases", "year": "2011", "lang": "ko", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "bph": [
+      {"file": "KR_HealthInfo/health_kdca_3193.md", "title": "전립선비대증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-18212.md", "title": "Benign Prostatic Hyperplasia", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_EuropePMC/europepmc_PMC4778754.md", "title": "Korean clinical practice guideline for benign prostatic hyperplasia", "org": "Korean Urological Association", "year": "2016", "lang": "en", "type": "진료지침", "license": "CC BY-NC"},
+      {"file": "KR_EuropePMC/europepmc_PMC2628135.md", "title": "Patterns in the Diagnosis and Management of Benign Prostatic Hyperplasia in a Country that does not have Country-Specific Clinical Practice Guidelines", "org": "Korean Urological Association", "year": "2007", "lang": "en", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "bladder_cancer": [
+      {"file": "US_StatPearls/statpearls_article-18354.md", "title": "Bladder Cancer", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_NCI-PDQ/nci_pdq_CDR62705.md", "title": "Bladder Cancer Treatment", "org": "National Cancer Institute (PDQ Editorial Boards)", "year": "2024", "lang": "en", "type": "기타 (일반인용)", "license": "공공 도메인"},
+      {"file": "US_NCI-PDQ/nci_pdq_CDR62908.md", "title": "Bladder Cancer Treatment (PDQ®)", "org": "National Cancer Institute (PDQ Editorial Boards)", "year": "2025", "lang": "en", "type": "근거 리뷰", "license": "공공 도메인"},
+      {"file": "US_USPSTF/uspstf_bladder-cancer-in-adults-screening.md", "title": "Bladder Cancer in Adults: Screening", "org": "U.S. Preventive Services Task Force (USPSTF) / AHRQ", "year": "2011", "lang": "en", "type": "권고문", "license": "USPSTF 저작권 고지"}
+    ],
+    "vaginitis": [
+      {"file": "KR_HealthInfo/health_kdca_5960.md", "title": "질염", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-30950.md", "title": "Vaginitis", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-30951.md", "title": "Bacterial Vaginosis", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_EuropePMC/europepmc_PMC2710380.md", "title": "Guidelines for the treatment of bacterial vaginosis: focus on tinidazole", "org": "Therapeutics and clinical risk management", "year": "2009", "lang": "en", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "stable_angina": [
+      {"file": "KR_HealthInfo/health_kdca_6566.md", "title": "협심증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-100323.md", "title": "Stable Angina", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_EuropePMC/europepmc_PMC13368461.md", "title": "Korean Society of Interventional Cardiology Expert Consensus for the Management of Chronic Coronary Syndrome: Part 2", "org": "Korean Society of Interventional Cardiology", "year": "2026", "lang": "en", "type": "합의문", "license": "CC BY-NC"},
+      {"file": "KR_EuropePMC/europepmc_PMC13368462.md", "title": "Korean Society of Interventional Cardiology Expert Consensus for the Management of Chronic Coronary Syndrome: Part 1", "org": "Korean Society of Interventional Cardiology", "year": "2026", "lang": "en", "type": "합의문", "license": "CC BY-NC"}
+    ],
+    "myocarditis": [
+      {"file": "US_StatPearls/statpearls_article-17161.md", "title": "Acute Myocarditis", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-25470.md", "title": "Viral Myocarditis", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-25469.md", "title": "Nonviral Myocarditis", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_EuropePMC/europepmc_PMC13142859.md", "title": "Taking ACTION to detect myocarditis related to recombinant gene transfer therapy for Duchenne Muscular Dystrophy; Consensus recommendations for cardiac surveillance", "org": "Journal of neuromuscular diseases", "year": "2025", "lang": "en", "type": "합의문", "license": "CC BY-NC"}
+    ],
+    "pulmonary_edema": [
+      {"file": "KR_HealthInfo/health_kdca_3167.md", "title": "폐부종", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-80517.md", "title": "Pulmonary Edema", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-28020.md", "title": "Cardiogenic Pulmonary Edema", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-28023.md", "title": "Noncardiogenic Pulmonary Edema", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "anaphylaxis": [
+      {"file": "KR_HealthInfo/health_kdca_6684.md", "title": "아나필락시스", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-17514.md", "title": "Anaphylaxis", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_KDCA/kdca_b55_227844_259428.md", "title": "아나필락시스 대응 매뉴얼 공유", "org": "질병관리청", "year": "2021", "lang": "ko", "type": "진료지침", "license": "공공누리 제4유형"},
+      {"file": "KR_KDCA/kdca_b49_219041_246662_0.md", "title": "식품알레르기, 아나필락시스, 노인천식 표준교육프로토콜 — 04-노인천식-설문지", "org": "질병관리청", "year": "2021", "lang": "ko", "type": "진료지침", "license": "공공누리 제4유형"}
+    ],
+    "epiglottitis": [
+      {"file": "US_StatPearls/statpearls_article-21236.md", "title": "Epiglottitis", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "viral_pharyngitis": [
+      {"file": "US_StatPearls/statpearls_article-27105.md", "title": "Acute Pharyngitis", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-27104.md", "title": "Pharyngitis (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-29526.md", "title": "Streptococcal Pharyngitis", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_EuropePMC/europepmc_PMC7593338.md", "title": "Diagnostic Methods, Clinical Guidelines, and Antibiotic Treatment for Group A Streptococcal Pharyngitis: A Narrative Review", "org": "Frontiers in cellular and infection microbiology", "year": "2020", "lang": "en", "type": "진료지침", "license": "CC BY"}
+    ],
+    "laryngitis": [
+      {"file": "US_StatPearls/statpearls_article-24052.md", "title": "Acute Laryngitis", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_HealthInfo/health_kdca_5727.md", "title": "크루프(후두염)", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"}
+    ],
+    "otitis_media": [
+      {"file": "KR_HealthInfo/health_kdca_3568.md", "title": "중이염", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-17163.md", "title": "Acute Otitis Media", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-26425.md", "title": "Otitis Media With Effusion", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_EuropePMC/europepmc_PMC3410229.md", "title": "Korean Clinical Practice Guidelines: Otitis Media in Children", "org": "Korean Otologic Society", "year": "2012", "lang": "en", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "pertussis": [
+      {"file": "KR_HealthInfo/health_kdca_6676.md", "title": "백일해", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-27057.md", "title": "Pertussis", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_EuropePMC/europepmc_PMC8650817.md", "title": "Recommendation for use of diphtheria and tetanus toxoids and acellular pertussis, inactivated poliovirus, Haemophilus influenzae type b conjugate, and hepatitis B vaccine in infants", "org": "Ministry of Food and Drug Safety", "year": "2021", "lang": "en", "type": "권고문", "license": "CC BY-NC"},
+      {"file": "US_CDC/cdc_mmwr-rr6702a1.md", "title": "Prevention of Pertussis, Tetanus, and Diphtheria with Vaccines in the United States: Recommendations of the Advisory Committee on Immunization Practices (ACIP)", "org": "Centers for Disease Control and Prevention (CDC) / Advisory Committee on Immunization Practices (ACIP)", "year": "2018", "lang": "en", "type": "권고문", "license": "공공 도메인"}
+    ],
+    "bronchiectasis": [
+      {"file": "KR_HealthInfo/health_kdca_6554.md", "title": "기관지확장증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-18639.md", "title": "Bronchiectasis", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_Journals/kr_journal_10.3904_kjm.2020.95.3.141.md", "title": "기관지확장증의 진단 및 치료: 최신 진료지침을 기반으로", "org": "The Korean Journal of Medicine", "year": "2020", "lang": "ko", "type": "근거 리뷰", "license": "CC BY-NC"},
+      {"file": "KR_EuropePMC/europepmc_PMC8743636.md", "title": "Developing a Diagnostic Bundle for Bronchiectasis in South Korea: A Modified Delphi Consensus Study", "org": "Tuberculosis and respiratory diseases", "year": "2022", "lang": "en", "type": "합의문", "license": "CC BY-NC"}
+    ],
+    "gbs": [
+      {"file": "US_StatPearls/statpearls_article-22461.md", "title": "Guillain-Barre Syndrome", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "myasthenia_gravis": [
+      {"file": "US_StatPearls/statpearls_article-25411.md", "title": "Myasthenia Gravis", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_Journals/kr_journal_10.59578_jmsni.2024.15.2.59-71.md", "title": "난치중증근무력증 환자의 치료에 대한 권고합의안", "org": "Korean Society of Neuroimmunology", "year": "2024", "lang": "ko", "type": "합의문", "license": "CC BY-NC"},
+      {"file": "US_EuropePMC/europepmc_PMC7884987.md", "title": "International Consensus Guidance for Management of Myasthenia Gravis", "org": "Myasthenia Gravis Foundation of America", "year": "2021", "lang": "en", "type": "합의문", "license": "CC BY-NC-ND"},
+      {"file": "US_EuropePMC/europepmc_PMC4977114.md", "title": "International consensus guidance for management of myasthenia gravis", "org": "Myasthenia Gravis Foundation of America", "year": "2016", "lang": "en", "type": "합의문", "license": "CC BY-NC-ND"}
+    ],
+    "inguinal_hernia": [
+      {"file": "US_StatPearls/statpearls_article-23527.md", "title": "Inguinal Hernia (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "sle": [
+      {"file": "US_StatPearls/statpearls_article-24526.md", "title": "Systemic Lupus Erythematosus", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "sarcoidosis": [
+      {"file": "US_StatPearls/statpearls_article-28721.md", "title": "Sarcoidosis", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_EuropePMC/europepmc_PMC12235296.md", "title": "Korean Guidelines for the Diagnosis and Management of Interstitial Lung Diseases: Sarcoidosis", "org": "Tuberculosis and respiratory diseases", "year": "2025", "lang": "en", "type": "진료지침", "license": "CC BY-NC"},
+      {"file": "US_EuropePMC/europepmc_PMC9488897.md", "title": "Delphi consensus recommendations for a treatment algorithm in pulmonary sarcoidosis", "org": "European respiratory review : an official journal of the European Respiratory Society", "year": "2020", "lang": "en", "type": "합의문", "license": "CC BY-NC"}
+    ],
+    "pancreatic_cancer": [
+      {"file": "US_StatPearls/statpearls_article-26569.md", "title": "Pancreatic Cancer", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_EuropePMC/europepmc_PMC8901981.md", "title": "Korean Surgical Practice Guideline for Pancreatic Cancer 2022: A summary of evidence-based surgical approaches", "org": "Korean Association of Hepato-Biliary-Pancreatic Surgery", "year": "2022", "lang": "en", "type": "진료지침", "license": "CC BY-NC"},
+      {"file": "US_USPSTF/uspstf_pancreatic-cancer-screening.md", "title": "Pancreatic Cancer: Screening", "org": "U.S. Preventive Services Task Force (USPSTF) / AHRQ", "year": "2019", "lang": "en", "type": "권고문", "license": "USPSTF 저작권 고지"},
+      {"file": "US_NCI-PDQ/nci_pdq_CDR62951.md", "title": "Pancreatic Cancer Treatment (PDQ®)", "org": "National Cancer Institute (PDQ Editorial Boards)", "year": "2025", "lang": "en", "type": "근거 리뷰", "license": "공공 도메인"}
+    ],
+    "acute_hiv": [
+      {"file": "US_StatPearls/statpearls_article-22914.md", "title": "HIV and AIDS", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_NCBI-Bookshelf/bookshelf_NBK563020.md", "title": "Diagnosis and Management of Acute HIV Infection", "org": "Johns Hopkins University", "year": "2024", "lang": "en", "type": "진료지침", "license": "CC BY-NC-ND"},
+      {"file": "US_NCBI-Bookshelf/bookshelf_NBK562734.md", "title": "PEP to Prevent HIV Infection", "org": "Johns Hopkins University", "year": "2025", "lang": "en", "type": "진료지침", "license": "CC BY-NC-ND"},
+      {"file": "US_CDC/cdc_pmc-PMC9400540.md", "title": "Interim Guidance for Prevention and Treatment of Monkeypox in Persons with HIV Infection - United States, August 2022", "org": "Centers for Disease Control and Prevention (CDC)", "year": "2022", "lang": "en", "type": "진료지침", "license": "공공 도메인"}
+    ],
+    "rib_fracture": [
+      {"file": "US_StatPearls/statpearls_article-28574.md", "title": "Rib Fracture", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "boerhaave": [
+      {"file": "US_StatPearls/statpearls_article-18428.md", "title": "Boerhaave Syndrome", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-21341.md", "title": "Esophageal Perforation and Tears", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "chronic_sinusitis": [
+      {"file": "KR_HealthInfo/health_kdca_1101.md", "title": "비부비동염", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-29061.md", "title": "Chronic Sinusitis", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_EuropePMC/europepmc_PMC8901942.md", "title": "Clinical Practice Guideline: Nasal Irrigation for Chronic Rhinosinusitis in Adults", "org": "Korean Society of Otorhinolaryngology-Head and Neck Surgery and Korean Rhinologic Society", "year": "2022", "lang": "en", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "psvt": [
+      {"file": "US_StatPearls/statpearls_article-26699.md", "title": "Paroxysmal Supraventricular Tachycardia", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-29754.md", "title": "Supraventricular Tachycardia", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "atrial_fibrillation": [
+      {"file": "US_StatPearls/statpearls_article-17962.md", "title": "Atrial Fibrillation", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-26694.md", "title": "Paroxysmal Atrial Fibrillation", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_KoMGI/komgi_chronic99_5.md", "title": "심방세동 환자에게 필요한 정보", "org": "대한의학회·질병관리청", "year": "2024", "lang": "ko", "type": "요약본 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_KoMGI/komgi_chronic99_4.md", "title": "심방세동 Practical tip", "org": "대한의학회·질병관리청", "year": "2024", "lang": "ko", "type": "요약본", "license": "공공누리 제4유형"}
+    ],
+    "hyperthyroidism": [
+      {"file": "KR_HealthInfo/health_kdca_1831.md", "title": "갑상선기능항진증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-29850.md", "title": "Hyperthyroidism", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-30167.md", "title": "Thyrotoxicosis", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-22414.md", "title": "Graves Disease", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "peritonsillar_abscess": [
+      {"file": "US_StatPearls/statpearls_article-27029.md", "title": "Peritonsillar Abscess", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "infectious_mononucleosis": [
+      {"file": "US_StatPearls/statpearls_article-25253.md", "title": "Mononucleosis", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_HealthInfo/health_kdca_5236.md", "title": "감염단핵구증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"}
+    ],
+    "bell_palsy": [
+      {"file": "KR_HealthInfo/health_kdca_1201.md", "title": "얼굴마비", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-18195.md", "title": "Bell Palsy", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-21555.md", "title": "Facial Nerve Palsy", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_HealthInfo/health_kdca_3789.md", "title": "얼굴마비(중추성 마비)", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"}
+    ],
+    "hypokalemia": [
+      {"file": "US_StatPearls/statpearls_article-23269.md", "title": "Hypokalemia", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_HealthInfo/health_kdca_6807.md", "title": "전해질 이상(저칼륨혈증)", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"}
+    ],
+    "vasovagal_syncope": [
+      {"file": "KR_HealthInfo/health_kdca_5853.md", "title": "실신", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-29805.md", "title": "Syncope", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-31039.md", "title": "Vasovagal Episode", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_EuropePMC/europepmc_PMC7252783.md", "title": "Evaluation and Management of Syncope: Comparing the Guidelines of the American College of Cardiology/American Heart Association/Heart Rhythm Society and the European Society of Cardiology", "org": "American College of Cardiology/American Heart Association/Heart Rhythm Society", "year": "2018", "lang": "en", "type": "진료지침", "license": "CC BY"}
+    ],
+    "aortic_stenosis": [
+      {"file": "US_StatPearls/statpearls_article-17744.md", "title": "Aortic Stenosis", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "seizure_disorder": [
+      {"file": "KR_HealthInfo/health_kdca_5961.md", "title": "뇌전증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-28836.md", "title": "Seizure", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-21244.md", "title": "Status Epilepticus", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-21653.md", "title": "Febrile Seizure", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "alcohol_intoxication": [
+      {"file": "US_StatPearls/statpearls_article-21385.md", "title": "Ethanol Toxicity", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-17335.md", "title": "Alcohol Withdrawal Syndrome", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_NCBI-Bookshelf/bookshelf_NBK604324.md", "title": "Alcohol Withdrawal in Hospitalized Patients", "org": "Michigan Medicine University of Michigan", "year": "2024", "lang": "en", "type": "진료지침", "license": "CC BY-NC-SA"},
+      {"file": "US_NCBI-Bookshelf/bookshelf_NBK555603.md", "title": "Alcohol Withdrawal in Hospitalized Patients", "org": "Michigan Medicine University of Michigan", "year": "2020", "lang": "en", "type": "진료지침", "license": "CC BY-NC-SA"}
+    ],
+    "hepatic_encephalopathy": [
+      {"file": "US_StatPearls/statpearls_article-21070.md", "title": "Hepatic Encephalopathy", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_Journals/kr_journal_10.4166_kjg.2019.74.5.274.md", "title": "2019 개정 대한간학회 간경변증 진료 가이드라인 소개: 정맥류, 간성뇌증 및 관련 합병증", "org": "대한간학회", "year": "2019", "lang": "ko", "type": "진료지침", "license": "CC BY-NC"},
+      {"file": "KR_EuropePMC/europepmc_PMC7160350.md", "title": "KASL clinical practice guidelines for liver cirrhosis: Varices, hepatic encephalopathy, and related complications", "org": "Korean Association for the Study of the Liver", "year": "2020", "lang": "en", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "drug_intoxication": [
+      {"file": "US_StatPearls/statpearls_article-17075.md", "title": "Acetaminophen Toxicity", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-406.md", "title": "Toxicology Screening", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-30312.md", "title": "Benzodiazepine Toxicity", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-26226.md", "title": "Opioid Toxicity", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "urticaria": [
+      {"file": "KR_HealthInfo/health_kdca_6581.md", "title": "두드러기", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-43025.md", "title": "Chronic Urticaria", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-30877.md", "title": "Urticaria Pigmentosa", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_Journals/kr_journal_10.5124_jkma.2019.62.1.37.md", "title": "만성두드러기의 최신 치료 가이드라인", "org": "건강보험심사평가원", "year": "2019", "lang": "ko", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "herpes_zoster": [
+      {"file": "US_StatPearls/statpearls_article-22841.md", "title": "Herpes Zoster", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_HealthInfo/health_kdca_6679.md", "title": "수두와 대상포진", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_EuropePMC/europepmc_PMC5779434.md", "title": "Update on Recommendations for Use of Herpes Zoster Vaccine", "org": "Advisory Committee on Immunization Practices", "year": "2014", "lang": "en", "type": "권고문", "license": "CC0"},
+      {"file": "US_CDC/cdc_mmwr-mm6703a5.md", "title": "Recommendations of the Advisory Committee on Immunization Practices for Use of Herpes Zoster Vaccines", "org": "Centers for Disease Control and Prevention (CDC) / Advisory Committee on Immunization Practices (ACIP)", "year": "2018", "lang": "en", "type": "권고문", "license": "공공 도메인"}
+    ],
+    "drug_eruption": [
+      {"file": "US_StatPearls/statpearls_article-17251.md", "title": "Cutaneous Adverse Drug Reaction", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "contact_dermatitis": [
+      {"file": "US_StatPearls/statpearls_article-20379.md", "title": "Contact Dermatitis", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_HealthInfo/health_kdca_5689.md", "title": "자극접촉피부염", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-19927.md", "title": "Allergic Contact Dermatitis (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "viral_exanthem": [
+      {"file": "US_StatPearls/statpearls_article-24807.md", "title": "Measles", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-83816.md", "title": "Rubeola (Measles) (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "toxic_nodular_goiter": [
+      {"file": "KR_HealthInfo/health_kdca_6683.md", "title": "갑상선 결절", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-22351.md", "title": "Goiter", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-30147.md", "title": "Thyroid Nodule", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-22354.md", "title": "Nontoxic Goiter", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "thyroiditis": [
+      {"file": "KR_HealthInfo/health_kdca_1322.md", "title": "갑상선염", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"}
+    ],
+    "diabetes_mellitus": [
+      {"file": "KR_HealthInfo/health_kdca_5305.md", "title": "당뇨병", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_HealthInfo/health_kdca_6691.md", "title": "임신당뇨병", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_HealthInfo/health_kdca_5306.md", "title": "노인 당뇨병", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_HealthInfo/health_kdca_6692.md", "title": "당뇨병성 족부병증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"}
+    ],
+    "occult_malignancy": [
+      {"file": "KR_HealthInfo/health_kdca_6546.md", "title": "체중 감소", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_EuropePMC/europepmc_PMC11413447.md", "title": "Expert Consensus Statement on an Updated Definition of Unintended Weight Loss Among Persons With Human Immunodeficiency Virus in the Modern Treatment Era", "org": "Clinical infectious diseases : an official publication of the Infectious Diseases Society of America", "year": "2024", "lang": "en", "type": "합의문", "license": "CC BY"}
+    ],
+    "adrenal_insufficiency": [
+      {"file": "US_StatPearls/statpearls_article-17241.md", "title": "Adrenal Insufficiency", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_HealthInfo/health_kdca_5257.md", "title": "부신부전증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"}
+    ],
+    "crohn_disease": [
+      {"file": "US_StatPearls/statpearls_article-20133.md", "title": "Crohn Disease", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-32741.md", "title": "Cutaneous Crohn Disease", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-540.md", "title": "Crohn Disease Stricturoplasty", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_Journals/kr_journal_10.4166_kjg.2012.59.2.141.md", "title": "크론병 치료 가이드라인", "org": "the Korean Association for the Study", "year": "2012", "lang": "ko", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "anorexia_nervosa": [
+      {"file": "US_StatPearls/statpearls_article-17626.md", "title": "Anorexia Nervosa", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "sedative_use_disorder": [
+      {"file": "US_StatPearls/statpearls_article-31475.md", "title": "Zolpidem", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-30312.md", "title": "Benzodiazepine Toxicity", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-311.md", "title": "Anxiolytics and Sedative-Hypnotics Toxicity", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_EuropePMC/europepmc_PMC12463801.md", "title": "Joint Clinical Practice Guideline on Benzodiazepine Tapering: Considerations When Risks Outweigh Benefits", "org": "DescriptionThe American Society of Addiction Medicine", "year": "2025", "lang": "en", "type": "진료지침", "license": "CC BY"}
+    ],
+    "chronic_insomnia": [
+      {"file": "US_EuropePMC/europepmc_PMC13076838.md", "title": "Combination treatment for chronic insomnia disorder in adults: an American Academy of Sleep Medicine clinical practice guideline", "org": "American Academy of Sleep Medicine", "year": "2026", "lang": "en", "type": "진료지침", "license": "CC BY-NC-ND"},
+      {"file": "US_VA-DoD/vadod_insomnia_i-osa-cpg-2025-guideline-final-20250915.md", "title": "VA/DoD CPG: The Management of Chronic Insomnia Disorder and Obstructive Sleep Apnea (Insomnia/OSA) — Insomnia/OSA Full CPG (2025)", "org": "U.S. Department of Veterans Affairs (VA) / U.S. Department of Defense (DoD)", "year": "2025", "lang": "en", "type": "진료지침", "license": "공공 도메인"},
+      {"file": "US_VA-DoD/vadod_insomnia_i-osa-2025-pocket-card-final-20250205.md", "title": "VA/DoD CPG: The Management of Chronic Insomnia Disorder and Obstructive Sleep Apnea (Insomnia/OSA) — Insomnia/OSA Pocket Card (2025)", "org": "U.S. Department of Veterans Affairs (VA) / U.S. Department of Defense (DoD)", "year": "2025", "lang": "en", "type": "요약본", "license": "공공 도메인"},
+      {"file": "US_VA-DoD/vadod_insomnia_i-osa-2025-patient-summary-final-20250205.md", "title": "VA/DoD CPG: The Management of Chronic Insomnia Disorder and Obstructive Sleep Apnea (Insomnia/OSA) — Insomnia/OSA Patient Summary (2025)", "org": "U.S. Department of Veterans Affairs (VA) / U.S. Department of Defense (DoD)", "year": "2025", "lang": "en", "type": "요약본 (일반인용)", "license": "공공 도메인"}
+    ],
+    "depression": [
+      {"file": "US_StatPearls/statpearls_article-24655.md", "title": "Major Depressive Disorder", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_KoMGI/komgi_chronic98_5.md", "title": "우울증 환자에게 필요한 정보", "org": "대한의학회·질병관리청", "year": "2023", "lang": "ko", "type": "요약본 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_KoMGI/komgi_chronic98_4.md", "title": "우울증 Practical tip", "org": "대한의학회·질병관리청", "year": "2023", "lang": "ko", "type": "요약본", "license": "공공누리 제4유형"},
+      {"file": "KR_KoMGI/komgi_chronic98_6.md", "title": "나와 가족을 위한 우울증 예방과 관리 정보 책자", "org": "대한의학회·질병관리청", "year": "2023", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 (유형 미표기, 제4유형 기준)"}
+    ],
+    "gad": [
+      {"file": "US_StatPearls/statpearls_article-22130.md", "title": "Generalized Anxiety Disorder", "org": "StatPearls Publishing", "year": "2022", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "osa": [
+      {"file": "KR_HealthInfo/health_kdca_6308.md", "title": "수면무호흡증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-26084.md", "title": "Obstructive Sleep Apnea", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_NECA/neca_rpt307_main307.md", "title": "구강내장치를 이용한 폐쇄성 수면무호흡증 치료의 안전성, 유효성 평가 및 치료 가이드라인 개발", "org": "한국보건의료연구원", "year": "2021", "lang": "ko", "type": "진료지침", "license": "공공누리 제4유형"},
+      {"file": "KR_EuropePMC/europepmc_PMC13256478.md", "title": "Guideline for the Management of Obesity in Adult Patients With Obstructive Sleep Apnea", "org": "MethodsThe Korean Society of Sleep and Breathing", "year": "2026", "lang": "en", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "constitutional_delay": [
+      {"file": "US_StatPearls/statpearls_article-20323.md", "title": "Delayed Puberty", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-87579.md", "title": "Short Stature", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-21616.md", "title": "Familial Short Stature (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "familial_short_stature": [
+      {"file": "US_StatPearls/statpearls_article-21616.md", "title": "Familial Short Stature (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "gh_deficiency": [
+      {"file": "KR_Journals/kr_journal_J_Korean_Endocr_Soc_KM2391900.md", "title": "Evaluation and Treatment of Adult Growth Hormone Deficiency: An American Endocrine Society Clinical Practice Guideline", "org": "Journal of Korean Endocrine Society", "year": "2006", "lang": "ko", "type": "근거 리뷰", "license": "CC BY-NC"}
+    ],
+    "hypothyroidism": [
+      {"file": "KR_HealthInfo/health_kdca_5810.md", "title": "갑상선기능저하증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-23304.md", "title": "Hypothyroidism", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_HealthInfo/health_kdca_6701.md", "title": "선천갑상샘저하증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-23305.md", "title": "Congenital Hypothyroidism", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "cushing_syndrome": [
+      {"file": "US_StatPearls/statpearls_article-20178.md", "title": "Cushing Syndrome (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-23170.md", "title": "Hypercortisolism (Cushing Syndrome)", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_EuropePMC/europepmc_PMC7596972.md", "title": "Clinical management of patients with Cushing syndrome treated with mifepristone: consensus recommendations", "org": "Clinical diabetes and endocrinology", "year": "2020", "lang": "en", "type": "합의문", "license": "CC BY"},
+      {"file": "US_EuropePMC/europepmc_PMC9387700.md", "title": "Whom Should We Screen for Cushing Syndrome? The Endocrine Society Practice Guideline Recommendations 2008 Revisited", "org": "Endocrine Society", "year": "2022", "lang": "en", "type": "진료지침", "license": "CC BY-NC-ND"}
+    ],
+    "celiac_disease": [
+      {"file": "US_StatPearls/statpearls_article-19095.md", "title": "Celiac Disease", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_USPSTF/uspstf_celiac-disease-screening.md", "title": "Celiac Disease: Screening", "org": "U.S. Preventive Services Task Force (USPSTF) / AHRQ", "year": "2017", "lang": "en", "type": "권고문", "license": "USPSTF 저작권 고지"}
+    ],
+    "turner_syndrome": [
+      {"file": "US_StatPearls/statpearls_article-30694.md", "title": "Turner Syndrome", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ]
+  }
+}
