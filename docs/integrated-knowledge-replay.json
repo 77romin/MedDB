@@ -1,0 +1,2670 @@
+{
+  "kind": "offline_fact_replay",
+  "model_calls": 0,
+  "diagnostic_accuracy_measured": false,
+  "clinical_version": "0.4.0",
+  "reference_version": "meddb-2026.10.13.1",
+  "reference_sha256": "bc699e785eea76bad45f6e152d95f9942021fa6011a83815701bb92d6f3da81f",
+  "mapping_version": "clinical-mappings-1",
+  "runs": [
+    {
+      "case": "uncertain_fever",
+      "mode": "clinical",
+      "observations": {
+        "present": [
+          "cough"
+        ],
+        "absent": [],
+        "unknown": [
+          "fever"
+        ]
+      },
+      "clinical_candidates": [
+        {
+          "id": "acute_bronchitis",
+          "ko": "급성 기관지염",
+          "kcd": "J20.9",
+          "score": 5.25,
+          "prior": 1.5,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [
+            "cough"
+          ],
+          "against": [],
+          "unknown_key": [
+            "sputum"
+          ],
+          "share": 0.211
+        },
+        {
+          "id": "uri",
+          "ko": "급성 상기도 감염",
+          "kcd": "J06.9",
+          "score": 5.1,
+          "prior": 1.2,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [
+            "cough"
+          ],
+          "against": [],
+          "unknown_key": [
+            "rhinorrhea",
+            "sore_throat"
+          ],
+          "share": 0.196
+        },
+        {
+          "id": "pneumonia",
+          "ko": "폐렴",
+          "kcd": "J18.9",
+          "score": 4.55,
+          "prior": 0.1,
+          "red_flag": false,
+          "urgency": "urgent",
+          "matched": [
+            "cough"
+          ],
+          "against": [],
+          "unknown_key": [
+            "fever",
+            "purulent_sputum",
+            "crackles"
+          ],
+          "share": 0.149
+        },
+        {
+          "id": "gerd",
+          "ko": "위식도 역류질환",
+          "kcd": "K21.9",
+          "score": 3.25,
+          "prior": 1.5,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [
+            "cough"
+          ],
+          "against": [],
+          "unknown_key": [
+            "heartburn",
+            "postprandial_worse"
+          ],
+          "share": 0.078
+        },
+        {
+          "id": "allergic_rhinitis",
+          "ko": "알레르기 비염(상기도 기침 증후군)",
+          "kcd": "J30.4",
+          "score": 2.75,
+          "prior": 1.5,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [
+            "cough"
+          ],
+          "against": [],
+          "unknown_key": [
+            "postnasal_drip",
+            "rhinorrhea"
+          ],
+          "share": 0.06
+        }
+      ],
+      "ontology_support": null
+    },
+    {
+      "case": "uncertain_fever",
+      "mode": "ontology",
+      "observations": {
+        "present": [
+          "cough"
+        ],
+        "absent": [],
+        "unknown": [
+          "fever"
+        ]
+      },
+      "clinical_candidates": [],
+      "ontology_support": {
+        "clinical_version": "0.4.0",
+        "mapping_version": "clinical-mappings-1",
+        "mappings_used": [
+          {
+            "clinical_id": "cough",
+            "finding_id": "hpo:HP:0012735",
+            "relation": "exact",
+            "review_status": "draft",
+            "basis": "Clinical cough and reference Cough; semantic review pending"
+          },
+          {
+            "clinical_id": "fever",
+            "finding_id": "nova:fever",
+            "relation": "exact",
+            "review_status": "draft",
+            "basis": "Clinical label Fever and reference label Fever; semantic review pending"
+          }
+        ],
+        "unmapped_or_unconfirmed": [],
+        "reference": {
+          "contract_version": "nova-knowledge-contract-1",
+          "data_version": "meddb-2026.10.13.1",
+          "data_sha256": "bc699e785eea76bad45f6e152d95f9942021fa6011a83815701bb92d6f3da81f",
+          "score_method": "phenotype-idf-v2-context",
+          "policy": {
+            "name": "research",
+            "policy_sha256": "e53af777ee4f56aab3cb54ad15cbcc2a890df5ce0479eade56e59289358c2db8",
+            "include_draft": true,
+            "description": "전체 연구용 초안 포함. 대회 성능 비교용이며 검수 완료 지식이 아니다.",
+            "assertions": 114092,
+            "reviewed": 0,
+            "draft": 114092
+          },
+          "phase": "preliminary",
+          "observations": [
+            {
+              "finding_id": "hpo:HP:0012735",
+              "state": "present",
+              "evidence_ids": [
+                "clinical-0"
+              ],
+              "confirmation": "caller_confirmed"
+            },
+            {
+              "finding_id": "nova:fever",
+              "state": "unknown",
+              "evidence_ids": [
+                "clinical-1"
+              ],
+              "confirmation": "unconfirmed"
+            }
+          ],
+          "patient": {},
+          "patient_evidence": {},
+          "context_ignored": [],
+          "candidates": [
+            {
+              "id": "dismech-disease:Actinomycosis",
+              "label": "Actinomycosis",
+              "rank": 1,
+              "evidence_score": 1.0,
+              "support": [
+                "hpo:HP:0012735"
+              ],
+              "counter_evidence": [],
+              "uncertain": [],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:004950",
+                  "source_id": "dismech:Actinomycosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Actinomycosis.yaml",
+                  "locator": "phenotypes[3]",
+                  "review_status": "draft",
+                  "context_excerpt": "Cough is a common pulmonary actinomycosis symptom.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "id": "dismech-disease:Adenovirus_Respiratory_Infection",
+              "label": "Adenovirus Respiratory Infection",
+              "rank": 1,
+              "evidence_score": 1.0,
+              "support": [
+                "hpo:HP:0012735"
+              ],
+              "counter_evidence": [],
+              "uncertain": [],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:006063",
+                  "source_id": "dismech:Adenovirus_Respiratory_Infection",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Adenovirus_Respiratory_Infection.yaml",
+                  "locator": "phenotypes[5]",
+                  "review_status": "draft",
+                  "context_excerpt": "Cough is a common manifestation of adenovirus pneumonia.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "id": "dismech-disease:Amniotic_Fluid_Embolism",
+              "label": "Amniotic Fluid Embolism",
+              "rank": 1,
+              "evidence_score": 1.0,
+              "support": [
+                "hpo:HP:0012735"
+              ],
+              "counter_evidence": [],
+              "uncertain": [],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:008701",
+                  "source_id": "dismech:Amniotic_Fluid_Embolism",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Amniotic_Fluid_Embolism.yaml",
+                  "locator": "phenotypes[16]",
+                  "review_status": "draft",
+                  "context_excerpt": "Cough was recorded in 2/48 typical and 2/13 atypical registry cases with available data.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "id": "dismech-disease:Aspergillosis",
+              "label": "Aspergillosis",
+              "rank": 1,
+              "evidence_score": 1.0,
+              "support": [
+                "hpo:HP:0012735"
+              ],
+              "counter_evidence": [],
+              "uncertain": [],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:011534",
+                  "source_id": "dismech:Aspergillosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspergillosis.yaml",
+                  "locator": "phenotypes[8]",
+                  "review_status": "draft",
+                  "context_excerpt": "Persistent cough, often productive, is the commonest symptom of chronic pulmonary aspergillosis and of Aspergillus bronchitis, and is part of the chronic pulmonary symptom complex the diagnostic criteria require.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "id": "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease",
+              "label": "Aspirin-Exacerbated Respiratory Disease",
+              "rank": 1,
+              "evidence_score": 1.0,
+              "support": [
+                "hpo:HP:0012735"
+              ],
+              "counter_evidence": [],
+              "uncertain": [],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:011588",
+                  "source_id": "dismech:Aspirin-Exacerbated_Respiratory_Disease",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspirin-Exacerbated_Respiratory_Disease.yaml",
+                  "locator": "phenotypes[10]",
+                  "review_status": "draft",
+                  "context_excerpt": "Cough can be part of the asthma presentation.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            }
+          ],
+          "next_actions": [
+            {
+              "finding_id": "nova:fever",
+              "label": "발열",
+              "action": "SAY",
+              "content": "열이 나나요?",
+              "review_status": "draft",
+              "associated_candidates": [
+                "dismech-disease:Actinomycosis",
+                "dismech-disease:Adenovirus_Respiratory_Infection",
+                "dismech-disease:Aspergillosis",
+                "dismech-disease:Babesiosis",
+                "dismech-disease:Bird_Fanciers_Lung",
+                "dismech-disease:COVID-19"
+              ],
+              "excluded_candidates": [],
+              "unrecorded_candidates": [
+                "dismech-disease:Amniotic_Fluid_Embolism",
+                "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease",
+                "dismech-disease:Asthma",
+                "dismech-disease:Autoimmune_Pulmonary_Alveolar_Proteinosis"
+              ],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:004949",
+                  "source_id": "dismech:Actinomycosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Actinomycosis.yaml",
+                  "locator": "phenotypes[2]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Fever occurs among the nonspecific systemic manifestations, particularly in thoracic presentations.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:006059",
+                  "source_id": "dismech:Adenovirus_Respiratory_Infection",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Adenovirus_Respiratory_Infection.yaml",
+                  "locator": "phenotypes[1]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Fever can be high and prolonged in adenovirus pneumonia.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:011533",
+                  "source_id": "dismech:Aspergillosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspergillosis.yaml",
+                  "locator": "phenotypes[7]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Fever is the commonest clinical sign of acute invasive disease, recorded in 98% of one COVID-19-associated pulmonary aspergillosis cohort, and what makes it useful is not its presence but its refractoriness: the temperature stays above 38.5 degrees Celsius through broad-spectrum antibacterial therap",
+                  "context_truncated": true
+                },
+                {
+                  "assertion_id": "dismech-assertion:017743",
+                  "source_id": "dismech:Babesiosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Babesiosis.yaml",
+                  "locator": "phenotypes[1]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Fever is a very frequent manifestation of symptomatic babesiosis.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 2
+            },
+            {
+              "finding_id": "hpo:HP:0002094",
+              "label": "호흡곤란",
+              "action": "SAY",
+              "content": "숨이 차나요?",
+              "review_status": "draft",
+              "associated_candidates": [
+                "dismech-disease:Actinomycosis",
+                "dismech-disease:Adenovirus_Respiratory_Infection",
+                "dismech-disease:Amniotic_Fluid_Embolism",
+                "dismech-disease:Aspergillosis",
+                "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease",
+                "dismech-disease:Bird_Fanciers_Lung",
+                "dismech-disease:COVID-19"
+              ],
+              "excluded_candidates": [],
+              "unrecorded_candidates": [
+                "dismech-disease:Asthma",
+                "dismech-disease:Autoimmune_Pulmonary_Alveolar_Proteinosis",
+                "dismech-disease:Babesiosis"
+              ],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:004951",
+                  "source_id": "dismech:Actinomycosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Actinomycosis.yaml",
+                  "locator": "phenotypes[4]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Dyspnea occurs with pulmonary mass and consolidation.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:006064",
+                  "source_id": "dismech:Adenovirus_Respiratory_Infection",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Adenovirus_Respiratory_Infection.yaml",
+                  "locator": "phenotypes[6]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Dyspnea is a warning feature of severe pediatric adenovirus pneumonia.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:008688",
+                  "source_id": "dismech:Amniotic_Fluid_Embolism",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Amniotic_Fluid_Embolism.yaml",
+                  "locator": "phenotypes[3]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:011532",
+                  "source_id": "dismech:Aspergillosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspergillosis.yaml",
+                  "locator": "phenotypes[6]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Breathlessness belongs to the classic symptom triad of chronic pulmonary aspergillosis alongside prolonged cough and weight loss, although a 69-patient series counted it in only 7.2% of cases, so the triad describes the syndrome better than it predicts any individual patient. It is also part of the ",
+                  "context_truncated": true
+                }
+              ],
+              "omitted_evidence_count": 3
+            },
+            {
+              "finding_id": "hpo:HP:0002315",
+              "label": "Headache",
+              "action": "SAY",
+              "content": "머리가 아픈가요?",
+              "review_status": "draft",
+              "associated_candidates": [
+                "dismech-disease:Amniotic_Fluid_Embolism",
+                "dismech-disease:Babesiosis"
+              ],
+              "excluded_candidates": [],
+              "unrecorded_candidates": [
+                "dismech-disease:Actinomycosis",
+                "dismech-disease:Adenovirus_Respiratory_Infection",
+                "dismech-disease:Aspergillosis",
+                "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease",
+                "dismech-disease:Asthma",
+                "dismech-disease:Autoimmune_Pulmonary_Alveolar_Proteinosis",
+                "dismech-disease:Bird_Fanciers_Lung",
+                "dismech-disease:COVID-19"
+              ],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:008702",
+                  "source_id": "dismech:Amniotic_Fluid_Embolism",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Amniotic_Fluid_Embolism.yaml",
+                  "locator": "phenotypes[17]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Headache was recorded in 3/50 typical and 4/13 atypical registry cases with available data. It is nonspecific and does not by itself establish a causal neurologic mechanism.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:017744",
+                  "source_id": "dismech:Babesiosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Babesiosis.yaml",
+                  "locator": "phenotypes[2]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Headache is a very frequent symptom in babesiosis.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "finding_id": "hpo:HP:0030828",
+              "label": "Wheezing",
+              "action": "EXAM",
+              "content": "양쪽 폐를 청진하여 천명을 확인합니다",
+              "review_status": "draft",
+              "associated_candidates": [
+                "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease",
+                "dismech-disease:Asthma"
+              ],
+              "excluded_candidates": [],
+              "unrecorded_candidates": [
+                "dismech-disease:Actinomycosis",
+                "dismech-disease:Adenovirus_Respiratory_Infection",
+                "dismech-disease:Amniotic_Fluid_Embolism",
+                "dismech-disease:Aspergillosis",
+                "dismech-disease:Autoimmune_Pulmonary_Alveolar_Proteinosis",
+                "dismech-disease:Babesiosis",
+                "dismech-disease:Bird_Fanciers_Lung",
+                "dismech-disease:COVID-19"
+              ],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:011586",
+                  "source_id": "dismech:Aspirin-Exacerbated_Respiratory_Disease",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspirin-Exacerbated_Respiratory_Disease.yaml",
+                  "locator": "phenotypes[8]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Expiratory wheeze reflects lower-airway disease and can accompany acute bronchospasm.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:011636",
+                  "source_id": "dismech:Asthma",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Asthma.yaml",
+                  "locator": "phenotypes[0]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "finding_id": "nova:abdominal-pain",
+              "label": "복통",
+              "action": "SAY",
+              "content": "배가 아픈가요?",
+              "review_status": "draft",
+              "associated_candidates": [
+                "dismech-disease:Actinomycosis",
+                "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease"
+              ],
+              "excluded_candidates": [],
+              "unrecorded_candidates": [
+                "dismech-disease:Adenovirus_Respiratory_Infection",
+                "dismech-disease:Amniotic_Fluid_Embolism",
+                "dismech-disease:Aspergillosis",
+                "dismech-disease:Asthma",
+                "dismech-disease:Autoimmune_Pulmonary_Alveolar_Proteinosis",
+                "dismech-disease:Babesiosis",
+                "dismech-disease:Bird_Fanciers_Lung",
+                "dismech-disease:COVID-19"
+              ],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:004956",
+                  "source_id": "dismech:Actinomycosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Actinomycosis.yaml",
+                  "locator": "phenotypes[9]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Abdominal pain is a common presentation of gastrointestinal-site actinomycosis.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:011594",
+                  "source_id": "dismech:Aspirin-Exacerbated_Respiratory_Disease",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspirin-Exacerbated_Respiratory_Disease.yaml",
+                  "locator": "phenotypes[16]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "An extra-respiratory manifestation reported in the mixed N-ERD reaction spectrum; no individual-feature prevalence is inferred from the proportion with any extra-respiratory symptom.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            }
+          ],
+          "history_pathways": {
+            "version": "clinical-pathways-2026.10.13.1",
+            "sha256": "38de89b8d4c9a8f24d6375182092dcedaafec7dc014df55ddb7a4b37072ef02e",
+            "pathways": [],
+            "interpretation": "History/plans are not phenotype observations. A plan is not an performed test or result."
+          },
+          "warnings": [
+            "Draft medical relationships included."
+          ],
+          "interpretation": "Scores are not diagnostic probabilities. Medical reference knowledge is not observed patient evidence. Provenance validation checks references, not the truth of semantic mapping. Plans are not performed results."
+        },
+        "confirmation_origin": "heuristic_or_model_extraction; semantic correctness requires review",
+        "interpretation": "Independent evidence scores; no score fusion or calibrated probability."
+      }
+    },
+    {
+      "case": "uncertain_fever",
+      "mode": "integrated",
+      "observations": {
+        "present": [
+          "cough"
+        ],
+        "absent": [],
+        "unknown": [
+          "fever"
+        ]
+      },
+      "clinical_candidates": [
+        {
+          "id": "acute_bronchitis",
+          "ko": "급성 기관지염",
+          "kcd": "J20.9",
+          "score": 5.25,
+          "prior": 1.5,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [
+            "cough"
+          ],
+          "against": [],
+          "unknown_key": [
+            "sputum"
+          ],
+          "share": 0.211
+        },
+        {
+          "id": "uri",
+          "ko": "급성 상기도 감염",
+          "kcd": "J06.9",
+          "score": 5.1,
+          "prior": 1.2,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [
+            "cough"
+          ],
+          "against": [],
+          "unknown_key": [
+            "rhinorrhea",
+            "sore_throat"
+          ],
+          "share": 0.196
+        },
+        {
+          "id": "pneumonia",
+          "ko": "폐렴",
+          "kcd": "J18.9",
+          "score": 4.55,
+          "prior": 0.1,
+          "red_flag": false,
+          "urgency": "urgent",
+          "matched": [
+            "cough"
+          ],
+          "against": [],
+          "unknown_key": [
+            "fever",
+            "purulent_sputum",
+            "crackles"
+          ],
+          "share": 0.149
+        },
+        {
+          "id": "gerd",
+          "ko": "위식도 역류질환",
+          "kcd": "K21.9",
+          "score": 3.25,
+          "prior": 1.5,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [
+            "cough"
+          ],
+          "against": [],
+          "unknown_key": [
+            "heartburn",
+            "postprandial_worse"
+          ],
+          "share": 0.078
+        },
+        {
+          "id": "allergic_rhinitis",
+          "ko": "알레르기 비염(상기도 기침 증후군)",
+          "kcd": "J30.4",
+          "score": 2.75,
+          "prior": 1.5,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [
+            "cough"
+          ],
+          "against": [],
+          "unknown_key": [
+            "postnasal_drip",
+            "rhinorrhea"
+          ],
+          "share": 0.06
+        }
+      ],
+      "ontology_support": {
+        "clinical_version": "0.4.0",
+        "mapping_version": "clinical-mappings-1",
+        "mappings_used": [
+          {
+            "clinical_id": "cough",
+            "finding_id": "hpo:HP:0012735",
+            "relation": "exact",
+            "review_status": "draft",
+            "basis": "Clinical cough and reference Cough; semantic review pending"
+          },
+          {
+            "clinical_id": "fever",
+            "finding_id": "nova:fever",
+            "relation": "exact",
+            "review_status": "draft",
+            "basis": "Clinical label Fever and reference label Fever; semantic review pending"
+          }
+        ],
+        "unmapped_or_unconfirmed": [],
+        "reference": {
+          "contract_version": "nova-knowledge-contract-1",
+          "data_version": "meddb-2026.10.13.1",
+          "data_sha256": "bc699e785eea76bad45f6e152d95f9942021fa6011a83815701bb92d6f3da81f",
+          "score_method": "phenotype-idf-v2-context",
+          "policy": {
+            "name": "research",
+            "policy_sha256": "e53af777ee4f56aab3cb54ad15cbcc2a890df5ce0479eade56e59289358c2db8",
+            "include_draft": true,
+            "description": "전체 연구용 초안 포함. 대회 성능 비교용이며 검수 완료 지식이 아니다.",
+            "assertions": 114092,
+            "reviewed": 0,
+            "draft": 114092
+          },
+          "phase": "preliminary",
+          "observations": [
+            {
+              "finding_id": "hpo:HP:0012735",
+              "state": "present",
+              "evidence_ids": [
+                "clinical-0"
+              ],
+              "confirmation": "caller_confirmed"
+            },
+            {
+              "finding_id": "nova:fever",
+              "state": "unknown",
+              "evidence_ids": [
+                "clinical-1"
+              ],
+              "confirmation": "unconfirmed"
+            }
+          ],
+          "patient": {},
+          "patient_evidence": {},
+          "context_ignored": [],
+          "candidates": [
+            {
+              "id": "dismech-disease:Actinomycosis",
+              "label": "Actinomycosis",
+              "rank": 1,
+              "evidence_score": 1.0,
+              "support": [
+                "hpo:HP:0012735"
+              ],
+              "counter_evidence": [],
+              "uncertain": [],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:004950",
+                  "source_id": "dismech:Actinomycosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Actinomycosis.yaml",
+                  "locator": "phenotypes[3]",
+                  "review_status": "draft",
+                  "context_excerpt": "Cough is a common pulmonary actinomycosis symptom.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "id": "dismech-disease:Adenovirus_Respiratory_Infection",
+              "label": "Adenovirus Respiratory Infection",
+              "rank": 1,
+              "evidence_score": 1.0,
+              "support": [
+                "hpo:HP:0012735"
+              ],
+              "counter_evidence": [],
+              "uncertain": [],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:006063",
+                  "source_id": "dismech:Adenovirus_Respiratory_Infection",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Adenovirus_Respiratory_Infection.yaml",
+                  "locator": "phenotypes[5]",
+                  "review_status": "draft",
+                  "context_excerpt": "Cough is a common manifestation of adenovirus pneumonia.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "id": "dismech-disease:Amniotic_Fluid_Embolism",
+              "label": "Amniotic Fluid Embolism",
+              "rank": 1,
+              "evidence_score": 1.0,
+              "support": [
+                "hpo:HP:0012735"
+              ],
+              "counter_evidence": [],
+              "uncertain": [],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:008701",
+                  "source_id": "dismech:Amniotic_Fluid_Embolism",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Amniotic_Fluid_Embolism.yaml",
+                  "locator": "phenotypes[16]",
+                  "review_status": "draft",
+                  "context_excerpt": "Cough was recorded in 2/48 typical and 2/13 atypical registry cases with available data.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "id": "dismech-disease:Aspergillosis",
+              "label": "Aspergillosis",
+              "rank": 1,
+              "evidence_score": 1.0,
+              "support": [
+                "hpo:HP:0012735"
+              ],
+              "counter_evidence": [],
+              "uncertain": [],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:011534",
+                  "source_id": "dismech:Aspergillosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspergillosis.yaml",
+                  "locator": "phenotypes[8]",
+                  "review_status": "draft",
+                  "context_excerpt": "Persistent cough, often productive, is the commonest symptom of chronic pulmonary aspergillosis and of Aspergillus bronchitis, and is part of the chronic pulmonary symptom complex the diagnostic criteria require.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "id": "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease",
+              "label": "Aspirin-Exacerbated Respiratory Disease",
+              "rank": 1,
+              "evidence_score": 1.0,
+              "support": [
+                "hpo:HP:0012735"
+              ],
+              "counter_evidence": [],
+              "uncertain": [],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:011588",
+                  "source_id": "dismech:Aspirin-Exacerbated_Respiratory_Disease",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspirin-Exacerbated_Respiratory_Disease.yaml",
+                  "locator": "phenotypes[10]",
+                  "review_status": "draft",
+                  "context_excerpt": "Cough can be part of the asthma presentation.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            }
+          ],
+          "next_actions": [
+            {
+              "finding_id": "nova:fever",
+              "label": "발열",
+              "action": "SAY",
+              "content": "열이 나나요?",
+              "review_status": "draft",
+              "associated_candidates": [
+                "dismech-disease:Actinomycosis",
+                "dismech-disease:Adenovirus_Respiratory_Infection",
+                "dismech-disease:Aspergillosis",
+                "dismech-disease:Babesiosis",
+                "dismech-disease:Bird_Fanciers_Lung",
+                "dismech-disease:COVID-19"
+              ],
+              "excluded_candidates": [],
+              "unrecorded_candidates": [
+                "dismech-disease:Amniotic_Fluid_Embolism",
+                "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease",
+                "dismech-disease:Asthma",
+                "dismech-disease:Autoimmune_Pulmonary_Alveolar_Proteinosis"
+              ],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:004949",
+                  "source_id": "dismech:Actinomycosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Actinomycosis.yaml",
+                  "locator": "phenotypes[2]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Fever occurs among the nonspecific systemic manifestations, particularly in thoracic presentations.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:006059",
+                  "source_id": "dismech:Adenovirus_Respiratory_Infection",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Adenovirus_Respiratory_Infection.yaml",
+                  "locator": "phenotypes[1]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Fever can be high and prolonged in adenovirus pneumonia.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:011533",
+                  "source_id": "dismech:Aspergillosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspergillosis.yaml",
+                  "locator": "phenotypes[7]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Fever is the commonest clinical sign of acute invasive disease, recorded in 98% of one COVID-19-associated pulmonary aspergillosis cohort, and what makes it useful is not its presence but its refractoriness: the temperature stays above 38.5 degrees Celsius through broad-spectrum antibacterial therap",
+                  "context_truncated": true
+                },
+                {
+                  "assertion_id": "dismech-assertion:017743",
+                  "source_id": "dismech:Babesiosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Babesiosis.yaml",
+                  "locator": "phenotypes[1]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Fever is a very frequent manifestation of symptomatic babesiosis.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 2
+            },
+            {
+              "finding_id": "hpo:HP:0002094",
+              "label": "호흡곤란",
+              "action": "SAY",
+              "content": "숨이 차나요?",
+              "review_status": "draft",
+              "associated_candidates": [
+                "dismech-disease:Actinomycosis",
+                "dismech-disease:Adenovirus_Respiratory_Infection",
+                "dismech-disease:Amniotic_Fluid_Embolism",
+                "dismech-disease:Aspergillosis",
+                "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease",
+                "dismech-disease:Bird_Fanciers_Lung",
+                "dismech-disease:COVID-19"
+              ],
+              "excluded_candidates": [],
+              "unrecorded_candidates": [
+                "dismech-disease:Asthma",
+                "dismech-disease:Autoimmune_Pulmonary_Alveolar_Proteinosis",
+                "dismech-disease:Babesiosis"
+              ],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:004951",
+                  "source_id": "dismech:Actinomycosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Actinomycosis.yaml",
+                  "locator": "phenotypes[4]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Dyspnea occurs with pulmonary mass and consolidation.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:006064",
+                  "source_id": "dismech:Adenovirus_Respiratory_Infection",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Adenovirus_Respiratory_Infection.yaml",
+                  "locator": "phenotypes[6]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Dyspnea is a warning feature of severe pediatric adenovirus pneumonia.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:008688",
+                  "source_id": "dismech:Amniotic_Fluid_Embolism",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Amniotic_Fluid_Embolism.yaml",
+                  "locator": "phenotypes[3]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:011532",
+                  "source_id": "dismech:Aspergillosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspergillosis.yaml",
+                  "locator": "phenotypes[6]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Breathlessness belongs to the classic symptom triad of chronic pulmonary aspergillosis alongside prolonged cough and weight loss, although a 69-patient series counted it in only 7.2% of cases, so the triad describes the syndrome better than it predicts any individual patient. It is also part of the ",
+                  "context_truncated": true
+                }
+              ],
+              "omitted_evidence_count": 3
+            },
+            {
+              "finding_id": "hpo:HP:0002315",
+              "label": "Headache",
+              "action": "SAY",
+              "content": "머리가 아픈가요?",
+              "review_status": "draft",
+              "associated_candidates": [
+                "dismech-disease:Amniotic_Fluid_Embolism",
+                "dismech-disease:Babesiosis"
+              ],
+              "excluded_candidates": [],
+              "unrecorded_candidates": [
+                "dismech-disease:Actinomycosis",
+                "dismech-disease:Adenovirus_Respiratory_Infection",
+                "dismech-disease:Aspergillosis",
+                "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease",
+                "dismech-disease:Asthma",
+                "dismech-disease:Autoimmune_Pulmonary_Alveolar_Proteinosis",
+                "dismech-disease:Bird_Fanciers_Lung",
+                "dismech-disease:COVID-19"
+              ],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:008702",
+                  "source_id": "dismech:Amniotic_Fluid_Embolism",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Amniotic_Fluid_Embolism.yaml",
+                  "locator": "phenotypes[17]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Headache was recorded in 3/50 typical and 4/13 atypical registry cases with available data. It is nonspecific and does not by itself establish a causal neurologic mechanism.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:017744",
+                  "source_id": "dismech:Babesiosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Babesiosis.yaml",
+                  "locator": "phenotypes[2]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Headache is a very frequent symptom in babesiosis.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "finding_id": "hpo:HP:0030828",
+              "label": "Wheezing",
+              "action": "EXAM",
+              "content": "양쪽 폐를 청진하여 천명을 확인합니다",
+              "review_status": "draft",
+              "associated_candidates": [
+                "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease",
+                "dismech-disease:Asthma"
+              ],
+              "excluded_candidates": [],
+              "unrecorded_candidates": [
+                "dismech-disease:Actinomycosis",
+                "dismech-disease:Adenovirus_Respiratory_Infection",
+                "dismech-disease:Amniotic_Fluid_Embolism",
+                "dismech-disease:Aspergillosis",
+                "dismech-disease:Autoimmune_Pulmonary_Alveolar_Proteinosis",
+                "dismech-disease:Babesiosis",
+                "dismech-disease:Bird_Fanciers_Lung",
+                "dismech-disease:COVID-19"
+              ],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:011586",
+                  "source_id": "dismech:Aspirin-Exacerbated_Respiratory_Disease",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspirin-Exacerbated_Respiratory_Disease.yaml",
+                  "locator": "phenotypes[8]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Expiratory wheeze reflects lower-airway disease and can accompany acute bronchospasm.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:011636",
+                  "source_id": "dismech:Asthma",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Asthma.yaml",
+                  "locator": "phenotypes[0]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "finding_id": "nova:abdominal-pain",
+              "label": "복통",
+              "action": "SAY",
+              "content": "배가 아픈가요?",
+              "review_status": "draft",
+              "associated_candidates": [
+                "dismech-disease:Actinomycosis",
+                "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease"
+              ],
+              "excluded_candidates": [],
+              "unrecorded_candidates": [
+                "dismech-disease:Adenovirus_Respiratory_Infection",
+                "dismech-disease:Amniotic_Fluid_Embolism",
+                "dismech-disease:Aspergillosis",
+                "dismech-disease:Asthma",
+                "dismech-disease:Autoimmune_Pulmonary_Alveolar_Proteinosis",
+                "dismech-disease:Babesiosis",
+                "dismech-disease:Bird_Fanciers_Lung",
+                "dismech-disease:COVID-19"
+              ],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:004956",
+                  "source_id": "dismech:Actinomycosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Actinomycosis.yaml",
+                  "locator": "phenotypes[9]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Abdominal pain is a common presentation of gastrointestinal-site actinomycosis.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:011594",
+                  "source_id": "dismech:Aspirin-Exacerbated_Respiratory_Disease",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspirin-Exacerbated_Respiratory_Disease.yaml",
+                  "locator": "phenotypes[16]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "An extra-respiratory manifestation reported in the mixed N-ERD reaction spectrum; no individual-feature prevalence is inferred from the proportion with any extra-respiratory symptom.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            }
+          ],
+          "history_pathways": {
+            "version": "clinical-pathways-2026.10.13.1",
+            "sha256": "38de89b8d4c9a8f24d6375182092dcedaafec7dc014df55ddb7a4b37072ef02e",
+            "pathways": [],
+            "interpretation": "History/plans are not phenotype observations. A plan is not an performed test or result."
+          },
+          "warnings": [
+            "Draft medical relationships included."
+          ],
+          "interpretation": "Scores are not diagnostic probabilities. Medical reference knowledge is not observed patient evidence. Provenance validation checks references, not the truth of semantic mapping. Plans are not performed results."
+        },
+        "confirmation_origin": "heuristic_or_model_extraction; semantic correctness requires review",
+        "interpretation": "Independent evidence scores; no score fusion or calibrated probability."
+      }
+    },
+    {
+      "case": "respiratory",
+      "mode": "clinical",
+      "observations": {
+        "present": [
+          "dyspnea",
+          "cough"
+        ],
+        "absent": [],
+        "unknown": []
+      },
+      "clinical_candidates": [
+        {
+          "id": "pneumonia",
+          "ko": "폐렴",
+          "kcd": "J18.9",
+          "score": 5.55,
+          "prior": 0.1,
+          "red_flag": false,
+          "urgency": "urgent",
+          "matched": [
+            "cough",
+            "dyspnea"
+          ],
+          "against": [],
+          "unknown_key": [
+            "fever",
+            "purulent_sputum",
+            "crackles"
+          ],
+          "share": 0.272
+        },
+        {
+          "id": "asthma",
+          "ko": "천식 악화",
+          "kcd": "J45.9",
+          "score": 3.38,
+          "prior": 0.76,
+          "red_flag": false,
+          "urgency": "urgent",
+          "matched": [
+            "dyspnea",
+            "cough"
+          ],
+          "against": [],
+          "unknown_key": [
+            "wheeze_sx",
+            "nocturnal_cough",
+            "wheezing_sign",
+            "asthma_history"
+          ],
+          "share": 0.092
+        },
+        {
+          "id": "acute_bronchitis",
+          "ko": "급성 기관지염",
+          "kcd": "J20.9",
+          "score": 3.25,
+          "prior": 1.5,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [
+            "cough"
+          ],
+          "against": [
+            "dyspnea"
+          ],
+          "unknown_key": [
+            "sputum"
+          ],
+          "share": 0.086
+        },
+        {
+          "id": "gerd",
+          "ko": "위식도 역류질환",
+          "kcd": "K21.9",
+          "score": 3.25,
+          "prior": 1.5,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [
+            "cough"
+          ],
+          "against": [],
+          "unknown_key": [
+            "heartburn",
+            "postprandial_worse"
+          ],
+          "share": 0.086
+        },
+        {
+          "id": "uri",
+          "ko": "급성 상기도 감염",
+          "kcd": "J06.9",
+          "score": 3.1,
+          "prior": 1.2,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [
+            "cough"
+          ],
+          "against": [
+            "dyspnea"
+          ],
+          "unknown_key": [
+            "rhinorrhea",
+            "sore_throat"
+          ],
+          "share": 0.08
+        }
+      ],
+      "ontology_support": null
+    },
+    {
+      "case": "respiratory",
+      "mode": "ontology",
+      "observations": {
+        "present": [
+          "dyspnea",
+          "cough"
+        ],
+        "absent": [],
+        "unknown": []
+      },
+      "clinical_candidates": [],
+      "ontology_support": {
+        "clinical_version": "0.4.0",
+        "mapping_version": "clinical-mappings-1",
+        "mappings_used": [
+          {
+            "clinical_id": "cough",
+            "finding_id": "hpo:HP:0012735",
+            "relation": "exact",
+            "review_status": "draft",
+            "basis": "Clinical cough and reference Cough; semantic review pending"
+          },
+          {
+            "clinical_id": "dyspnea",
+            "finding_id": "hpo:HP:0002094",
+            "relation": "exact",
+            "review_status": "draft",
+            "basis": "Clinical dyspnea and reference Dyspnea; semantic review pending"
+          }
+        ],
+        "unmapped_or_unconfirmed": [],
+        "reference": {
+          "contract_version": "nova-knowledge-contract-1",
+          "data_version": "meddb-2026.10.13.1",
+          "data_sha256": "bc699e785eea76bad45f6e152d95f9942021fa6011a83815701bb92d6f3da81f",
+          "score_method": "phenotype-idf-v2-context",
+          "policy": {
+            "name": "research",
+            "policy_sha256": "e53af777ee4f56aab3cb54ad15cbcc2a890df5ce0479eade56e59289358c2db8",
+            "include_draft": true,
+            "description": "전체 연구용 초안 포함. 대회 성능 비교용이며 검수 완료 지식이 아니다.",
+            "assertions": 114092,
+            "reviewed": 0,
+            "draft": 114092
+          },
+          "phase": "preliminary",
+          "observations": [
+            {
+              "finding_id": "hpo:HP:0012735",
+              "state": "present",
+              "evidence_ids": [
+                "clinical-0"
+              ],
+              "confirmation": "caller_confirmed"
+            },
+            {
+              "finding_id": "hpo:HP:0002094",
+              "state": "present",
+              "evidence_ids": [
+                "clinical-1"
+              ],
+              "confirmation": "caller_confirmed"
+            }
+          ],
+          "patient": {},
+          "patient_evidence": {},
+          "context_ignored": [],
+          "candidates": [
+            {
+              "id": "dismech-disease:Actinomycosis",
+              "label": "Actinomycosis",
+              "rank": 1,
+              "evidence_score": 1.0,
+              "support": [
+                "hpo:HP:0002094",
+                "hpo:HP:0012735"
+              ],
+              "counter_evidence": [],
+              "uncertain": [],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:004950",
+                  "source_id": "dismech:Actinomycosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Actinomycosis.yaml",
+                  "locator": "phenotypes[3]",
+                  "review_status": "draft",
+                  "context_excerpt": "Cough is a common pulmonary actinomycosis symptom.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:004951",
+                  "source_id": "dismech:Actinomycosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Actinomycosis.yaml",
+                  "locator": "phenotypes[4]",
+                  "review_status": "draft",
+                  "context_excerpt": "Dyspnea occurs with pulmonary mass and consolidation.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "id": "dismech-disease:Adenovirus_Respiratory_Infection",
+              "label": "Adenovirus Respiratory Infection",
+              "rank": 1,
+              "evidence_score": 1.0,
+              "support": [
+                "hpo:HP:0002094",
+                "hpo:HP:0012735"
+              ],
+              "counter_evidence": [],
+              "uncertain": [],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:006063",
+                  "source_id": "dismech:Adenovirus_Respiratory_Infection",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Adenovirus_Respiratory_Infection.yaml",
+                  "locator": "phenotypes[5]",
+                  "review_status": "draft",
+                  "context_excerpt": "Cough is a common manifestation of adenovirus pneumonia.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:006064",
+                  "source_id": "dismech:Adenovirus_Respiratory_Infection",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Adenovirus_Respiratory_Infection.yaml",
+                  "locator": "phenotypes[6]",
+                  "review_status": "draft",
+                  "context_excerpt": "Dyspnea is a warning feature of severe pediatric adenovirus pneumonia.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "id": "dismech-disease:Amniotic_Fluid_Embolism",
+              "label": "Amniotic Fluid Embolism",
+              "rank": 1,
+              "evidence_score": 1.0,
+              "support": [
+                "hpo:HP:0002094",
+                "hpo:HP:0012735"
+              ],
+              "counter_evidence": [],
+              "uncertain": [],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:008688",
+                  "source_id": "dismech:Amniotic_Fluid_Embolism",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Amniotic_Fluid_Embolism.yaml",
+                  "locator": "phenotypes[3]",
+                  "review_status": "draft",
+                  "context_excerpt": "",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:008701",
+                  "source_id": "dismech:Amniotic_Fluid_Embolism",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Amniotic_Fluid_Embolism.yaml",
+                  "locator": "phenotypes[16]",
+                  "review_status": "draft",
+                  "context_excerpt": "Cough was recorded in 2/48 typical and 2/13 atypical registry cases with available data.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "id": "dismech-disease:Aspergillosis",
+              "label": "Aspergillosis",
+              "rank": 1,
+              "evidence_score": 1.0,
+              "support": [
+                "hpo:HP:0002094",
+                "hpo:HP:0012735"
+              ],
+              "counter_evidence": [],
+              "uncertain": [],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:011532",
+                  "source_id": "dismech:Aspergillosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspergillosis.yaml",
+                  "locator": "phenotypes[6]",
+                  "review_status": "draft",
+                  "context_excerpt": "Breathlessness belongs to the classic symptom triad of chronic pulmonary aspergillosis alongside prolonged cough and weight loss, although a 69-patient series counted it in only 7.2% of cases, so the triad describes the syndrome better than it predicts any individual patient. It is also part of the ",
+                  "context_truncated": true
+                },
+                {
+                  "assertion_id": "dismech-assertion:011534",
+                  "source_id": "dismech:Aspergillosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspergillosis.yaml",
+                  "locator": "phenotypes[8]",
+                  "review_status": "draft",
+                  "context_excerpt": "Persistent cough, often productive, is the commonest symptom of chronic pulmonary aspergillosis and of Aspergillus bronchitis, and is part of the chronic pulmonary symptom complex the diagnostic criteria require.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "id": "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease",
+              "label": "Aspirin-Exacerbated Respiratory Disease",
+              "rank": 1,
+              "evidence_score": 1.0,
+              "support": [
+                "hpo:HP:0002094",
+                "hpo:HP:0012735"
+              ],
+              "counter_evidence": [],
+              "uncertain": [],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:011587",
+                  "source_id": "dismech:Aspirin-Exacerbated_Respiratory_Disease",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspirin-Exacerbated_Respiratory_Disease.yaml",
+                  "locator": "phenotypes[9]",
+                  "review_status": "draft",
+                  "context_excerpt": "Breathlessness accompanies variable lower-airway obstruction.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:011588",
+                  "source_id": "dismech:Aspirin-Exacerbated_Respiratory_Disease",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspirin-Exacerbated_Respiratory_Disease.yaml",
+                  "locator": "phenotypes[10]",
+                  "review_status": "draft",
+                  "context_excerpt": "Cough can be part of the asthma presentation.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            }
+          ],
+          "next_actions": [
+            {
+              "finding_id": "nova:abdominal-pain",
+              "label": "복통",
+              "action": "SAY",
+              "content": "배가 아픈가요?",
+              "review_status": "draft",
+              "associated_candidates": [
+                "dismech-disease:Actinomycosis",
+                "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease",
+                "dismech-disease:E-Cigarette_or_Vaping_Product_Use-Associated_Lung_Injury"
+              ],
+              "excluded_candidates": [],
+              "unrecorded_candidates": [
+                "dismech-disease:Adenovirus_Respiratory_Infection",
+                "dismech-disease:Amniotic_Fluid_Embolism",
+                "dismech-disease:Aspergillosis",
+                "dismech-disease:Bird_Fanciers_Lung",
+                "dismech-disease:COVID-19",
+                "dismech-disease:Catamenial_Pneumothorax",
+                "dismech-disease:Coccidioidomycosis"
+              ],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:004956",
+                  "source_id": "dismech:Actinomycosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Actinomycosis.yaml",
+                  "locator": "phenotypes[9]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Abdominal pain is a common presentation of gastrointestinal-site actinomycosis.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:011594",
+                  "source_id": "dismech:Aspirin-Exacerbated_Respiratory_Disease",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspirin-Exacerbated_Respiratory_Disease.yaml",
+                  "locator": "phenotypes[16]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "An extra-respiratory manifestation reported in the mixed N-ERD reaction spectrum; no individual-feature prevalence is inferred from the proportion with any extra-respiratory symptom.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:043722",
+                  "source_id": "dismech:E-Cigarette_or_Vaping_Product_Use-Associated_Lung_Injury",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/E-Cigarette_or_Vaping_Product_Use-Associated_Lung_Injury.yaml",
+                  "locator": "phenotypes[4]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Reported within the same gastrointestinal cluster.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "finding_id": "nova:fever",
+              "label": "발열",
+              "action": "SAY",
+              "content": "열이 나나요?",
+              "review_status": "draft",
+              "associated_candidates": [
+                "dismech-disease:Actinomycosis",
+                "dismech-disease:Adenovirus_Respiratory_Infection",
+                "dismech-disease:Aspergillosis",
+                "dismech-disease:Bird_Fanciers_Lung",
+                "dismech-disease:COVID-19",
+                "dismech-disease:Coccidioidomycosis",
+                "dismech-disease:E-Cigarette_or_Vaping_Product_Use-Associated_Lung_Injury"
+              ],
+              "excluded_candidates": [],
+              "unrecorded_candidates": [
+                "dismech-disease:Amniotic_Fluid_Embolism",
+                "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease",
+                "dismech-disease:Catamenial_Pneumothorax"
+              ],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:004949",
+                  "source_id": "dismech:Actinomycosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Actinomycosis.yaml",
+                  "locator": "phenotypes[2]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Fever occurs among the nonspecific systemic manifestations, particularly in thoracic presentations.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:006059",
+                  "source_id": "dismech:Adenovirus_Respiratory_Infection",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Adenovirus_Respiratory_Infection.yaml",
+                  "locator": "phenotypes[1]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Fever can be high and prolonged in adenovirus pneumonia.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:011533",
+                  "source_id": "dismech:Aspergillosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspergillosis.yaml",
+                  "locator": "phenotypes[7]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Fever is the commonest clinical sign of acute invasive disease, recorded in 98% of one COVID-19-associated pulmonary aspergillosis cohort, and what makes it useful is not its presence but its refractoriness: the temperature stays above 38.5 degrees Celsius through broad-spectrum antibacterial therap",
+                  "context_truncated": true
+                },
+                {
+                  "assertion_id": "dismech-assertion:020109",
+                  "source_id": "dismech:Bird_Fanciers_Lung",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Bird_Fanciers_Lung.yaml",
+                  "locator": "phenotypes[5]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Flu-like systemic symptoms during acute exposure episodes.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 3
+            },
+            {
+              "finding_id": "hpo:HP:0002315",
+              "label": "Headache",
+              "action": "SAY",
+              "content": "머리가 아픈가요?",
+              "review_status": "draft",
+              "associated_candidates": [
+                "dismech-disease:Amniotic_Fluid_Embolism",
+                "dismech-disease:Coccidioidomycosis"
+              ],
+              "excluded_candidates": [],
+              "unrecorded_candidates": [
+                "dismech-disease:Actinomycosis",
+                "dismech-disease:Adenovirus_Respiratory_Infection",
+                "dismech-disease:Aspergillosis",
+                "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease",
+                "dismech-disease:Bird_Fanciers_Lung",
+                "dismech-disease:COVID-19",
+                "dismech-disease:Catamenial_Pneumothorax",
+                "dismech-disease:E-Cigarette_or_Vaping_Product_Use-Associated_Lung_Injury"
+              ],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:008702",
+                  "source_id": "dismech:Amniotic_Fluid_Embolism",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Amniotic_Fluid_Embolism.yaml",
+                  "locator": "phenotypes[17]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Headache was recorded in 3/50 typical and 4/13 atypical registry cases with available data. It is nonspecific and does not by itself establish a causal neurologic mechanism.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:033660",
+                  "source_id": "dismech:Coccidioidomycosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Coccidioidomycosis.yaml",
+                  "locator": "phenotypes[10]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Prominent symptom in coccidioidal meningitis; may present with hydrocephalus.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "finding_id": "nova:diarrhea",
+              "label": "설사",
+              "action": "SAY",
+              "content": "설사를 하나요?",
+              "review_status": "draft",
+              "associated_candidates": [
+                "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease",
+                "dismech-disease:E-Cigarette_or_Vaping_Product_Use-Associated_Lung_Injury"
+              ],
+              "excluded_candidates": [],
+              "unrecorded_candidates": [
+                "dismech-disease:Actinomycosis",
+                "dismech-disease:Adenovirus_Respiratory_Infection",
+                "dismech-disease:Amniotic_Fluid_Embolism",
+                "dismech-disease:Aspergillosis",
+                "dismech-disease:Bird_Fanciers_Lung",
+                "dismech-disease:COVID-19",
+                "dismech-disease:Catamenial_Pneumothorax",
+                "dismech-disease:Coccidioidomycosis"
+              ],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:011597",
+                  "source_id": "dismech:Aspirin-Exacerbated_Respiratory_Disease",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspirin-Exacerbated_Respiratory_Disease.yaml",
+                  "locator": "phenotypes[19]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "An extra-respiratory manifestation reported in the mixed N-ERD reaction spectrum; no individual-feature prevalence is inferred from the proportion with any extra-respiratory symptom.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:043721",
+                  "source_id": "dismech:E-Cigarette_or_Vaping_Product_Use-Associated_Lung_Injury",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/E-Cigarette_or_Vaping_Product_Use-Associated_Lung_Injury.yaml",
+                  "locator": "phenotypes[3]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Part of the gastrointestinal cluster reported alongside nausea, vomiting and abdominal pain.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "finding_id": "hpo:HP:0030828",
+              "label": "Wheezing",
+              "action": "EXAM",
+              "content": "양쪽 폐를 청진하여 천명을 확인합니다",
+              "review_status": "draft",
+              "associated_candidates": [
+                "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease"
+              ],
+              "excluded_candidates": [],
+              "unrecorded_candidates": [
+                "dismech-disease:Actinomycosis",
+                "dismech-disease:Adenovirus_Respiratory_Infection",
+                "dismech-disease:Amniotic_Fluid_Embolism",
+                "dismech-disease:Aspergillosis",
+                "dismech-disease:Bird_Fanciers_Lung",
+                "dismech-disease:COVID-19",
+                "dismech-disease:Catamenial_Pneumothorax",
+                "dismech-disease:Coccidioidomycosis",
+                "dismech-disease:E-Cigarette_or_Vaping_Product_Use-Associated_Lung_Injury"
+              ],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:011586",
+                  "source_id": "dismech:Aspirin-Exacerbated_Respiratory_Disease",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspirin-Exacerbated_Respiratory_Disease.yaml",
+                  "locator": "phenotypes[8]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Expiratory wheeze reflects lower-airway disease and can accompany acute bronchospasm.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            }
+          ],
+          "history_pathways": {
+            "version": "clinical-pathways-2026.10.13.1",
+            "sha256": "38de89b8d4c9a8f24d6375182092dcedaafec7dc014df55ddb7a4b37072ef02e",
+            "pathways": [],
+            "interpretation": "History/plans are not phenotype observations. A plan is not an performed test or result."
+          },
+          "warnings": [
+            "Draft medical relationships included."
+          ],
+          "interpretation": "Scores are not diagnostic probabilities. Medical reference knowledge is not observed patient evidence. Provenance validation checks references, not the truth of semantic mapping. Plans are not performed results."
+        },
+        "confirmation_origin": "heuristic_or_model_extraction; semantic correctness requires review",
+        "interpretation": "Independent evidence scores; no score fusion or calibrated probability."
+      }
+    },
+    {
+      "case": "respiratory",
+      "mode": "integrated",
+      "observations": {
+        "present": [
+          "dyspnea",
+          "cough"
+        ],
+        "absent": [],
+        "unknown": []
+      },
+      "clinical_candidates": [
+        {
+          "id": "pneumonia",
+          "ko": "폐렴",
+          "kcd": "J18.9",
+          "score": 5.55,
+          "prior": 0.1,
+          "red_flag": false,
+          "urgency": "urgent",
+          "matched": [
+            "cough",
+            "dyspnea"
+          ],
+          "against": [],
+          "unknown_key": [
+            "fever",
+            "purulent_sputum",
+            "crackles"
+          ],
+          "share": 0.272
+        },
+        {
+          "id": "asthma",
+          "ko": "천식 악화",
+          "kcd": "J45.9",
+          "score": 3.38,
+          "prior": 0.76,
+          "red_flag": false,
+          "urgency": "urgent",
+          "matched": [
+            "dyspnea",
+            "cough"
+          ],
+          "against": [],
+          "unknown_key": [
+            "wheeze_sx",
+            "nocturnal_cough",
+            "wheezing_sign",
+            "asthma_history"
+          ],
+          "share": 0.092
+        },
+        {
+          "id": "acute_bronchitis",
+          "ko": "급성 기관지염",
+          "kcd": "J20.9",
+          "score": 3.25,
+          "prior": 1.5,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [
+            "cough"
+          ],
+          "against": [
+            "dyspnea"
+          ],
+          "unknown_key": [
+            "sputum"
+          ],
+          "share": 0.086
+        },
+        {
+          "id": "gerd",
+          "ko": "위식도 역류질환",
+          "kcd": "K21.9",
+          "score": 3.25,
+          "prior": 1.5,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [
+            "cough"
+          ],
+          "against": [],
+          "unknown_key": [
+            "heartburn",
+            "postprandial_worse"
+          ],
+          "share": 0.086
+        },
+        {
+          "id": "uri",
+          "ko": "급성 상기도 감염",
+          "kcd": "J06.9",
+          "score": 3.1,
+          "prior": 1.2,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [
+            "cough"
+          ],
+          "against": [
+            "dyspnea"
+          ],
+          "unknown_key": [
+            "rhinorrhea",
+            "sore_throat"
+          ],
+          "share": 0.08
+        }
+      ],
+      "ontology_support": {
+        "clinical_version": "0.4.0",
+        "mapping_version": "clinical-mappings-1",
+        "mappings_used": [
+          {
+            "clinical_id": "cough",
+            "finding_id": "hpo:HP:0012735",
+            "relation": "exact",
+            "review_status": "draft",
+            "basis": "Clinical cough and reference Cough; semantic review pending"
+          },
+          {
+            "clinical_id": "dyspnea",
+            "finding_id": "hpo:HP:0002094",
+            "relation": "exact",
+            "review_status": "draft",
+            "basis": "Clinical dyspnea and reference Dyspnea; semantic review pending"
+          }
+        ],
+        "unmapped_or_unconfirmed": [],
+        "reference": {
+          "contract_version": "nova-knowledge-contract-1",
+          "data_version": "meddb-2026.10.13.1",
+          "data_sha256": "bc699e785eea76bad45f6e152d95f9942021fa6011a83815701bb92d6f3da81f",
+          "score_method": "phenotype-idf-v2-context",
+          "policy": {
+            "name": "research",
+            "policy_sha256": "e53af777ee4f56aab3cb54ad15cbcc2a890df5ce0479eade56e59289358c2db8",
+            "include_draft": true,
+            "description": "전체 연구용 초안 포함. 대회 성능 비교용이며 검수 완료 지식이 아니다.",
+            "assertions": 114092,
+            "reviewed": 0,
+            "draft": 114092
+          },
+          "phase": "preliminary",
+          "observations": [
+            {
+              "finding_id": "hpo:HP:0012735",
+              "state": "present",
+              "evidence_ids": [
+                "clinical-0"
+              ],
+              "confirmation": "caller_confirmed"
+            },
+            {
+              "finding_id": "hpo:HP:0002094",
+              "state": "present",
+              "evidence_ids": [
+                "clinical-1"
+              ],
+              "confirmation": "caller_confirmed"
+            }
+          ],
+          "patient": {},
+          "patient_evidence": {},
+          "context_ignored": [],
+          "candidates": [
+            {
+              "id": "dismech-disease:Actinomycosis",
+              "label": "Actinomycosis",
+              "rank": 1,
+              "evidence_score": 1.0,
+              "support": [
+                "hpo:HP:0002094",
+                "hpo:HP:0012735"
+              ],
+              "counter_evidence": [],
+              "uncertain": [],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:004950",
+                  "source_id": "dismech:Actinomycosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Actinomycosis.yaml",
+                  "locator": "phenotypes[3]",
+                  "review_status": "draft",
+                  "context_excerpt": "Cough is a common pulmonary actinomycosis symptom.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:004951",
+                  "source_id": "dismech:Actinomycosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Actinomycosis.yaml",
+                  "locator": "phenotypes[4]",
+                  "review_status": "draft",
+                  "context_excerpt": "Dyspnea occurs with pulmonary mass and consolidation.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "id": "dismech-disease:Adenovirus_Respiratory_Infection",
+              "label": "Adenovirus Respiratory Infection",
+              "rank": 1,
+              "evidence_score": 1.0,
+              "support": [
+                "hpo:HP:0002094",
+                "hpo:HP:0012735"
+              ],
+              "counter_evidence": [],
+              "uncertain": [],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:006063",
+                  "source_id": "dismech:Adenovirus_Respiratory_Infection",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Adenovirus_Respiratory_Infection.yaml",
+                  "locator": "phenotypes[5]",
+                  "review_status": "draft",
+                  "context_excerpt": "Cough is a common manifestation of adenovirus pneumonia.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:006064",
+                  "source_id": "dismech:Adenovirus_Respiratory_Infection",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Adenovirus_Respiratory_Infection.yaml",
+                  "locator": "phenotypes[6]",
+                  "review_status": "draft",
+                  "context_excerpt": "Dyspnea is a warning feature of severe pediatric adenovirus pneumonia.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "id": "dismech-disease:Amniotic_Fluid_Embolism",
+              "label": "Amniotic Fluid Embolism",
+              "rank": 1,
+              "evidence_score": 1.0,
+              "support": [
+                "hpo:HP:0002094",
+                "hpo:HP:0012735"
+              ],
+              "counter_evidence": [],
+              "uncertain": [],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:008688",
+                  "source_id": "dismech:Amniotic_Fluid_Embolism",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Amniotic_Fluid_Embolism.yaml",
+                  "locator": "phenotypes[3]",
+                  "review_status": "draft",
+                  "context_excerpt": "",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:008701",
+                  "source_id": "dismech:Amniotic_Fluid_Embolism",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Amniotic_Fluid_Embolism.yaml",
+                  "locator": "phenotypes[16]",
+                  "review_status": "draft",
+                  "context_excerpt": "Cough was recorded in 2/48 typical and 2/13 atypical registry cases with available data.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "id": "dismech-disease:Aspergillosis",
+              "label": "Aspergillosis",
+              "rank": 1,
+              "evidence_score": 1.0,
+              "support": [
+                "hpo:HP:0002094",
+                "hpo:HP:0012735"
+              ],
+              "counter_evidence": [],
+              "uncertain": [],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:011532",
+                  "source_id": "dismech:Aspergillosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspergillosis.yaml",
+                  "locator": "phenotypes[6]",
+                  "review_status": "draft",
+                  "context_excerpt": "Breathlessness belongs to the classic symptom triad of chronic pulmonary aspergillosis alongside prolonged cough and weight loss, although a 69-patient series counted it in only 7.2% of cases, so the triad describes the syndrome better than it predicts any individual patient. It is also part of the ",
+                  "context_truncated": true
+                },
+                {
+                  "assertion_id": "dismech-assertion:011534",
+                  "source_id": "dismech:Aspergillosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspergillosis.yaml",
+                  "locator": "phenotypes[8]",
+                  "review_status": "draft",
+                  "context_excerpt": "Persistent cough, often productive, is the commonest symptom of chronic pulmonary aspergillosis and of Aspergillus bronchitis, and is part of the chronic pulmonary symptom complex the diagnostic criteria require.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "id": "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease",
+              "label": "Aspirin-Exacerbated Respiratory Disease",
+              "rank": 1,
+              "evidence_score": 1.0,
+              "support": [
+                "hpo:HP:0002094",
+                "hpo:HP:0012735"
+              ],
+              "counter_evidence": [],
+              "uncertain": [],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:011587",
+                  "source_id": "dismech:Aspirin-Exacerbated_Respiratory_Disease",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspirin-Exacerbated_Respiratory_Disease.yaml",
+                  "locator": "phenotypes[9]",
+                  "review_status": "draft",
+                  "context_excerpt": "Breathlessness accompanies variable lower-airway obstruction.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:011588",
+                  "source_id": "dismech:Aspirin-Exacerbated_Respiratory_Disease",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspirin-Exacerbated_Respiratory_Disease.yaml",
+                  "locator": "phenotypes[10]",
+                  "review_status": "draft",
+                  "context_excerpt": "Cough can be part of the asthma presentation.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            }
+          ],
+          "next_actions": [
+            {
+              "finding_id": "nova:abdominal-pain",
+              "label": "복통",
+              "action": "SAY",
+              "content": "배가 아픈가요?",
+              "review_status": "draft",
+              "associated_candidates": [
+                "dismech-disease:Actinomycosis",
+                "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease",
+                "dismech-disease:E-Cigarette_or_Vaping_Product_Use-Associated_Lung_Injury"
+              ],
+              "excluded_candidates": [],
+              "unrecorded_candidates": [
+                "dismech-disease:Adenovirus_Respiratory_Infection",
+                "dismech-disease:Amniotic_Fluid_Embolism",
+                "dismech-disease:Aspergillosis",
+                "dismech-disease:Bird_Fanciers_Lung",
+                "dismech-disease:COVID-19",
+                "dismech-disease:Catamenial_Pneumothorax",
+                "dismech-disease:Coccidioidomycosis"
+              ],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:004956",
+                  "source_id": "dismech:Actinomycosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Actinomycosis.yaml",
+                  "locator": "phenotypes[9]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Abdominal pain is a common presentation of gastrointestinal-site actinomycosis.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:011594",
+                  "source_id": "dismech:Aspirin-Exacerbated_Respiratory_Disease",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspirin-Exacerbated_Respiratory_Disease.yaml",
+                  "locator": "phenotypes[16]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "An extra-respiratory manifestation reported in the mixed N-ERD reaction spectrum; no individual-feature prevalence is inferred from the proportion with any extra-respiratory symptom.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:043722",
+                  "source_id": "dismech:E-Cigarette_or_Vaping_Product_Use-Associated_Lung_Injury",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/E-Cigarette_or_Vaping_Product_Use-Associated_Lung_Injury.yaml",
+                  "locator": "phenotypes[4]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Reported within the same gastrointestinal cluster.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "finding_id": "nova:fever",
+              "label": "발열",
+              "action": "SAY",
+              "content": "열이 나나요?",
+              "review_status": "draft",
+              "associated_candidates": [
+                "dismech-disease:Actinomycosis",
+                "dismech-disease:Adenovirus_Respiratory_Infection",
+                "dismech-disease:Aspergillosis",
+                "dismech-disease:Bird_Fanciers_Lung",
+                "dismech-disease:COVID-19",
+                "dismech-disease:Coccidioidomycosis",
+                "dismech-disease:E-Cigarette_or_Vaping_Product_Use-Associated_Lung_Injury"
+              ],
+              "excluded_candidates": [],
+              "unrecorded_candidates": [
+                "dismech-disease:Amniotic_Fluid_Embolism",
+                "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease",
+                "dismech-disease:Catamenial_Pneumothorax"
+              ],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:004949",
+                  "source_id": "dismech:Actinomycosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Actinomycosis.yaml",
+                  "locator": "phenotypes[2]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Fever occurs among the nonspecific systemic manifestations, particularly in thoracic presentations.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:006059",
+                  "source_id": "dismech:Adenovirus_Respiratory_Infection",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Adenovirus_Respiratory_Infection.yaml",
+                  "locator": "phenotypes[1]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Fever can be high and prolonged in adenovirus pneumonia.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:011533",
+                  "source_id": "dismech:Aspergillosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspergillosis.yaml",
+                  "locator": "phenotypes[7]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Fever is the commonest clinical sign of acute invasive disease, recorded in 98% of one COVID-19-associated pulmonary aspergillosis cohort, and what makes it useful is not its presence but its refractoriness: the temperature stays above 38.5 degrees Celsius through broad-spectrum antibacterial therap",
+                  "context_truncated": true
+                },
+                {
+                  "assertion_id": "dismech-assertion:020109",
+                  "source_id": "dismech:Bird_Fanciers_Lung",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Bird_Fanciers_Lung.yaml",
+                  "locator": "phenotypes[5]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Flu-like systemic symptoms during acute exposure episodes.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 3
+            },
+            {
+              "finding_id": "hpo:HP:0002315",
+              "label": "Headache",
+              "action": "SAY",
+              "content": "머리가 아픈가요?",
+              "review_status": "draft",
+              "associated_candidates": [
+                "dismech-disease:Amniotic_Fluid_Embolism",
+                "dismech-disease:Coccidioidomycosis"
+              ],
+              "excluded_candidates": [],
+              "unrecorded_candidates": [
+                "dismech-disease:Actinomycosis",
+                "dismech-disease:Adenovirus_Respiratory_Infection",
+                "dismech-disease:Aspergillosis",
+                "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease",
+                "dismech-disease:Bird_Fanciers_Lung",
+                "dismech-disease:COVID-19",
+                "dismech-disease:Catamenial_Pneumothorax",
+                "dismech-disease:E-Cigarette_or_Vaping_Product_Use-Associated_Lung_Injury"
+              ],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:008702",
+                  "source_id": "dismech:Amniotic_Fluid_Embolism",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Amniotic_Fluid_Embolism.yaml",
+                  "locator": "phenotypes[17]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Headache was recorded in 3/50 typical and 4/13 atypical registry cases with available data. It is nonspecific and does not by itself establish a causal neurologic mechanism.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:033660",
+                  "source_id": "dismech:Coccidioidomycosis",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Coccidioidomycosis.yaml",
+                  "locator": "phenotypes[10]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Prominent symptom in coccidioidal meningitis; may present with hydrocephalus.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "finding_id": "nova:diarrhea",
+              "label": "설사",
+              "action": "SAY",
+              "content": "설사를 하나요?",
+              "review_status": "draft",
+              "associated_candidates": [
+                "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease",
+                "dismech-disease:E-Cigarette_or_Vaping_Product_Use-Associated_Lung_Injury"
+              ],
+              "excluded_candidates": [],
+              "unrecorded_candidates": [
+                "dismech-disease:Actinomycosis",
+                "dismech-disease:Adenovirus_Respiratory_Infection",
+                "dismech-disease:Amniotic_Fluid_Embolism",
+                "dismech-disease:Aspergillosis",
+                "dismech-disease:Bird_Fanciers_Lung",
+                "dismech-disease:COVID-19",
+                "dismech-disease:Catamenial_Pneumothorax",
+                "dismech-disease:Coccidioidomycosis"
+              ],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:011597",
+                  "source_id": "dismech:Aspirin-Exacerbated_Respiratory_Disease",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspirin-Exacerbated_Respiratory_Disease.yaml",
+                  "locator": "phenotypes[19]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "An extra-respiratory manifestation reported in the mixed N-ERD reaction spectrum; no individual-feature prevalence is inferred from the proportion with any extra-respiratory symptom.",
+                  "context_truncated": false
+                },
+                {
+                  "assertion_id": "dismech-assertion:043721",
+                  "source_id": "dismech:E-Cigarette_or_Vaping_Product_Use-Associated_Lung_Injury",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/E-Cigarette_or_Vaping_Product_Use-Associated_Lung_Injury.yaml",
+                  "locator": "phenotypes[3]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Part of the gastrointestinal cluster reported alongside nausea, vomiting and abdominal pain.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            },
+            {
+              "finding_id": "hpo:HP:0030828",
+              "label": "Wheezing",
+              "action": "EXAM",
+              "content": "양쪽 폐를 청진하여 천명을 확인합니다",
+              "review_status": "draft",
+              "associated_candidates": [
+                "dismech-disease:Aspirin-Exacerbated_Respiratory_Disease"
+              ],
+              "excluded_candidates": [],
+              "unrecorded_candidates": [
+                "dismech-disease:Actinomycosis",
+                "dismech-disease:Adenovirus_Respiratory_Infection",
+                "dismech-disease:Amniotic_Fluid_Embolism",
+                "dismech-disease:Aspergillosis",
+                "dismech-disease:Bird_Fanciers_Lung",
+                "dismech-disease:COVID-19",
+                "dismech-disease:Catamenial_Pneumothorax",
+                "dismech-disease:Coccidioidomycosis",
+                "dismech-disease:E-Cigarette_or_Vaping_Product_Use-Associated_Lung_Injury"
+              ],
+              "evidence": [
+                {
+                  "assertion_id": "dismech-assertion:011586",
+                  "source_id": "dismech:Aspirin-Exacerbated_Respiratory_Disease",
+                  "source_url": "https://github.com/monarch-initiative/dismech/blob/0cfe4bd579700d42c13d5fcc147e785e52c97966/kb/disorders/Aspirin-Exacerbated_Respiratory_Disease.yaml",
+                  "locator": "phenotypes[8]",
+                  "review_status": "draft",
+                  "polarity": "associated",
+                  "context_excerpt": "Expiratory wheeze reflects lower-airway disease and can accompany acute bronchospasm.",
+                  "context_truncated": false
+                }
+              ],
+              "omitted_evidence_count": 0
+            }
+          ],
+          "history_pathways": {
+            "version": "clinical-pathways-2026.10.13.1",
+            "sha256": "38de89b8d4c9a8f24d6375182092dcedaafec7dc014df55ddb7a4b37072ef02e",
+            "pathways": [],
+            "interpretation": "History/plans are not phenotype observations. A plan is not an performed test or result."
+          },
+          "warnings": [
+            "Draft medical relationships included."
+          ],
+          "interpretation": "Scores are not diagnostic probabilities. Medical reference knowledge is not observed patient evidence. Provenance validation checks references, not the truth of semantic mapping. Plans are not performed results."
+        },
+        "confirmation_origin": "heuristic_or_model_extraction; semantic correctness requires review",
+        "interpretation": "Independent evidence scores; no score fusion or calibrated probability."
+      }
+    },
+    {
+      "case": "corrected_fever",
+      "mode": "clinical",
+      "observations": {
+        "present": [],
+        "absent": [],
+        "unknown": [
+          "fever"
+        ]
+      },
+      "clinical_candidates": [
+        {
+          "id": "acute_bronchitis",
+          "ko": "급성 기관지염",
+          "kcd": "J20.9",
+          "score": 2.25,
+          "prior": 1.5,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [],
+          "against": [],
+          "unknown_key": [
+            "cough",
+            "sputum"
+          ],
+          "share": 0.112
+        },
+        {
+          "id": "gerd",
+          "ko": "위식도 역류질환",
+          "kcd": "K21.9",
+          "score": 2.25,
+          "prior": 1.5,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [],
+          "against": [],
+          "unknown_key": [
+            "heartburn",
+            "postprandial_worse"
+          ],
+          "share": 0.112
+        },
+        {
+          "id": "uri",
+          "ko": "급성 상기도 감염",
+          "kcd": "J06.9",
+          "score": 2.1,
+          "prior": 1.2,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [],
+          "against": [],
+          "unknown_key": [
+            "rhinorrhea",
+            "sore_throat",
+            "cough"
+          ],
+          "share": 0.104
+        },
+        {
+          "id": "allergic_rhinitis",
+          "ko": "알레르기 비염(상기도 기침 증후군)",
+          "kcd": "J30.4",
+          "score": 1.75,
+          "prior": 1.5,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [],
+          "against": [],
+          "unknown_key": [
+            "postnasal_drip",
+            "rhinorrhea"
+          ],
+          "share": 0.087
+        },
+        {
+          "id": "laryngitis",
+          "ko": "급성 후두염",
+          "kcd": "J04.0",
+          "score": 1.57,
+          "prior": 1.15,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [],
+          "against": [],
+          "unknown_key": [
+            "hoarseness",
+            "recent_uri"
+          ],
+          "share": 0.08
+        }
+      ],
+      "ontology_support": null
+    },
+    {
+      "case": "corrected_fever",
+      "mode": "ontology",
+      "observations": {
+        "present": [],
+        "absent": [],
+        "unknown": [
+          "fever"
+        ]
+      },
+      "clinical_candidates": [],
+      "ontology_support": {
+        "clinical_version": "0.4.0",
+        "mapping_version": "clinical-mappings-1",
+        "mappings_used": [
+          {
+            "clinical_id": "fever",
+            "finding_id": "nova:fever",
+            "relation": "exact",
+            "review_status": "draft",
+            "basis": "Clinical label Fever and reference label Fever; semantic review pending"
+          }
+        ],
+        "unmapped_or_unconfirmed": [],
+        "reference": {
+          "contract_version": "nova-knowledge-contract-1",
+          "data_version": "meddb-2026.10.13.1",
+          "data_sha256": "bc699e785eea76bad45f6e152d95f9942021fa6011a83815701bb92d6f3da81f",
+          "score_method": "phenotype-idf-v2-context",
+          "policy": {
+            "name": "research",
+            "policy_sha256": "e53af777ee4f56aab3cb54ad15cbcc2a890df5ce0479eade56e59289358c2db8",
+            "include_draft": true,
+            "description": "전체 연구용 초안 포함. 대회 성능 비교용이며 검수 완료 지식이 아니다.",
+            "assertions": 114092,
+            "reviewed": 0,
+            "draft": 114092
+          },
+          "phase": "preliminary",
+          "observations": [
+            {
+              "finding_id": "nova:fever",
+              "state": "unknown",
+              "evidence_ids": [
+                "clinical-0"
+              ],
+              "confirmation": "unconfirmed"
+            }
+          ],
+          "patient": {},
+          "patient_evidence": {},
+          "context_ignored": [],
+          "candidates": [],
+          "next_actions": [],
+          "history_pathways": {
+            "version": "clinical-pathways-2026.10.13.1",
+            "sha256": "38de89b8d4c9a8f24d6375182092dcedaafec7dc014df55ddb7a4b37072ef02e",
+            "pathways": [],
+            "interpretation": "History/plans are not phenotype observations. A plan is not an performed test or result."
+          },
+          "warnings": [
+            "Draft medical relationships included."
+          ],
+          "interpretation": "Scores are not diagnostic probabilities. Medical reference knowledge is not observed patient evidence. Provenance validation checks references, not the truth of semantic mapping. Plans are not performed results."
+        },
+        "confirmation_origin": "heuristic_or_model_extraction; semantic correctness requires review",
+        "interpretation": "Independent evidence scores; no score fusion or calibrated probability."
+      }
+    },
+    {
+      "case": "corrected_fever",
+      "mode": "integrated",
+      "observations": {
+        "present": [],
+        "absent": [],
+        "unknown": [
+          "fever"
+        ]
+      },
+      "clinical_candidates": [
+        {
+          "id": "acute_bronchitis",
+          "ko": "급성 기관지염",
+          "kcd": "J20.9",
+          "score": 2.25,
+          "prior": 1.5,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [],
+          "against": [],
+          "unknown_key": [
+            "cough",
+            "sputum"
+          ],
+          "share": 0.112
+        },
+        {
+          "id": "gerd",
+          "ko": "위식도 역류질환",
+          "kcd": "K21.9",
+          "score": 2.25,
+          "prior": 1.5,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [],
+          "against": [],
+          "unknown_key": [
+            "heartburn",
+            "postprandial_worse"
+          ],
+          "share": 0.112
+        },
+        {
+          "id": "uri",
+          "ko": "급성 상기도 감염",
+          "kcd": "J06.9",
+          "score": 2.1,
+          "prior": 1.2,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [],
+          "against": [],
+          "unknown_key": [
+            "rhinorrhea",
+            "sore_throat",
+            "cough"
+          ],
+          "share": 0.104
+        },
+        {
+          "id": "allergic_rhinitis",
+          "ko": "알레르기 비염(상기도 기침 증후군)",
+          "kcd": "J30.4",
+          "score": 1.75,
+          "prior": 1.5,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [],
+          "against": [],
+          "unknown_key": [
+            "postnasal_drip",
+            "rhinorrhea"
+          ],
+          "share": 0.087
+        },
+        {
+          "id": "laryngitis",
+          "ko": "급성 후두염",
+          "kcd": "J04.0",
+          "score": 1.57,
+          "prior": 1.15,
+          "red_flag": false,
+          "urgency": "routine",
+          "matched": [],
+          "against": [],
+          "unknown_key": [
+            "hoarseness",
+            "recent_uri"
+          ],
+          "share": 0.08
+        }
+      ],
+      "ontology_support": {
+        "clinical_version": "0.4.0",
+        "mapping_version": "clinical-mappings-1",
+        "mappings_used": [
+          {
+            "clinical_id": "fever",
+            "finding_id": "nova:fever",
+            "relation": "exact",
+            "review_status": "draft",
+            "basis": "Clinical label Fever and reference label Fever; semantic review pending"
+          }
+        ],
+        "unmapped_or_unconfirmed": [],
+        "reference": {
+          "contract_version": "nova-knowledge-contract-1",
+          "data_version": "meddb-2026.10.13.1",
+          "data_sha256": "bc699e785eea76bad45f6e152d95f9942021fa6011a83815701bb92d6f3da81f",
+          "score_method": "phenotype-idf-v2-context",
+          "policy": {
+            "name": "research",
+            "policy_sha256": "e53af777ee4f56aab3cb54ad15cbcc2a890df5ce0479eade56e59289358c2db8",
+            "include_draft": true,
+            "description": "전체 연구용 초안 포함. 대회 성능 비교용이며 검수 완료 지식이 아니다.",
+            "assertions": 114092,
+            "reviewed": 0,
+            "draft": 114092
+          },
+          "phase": "preliminary",
+          "observations": [
+            {
+              "finding_id": "nova:fever",
+              "state": "unknown",
+              "evidence_ids": [
+                "clinical-0"
+              ],
+              "confirmation": "unconfirmed"
+            }
+          ],
+          "patient": {},
+          "patient_evidence": {},
+          "context_ignored": [],
+          "candidates": [],
+          "next_actions": [],
+          "history_pathways": {
+            "version": "clinical-pathways-2026.10.13.1",
+            "sha256": "38de89b8d4c9a8f24d6375182092dcedaafec7dc014df55ddb7a4b37072ef02e",
+            "pathways": [],
+            "interpretation": "History/plans are not phenotype observations. A plan is not an performed test or result."
+          },
+          "warnings": [
+            "Draft medical relationships included."
+          ],
+          "interpretation": "Scores are not diagnostic probabilities. Medical reference knowledge is not observed patient evidence. Provenance validation checks references, not the truth of semantic mapping. Plans are not performed results."
+        },
+        "confirmation_origin": "heuristic_or_model_extraction; semantic correctness requires review",
+        "interpretation": "Independent evidence scores; no score fusion or calibrated probability."
+      }
+    }
+  ],
+  "limitations": [
+    "Synthetic boundary cases, not independent clinical validation.",
+    "Draft reference mappings enabled for research only.",
+    "Same observations across views; no score fusion or automated diagnosis."
+  ]
+}

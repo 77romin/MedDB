@@ -1,0 +1,1469 @@
+@mi|급성 심근경색|Acute myocardial infarction|I21.9|emergent|Y|2||30-
+key: pressure_chest_pain, radiation_arm_jaw, diaphoresis
+sup: exertional_chest_pain, nausea_vomiting, dyspnea, cv_risk, smoker, sudden_onset
+against: chest_wall_tenderness, pleuritic_pain
+ro: pressure_chest_pain, radiation_arm_jaw
+test: 12유도 심전도; 심근효소(트로포닌) 연속 측정; 흉부 X선
+treat: 금기 확인 후 아스피린 투여; 산소포화도 저하 시 산소 공급; 심장내과 협진(재관류 치료 평가)
+dispo: 응급 평가 후 입원
+edu: 흉통이 지속·악화되면 즉시 알리도록 설명; 금연과 혈압·혈당 조절 교육
+explain: 심장 혈관 문제일 수 있어요.; 바로 심전도와 피검사가 필요해요.
+unsafe: 심전도 없이 귀가 조치; 진통제만 처방
+alias: 심근경색; 심근경색증; STEMI; NSTEMI; 급성 관상동맥증후군
+
+@unstable_angina|불안정 협심증|Unstable angina|I20.0|emergent|Y|2||30-
+key: pressure_chest_pain, exertional_chest_pain
+sup: radiation_arm_jaw, cv_risk, smoker, recurrent_similar, dyspnea, rest_chest_pain, crescendo_symptoms
+against: chest_wall_tenderness, pleuritic_pain
+ro: pressure_chest_pain, exertional_chest_pain
+test: 12유도 심전도; 심근효소(트로포닌) 연속 측정; 심초음파
+treat: 금기 확인 후 아스피린 투여; 심장내과 협진
+dispo: 응급 평가 후 입원 관찰
+edu: 안정 시에도 흉통이 오면 즉시 내원하도록 설명; 금연과 위험인자 조절 교육
+explain: 협심증 가능성이 있어 보여요.; 심장 검사를 바로 해 보겠습니다.
+unsafe: 심전도 없이 귀가 조치
+alias: 협심증
+
+@aortic_dissection|대동맥 박리|Aortic dissection|I71.0|emergent|Y|1||40-
+key: tearing_pain_back, sudden_onset, bp_arm_difference
+sup: severe_hypertension, cv_risk, syncope, murmur
+ro: tearing_pain_back
+test: 흉부 CT 혈관조영; 12유도 심전도; 흉부 X선
+treat: 혈압·심박수 조절; 흉부외과 응급 협진
+dispo: 응급 평가 후 입원
+edu: 응급 질환 가능성과 즉시 검사가 필요한 이유 설명
+explain: 큰 혈관 문제를 확인해야 해요.; 급히 CT 검사가 필요합니다.
+unsafe: 확인 전 항혈소판제·혈전용해제 투여; 귀가 조치
+alias: 대동맥박리; 급성 대동맥 박리
+
+@pulmonary_embolism|폐색전증|Pulmonary embolism|I26.9|emergent|Y|1||
+key: dyspnea, pleuritic_pain, unilateral_leg_swelling, immobilization
+sup: tachycardia, hypoxia, hemoptysis, sudden_onset, calf_swelling_tender, syncope, cancer_history
+ro: unilateral_leg_swelling, immobilization
+test: D-dimer; 흉부 CT 혈관조영; 12유도 심전도; 하지 정맥 초음파
+treat: 산소 공급; 금기 확인 후 항응고 치료
+dispo: 응급 평가 후 입원
+edu: 호흡곤란·흉통 악화 시 즉시 알리도록 설명
+explain: 폐혈관이 막혔는지 확인해야 해요.; 피검사와 CT가 필요합니다.
+unsafe: 귀가 조치
+alias: 폐색전; 폐동맥 색전증; 폐혈전색전증
+
+@pneumothorax|기흉|Pneumothorax|J93.9|urgent|Y|1||
+key: sudden_onset, pleuritic_pain, decreased_breath_sounds
+sup: dyspnea, smoker, hypoxia, tachycardia
+ro: decreased_breath_sounds
+test: 흉부 X선
+treat: 산소 공급; 크기에 따라 흉관 삽입 평가
+dispo: 응급 평가(크기에 따라 입원)
+edu: 호흡곤란 악화 시 즉시 내원; 금연 교육
+explain: 폐에 바람이 샜을 수 있어요.; 가슴 엑스레이가 필요합니다.
+unsafe: 흉부 X선 없이 귀가 조치
+alias: 자연 기흉; 긴장성 기흉
+
+@pericarditis|급성 심막염|Acute pericarditis|I30.9|urgent|N|1||
+key: pleuritic_pain, positional_relief, pericardial_rub
+sup: fever, myalgia
+test: 12유도 심전도; 심초음파; 염증 수치(CRP); 심근효소
+treat: 소염진통제; 콜히친 병용 고려
+dispo: 심초음파 결과에 따라 입원 또는 외래 추적
+edu: 호흡곤란·실신 시 즉시 내원; 격한 운동 제한
+explain: 심장을 싸는 막의 염증 같아요.; 심전도와 초음파로 확인할게요.
+alias: 심막염; 심낭염
+
+@gerd|위식도 역류질환|Gastroesophageal reflux disease|K21.9|routine|N|3||
+key: heartburn, postprandial_worse
+sup: epigastric_pain, nocturnal_cough, chronic_cough
+against: exertional_chest_pain, diaphoresis, radiation_arm_jaw
+test: 경과에 따라 상부위장관 내시경; 흉통이 있으면 심전도로 심장 원인 배제
+treat: 양성자펌프억제제; 생활습관 교정
+dispo: 외래 추적
+edu: 야식·과식 피하고 식후 바로 눕지 않기; 흉통 양상이 바뀌면 재내원
+explain: 위산 역류 가능성이 높아 보여요.; 식사 후 바로 눕지 마세요.
+alias: 역류성 식도염; 위식도역류
+
+@costochondritis|늑연골염|Costochondritis|M94.0|routine|N|2||
+key: chest_wall_tenderness, lifting_strain
+sup: pleuritic_pain
+against: diaphoresis, dyspnea, radiation_arm_jaw
+test: 위험인자가 있으면 심전도
+treat: 소염진통제; 온찜질
+dispo: 외래 추적
+edu: 무리한 상체 동작 줄이기; 호흡곤란·식은땀 동반 시 재내원
+explain: 가슴 벽 근골격 통증 같아요.; 숨이 차거나 식은땀 나면 오세요.
+alias: 근골격성 흉통; 흉벽 통증
+
+@pneumonia|폐렴|Pneumonia|J18.9|urgent|N|3||
+key: fever, cough, purulent_sputum, crackles
+sup: pleuritic_pain, dyspnea, tachypnea, hypoxia, myalgia, sputum
+test: 흉부 X선; 혈액검사(CBC, CRP); 산소포화도 확인; 객담 검사
+treat: 경험적 항생제; 해열제와 수분 보충
+dispo: 중증도(나이·활력징후·산소포화도)에 따라 입원 또는 외래
+edu: 호흡곤란·고열 지속 시 재내원; 항생제 끝까지 복용
+explain: 폐렴 가능성이 있어 보여요.; 가슴 엑스레이를 찍어 볼게요.
+alias: 지역사회획득 폐렴; 세균성 폐렴
+
+@panic_attack|공황발작|Panic attack|F41.0|routine|N|2||
+key: anxiety_trigger, palpitations, paresthesia
+sup: dyspnea, diaphoresis, recurrent_similar, stress_sleep
+test: 12유도 심전도로 심장 원인 배제; 혈당·전해질
+treat: 안정과 호흡 조절; 반복되면 정신건강의학과 의뢰
+dispo: 기질적 원인 배제 후 외래 추적
+edu: 증상이 반복되면 진료 받도록 설명; 흉통 양상이 달라지면 재내원
+explain: 심장 문제부터 확인하겠습니다.; 천천히 숨을 쉬어 보세요.
+alias: 공황장애; 과호흡 증후군
+
+@heart_failure|심부전|Heart failure|I50.9|urgent|N|2||40-
+key: orthopnea, leg_swelling, exertional_dyspnea, crackles
+sup: pitting_edema, jvd, s3_gallop, cv_risk, fatigue, dyspnea
+test: 흉부 X선; BNP; 심초음파; 12유도 심전도
+treat: 이뇨제; 산소포화도 저하 시 산소 공급
+dispo: 급성 악화 시 입원
+edu: 염분·수분 섭취 조절과 체중 매일 측정; 숨참 악화 시 재내원
+explain: 심장 기능이 약해졌을 수 있어요.; 심장 초음파가 필요합니다.
+alias: 울혈성 심부전; 급성 심부전
+
+@asthma|천식 악화|Asthma exacerbation|J45.9|urgent|N|2||
+key: wheeze_sx, nocturnal_cough, wheezing_sign, asthma_history
+sup: dyspnea, cough, recurrent_similar
+test: 산소포화도 확인; 최대호기유속; 폐기능검사
+treat: 속효성 기관지확장제 흡입; 전신 스테로이드
+dispo: 치료 반응에 따라 입원 또는 외래
+edu: 흡입기 사용법 교육; 유발 요인 피하기; 말하기 힘들 정도면 즉시 내원
+explain: 천식이 나빠진 것으로 보여요.; 흡입 치료를 바로 하겠습니다.
+alias: 천식; 기관지 천식
+
+@copd_exacerbation|만성폐쇄성폐질환 급성 악화|COPD exacerbation|J44.1|urgent|N|2||40-
+key: smoker, sputum, wheezing_sign, exertional_dyspnea
+sup: purulent_sputum, cough, hypoxia, dyspnea
+test: 흉부 X선; 산소포화도·동맥혈가스; 폐기능검사
+treat: 기관지확장제 흡입; 전신 스테로이드; 화농성 가래면 항생제; 조절된 산소 공급
+dispo: 중증도에 따라 입원
+edu: 금연 교육; 흡입기 사용법 교육; 호흡곤란 악화 시 재내원
+explain: 만성 폐질환이 악화된 것 같아요.; 금연이 가장 중요합니다.
+alias: COPD; 만성폐쇄성폐질환
+
+@anemia|빈혈|Anemia|D64.9|routine|N|2||
+key: fatigue, pallor, exertional_dyspnea
+sup: lightheaded, palpitations, heavy_menses, bloody_stool, tachycardia
+test: 혈액검사(CBC); 철분 검사; 출혈 원인 평가(대변 잠혈 등)
+treat: 원인 교정; 결핍 시 철분제
+dispo: 외래 추적(심한 빈혈·출혈 시 입원)
+edu: 검은 변·실신 시 즉시 내원
+explain: 빈혈이 있는지 피검사를 할게요.; 원인도 함께 찾아보겠습니다.
+alias: 철결핍 빈혈
+
+@appendicitis|급성 충수염|Acute appendicitis|K35.8|urgent|Y|2||
+key: rlq_migration, rlq_tenderness, anorexia
+sup: fever, nausea_vomiting, rebound_guarding
+against: diarrhea
+ro: rlq_tenderness
+test: 혈액검사(CBC, CRP); 복부 CT 또는 초음파; 가임기 여성은 임신 검사
+treat: 금식과 수액; 외과 협진(충수절제술)
+dispo: 입원 및 수술 평가
+edu: 진단 전까지 금식; 통증이 갑자기 심해지면 즉시 알리기
+explain: 맹장염일 가능성이 있어요.; 피검사와 복부 영상이 필요해요.
+unsafe: 영상 평가 없이 귀가 조치; 진통제만 처방
+alias: 충수염; 맹장염; 충수돌기염
+
+@cholecystitis|급성 담낭염|Acute cholecystitis|K81.0|urgent|N|2||
+key: ruq_pain, murphy_sign, fatty_food_trigger, fever
+sup: nausea_vomiting, ruq_tenderness
+test: 복부 초음파; 혈액검사(CBC, 간기능, 빌리루빈)
+treat: 금식과 수액; 항생제; 외과 협진(담낭절제술)
+dispo: 입원
+edu: 기름진 음식 피하기; 황달·고열 시 즉시 내원
+explain: 담낭에 염증이 생긴 것 같아요.; 복부 초음파로 확인하겠습니다.
+alias: 담낭염
+
+@biliary_colic|담석 산통|Biliary colic|K80.2|routine|N|2||
+key: ruq_pain, fatty_food_trigger
+sup: nausea_vomiting, colicky_pain, recurrent_similar
+against: fever, murphy_sign
+test: 복부 초음파; 간기능 검사
+treat: 진통제; 반복되면 담낭절제술 상담
+dispo: 외래 추적
+edu: 기름진 음식 피하기; 발열·황달·지속 통증 시 내원
+explain: 담석 때문에 아픈 것 같아요.; 초음파로 담석을 확인할게요.
+alias: 담석증; 담낭 결석
+
+@cholangitis|급성 담관염|Acute cholangitis|K83.0|emergent|Y|1||
+key: fever, jaundice_sx, ruq_pain
+sup: hypotension, altered_mental, ruq_tenderness, nausea_vomiting
+ro: jaundice_sx
+test: 혈액검사(CBC, 간기능, 빌리루빈); 혈액배양; 복부 초음파 또는 CT
+treat: 수액과 광범위 항생제; 담도 배액(ERCP) 협진
+dispo: 응급 평가 후 입원
+edu: 응급 질환이며 입원 치료가 필요함을 설명
+explain: 담관 감염이 의심됩니다.; 입원해서 치료가 필요해요.
+unsafe: 귀가 조치
+alias: 담관염; 담도염
+
+@pancreatitis|급성 췌장염|Acute pancreatitis|K85.9|urgent|N|2||
+key: epigastric_pain, pain_radiates_back, heavy_alcohol
+sup: nausea_vomiting, epigastric_tenderness, fatty_food_trigger
+test: 혈청 리파아제·아밀라아제; 복부 CT 또는 초음파; 간기능 검사
+treat: 금식과 충분한 수액; 진통제
+dispo: 입원
+edu: 금주 교육; 통증·구토 악화 시 알리기
+explain: 췌장에 염증이 생긴 것 같아요.; 피검사로 췌장 수치를 볼게요.
+alias: 췌장염
+
+@peptic_ulcer|소화성 궤양|Peptic ulcer disease|K27.9|routine|N|2||
+key: epigastric_pain, nsaid_use, heartburn
+sup: epigastric_tenderness, bloody_stool, postprandial_worse
+test: 상부위장관 내시경; 헬리코박터 검사; 혈액검사(CBC)
+treat: 양성자펌프억제제; 소염진통제 중단; 헬리코박터 제균
+dispo: 외래 추적(출혈 징후 시 입원)
+edu: 소염진통제·음주 피하기; 검은 변·토혈 시 즉시 내원
+explain: 위나 십이지장 궤양 같아요.; 내시경으로 확인이 필요합니다.
+alias: 위궤양; 십이지장 궤양
+
+@perforated_ulcer|소화성 궤양 천공|Perforated peptic ulcer|K27.5|emergent|Y|1||
+key: sudden_onset, rebound_guarding, epigastric_pain
+sup: nsaid_use, tachycardia, hypotension, bowel_sounds_abnormal
+ro: rebound_guarding
+test: 흉부 X선(횡격막 아래 공기); 복부 CT; 혈액검사
+treat: 금식과 수액; 광범위 항생제; 외과 응급 협진
+dispo: 응급 수술 평가
+edu: 응급 수술이 필요할 수 있음을 설명
+explain: 장에 구멍이 났을 수 있어요.; 급히 영상 검사가 필요합니다.
+unsafe: 귀가 조치; 진통제만 처방
+alias: 위 천공; 장 천공; 복막염
+
+@gastroenteritis|급성 위장염|Acute gastroenteritis|A09.9|routine|N|3||
+key: diarrhea, nausea_vomiting
+sup: fever, colicky_pain, abdominal_pain, sick_contact, suspicious_food
+against: rebound_guarding, bloody_stool, no_flatus
+test: 탈수 평가; 증상이 심하면 전해질·대변 검사
+treat: 경구 수분 보충; 탈수 심하면 수액; 대증 치료
+dispo: 외래(탈수 심하면 수액 치료)
+edu: 수분을 조금씩 자주 섭취; 손 씻기; 혈변·고열·소변 감소 시 재내원
+explain: 장염일 가능성이 높아 보여요.; 물을 조금씩 자주 드세요.
+alias: 장염; 위장염; 바이러스성 장염
+
+@bowel_obstruction|장폐색|Bowel obstruction|K56.6|emergent|Y|1||
+key: no_flatus, abdominal_distension, nausea_vomiting, abdominal_surgery_history
+sup: colicky_pain, bowel_sounds_abnormal
+against: diarrhea
+ro: no_flatus
+test: 복부 X선; 복부 CT; 전해질
+treat: 금식과 수액; 비위관 감압; 외과 협진
+dispo: 입원
+edu: 금식 유지; 통증이 심해지면 즉시 알리기
+explain: 장이 막혔는지 확인해야 해요.; 복부 엑스레이를 찍겠습니다.
+unsafe: 귀가 조치; 지사제·장운동 촉진제 처방
+alias: 장폐쇄; 소장 폐색; 장마비
+
+@ureteral_stone|요관 결석|Ureteral stone|N20.1|urgent|N|2||
+key: flank_pain, colicky_pain, radiation_groin, hematuria
+sup: nausea_vomiting, cva_tenderness, sudden_onset, recurrent_similar
+against: fever
+test: 소변검사; 비조영 복부 CT; 신기능 검사
+treat: 소염진통제; 수분 섭취; 크기에 따라 비뇨의학과 의뢰
+dispo: 통증 조절되면 외래(발열·신기능 저하 시 입원)
+edu: 물 충분히 마시기; 발열이나 소변이 안 나오면 즉시 내원
+explain: 요로 결석일 가능성이 높아요.; 소변검사와 CT로 확인할게요.
+alias: 요로 결석; 요관결석; 신장 결석
+
+@diverticulitis|게실염|Diverticulitis|K57.3|urgent|N|1||40-
+key: llq_tenderness, lower_abd_pain, fever
+sup: nausea_vomiting, recurrent_similar
+test: 복부 CT; 혈액검사(CBC, CRP)
+treat: 항생제; 유동식
+dispo: 경증은 외래, 합병증 의심 시 입원
+edu: 통증·발열 악화 시 재내원
+explain: 대장 게실에 염증이 의심됩니다.; 복부 CT로 확인해 보겠습니다.
+alias: 대장 게실염
+
+@ectopic_pregnancy|자궁외 임신|Ectopic pregnancy|O00.9|emergent|Y|1|F|12-55
+key: pregnancy_possible, vaginal_bleeding, lower_abd_pain
+sup: syncope, hypotension, adnexal_tenderness, sudden_onset, lightheaded
+ro: pregnancy_possible
+test: 소변·혈청 hCG; 경질 초음파; 혈액형과 혈액검사
+treat: 수액; 산부인과 응급 협진
+dispo: 응급 평가 후 입원
+edu: 어지럼·심한 복통 시 즉시 알리기
+explain: 임신 여부를 먼저 확인할게요.; 초음파 검사가 필요합니다.
+unsafe: 임신 검사 없이 귀가 조치
+alias: 자궁외임신; 난관 임신
+
+@ovarian_torsion|난소 염전|Ovarian torsion|N83.5|emergent|N|1|F|
+key: sudden_onset, lower_abd_pain, nausea_vomiting
+sup: adnexal_tenderness
+test: 골반 초음파(도플러); 임신 검사
+treat: 진통제; 산부인과 응급 협진(수술)
+dispo: 응급 수술 평가
+edu: 응급 수술이 필요할 수 있음을 설명
+explain: 난소가 꼬였을 수 있어요.; 급히 초음파 검사를 할게요.
+alias: 난소 꼬임; 부속기 염전
+
+@pid|골반염|Pelvic inflammatory disease|N73.9|urgent|N|1|F|
+key: lower_abd_pain, vaginal_discharge, cervical_motion_tenderness
+sup: fever, unprotected_sex, dysuria, adnexal_tenderness
+test: 임신 검사; 질 분비물·성매개감염 검사; 골반 초음파
+treat: 항생제; 파트너 치료 안내
+dispo: 경증은 외래, 중증은 입원
+edu: 치료 끝날 때까지 성관계 피하기; 파트너도 검사 받기
+explain: 골반 안 염증이 의심됩니다.; 분비물 검사를 해 보겠습니다.
+alias: 골반 염증성 질환; 골반내 감염
+
+@aaa_rupture|복부 대동맥류 파열|Ruptured abdominal aortic aneurysm|I71.3|emergent|Y|1||50-
+key: pulsatile_mass, pain_radiates_back, hypotension
+sup: sudden_onset, smoker, cv_risk, syncope
+ro: pulsatile_mass
+test: 복부 CT 혈관조영; 침상 초음파; 혈액형과 교차시험
+treat: 수액·수혈 준비; 혈관외과 응급 협진
+dispo: 응급 수술 평가
+edu: 응급 질환이며 즉시 검사가 필요함을 설명
+explain: 복부 큰 혈관을 확인해야 해요.; 급히 CT 검사가 필요합니다.
+unsafe: 귀가 조치
+alias: 복부 대동맥류; 대동맥류 파열
+
+@tension_headache|긴장형 두통|Tension-type headache|G44.2|routine|N|3||
+key: band_like, stress_sleep
+sup: recurrent_similar
+against: nausea_vomiting, photophobia, thunderclap, focal_weakness, fever
+test: 위험 징후가 없으면 영상 검사 불필요
+treat: 단순 진통제; 스트레스·수면 관리
+dispo: 외래 추적
+edu: 진통제 과용 주의; 갑자기 심한 두통·마비·발열 시 즉시 내원
+explain: 긴장형 두통으로 보입니다.; 충분히 쉬고 주무시는 게 좋아요.
+alias: 긴장성 두통
+
+@migraine|편두통|Migraine|G43.9|routine|N|3||
+key: unilateral_throbbing, photophobia, nausea_vomiting
+sup: aura, recurrent_similar, stress_sleep
+against: thunderclap, fever, focal_weakness
+test: 위험 징후가 없으면 영상 검사 불필요
+treat: 급성기 진통제(소염진통제 또는 트립탄); 어둡고 조용한 곳에서 휴식
+dispo: 외래 추적
+edu: 유발 요인(수면 부족·음주 등) 피하기; 평소와 다른 심한 두통 시 내원
+explain: 편두통일 가능성이 높아 보여요.; 어둡고 조용한 곳에서 쉬세요.
+alias: 편두통 발작
+
+@cluster_headache|군발두통|Cluster headache|G44.0|routine|N|1|M|
+key: periorbital_autonomic, recurrent_similar
+sup: heavy_alcohol
+test: 처음 발생했으면 뇌 MRI 고려
+treat: 고유량 산소 흡입; 트립탄
+dispo: 신경과 외래 의뢰
+edu: 군발기에는 음주 피하기
+explain: 군발두통이 의심됩니다.; 산소 치료가 도움이 됩니다.
+alias: 군발성 두통
+
+@sah|지주막하 출혈|Subarachnoid hemorrhage|I60.9|emergent|Y|1||
+key: thunderclap, sudden_onset, neck_stiffness_sx
+sup: nausea_vomiting, syncope, altered_mental, nuchal_rigidity, severe_hypertension
+ro: thunderclap, sudden_onset
+test: 비조영 뇌 CT; CT가 정상이면 요추천자; CT 혈관조영
+treat: 혈압 조절; 신경외과 응급 협진
+dispo: 응급 평가 후 입원
+edu: 응급 질환 가능성과 즉시 검사가 필요한 이유 설명
+explain: 뇌출혈 여부를 확인해야 해요.; 바로 머리 CT를 찍겠습니다.
+unsafe: 뇌 CT 없이 귀가 조치; 진통제만 처방
+alias: 거미막하 출혈; 지주막하출혈; 뇌동맥류 파열
+
+@meningitis|뇌수막염|Meningitis|G03.9|emergent|Y|1||
+key: fever, neck_stiffness_sx, nuchal_rigidity, photophobia
+sup: altered_mental, nausea_vomiting, rash, petechiae
+ro: neck_stiffness_sx
+test: 요추천자(뇌척수액 검사); 혈액배양; 필요 시 뇌 CT
+treat: 세균성이 의심되면 지체 없이 경험적 항생제; 수액
+dispo: 응급 평가 후 입원
+edu: 응급 질환이며 입원 치료가 필요함을 설명
+explain: 뇌수막염을 확인해야 합니다.; 척수액 검사가 필요해요.
+unsafe: 귀가 조치; 검사를 이유로 항생제 지연
+alias: 수막염; 세균성 수막염; 바이러스성 수막염
+
+@brain_tumor|뇌종양|Brain tumor|D43.2|urgent|N|1||
+key: morning_headache, focal_weakness
+sup: nausea_vomiting, diplopia, weight_loss, cancer_history
+test: 조영증강 뇌 MRI
+treat: 신경외과 의뢰
+dispo: 조기 영상 검사와 신경외과 진료
+edu: 경련·의식 변화·마비 시 즉시 내원
+explain: 머리 영상 검사가 필요해 보여요.; MRI로 자세히 확인하겠습니다.
+alias: 두개내 종양; 뇌 종양
+
+@ich|뇌내출혈|Intracerebral hemorrhage|I61.9|emergent|Y|1||40-
+key: sudden_onset, focal_weakness, speech_disturbance, severe_hypertension
+sup: nausea_vomiting, altered_mental, facial_droop, motor_weakness_sign, cv_risk
+ro: focal_weakness
+test: 비조영 뇌 CT; 혈액응고 검사
+treat: 혈압 조절; 신경외과 협진
+dispo: 응급 평가 후 입원
+edu: 응급 질환이며 즉시 검사가 필요함을 설명
+explain: 뇌출혈 여부를 확인해야 해요.; 바로 머리 CT를 찍겠습니다.
+unsafe: 귀가 조치; 영상 확인 전 항혈전제 투여
+alias: 뇌출혈; 출혈성 뇌졸중
+
+@subdural_hematoma|경막하 출혈|Subdural hematoma|S06.5|emergent|Y|1||
+key: head_trauma, altered_mental
+sup: focal_weakness, nausea_vomiting, motor_weakness_sign, confusion_sign
+ro: head_trauma
+test: 비조영 뇌 CT; 혈액응고 검사
+treat: 신경외과 협진; 항응고제 복용 여부 확인
+dispo: 응급 평가 후 입원 관찰
+edu: 의식이 처지거나 구토가 반복되면 즉시 내원
+explain: 머리 안 출혈을 확인해야 해요.; 바로 머리 CT를 찍겠습니다.
+unsafe: 뇌 CT 없이 귀가 조치
+alias: 경막하 혈종; 외상성 뇌출혈
+
+@temporal_arteritis|거대세포 동맥염|Giant cell arteritis|M31.6|urgent|Y|1||50-
+key: jaw_claudication, temporal_artery_tender, vision_halos
+sup: fever, weight_loss, myalgia
+ro: jaw_claudication
+test: 적혈구침강속도(ESR)와 CRP; 측두동맥 생검
+treat: 시력 보호를 위해 조기 고용량 스테로이드
+dispo: 당일 평가와 류마티스내과·안과 의뢰
+edu: 시력 변화가 생기면 즉시 내원
+explain: 혈관 염증을 확인해야 합니다.; 염증 수치 피검사를 할게요.
+unsafe: 시력 증상이 있는데 치료 지연
+alias: 측두동맥염; 거대세포동맥염
+
+@acute_glaucoma|급성 폐쇄각 녹내장|Acute angle-closure glaucoma|H40.2|emergent|Y|1||40-
+key: vision_halos, red_eye, nausea_vomiting
+sup: pupil_abnormal
+ro: vision_halos
+test: 안압 측정; 안과 세극등 검사
+treat: 안압 하강 치료; 안과 응급 협진
+dispo: 안과 응급 진료
+edu: 시력 보존을 위해 즉시 치료가 필요함을 설명
+explain: 눈의 압력을 확인해야 합니다.; 바로 안과 진료가 필요해요.
+unsafe: 안압 확인 없이 귀가 조치
+alias: 급성 녹내장; 폐쇄각 녹내장
+
+@sinusitis|급성 부비동염|Acute sinusitis|J01.9|routine|N|2||
+key: facial_pain_bending, rhinorrhea, sinus_tenderness
+sup: fever, postnasal_drip, cough
+test: 임상 진단(합병증 의심 시 부비동 CT)
+treat: 대증 치료와 비강 세척; 10일 이상 지속·악화 시 항생제
+dispo: 외래 추적
+edu: 눈 주위 부종·심한 두통·고열 시 재내원
+explain: 부비동염일 가능성이 높아요.; 코 세척이 도움이 됩니다.
+alias: 부비동염; 축농증
+
+@uri|급성 상기도 감염|Acute upper respiratory infection|J06.9|routine|N|3||
+key: rhinorrhea, sore_throat, cough
+sup: fever, sick_contact, pharyngeal_erythema, myalgia
+against: dyspnea, crackles, purulent_sputum
+test: 임상 진단(위험 징후 없으면 검사 불필요)
+treat: 해열진통제 등 대증 치료; 수분과 휴식
+dispo: 외래
+edu: 항생제가 필요 없음을 설명; 호흡곤란·3일 넘는 고열 시 재내원
+explain: 감기로 보입니다.; 물 많이 드시고 푹 쉬세요.
+unsafe: 불필요한 항생제 처방
+alias: 감기; 상기도 감염; 급성 비인두염
+
+@influenza|인플루엔자|Influenza|J11.1|routine|N|2||
+key: fever, myalgia, cough, sudden_onset
+sup: sore_throat, sick_contact, fatigue, rhinorrhea
+test: 인플루엔자 신속항원검사 또는 PCR
+treat: 발병 48시간 이내면 항바이러스제; 해열제와 수분
+dispo: 외래(고위험군·호흡곤란 시 입원 평가)
+edu: 해열 후 하루까지 등교·출근 자제; 호흡곤란 시 재내원
+explain: 독감일 가능성이 있습니다.; 독감 검사를 해 보겠습니다.
+alias: 독감; 인플루엔자 감염
+
+@tonsillitis|급성 편도염|Acute tonsillitis|J03.9|routine|N|2||
+key: sore_throat, fever, tonsillar_exudate
+sup: cervical_lymphadenopathy, pharyngeal_erythema
+against: cough, rhinorrhea
+test: 신속항원검사 또는 인후 배양
+treat: 세균성이 의심되면 항생제; 해열진통제
+dispo: 외래
+edu: 침을 못 삼키거나 입이 안 벌어지면 즉시 내원
+explain: 편도에 염증이 생긴 것 같아요.; 목 검사를 해 보겠습니다.
+alias: 편도염; 인두편도염; 급성 인두염
+
+@pyelonephritis|급성 신우신염|Acute pyelonephritis|N10|urgent|N|2||
+key: fever, flank_pain, cva_tenderness, dysuria
+sup: frequency_urgency, nausea_vomiting, myalgia
+test: 소변검사와 소변배양; 혈액검사(CBC, CRP, 신기능); 필요 시 혈액배양
+treat: 항생제; 수액과 해열제
+dispo: 경증은 외래, 구토·고열·임신 시 입원
+edu: 물 충분히 마시기; 열이 계속되면 재내원
+explain: 콩팥까지 감염이 간 것 같아요.; 소변검사와 피검사를 할게요.
+alias: 신우신염; 상부 요로감염
+
+@cellulitis|연조직염|Cellulitis|L03.9|urgent|N|2||
+key: skin_redness_swelling, erythema_warmth
+sup: fever, immunocompromised
+test: 임상 진단; 전신 증상이 있으면 혈액검사
+treat: 항생제; 환부 올리고 안정
+dispo: 경증은 외래, 전신 증상 시 입원
+edu: 붉은 부위가 빠르게 넓어지거나 통증이 심해지면 즉시 내원
+explain: 피부 감염으로 보입니다.; 항생제 치료가 필요합니다.
+alias: 봉와직염; 봉소염
+
+@sepsis|패혈증|Sepsis|A41.9|emergent|Y|1||
+key: fever, hypotension, altered_mental, tachycardia
+sup: tachypnea, poor_oral_intake, immunocompromised, confusion_sign
+ro: altered_mental
+test: 혈액배양 2쌍; 젖산; 혈액검사(CBC, 신기능, 간기능); 감염 병소 영상
+treat: 조기 수액 소생; 1시간 이내 광범위 항생제
+dispo: 응급 평가 후 입원(중환자 평가)
+edu: 응급 질환이며 입원 치료가 필요함을 설명
+explain: 감염이 온몸에 퍼졌을 수 있어요.; 바로 피검사와 수액을 할게요.
+unsafe: 귀가 조치; 해열제만 처방
+alias: 패혈성 쇼크
+
+@tuberculosis|폐결핵|Pulmonary tuberculosis|A16.2|urgent|Y|1||
+key: chronic_cough, night_sweats, weight_loss, hemoptysis
+sup: fever, tb_contact, fatigue, sputum
+ro: hemoptysis, weight_loss
+test: 흉부 X선; 객담 항산균 도말·배양과 결핵균 PCR
+treat: 확진 시 항결핵제 병합 요법; 보건소 신고
+dispo: 호흡기내과 진료(전염성 평가)
+edu: 확인 전까지 마스크 착용; 가족 접촉자 검진 안내
+explain: 결핵 검사가 필요해 보입니다.; 엑스레이와 가래 검사를 할게요.
+unsafe: 검사 없이 감기약만 처방
+alias: 결핵
+
+@bppv|양성 돌발성 체위성 현훈|Benign paroxysmal positional vertigo|H81.1|routine|N|3||
+key: positional_vertigo, vertigo, dix_hallpike_positive
+sup: nausea_vomiting, recurrent_similar
+against: hearing_loss_tinnitus, focal_weakness, continuous_vertigo, speech_disturbance
+test: 딕스-홀파이크 검사
+treat: 이석 정복술(에플리법)
+dispo: 외래 추적
+edu: 급하게 고개 돌리거나 일어나지 않기; 마비·발음 이상·복시 시 즉시 내원
+explain: 이석증일 가능성이 높아요.; 자세 치료로 좋아질 수 있어요.
+alias: 이석증; 양성 발작성 체위성 현훈; BPPV
+
+@vestibular_neuritis|전정신경염|Vestibular neuritis|H81.2|urgent|N|2||
+key: continuous_vertigo, vertigo, nystagmus_peripheral
+sup: nausea_vomiting, rhinorrhea
+against: hearing_loss_tinnitus, focal_weakness, speech_disturbance, nystagmus_central
+test: 두부충동검사 등 신경학적 진찰; 중추성 의심 시 뇌 MRI
+treat: 초기 전정억제제와 항구토제; 조기 전정 재활
+dispo: 외래 추적(중추성 배제 안 되면 입원 평가)
+edu: 낙상 주의; 마비·발음 이상·복시 시 즉시 내원
+explain: 균형 신경의 염증으로 보여요.; 며칠간 서서히 좋아집니다.
+alias: 전정신경병증
+
+@meniere|메니에르병|Meniere disease|H81.0|routine|N|1||
+key: vertigo, hearing_loss_tinnitus, recurrent_similar
+sup: nausea_vomiting
+test: 순음청력검사; 이비인후과 진료
+treat: 저염식; 급성기 전정억제제; 이뇨제 고려
+dispo: 이비인후과 외래 의뢰
+edu: 염분·카페인 줄이기; 청력이 갑자기 떨어지면 내원
+explain: 귀 안쪽 문제일 수 있어요.; 청력 검사를 해 보겠습니다.
+alias: 메니에르; 메니에르 증후군
+
+@ischemic_stroke|뇌경색|Ischemic stroke|I63.9|emergent|Y|1||40-
+key: focal_weakness, speech_disturbance, diplopia, gait_unsteady, sudden_onset
+sup: vertigo, cv_risk, nystagmus_central, ataxia, facial_droop, motor_weakness_sign, smoker
+ro: focal_weakness, speech_disturbance
+test: 뇌 CT; 확산강조 뇌 MRI; 혈당; 12유도 심전도
+treat: 발병 시각 확인 후 재관류 치료 평가; 신경과 응급 협진
+dispo: 응급 평가 후 입원
+edu: 발병 시각이 치료에 중요함을 설명; 증상 변화 시 즉시 알리기
+explain: 뇌혈관 문제를 확인해야 해요.; 바로 머리 영상 검사를 할게요.
+unsafe: 귀가 조치; 어지럼 약만 처방
+alias: 뇌졸중; 허혈성 뇌졸중; 소뇌 경색; 중풍
+
+@orthostatic_hypotension|기립성 저혈압|Orthostatic hypotension|I95.1|routine|N|2||
+key: orthostatic_sx, lightheaded, orthostatic_drop
+sup: poor_oral_intake, diarrhea, new_bp_med, dry_mucosa
+against: vertigo, focal_weakness
+test: 누운 자세와 선 자세 혈압; 혈액검사(CBC, 전해질); 복용 약 검토
+treat: 수분 보충; 원인 약물 조정
+dispo: 외래 추적
+edu: 천천히 일어나기; 수분 충분히 섭취; 실신 시 내원
+explain: 일어설 때 혈압이 떨어지나 봐요.; 천천히 일어나시는 게 좋아요.
+alias: 체위성 저혈압
+
+@arrhythmia|부정맥|Cardiac arrhythmia|I49.9|urgent|Y|1||
+key: palpitations, syncope, irregular_rhythm
+sup: lightheaded, cv_risk, exertional_dyspnea, tachycardia
+ro: syncope, palpitations
+test: 12유도 심전도; 24시간 홀터 검사; 전해질·갑상선 기능; 심초음파
+treat: 심전도 감시; 심장내과 협진
+dispo: 실신·혈역학 불안정 시 입원
+edu: 실신·흉통·심한 두근거림 시 즉시 내원
+explain: 심장 박동을 확인해 보겠습니다.; 심전도 검사가 필요합니다.
+unsafe: 실신이 있는데 심전도 없이 귀가 조치
+alias: 빈맥성 부정맥; 서맥; 심실성 부정맥
+
+@hypoglycemia|저혈당|Hypoglycemia|E16.2|urgent|N|1||
+key: diabetes_medication, missed_meal, diaphoresis
+sup: paresthesia, palpitations, altered_mental, lightheaded
+test: 즉시 혈당 측정
+treat: 의식 있으면 당분 경구 섭취; 의식 저하 시 포도당 정맥 주사
+dispo: 회복 후 원인 약물 조정(지속성 약물이면 관찰)
+edu: 식사 거르지 않기; 사탕·주스 휴대; 약 용량 상담
+explain: 혈당이 떨어졌을 수 있어요.; 바로 혈당을 재 보겠습니다.
+alias: 저혈당증
+
+@lumbar_strain|요추 염좌|Lumbar strain|S33.5|routine|N|3||
+key: lifting_strain, paraspinal_tenderness
+sup: recurrent_similar
+against: leg_numbness_weak, fever, night_rest_pain, bowel_bladder_dysfunction, weight_loss
+test: 위험 징후가 없으면 영상 검사 불필요
+treat: 소염진통제; 가능한 범위에서 일상 활동 유지
+dispo: 외래 추적
+edu: 침상 안정보다 가벼운 활동 유지; 다리 힘 빠짐·대소변 장애 시 즉시 내원
+explain: 허리 근육이 삔 것으로 보여요.; 가볍게 움직이는 게 회복에 좋아요.
+alias: 급성 요통; 허리 염좌; 요추부 염좌
+
+@disc_herniation|요추 추간판 탈출증|Lumbar disc herniation|M51.1|routine|N|2||
+key: leg_radiation, slr_positive, leg_numbness_weak
+sup: lifting_strain
+test: 신경학적 진찰; 증상 지속·신경 결손 시 요추 MRI
+treat: 소염진통제; 물리치료; 호전 없으면 시술·수술 상담
+dispo: 외래 추적
+edu: 다리 힘 빠짐이 진행하거나 대소변 장애 시 즉시 내원
+explain: 허리 디스크가 의심됩니다.; 우선 약과 물리치료를 해 볼게요.
+alias: 허리 디스크; 추간판 탈출증; 좌골신경통
+
+@cauda_equina|마미 증후군|Cauda equina syndrome|G83.4|emergent|Y|1||
+key: bowel_bladder_dysfunction, saddle_anesthesia, leg_numbness_weak
+sup: saddle_anesthesia_sign, leg_radiation
+ro: bowel_bladder_dysfunction, saddle_anesthesia
+test: 응급 요추 MRI; 배뇨 후 잔뇨 측정
+treat: 척추외과 응급 협진(조기 감압술)
+dispo: 응급 평가 후 입원
+edu: 응급 수술이 필요할 수 있음을 설명
+explain: 신경이 눌렸는지 확인해야 해요.; 급히 허리 MRI가 필요합니다.
+unsafe: 귀가 조치; 진통제만 처방
+alias: 마미증후군; 말총 증후군
+
+@compression_fracture|척추 압박 골절|Vertebral compression fracture|M80.9|urgent|N|2||60-
+key: trauma_fall, osteoporosis_steroid, spinal_tenderness
+sup: sudden_onset
+test: 척추 X선; 필요 시 MRI; 골밀도 검사
+treat: 진통제; 보조기; 골다공증 치료
+dispo: 통증 조절되면 외래(신경 증상 시 입원)
+edu: 낙상 예방; 다리 저림·힘 빠짐 시 즉시 내원
+explain: 척추뼈 골절이 의심됩니다.; 엑스레이를 찍어 보겠습니다.
+alias: 골다공증성 압박 골절; 척추 골절
+
+@spinal_infection|척추 감염|Spinal infection|M46.4|urgent|Y|1||
+key: fever, night_rest_pain, spinal_tenderness
+sup: immunocompromised, cv_risk
+ro: night_rest_pain
+test: 염증 수치(ESR, CRP); 혈액배양; 조영증강 척추 MRI
+treat: 배양 검사 후 항생제; 척추외과·감염내과 협진
+dispo: 입원
+edu: 다리 힘 빠짐·대소변 장애 시 즉시 알리기
+explain: 척추 감염 여부를 확인해야 해요.; 피검사와 MRI가 필요합니다.
+unsafe: 발열이 있는데 진통제만 처방
+alias: 척추염; 추간판염; 척추 경막외 농양
+
+@spinal_metastasis|척추 전이암|Spinal metastasis|C79.5|urgent|Y|1||50-
+key: cancer_history, night_rest_pain, weight_loss
+sup: spinal_tenderness, leg_numbness_weak
+ro: cancer_history
+test: 조영증강 척추 MRI; 혈액검사(칼슘, ALP)
+treat: 종양내과·척추외과 협진; 신경 압박 시 스테로이드와 응급 치료
+dispo: 조기 영상 검사(신경 증상 시 응급)
+edu: 다리 힘 빠짐·대소변 장애 시 즉시 내원
+explain: 정밀 검사가 필요해 보입니다.; 허리 MRI로 확인하겠습니다.
+unsafe: 암 병력이 있는데 영상 없이 진통제만 처방
+alias: 전이성 척추 종양; 척추 전이
+
+@ankylosing_spondylitis|강직성 척추염|Ankylosing spondylitis|M45|routine|N|1||-45
+key: morning_stiffness, night_rest_pain
+sup: recurrent_similar
+against: lifting_strain
+test: 천장관절 X선 또는 MRI; HLA-B27; 염증 수치
+treat: 소염진통제; 운동 요법; 류마티스내과 의뢰
+dispo: 외래 추적
+edu: 꾸준한 스트레칭과 운동; 눈 충혈·통증 시 안과 진료
+explain: 염증성 허리 통증이 의심됩니다.; 피검사와 영상 검사를 할게요.
+alias: 강직척추염; 축성 척추관절염
+
+@acute_bronchitis|급성 기관지염|Acute bronchitis|J20.9|routine|N|3||
+key: cough, sputum
+sup: rhinorrhea, sore_throat, wheeze_sx
+against: crackles, dyspnea, hypoxia, chronic_cough
+test: 임상 진단(폐렴 의심 시 흉부 X선)
+treat: 대증 치료; 수분 섭취
+dispo: 외래
+edu: 기침이 2~3주 갈 수 있음을 설명; 호흡곤란·고열 시 재내원
+explain: 급성 기관지염으로 보입니다.; 기침은 2~3주 갈 수 있어요.
+unsafe: 불필요한 항생제 처방
+alias: 기관지염
+
+@allergic_rhinitis|알레르기 비염(상기도 기침 증후군)|Allergic rhinitis with upper airway cough syndrome|J30.4|routine|N|2||
+key: postnasal_drip, rhinorrhea
+sup: asthma_history, chronic_cough, recurrent_similar, nocturnal_cough, nasal_eye_itching
+against: fever, purulent_sputum
+test: 임상 진단; 필요 시 알레르기 검사
+treat: 비강 스테로이드 분무; 항히스타민제
+dispo: 외래 추적
+edu: 유발 물질 피하기; 호전 없으면 추가 검사
+explain: 코에서 넘어가는 분비물 탓 같아요.; 코 스프레이 약을 써 볼게요.
+alias: 알레르기 비염; 후비루 증후군; 상기도 기침 증후군
+
+@lung_cancer|폐암|Lung cancer|C34.9|urgent|Y|1||45-
+key: hemoptysis, weight_loss, smoker, chronic_cough
+sup: dyspnea, fatigue
+ro: hemoptysis, weight_loss
+test: 흉부 X선; 흉부 CT; 필요 시 기관지내시경
+treat: 호흡기내과 의뢰
+dispo: 조기 영상 검사와 호흡기내과 진료
+edu: 금연 교육; 객혈이 많아지면 즉시 내원
+explain: 폐 정밀 검사가 필요해 보여요.; 가슴 CT를 찍어 보겠습니다.
+unsafe: 객혈이 있는데 영상 없이 기침약만 처방
+alias: 폐종양; 기관지암
+
+@ace_cough|혈압약(ACE 억제제) 유발 기침|ACE inhibitor-induced cough|-|routine|N|1||
+key: new_bp_med, chronic_cough
+against: sputum, fever, dyspnea
+test: 복용 약 검토; 다른 원인 배제를 위한 흉부 X선
+treat: 처방 의사와 상의해 약 변경
+dispo: 외래 추적
+edu: 임의로 약을 끊지 말고 상의하도록 설명
+explain: 혈압약 때문에 기침할 수 있어요.; 약 변경을 상의해 보겠습니다.
+alias: ACE 억제제 기침; 약물 유발 기침
+
+@food_poisoning|세균성 식중독|Bacterial food poisoning|A05.9|routine|N|2||
+key: suspicious_food, nausea_vomiting, diarrhea
+sup: sudden_onset, abdominal_pain, sick_contact, colicky_pain
+against: no_flatus
+test: 탈수 평가; 심하면 전해질·대변 배양
+treat: 수분·전해질 보충; 대증 치료
+dispo: 외래(탈수 심하면 수액 치료)
+edu: 수분을 조금씩 자주 섭취; 혈변·고열·소변 감소 시 재내원
+explain: 식중독일 가능성이 높아 보여요.; 물을 조금씩 자주 드세요.
+alias: 식중독
+
+@upper_gi_bleeding|상부위장관 출혈|Upper gastrointestinal bleeding|K92.2|emergent|Y|1||
+key: hematemesis, bloody_stool
+sup: lightheaded, nsaid_use, heavy_alcohol, tachycardia, hypotension, epigastric_pain, pallor
+ro: hematemesis, bloody_stool
+test: 혈액검사(CBC, 응고, 혈액형); 응급 상부위장관 내시경
+treat: 정맥로 확보와 수액; 양성자펌프억제제 정맥 투여; 필요 시 수혈
+dispo: 응급 평가 후 입원
+edu: 금식 유지; 어지럼·재출혈 시 즉시 알리기
+explain: 위장 출혈을 확인해야 합니다.; 피검사와 내시경이 필요해요.
+unsafe: 귀가 조치
+alias: 위장관 출혈; 위출혈; 토혈
+
+@dka|당뇨병성 케톤산증|Diabetic ketoacidosis|E14.1|emergent|Y|1||
+key: polyuria_polydipsia, nausea_vomiting, abdominal_pain
+sup: diabetes_medication, tachypnea, altered_mental, dry_mucosa, fatigue, weight_loss
+ro: polyuria_polydipsia
+test: 혈당; 혈중 케톤; 정맥혈 가스; 전해질
+treat: 수액; 인슐린 정맥 투여; 칼륨 교정
+dispo: 응급 평가 후 입원
+edu: 아픈 날에도 인슐린을 임의로 끊지 않도록 교육
+explain: 혈당 문제를 확인해야 합니다.; 바로 혈당과 피검사를 할게요.
+unsafe: 혈당 확인 없이 귀가 조치
+alias: 케톤산증; 당뇨병 케톤산증; DKA
+
+@c_diff_colitis|클로스트리디오이데스 디피실 장염|Clostridioides difficile colitis|A04.7|urgent|N|1||
+key: recent_antibiotics, diarrhea
+sup: fever, abdominal_pain
+test: 대변 독소·PCR 검사; 혈액검사
+treat: 원인 항생제 중단; 경구 반코마이신 또는 피닥소마이신
+dispo: 중증도에 따라 입원
+edu: 손 씻기; 지사제 임의 복용 금지
+explain: 항생제 관련 장염이 의심됩니다.; 대변 검사를 해 보겠습니다.
+unsafe: 지사제 처방
+alias: 항생제 연관 장염; 위막성 대장염
+
+@ulcerative_colitis|궤양성 대장염|Ulcerative colitis|K51.9|routine|N|1||
+key: bloody_stool, diarrhea, recurrent_similar
+sup: lower_abd_pain, weight_loss, fatigue
+test: 대장내시경과 조직검사; 대변 검사; 염증 수치
+treat: 소화기내과 의뢰; 항염증제(5-ASA)
+dispo: 외래 추적(중증이면 입원)
+edu: 심한 혈변·고열·복통 시 즉시 내원
+explain: 대장 염증 질환이 의심됩니다.; 대장 내시경이 필요합니다.
+alias: 염증성 장질환
+
+@hyperemesis|임신 입덧(임신 오조)|Hyperemesis gravidarum|O21.0|routine|N|1|F|12-55
+key: pregnancy_possible, nausea_vomiting
+sup: poor_oral_intake, dry_mucosa
+against: diarrhea, fever
+test: 임신 검사; 소변 케톤; 전해질
+treat: 수분 보충; 임신 중 안전한 항구토제
+dispo: 산부인과 외래(탈수 심하면 입원)
+edu: 소량씩 자주 먹기; 물도 못 넘기면 내원
+explain: 임신 여부를 먼저 확인할게요.; 탈수가 있으면 수액을 맞을게요.
+unsafe: 임신 확인 없이 약 처방
+alias: 입덧; 임신 오조
+
+@cystitis|급성 방광염|Acute cystitis|N30.0|routine|N|3||
+key: dysuria, frequency_urgency, suprapubic_tenderness
+sup: hematuria
+against: fever, flank_pain, vaginal_discharge
+test: 소변검사; 재발·남성·임신 시 소변배양
+treat: 항생제; 수분 섭취
+dispo: 외래
+edu: 물 충분히 마시기; 발열·옆구리 통증 시 재내원
+explain: 방광염일 가능성이 높아요.; 소변검사로 확인하겠습니다.
+alias: 방광염; 하부 요로감염; 요로감염
+
+@urethritis|요도염|Urethritis|N34.1|routine|N|1||
+key: dysuria, urethral_discharge, unprotected_sex
+test: 소변·요도 분비물 핵산증폭검사(임균·클라미디아)
+treat: 항생제; 파트너 동시 치료
+dispo: 외래
+edu: 치료 끝날 때까지 성관계 피하기; 파트너도 검사 받기
+explain: 요도 감염이 의심됩니다.; 소변으로 균 검사를 하겠습니다.
+alias: 성매개 감염; 비임균성 요도염
+
+@prostatitis|급성 전립선염|Acute prostatitis|N41.0|urgent|N|1|M|
+key: perineal_pain, dysuria, fever, prostate_tender
+sup: weak_stream, frequency_urgency
+test: 소변검사와 소변배양; 혈액검사
+treat: 항생제; 요폐가 있으면 도뇨
+dispo: 경증은 외래, 고열·요폐 시 입원
+edu: 물 충분히 마시기; 소변이 안 나오면 즉시 내원
+explain: 전립선 염증이 의심됩니다.; 소변검사를 해 보겠습니다.
+alias: 전립선염
+
+@bph|전립선 비대증|Benign prostatic hyperplasia|N40|routine|N|2|M|50-
+key: weak_stream, frequency_urgency, prostate_enlarged
+against: dysuria, fever
+test: 소변검사; 전립선특이항원(PSA); 요속·잔뇨 검사
+treat: 알파차단제; 비뇨의학과 의뢰
+dispo: 외래 추적
+edu: 저녁 수분·카페인 줄이기; 소변이 안 나오면 즉시 내원
+explain: 전립선이 커진 것으로 보여요.; 소변검사와 피검사를 할게요.
+alias: 전립선 비대; 양성 전립선 비대
+
+@bladder_cancer|방광암|Bladder cancer|C67.9|urgent|N|1||50-
+key: hematuria, smoker
+against: dysuria, fever
+test: 소변검사와 요세포검사; 방광경; CT 요로조영
+treat: 비뇨의학과 의뢰
+dispo: 조기 비뇨의학과 진료
+edu: 통증 없는 혈뇨도 반드시 검사 받도록 설명; 금연 교육
+explain: 혈뇨 원인을 꼭 확인해야 해요.; 방광 내시경이 필요합니다.
+alias: 방광 종양; 요로상피암
+
+@vaginitis|질염|Vaginitis|N76.0|routine|N|2|F|
+key: vaginal_discharge, vulvar_itching
+sup: dysuria
+against: fever, lower_abd_pain
+test: 질 분비물 검사
+treat: 원인균에 따른 항진균제 또는 항생제
+dispo: 외래
+edu: 꽉 끼는 옷·과도한 세정 피하기; 하복부 통증·발열 시 재내원
+explain: 질염일 가능성이 높아 보여요.; 분비물 검사를 해 보겠습니다.
+alias: 세균성 질염; 칸디다 질염
+
+@stable_angina|안정형 협심증|Stable angina|I20.9|urgent|N|2||40-
+key: exertional_chest_pain, pressure_chest_pain
+sup: cv_risk, smoker, recurrent_similar, heart_disease_history
+against: rest_chest_pain, pleuritic_pain, chest_wall_tenderness
+test: 12유도 심전도; 운동부하검사 또는 관상동맥 CT; 지질·혈당 검사
+treat: 항협심증 약물과 위험인자 조절; 심장내과 의뢰
+dispo: 외래 추적(안정 시 통증·악화 양상이면 응급 평가)
+edu: 안정 시에도 아프거나 20분 넘게 지속되면 즉시 내원; 금연
+explain: 협심증 가능성이 있어 보여요.; 심장 검사를 예약해 드릴게요.
+alias: 협심증; 노작성 협심증
+
+@myocarditis|심근염|Myocarditis|I51.4|urgent|N|1||
+key: recent_uri, dyspnea, palpitations
+sup: fatigue, fever, pleuritic_pain, orthopnea, exertional_dyspnea
+test: 12유도 심전도; 심근효소(트로포닌); 심초음파; 염증 수치
+treat: 안정과 심전도 감시; 심장내과 협진
+dispo: 입원 관찰
+edu: 회복기까지 격한 운동 금지; 실신·호흡곤란 악화 시 즉시 알리기
+explain: 심장 근육 염증이 의심됩니다.; 심전도와 피검사를 하겠습니다.
+alias: 급성 심근염
+
+@pulmonary_edema|급성 폐부종|Acute pulmonary edema|J81|emergent|Y|1||
+key: orthopnea, pnd, crackles, heart_disease_history
+sup: leg_swelling, hypoxia, tachypnea, diaphoresis, exertional_dyspnea, cv_risk
+ro: orthopnea
+test: 흉부 X선; BNP; 12유도 심전도; 심초음파; 동맥혈가스
+treat: 앉은 자세와 산소 공급; 이뇨제 정맥 투여; 원인 교정
+dispo: 응급 평가 후 입원
+edu: 염분·수분 조절; 숨참 악화 시 즉시 내원
+explain: 폐에 물이 찼을 수 있어요.; 바로 가슴 엑스레이를 찍을게요.
+unsafe: 귀가 조치; 눕힌 채 관찰
+alias: 폐부종; 심인성 폐부종
+
+@anaphylaxis|아나필락시스|Anaphylaxis|T78.2|emergent|Y|1||
+key: allergen_exposure, angioedema, urticaria_wheals, dyspnea
+sup: wheeze_sx, hypotension, lightheaded, nausea_vomiting, itching, stridor_sx, syncope, rash, tachycardia
+ro: angioedema, dyspnea
+test: 임상 진단(치료를 미루지 않음); 활력징후 연속 감시
+treat: 즉시 에피네프린 근육 주사; 산소와 수액; 항히스타민제·스테로이드 보조
+dispo: 응급 처치 후 관찰(재발 감시)
+edu: 원인 물질 회피; 자가 주사용 에피네프린 처방과 사용법 교육
+explain: 심한 알레르기 반응 같습니다.; 바로 주사 치료를 하겠습니다.
+unsafe: 에피네프린 지연; 항히스타민제만 주고 귀가 조치
+alias: 아나필락시스 쇼크; 과민성 쇼크
+
+@epiglottitis|급성 후두개염|Acute epiglottitis|J05.1|emergent|Y|1||
+key: drooling, dysphagia, muffled_voice, stridor_sx
+sup: fever, sore_throat, dyspnea
+ro: drooling, stridor_sx
+test: 기도 확보가 가능한 환경에서 후두 내시경; 경부 측면 X선
+treat: 기도 확보 준비; 정맥 항생제; 이비인후과 응급 협진
+dispo: 응급 평가 후 입원(기도 감시)
+edu: 응급 질환이며 입원 관찰이 필요함을 설명
+explain: 목 안쪽이 심하게 부은 것 같아요.; 숨길을 지키는 치료가 필요해요.
+unsafe: 설압자로 무리한 인두 진찰; 눕힌 채 관찰; 귀가 조치
+alias: 후두개염; 급성 후두덮개염
+
+@viral_pharyngitis|급성 인두염|Acute pharyngitis|J02.9|routine|N|3||
+key: sore_throat, pharyngeal_erythema
+sup: rhinorrhea, cough, fever, sick_contact, hoarseness
+against: tonsillar_exudate, drooling, trismus
+test: 임상 진단(세균성 의심 시 신속항원검사)
+treat: 해열진통제와 수분 섭취
+dispo: 외래
+edu: 항생제가 필요 없음을 설명; 침을 못 삼키거나 숨이 차면 즉시 내원
+explain: 목감기로 보입니다.; 따뜻한 물을 자주 드세요.
+unsafe: 불필요한 항생제 처방
+alias: 인두염; 바이러스성 인두염; 목감기
+
+@laryngitis|급성 후두염|Acute laryngitis|J04.0|routine|N|2||
+key: hoarseness, recent_uri
+sup: cough, sore_throat, smoker
+against: stridor_sx, drooling, dyspnea
+test: 임상 진단(3주 넘게 지속되면 후두 내시경)
+treat: 목소리 휴식과 수분 섭취
+dispo: 외래
+edu: 속삭이지 말고 목을 쉬기; 쉰 목소리가 3주 넘으면 재내원
+explain: 성대에 염증이 생긴 것 같아요.; 며칠간 목을 쉬어 주세요.
+alias: 후두염
+
+@otitis_media|급성 중이염|Acute otitis media|H66.9|routine|N|2||
+key: ear_pain, tympanic_bulging
+sup: fever, rhinorrhea, recent_uri, hearing_loss_tinnitus
+test: 이경 검사
+treat: 진통제; 중증·지속 시 항생제
+dispo: 외래
+edu: 귀 뒤가 붓거나 고열이 지속되면 재내원
+explain: 중이염으로 보입니다.; 진통제로 통증을 조절할게요.
+alias: 중이염
+
+@pertussis|백일해|Pertussis|A37.9|urgent|N|1||
+key: paroxysmal_cough, whooping, posttussive_vomiting
+sup: sick_contact, chronic_cough
+test: 비인두 도말 PCR 또는 배양
+treat: 마크로라이드계 항생제; 밀접 접촉자 예방 투약; 보건소 신고
+dispo: 외래(영아·호흡곤란 시 입원)
+edu: 항생제 5일 복용 전까지 등교·출근 자제; 영아 접촉 피하기
+explain: 백일해 검사가 필요해 보여요.; 코 안쪽에서 검사를 하겠습니다.
+alias: 백일해 감염
+
+@bronchiectasis|기관지 확장증|Bronchiectasis|J47|routine|N|1||
+key: chronic_cough, purulent_sputum, chronic_lung_disease
+sup: hemoptysis, dyspnea, crackles, sputum
+test: 흉부 X선; 고해상도 흉부 CT; 객담 배양
+treat: 기도 청결 요법; 급성 악화 시 항생제
+dispo: 호흡기내과 외래
+edu: 가래 배출법 교육; 객혈이 많아지면 즉시 내원; 예방접종
+explain: 기관지 확장증이 의심됩니다.; 가슴 CT로 확인하겠습니다.
+alias: 기관지확장증
+
+@gbs|길랭-바레 증후군|Guillain-Barre syndrome|G61.0|emergent|Y|1||
+key: ascending_weakness, bilateral_weakness, areflexia, recent_uri
+sup: paresthesia, dyspnea, facial_weakness, dysphagia
+ro: ascending_weakness, bilateral_weakness
+test: 요추천자(뇌척수액 검사); 신경전도검사; 폐활량 측정
+treat: 호흡 기능 감시; 면역글로불린 또는 혈장교환; 신경과 응급 협진
+dispo: 응급 평가 후 입원(호흡 감시)
+edu: 숨이 차거나 삼키기 어려워지면 즉시 알리기
+explain: 신경 염증 질환이 의심됩니다.; 입원해서 검사가 필요합니다.
+unsafe: 귀가 조치
+alias: 길랑바레 증후군; 급성 염증성 탈수초성 다발신경병증
+
+@myasthenia_gravis|중증 근무력증|Myasthenia gravis|G70.0|urgent|N|1||
+key: fatigable_weakness, ptosis, diplopia
+sup: dysphagia, speech_disturbance, dyspnea, ptosis_sign, bilateral_weakness
+test: 아세틸콜린수용체 항체; 반복신경자극검사; 흉부 CT(흉선종)
+treat: 신경과 의뢰; 콜린에스테라제 억제제
+dispo: 신경과 진료(호흡·삼킴 곤란 시 응급 입원)
+edu: 숨이 차거나 삼키기 어려우면 즉시 내원
+explain: 근무력증 검사가 필요해 보여요.; 피검사와 신경 검사를 할게요.
+alias: 중증근무력증; 근무력증
+
+@inguinal_hernia|서혜부 탈장|Inguinal hernia|K40.9|routine|N|2||
+key: groin_lump, strain_worse, groin_bulge
+sup: lower_abd_pain
+test: 진찰로 진단; 불확실하면 초음파
+treat: 외과 의뢰(수술 상담)
+dispo: 외래(안 들어가고 아프면 응급)
+edu: 덩이가 안 들어가고 통증·구토가 생기면 즉시 내원
+explain: 탈장으로 보입니다.; 외과 진료를 연결해 드릴게요.
+alias: 탈장; 사타구니 탈장; 샅굴 탈장
+
+@sle|전신 홍반 루푸스|Systemic lupus erythematosus|M32.9|routine|N|1||
+key: joint_pain, malar_rash, photosensitivity, oral_ulcers
+sup: fatigue, fever, rash, pleuritic_pain, swelling
+test: 항핵항체(ANA); 혈액검사(CBC, 신기능); 소변검사
+treat: 류마티스내과 의뢰
+dispo: 외래 추적
+edu: 자외선 차단; 부종·호흡곤란·흉통 시 내원
+explain: 자가면역 질환 검사가 필요해요.; 피검사와 소변검사를 할게요.
+alias: 루푸스; 전신홍반루푸스
+
+@sarcoidosis|사르코이드증|Sarcoidosis|D86.9|routine|N|1||
+key: chronic_cough, lymph_node_swelling, exertional_dyspnea
+sup: fatigue, rash, joint_pain
+test: 흉부 X선; 흉부 CT; 필요 시 조직검사
+treat: 호흡기내과 의뢰
+dispo: 외래 추적
+edu: 시력 변화·두근거림·실신 시 내원
+explain: 폐 정밀 검사가 필요해 보여요.; 가슴 엑스레이부터 찍겠습니다.
+alias: 유육종증; 사르코이드
+
+@pancreatic_cancer|췌장암|Pancreatic cancer|C25.9|urgent|N|1||50-
+key: weight_loss, jaundice_sx, epigastric_pain, pain_radiates_back
+sup: anorexia, smoker, fatigue, nausea_vomiting
+test: 조영증강 복부 CT; 간기능 검사와 빌리루빈; 종양표지자(CA 19-9)
+treat: 소화기내과·외과 의뢰
+dispo: 조기 영상 검사
+edu: 황달·발열·심한 통증 시 즉시 내원
+explain: 복부 정밀 검사가 필요합니다.; 복부 CT를 찍어 보겠습니다.
+alias: 췌장 종양
+
+@acute_hiv|급성 HIV 감염|Acute HIV infection|B23.0|urgent|N|1||
+key: unprotected_sex, fever, lymph_node_swelling, rash
+sup: sore_throat, myalgia, fatigue, diarrhea, oral_ulcers, weight_loss, night_sweats
+test: HIV 항원·항체 검사; HIV RNA 검사; 다른 성매개감염 검사
+treat: 감염내과 의뢰(조기 항바이러스 치료)
+dispo: 감염내과 진료
+edu: 결과 확인 전까지 안전한 성생활; 파트너 검사 안내
+explain: 감염 원인을 찾는 검사를 할게요.; 피검사 몇 가지가 필요합니다.
+alias: HIV 감염; 급성 레트로바이러스 증후군
+
+@rib_fracture|늑골 골절|Rib fracture|S22.3|routine|N|2||
+key: chest_wall_tenderness, movement_pain, trauma_fall
+sup: pleuritic_pain, osteoporosis_steroid, paroxysmal_cough
+test: 흉부 X선(기흉·혈흉 동반 확인)
+treat: 충분한 진통; 심호흡 격려
+dispo: 외래(다발 골절·고령·호흡곤란 시 입원)
+edu: 숨이 차거나 열이 나면 재내원; 통증 때문에 숨을 얕게 쉬지 않기
+explain: 갈비뼈 골절이 의심됩니다.; 가슴 엑스레이를 찍겠습니다.
+alias: 갈비뼈 골절
+
+@boerhaave|식도 파열|Esophageal rupture|K22.3|emergent|Y|1||
+key: forceful_vomiting, sudden_onset, heavy_alcohol
+sup: dyspnea, hematemesis, pleuritic_pain, tachycardia, fever
+ro: forceful_vomiting
+test: 흉부 X선; 수용성 조영제 식도 조영 또는 흉부 CT
+treat: 금식과 수액; 광범위 항생제; 흉부외과 응급 협진
+dispo: 응급 평가 후 입원
+edu: 응급 질환이며 즉시 검사가 필요함을 설명
+explain: 식도 손상을 확인해야 합니다.; 급히 가슴 CT가 필요합니다.
+unsafe: 귀가 조치
+alias: 보어하브 증후군; 식도 천공
+
+@chronic_sinusitis|만성 부비동염|Chronic sinusitis|J32.9|routine|N|2||
+key: purulent_nasal, postnasal_drip, anosmia
+sup: facial_pain_bending, chronic_cough, rhinorrhea, sinus_tenderness
+test: 비내시경; 부비동 CT
+treat: 비강 세척과 비강 스테로이드; 이비인후과 의뢰
+dispo: 외래 추적
+edu: 눈 주위 부종·시력 변화·심한 두통 시 내원
+explain: 만성 부비동염이 의심됩니다.; 코 세척을 꾸준히 해 보세요.
+alias: 만성 축농증
+
+@psvt|발작성 심실상성 빈맥|Paroxysmal supraventricular tachycardia|I47.1|urgent|N|2||
+key: abrupt_onset_offset, palpitations, tachycardia
+sup: lightheaded, dyspnea, anxiety_trigger, stimulant_use, recurrent_similar
+test: 12유도 심전도(증상 중); 홀터 검사; 전해질·갑상선 기능
+treat: 미주신경 자극법; 지속되면 아데노신; 심장내과 의뢰
+dispo: 안정되면 외래(실신·흉통 시 입원)
+edu: 발작 시 대처법 교육; 실신·흉통 동반 시 즉시 내원
+explain: 빠른 맥박 발작이 의심됩니다.; 심전도로 확인하겠습니다.
+alias: 발작성 상심실성 빈맥; 심실상성 빈맥; PSVT
+
+@atrial_fibrillation|심방세동|Atrial fibrillation|I48.9|urgent|N|2||40-
+key: irregular_palpitation, irregular_pulse, palpitations
+sup: exertional_dyspnea, lightheaded, cv_risk, heart_disease_history, thyroid_disease, heavy_alcohol, irregular_rhythm, fatigue
+test: 12유도 심전도; 심초음파; 갑상선 기능·전해질
+treat: 맥박수 조절; 뇌졸중 위험 평가 후 항응고 결정; 심장내과 의뢰
+dispo: 안정되면 외래(혈역학 불안정 시 입원)
+edu: 한쪽 마비·말 어눌함이 생기면 즉시 내원; 절주
+explain: 맥이 불규칙하게 뛰는 것 같아요.; 심전도로 확인하겠습니다.
+alias: 심방 세동; 심방조동
+
+@hyperthyroidism|갑상샘항진증(그레이브스병)|Graves disease (hyperthyroidism)|E05.0|routine|N|2||
+key: heat_intolerance, palpitations, goiter, exophthalmos
+sup: hand_tremor, weight_loss, increased_appetite, diaphoresis, anxiety_trigger, tachycardia, thyroid_disease, frequent_stools, diarrhea, fatigue, menstrual_change, eye_symptoms, neck_swelling, family_thyroid, thyroid_bruit, hyperreflexia, postural_tremor, warm_moist_skin, proximal_weakness_sx, pretibial_myxedema, paresthesia
+against: thyroid_nodule, thyroid_tenderness
+test: 갑상선 기능 검사(TSH, free T4, T3); 갑상선자극호르몬 수용체 항체(TRAb); 혈액검사(CBC, 간기능) — 항갑상선제 시작 전 기준치; 갑상선 초음파; 갑상선 스캔·섭취율(RAIU); 12유도 심전도(빈맥·심방세동 확인); 가임기 여성은 임신 반응 검사
+treat: 베타차단제로 두근거림·떨림 조절; 검사 확인 후 항갑상선제(메티마졸) 시작; 눈이 뻑뻑하면 인공눈물; 내분비내과 의뢰
+dispo: 외래 추적
+edu: 항갑상선제 부작용(무과립구증·간독성) 설명, 발열·인후통 시 즉시 내원; 심한 두근거림·숨참·고열·의식 변화 시 즉시 내원; 카페인·무리한 운동 자제, 충분한 휴식
+explain: 갑상선 호르몬이 많은 것 같아요.; 피검사로 확인하고 치료해요.
+unsafe: 갑상선 기능 확인 없이 단순 관찰; 원인 확인 전 방사성요오드 치료
+alias: 갑상선 기능 항진증; 갑상샘항진증; 갑상선 항진증; 갑상선기능항진증; 그레이브스병; 그레이브스; 바제도병; 갑상선중독증
+
+@peritonsillar_abscess|편도 주위 농양|Peritonsillar abscess|J36|urgent|Y|1||
+key: trismus, muffled_voice, uvular_deviation
+sup: fever, sore_throat, dysphagia, drooling, cervical_lymphadenopathy
+ro: trismus
+test: 인두 진찰; 필요 시 경부 CT
+treat: 배농(천자 또는 절개); 항생제; 이비인후과 협진
+dispo: 당일 이비인후과 처치
+edu: 숨이 차거나 침을 못 삼키면 즉시 알리기
+explain: 편도 옆에 고름이 찬 것 같아요.; 고름을 빼는 처치가 필요합니다.
+unsafe: 진통제만 처방
+alias: 편도주위농양
+
+@infectious_mononucleosis|감염성 단핵구증|Infectious mononucleosis|B27.9|routine|N|1||10-35
+key: sore_throat, lymph_node_swelling, fatigue
+sup: fever, tonsillar_exudate, cervical_lymphadenopathy, rash
+test: 혈액검사(CBC, 말초혈액도말); EBV 항체 검사; 간기능 검사
+treat: 대증 치료와 휴식
+dispo: 외래 추적
+edu: 3~4주간 격한 운동·접촉 스포츠 금지(비장 파열 위험); 심한 복통 시 즉시 내원
+explain: 바이러스 감염이 의심됩니다.; 피검사로 확인해 보겠습니다.
+unsafe: 격한 운동 허용
+alias: 전염성 단핵구증; EBV 감염
+
+@bell_palsy|벨 마비|Bell palsy|G51.0|urgent|N|2||
+key: facial_weakness, facial_droop
+sup: ear_pain, recent_uri
+against: focal_weakness, speech_disturbance, diplopia, motor_weakness_sign
+test: 신경학적 진찰로 중추성 마비 배제
+treat: 발병 72시간 이내 스테로이드; 눈 보호(인공눈물, 안대)
+dispo: 외래 추적
+edu: 팔다리 마비·말 어눌함이 생기면 즉시 내원; 눈이 마르지 않게 관리
+explain: 얼굴 신경 마비로 보입니다.; 약을 일찍 시작하는 게 좋아요.
+alias: 안면신경 마비; 구안와사; 말초성 안면마비
+
+@hypokalemia|저칼륨혈증|Hypokalemia|E87.6|urgent|N|1||
+key: bilateral_weakness, diuretic_use
+sup: diarrhea, nausea_vomiting, palpitations, myalgia, fatigue, thyroid_disease
+test: 전해질(칼륨, 마그네슘); 12유도 심전도
+treat: 칼륨 보충; 원인 교정
+dispo: 중증·심전도 변화 시 입원
+edu: 원인 약물 상담; 두근거림·마비 악화 시 내원
+explain: 전해질 이상을 확인해 볼게요.; 피검사와 심전도를 하겠습니다.
+alias: 저칼륨성 주기성 마비
+
+@vasovagal_syncope|미주신경성 실신|Vasovagal syncope|R55|routine|N|3||
+key: vasovagal_prodrome, standing_trigger
+sup: recurrent_similar, lightheaded, diaphoresis
+against: exertional_syncope, postictal_confusion, tongue_bite_incontinence, focal_weakness
+test: 12유도 심전도; 기립 혈압
+treat: 유발 상황 회피와 수분·염분 섭취
+dispo: 심장성 원인 배제 후 외래
+edu: 전구 증상이 오면 눕거나 앉기; 운동 중 실신·흉통·두근거림 동반 시 내원
+explain: 심장 문제부터 확인하겠습니다.; 심전도 검사를 해 볼게요.
+alias: 혈관미주신경성 실신; 단순 실신
+
+@aortic_stenosis|대동맥판 협착증|Aortic stenosis|I35.0|urgent|Y|1||60-
+key: exertional_syncope, murmur, exertional_dyspnea
+sup: exertional_chest_pain, heart_disease_history
+ro: exertional_syncope
+test: 심초음파; 12유도 심전도
+treat: 심장내과 의뢰(판막 치료 평가)
+dispo: 증상이 있으면 입원 평가
+edu: 격한 운동 피하기; 실신·흉통 재발 시 즉시 내원
+explain: 심장 판막을 확인해야 합니다.; 심장 초음파가 필요합니다.
+unsafe: 운동 중 실신인데 심장 평가 없이 귀가 조치
+alias: 대동맥판막 협착증
+
+@seizure_disorder|경련 발작|Seizure|G40.9|urgent|Y|1||
+key: seizure, postictal_confusion, tongue_bite_incontinence
+sup: recurrent_similar, head_trauma, heavy_alcohol, stress_sleep
+ro: tongue_bite_incontinence
+test: 혈당과 전해질; 뇌 CT 또는 MRI; 뇌파검사
+treat: 발작 지속 시 벤조디아제핀; 신경과 협진
+dispo: 첫 발작이면 응급 평가
+edu: 운전·수영·높은 곳 작업 제한; 재발 시 즉시 내원
+explain: 경련 원인을 찾아야 합니다.; 피검사와 머리 영상을 할게요.
+unsafe: 첫 발작인데 평가 없이 귀가 조치
+alias: 뇌전증; 간질; 발작
+
+@alcohol_intoxication|급성 알코올 중독|Acute alcohol intoxication|F10.0|urgent|N|2||
+key: heavy_alcohol, altered_mental
+sup: nausea_vomiting, gait_unsteady, speech_disturbance
+test: 혈당 측정; 혈중 알코올과 전해질; 외상 의심 시 뇌 CT
+treat: 기도 유지와 관찰; 티아민 투여; 저혈당 교정
+dispo: 의식 회복까지 관찰
+edu: 절주 상담; 구토·의식 저하 시 내원
+explain: 다른 원인이 없는지 확인할게요.; 혈당부터 재 보겠습니다.
+unsafe: 저혈당·두부 외상 배제 없이 귀가 조치
+alias: 알코올 중독; 만취
+
+@hepatic_encephalopathy|간성 뇌병증|Hepatic encephalopathy|K72.9|urgent|N|1||
+key: liver_disease, altered_mental, asterixis
+sup: jaundice_sx, bloody_stool, abdominal_distension, heavy_alcohol, confusion_sign
+test: 간기능 검사와 암모니아; 전해질·신기능; 유발 요인(감염·출혈) 평가
+treat: 락툴로스; 유발 요인 교정
+dispo: 입원
+edu: 변비 예방; 검은 변·의식 변화 시 즉시 내원
+explain: 간 기능과 관련 있어 보입니다.; 피검사를 바로 하겠습니다.
+unsafe: 진정제 투여
+alias: 간성 혼수; 간성뇌증
+
+@drug_intoxication|약물 중독|Drug intoxication|T50.9|emergent|Y|1||
+key: drug_overdose, altered_mental
+sup: nausea_vomiting, pupil_abnormal, confusion_sign, stress_sleep
+ro: drug_overdose
+test: 혈당; 12유도 심전도; 아세트아미노펜·살리실산 농도; 전해질과 혈액가스
+treat: 기도·호흡·순환 유지; 복용 약물에 따른 해독제; 정신건강의학과 협진
+dispo: 응급 평가 후 관찰 또는 입원
+edu: 복용한 약과 시각을 알려 주도록 설명; 보호자 동반 관찰
+explain: 드신 약을 확인해야 합니다.; 피검사와 심전도를 하겠습니다.
+unsafe: 귀가 조치
+alias: 약물 과다 복용; 급성 약물 중독
+
+@urticaria|급성 두드러기|Acute urticaria|L50.9|routine|N|3||
+key: itching, urticaria_wheals
+sup: allergen_exposure, new_drug, recurrent_similar, rash
+against: fever, dyspnea, angioedema
+test: 임상 진단
+treat: 2세대 항히스타민제; 원인 회피
+dispo: 외래
+edu: 입술·혀가 붓거나 숨이 차면 즉시 응급실로
+explain: 두드러기로 보입니다.; 가려움 약을 드릴게요.
+alias: 두드러기; 담마진
+
+@herpes_zoster|대상포진|Herpes zoster|B02.9|urgent|N|2||
+key: dermatomal_pain, vesicular_dermatomal
+sup: rash, immunocompromised, fever, itching
+test: 임상 진단(비전형이면 PCR)
+treat: 발진 72시간 이내 항바이러스제; 진통제
+dispo: 외래(눈 주위·면역저하·전신 파종 시 입원 평가)
+edu: 물집이 마를 때까지 임신부·영아 접촉 피하기; 눈 주위 발진 시 안과 진료
+explain: 대상포진으로 보입니다.; 항바이러스제를 빨리 시작할게요.
+alias: 대상 포진
+
+@drug_eruption|약물 발진|Drug eruption|L27.0|urgent|N|2||
+key: new_drug, maculopapular_rash
+sup: itching, fever, oral_ulcers, rash
+test: 복용 약 검토; 혈액검사(CBC, 간기능)
+treat: 원인 약물 중단; 항히스타민제
+dispo: 외래(점막 침범·피부 벗겨짐·고열 시 응급 입원)
+edu: 원인 약 이름 기록; 입안이 헐거나 피부가 벗겨지면 즉시 내원
+explain: 약 때문에 생긴 발진 같습니다.; 의심되는 약을 중단하겠습니다.
+unsafe: 원인 약물 계속 투여
+alias: 약진; 약물 알레르기; 약물 과민반응
+
+@contact_dermatitis|접촉 피부염|Contact dermatitis|L25.9|routine|N|2||
+key: contact_exposure, itching
+sup: rash, recurrent_similar
+against: fever
+test: 임상 진단; 반복되면 첩포검사
+treat: 원인 회피; 국소 스테로이드
+dispo: 외래
+edu: 원인 물질 피하기; 진물·열감이 심해지면 재내원
+explain: 접촉 피부염으로 보입니다.; 바르는 약을 처방해 드릴게요.
+alias: 접촉성 피부염; 알레르기 접촉 피부염
+
+@viral_exanthem|바이러스성 발진|Viral exanthem|B09|routine|N|2||
+key: maculopapular_rash, fever, recent_uri
+sup: rash, sick_contact, myalgia, sore_throat
+against: new_drug, petechiae
+test: 임상 진단(홍역·풍진 의심 시 혈청 검사)
+treat: 대증 치료
+dispo: 외래
+edu: 발진이 눌러도 안 없어지거나 의식이 처지면 즉시 내원
+explain: 바이러스 감염에 의한 발진 같아요.; 대개 저절로 좋아집니다.
+alias: 바이러스 발진
+
+@toxic_nodular_goiter|독성 결절성 갑상샘종|Toxic nodular goiter|E05.2|routine|N|1||40-
+key: thyroid_nodule, palpitations, heat_intolerance
+sup: weight_loss, hand_tremor, tachycardia, goiter, increased_appetite
+against: exophthalmos, thyroid_bruit
+test: 갑상선 기능 검사(TSH, free T4, T3); 갑상선 초음파; 갑상선 스캔·섭취율
+treat: 베타차단제로 증상 조절; 항갑상선제 후 방사성요오드·수술 평가; 내분비내과 의뢰
+dispo: 외래 추적
+edu: 심한 두근거림·고열 시 즉시 내원
+explain: 갑상선 혹이 호르몬을 만들 수 있어요.; 초음파와 피검사를 할게요.
+alias: 독성 다결절성 갑상선종; 독성 선종; 플러머병
+
+@thyroiditis|아급성 갑상샘염|Subacute thyroiditis|E06.1|routine|N|1||
+key: thyroid_tenderness, neck_pain_thyroid
+sup: fever, recent_uri, palpitations, heat_intolerance, fatigue, tachycardia
+against: exophthalmos, thyroid_bruit
+test: 갑상선 기능 검사(TSH, free T4); ESR·CRP; 갑상선 섭취율(RAIU)
+treat: 소염진통제; 두근거림에 베타차단제; 통증이 심하면 스테로이드
+dispo: 외래 추적
+edu: 대부분 수개월 안에 회복됨을 설명; 이후 기능 저하가 올 수 있어 추적 검사
+explain: 갑상선에 염증이 생긴 것 같아요.; 염증 약으로 좋아질 수 있어요.
+alias: 갑상선염; 아급성 갑상선염; 무통성 갑상선염
+
+@diabetes_mellitus|당뇨병|Diabetes mellitus|E11.9|routine|N|2||
+key: polyuria_polydipsia, weight_loss
+sup: fatigue, increased_appetite, vision_halos, cv_risk
+against: heat_intolerance, exophthalmos, goiter
+test: 공복혈당·당화혈색소(HbA1c); 소변검사(당·케톤); 혈액검사(전해질·신장 기능)
+treat: 식이·운동 교정; 혈당에 따라 경구 혈당강하제 또는 인슐린; 내과 추적
+dispo: 외래 추적(케톤산증이면 입원)
+edu: 구토·복통·의식 변화 시 즉시 내원; 저혈당 증상과 대처법 교육
+explain: 혈당이 높은지 확인해 볼게요.; 피검사로 알 수 있습니다.
+alias: 당뇨; 2형 당뇨병; 1형 당뇨병
+
+@occult_malignancy|악성 종양(원인 미상 체중 감소)|Malignancy with unexplained weight loss|C80.9|urgent|Y|1||40-
+key: weight_loss, anorexia
+sup: night_sweats, fatigue, lymph_node_swelling, cancer_history, smoker, bloody_stool, fever, cervical_lymphadenopathy, hepatosplenomegaly
+against: increased_appetite
+ro: anorexia, night_sweats
+test: 혈액검사(CBC, 간기능, LDH, ESR); 흉부 X선; 대변 잠혈검사와 위·대장 내시경; 필요 시 흉부·복부 CT
+treat: 원인 확인 후 해당 전문과 의뢰; 영양 상태 평가
+dispo: 신속한 외래 정밀검사
+edu: 혈변·지속되는 발열·급격한 체중 감소 시 빨리 내원
+explain: 체중이 빠진 원인을 찾아볼게요.; 몇 가지 검사가 필요해요.
+alias: 암; 악성 신생물; 원발 부위 불명 암
+
+@adrenal_insufficiency|부신기능저하증|Adrenal insufficiency|E27.1|urgent|N|1||
+key: hyperpigmentation, weight_loss, fatigue
+sup: anorexia, nausea_vomiting, orthostatic_sx, hypotension, abdominal_pain
+against: increased_appetite, heat_intolerance
+test: 아침 혈청 코르티솔·ACTH; 전해질(Na, K)과 혈당; ACTH 자극검사
+treat: 내분비내과 의뢰; 확진 시 스테로이드 보충
+dispo: 외래 추적(저혈압·쇼크면 응급 입원)
+edu: 구토·어지럼·실신 시 즉시 내원
+explain: 호르몬 검사가 필요해 보여요.; 피검사로 확인하겠습니다.
+alias: 애디슨병; 부신부전
+
+@crohn_disease|크론병|Crohn disease|K50.9|routine|N|1||10-40
+key: diarrhea, abdominal_pain, weight_loss
+sup: bloody_stool, fever, fatigue, anorexia, oral_ulcers, joint_pain
+against: increased_appetite
+test: 혈액검사(CBC, CRP); 대변 칼프로텍틴; 대장내시경; 복부 CT
+treat: 소화기내과 의뢰
+dispo: 외래 추적
+edu: 혈변·심한 복통·고열 시 즉시 내원; 금연 교육
+explain: 장에 염증이 있는지 볼게요.; 대장내시경이 필요해요.
+alias: 염증성 장질환; 크론
+
+@anorexia_nervosa|신경성 식욕부진증|Anorexia nervosa|F50.0|urgent|N|1||10-35
+key: intentional_diet, body_image, weight_loss
+sup: menstrual_change, fatigue, depressed_mood
+against: increased_appetite
+test: 혈액검사(전해질, 혈당, CBC); 12유도 심전도(서맥·QT); 체질량지수 확인
+treat: 정신건강의학과 의뢰; 영양 재활; 가족 지지
+dispo: 외래 추적(심한 저체중·전해질 이상·서맥이면 입원)
+edu: 어지럼·실신·두근거림 시 즉시 내원
+explain: 몸 상태부터 확인해 볼게요.; 전문 상담이 도움이 됩니다.
+alias: 거식증; 섭식장애
+
+@sedative_use_disorder|수면제 의존(진정수면제 사용장애)|Sedative-hypnotic use disorder|F13.2|routine|N|2||15-
+key: hypnotic_use, dose_escalation, withdrawal_sx
+sup: failed_cut_down, multiple_prescribers, daytime_sedation, functional_impairment, sleep_maintenance, sedation_sign, cognitive_impairment_sign
+test: 소변 약물 선별검사(다른 약물 병용 확인); 갑상선 기능 검사(TSH, free T4); 혈액검사(CBC, 간·신장 기능, 전해질); 12유도 심전도; 처방 내역(DUR) 조회로 실제 복용량 확인
+treat: 급격한 중단 금지, 실제 복용량 확인 후 1~2주마다 10~25%씩 점진적 감량; 처방 일원화(한 기관에서만 처방); 수면위생 교육과 불면 인지행동치료(CBT-I) 연계; 정신건강의학과(중독·수면) 협진
+dispo: 외래 감량 프로그램(급성 중독·심한 금단이면 입원)
+edu: 장기·고용량 복용 시 낮 졸림·기억력 저하·낙상 위험 설명; 혼자 갑자기 끊으면 불안·떨림·경련 같은 금단이 올 수 있음을 설명; 낮이나 새벽에 추가로 먹지 않도록 교육; 졸릴 때 운전 금지; 심한 불안·경련·혼동 시 즉시 내원
+explain: 수면제에 몸이 익숙해진 상태예요.; 갑자기 끊지 말고 천천히 줄여요.
+unsafe: 수면제 즉시 중단 지시; 요청대로 수면제 추가 처방
+alias: 수면제 의존; 수면제 의존증; 진정수면제 사용장애; 진정제 의존; 졸피뎀 의존; 벤조디아제핀 의존
+
+@chronic_insomnia|만성 불면장애|Chronic insomnia disorder|F51.0|routine|N|3||
+key: sleep_onset_insomnia, sleep_maintenance
+sup: daytime_sedation, stress_sleep, stimulant_use, functional_impairment, excessive_worry
+against: dose_escalation, withdrawal_sx, snoring_apnea
+test: 2주간 수면일지; 갑상선 기능 검사; 필요 시 수면다원검사
+treat: 수면위생 교육; 불면 인지행동치료(CBT-I); 약물은 최소 용량·단기간만
+dispo: 외래 추적
+edu: 규칙적인 기상 시간, 낮잠 피하기; 오후 카페인과 음주 제한
+explain: 잠자는 습관부터 바꿔 볼게요.; 약 없이 자는 방법도 있어요.
+unsafe: 장기간 수면제 처방
+alias: 불면증; 불면장애; 만성 불면증
+
+@depression|우울증(주요우울장애)|Major depressive disorder|F32.9|routine|N|2||
+key: depressed_mood, functional_impairment
+sup: sleep_maintenance, sleep_onset_insomnia, fatigue, anorexia, weight_loss, stress_sleep, suicidal_ideation
+against: increased_appetite
+test: 우울 선별검사(PHQ-9); 갑상선 기능 검사; 혈액검사(CBC)
+treat: 정신건강의학과 의뢰; 필요 시 항우울제; 상담 치료
+dispo: 외래 추적(자살 위험이 있으면 즉시 정신건강의학과 응급 평가)
+edu: 죽고 싶은 생각이 들면 즉시 도움 요청(자살예방 상담전화 109); 규칙적인 수면과 활동
+explain: 마음 건강도 함께 살펴볼게요.; 상담 치료가 도움이 됩니다.
+unsafe: 자살 위험 평가 없이 귀가 조치
+alias: 우울장애; 주요우울장애; 우울증
+
+@gad|범불안장애|Generalized anxiety disorder|F41.1|routine|N|2||
+key: excessive_worry, anxiety_trigger
+sup: sleep_onset_insomnia, palpitations, fatigue, stress_sleep, hand_tremor
+against: goiter, exophthalmos, weight_loss
+test: 불안 척도(GAD-7); 갑상선 기능 검사
+treat: 인지행동치료; 필요 시 항우울제(SSRI); 정신건강의학과 의뢰
+dispo: 외래 추적
+edu: 카페인 줄이기; 규칙적인 운동과 수면
+explain: 불안이 몸 증상을 만들 수 있어요.; 치료하면 좋아질 수 있어요.
+alias: 불안장애; 범불안 장애
+
+@osa|폐쇄성 수면무호흡증|Obstructive sleep apnea|G47.3|routine|N|2||30-
+key: snoring_apnea, daytime_sedation
+sup: morning_headache, sleep_maintenance, cv_risk, fatigue
+test: 수면다원검사
+treat: 체중 감량; 양압기(CPAP) 치료 평가; 수면 전문 진료 의뢰
+dispo: 외래 추적
+edu: 졸릴 때 운전 금지; 음주와 수면제는 무호흡을 악화시킴
+explain: 자는 동안 숨이 막힐 수 있어요.; 수면검사로 확인해요.
+unsafe: 수면제 처방
+alias: 수면무호흡; 수면 무호흡증
+
+@constitutional_delay|체질성 성장지연|Constitutional delay of growth and puberty|E30.0|routine|N|3||2-18
+key: family_late_puberty, height_below_p3
+against: growth_velocity_low, disproportion, dysmorphic, purple_striae, chronic_illness, birth_abnormal, developmental_delay, cold_intolerance, steroid_use, cushing_features
+test: 좌측 손 X선(골연령 — 역연령보다 지연 예상); 갑상선 기능 검사(TSH, free T4); IGF-1·IGFBP-3; 혈액검사(CBC, ESR, 전해질·간·신장 기능)와 소변검사; 과거 키 기록을 표준성장도표에 표시
+treat: 현재 약물치료 적응 없음(검사 결과 확인 후 재판단); 지금의 식습관·수면·신체 활동 유지
+dispo: 외래 추적
+edu: 사춘기가 늦게 오지만 대부분 치료 없이 정상 성인 키에 도달함을 설명; 3~6개월마다 키 측정, 성장 속도가 느려지면 소아내분비 진료; 두통·구토·시야 이상 시 바로 진료
+explain: 늦게 크는 체질일 가능성이 높아요.; 뼈 나이 검사로 확인해 볼게요.
+alias: 체질성 성장 지연; 체질성 성장 및 사춘기 지연; 사춘기 지연
+
+@familial_short_stature|가족성 저신장|Familial short stature|E34.3|routine|N|3||2-18
+key: family_short_stature, height_below_p3
+against: family_late_puberty, growth_velocity_low, disproportion, dysmorphic, chronic_illness
+test: 좌측 손 X선(골연령 — 역연령과 일치 예상); 중간부모키 계산; 갑상선 기능 검사
+treat: 치료 불필요, 성장 추적
+dispo: 외래 추적
+edu: 부모 키에 맞는 정상 성장임을 설명; 성장 속도가 줄면 재평가
+explain: 부모님 키를 닮은 것 같아요.; 키 크는 속도만 지켜보면 돼요.
+alias: 유전성 저신장; 가족성 단신
+
+@gh_deficiency|성장호르몬 결핍증|Growth hormone deficiency|E23.0|routine|N|1||1-18
+key: growth_velocity_low, height_below_p3
+sup: growth_slowing, birth_abnormal, morning_headache
+test: IGF-1·IGFBP-3; 좌측 손 X선(골연령); 성장호르몬 자극검사; 뇌하수체 MRI
+treat: 소아내분비 의뢰; 확진 시 성장호르몬 치료
+dispo: 외래 추적
+edu: 두통·구토·시야 이상 시 즉시 진료
+explain: 성장호르몬 검사가 필요해요.; 피검사부터 해 볼게요.
+alias: 성장호르몬 결핍; 뇌하수체기능저하증
+
+@hypothyroidism|갑상샘기능저하증|Hypothyroidism|E03.9|routine|N|2||
+key: cold_intolerance, constipation, fatigue
+sup: growth_velocity_low, goiter, family_thyroid, swelling, depressed_mood, menstrual_change
+against: heat_intolerance, increased_appetite, exophthalmos
+test: 갑상선 기능 검사(TSH, free T4); 갑상선 항체(anti-TPO)
+treat: 갑상선호르몬(레보티록신) 보충; 내분비내과 의뢰
+dispo: 외래 추적
+edu: 약은 매일 아침 공복에 복용; 6~8주 뒤 TSH 재검
+explain: 갑상선 기능이 떨어졌을 수 있어요.; 피검사로 확인해요.
+alias: 갑상선 기능 저하증; 갑상선기능저하증; 갑상샘저하증; 하시모토 갑상선염
+
+@cushing_syndrome|쿠싱증후군|Cushing syndrome|E24.9|routine|N|1||
+key: cushing_features, purple_striae
+sup: steroid_use, growth_velocity_low, severe_hypertension
+test: 24시간 소변 코르티솔; 저용량 덱사메타손 억제검사; 심야 타액 코르티솔
+treat: 내분비내과 의뢰; 스테로이드 복용 중이면 점진적 감량
+dispo: 외래 추적
+edu: 스테로이드를 임의로 끊지 않도록 교육
+explain: 호르몬 검사를 해 볼게요.; 소변과 피검사가 필요해요.
+alias: 쿠싱 증후군; 쿠싱병
+
+@celiac_disease|셀리악병|Celiac disease|K90.0|routine|N|1||
+key: diarrhea, abdominal_distension
+sup: weight_loss, anorexia, fatigue, height_below_p3, growth_velocity_low, abdominal_pain
+test: 조직 트랜스글루타미나제 항체(tTG-IgA)·총 IgA; 혈액검사(CBC, 철분); 필요 시 소장 내시경 생검
+treat: 소화기 전문의 의뢰; 확진 시 글루텐 제한 식이
+dispo: 외래 추적
+edu: 확진 전에 임의로 식이 제한하지 않도록 교육
+explain: 장 흡수 문제를 확인해 볼게요.; 피검사부터 하겠습니다.
+alias: 실리악병; 글루텐 장병증
+
+@turner_syndrome|터너증후군|Turner syndrome|Q96.9|routine|N|1|F|
+key: height_below_p3, dysmorphic
+sup: growth_velocity_low, disproportion, birth_abnormal
+test: 염색체 검사(핵형 분석); 심장 초음파; 신장 초음파
+treat: 소아내분비 의뢰; 성장호르몬 치료 평가
+dispo: 외래 추적
+edu: 심장·신장·청력 정기 추적
+explain: 염색체 검사가 필요해요.; 피검사로 확인할 수 있어요.
+alias: 터너 증후군

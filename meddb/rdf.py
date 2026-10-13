@@ -25,6 +25,11 @@ def export(kb, include_draft=False):
         lines.append(f'{iri(s["id"])} a nova:Source ; rdfs:label {literal(s["title"])} ; nova:url {literal(s["url"])} ; nova:sourceVersion {literal(s["version"])} .')
     for a in kb.assertions(include_draft):
         props = ['a nova:Assertion', 'nova:subject '+iri(a['subject']), 'nova:predicate nova:'+a['predicate'], 'nova:object '+iri(a['object']), 'nova:source '+iri(a['source_id']), 'nova:locator '+literal(a['locator']), 'nova:context '+literal(a['context']), 'nova:reviewStatus '+literal(a['review_status']), 'nova:extractionMethod '+literal(a['extraction_method'])]
+        from .ranking import relation_polarity
+        if a['predicate']=='has_phenotype': props.append('nova:polarity '+literal(relation_polarity(a)))
+        if a.get('frequency_label') is not None: props.append('nova:frequencyLabel '+literal(a['frequency_label']))
+        if a.get('references'): props.append('nova:references '+literal(json.dumps(a['references'],ensure_ascii=False)))
+        if a.get('upstream_conditions'): props.append('nova:upstreamConditions '+literal(json.dumps(a['upstream_conditions'],ensure_ascii=False)))
         if a['reviewer']: props.append('nova:reviewer '+literal(a['reviewer']))
         lines.append(iri(a['id'])+' '+ ' ; '.join(props)+' .')
     lines.append(f'nova:snapshot nova:dataVersion {literal(kb.version)} ; nova:sha256 {literal(kb.sha256)} .')

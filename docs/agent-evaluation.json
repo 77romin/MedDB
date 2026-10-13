@@ -1,0 +1,247 @@
+{
+  "scope": "synthetic software regression fixtures, not clinical validation",
+  "data_version": "meddb-2026.10.13.1",
+  "data_sha256": "bc699e785eea76bad45f6e152d95f9942021fa6011a83815701bb92d6f3da81f",
+  "fixture_sha256": "d74a0b6a5151b7c0010708c8a2cab5f0d6357f913aaf6093a9b17b426a6c8b4a",
+  "ranking_results": [
+    {
+      "case": "pilot-appendicitis",
+      "method": "legacy_overlap",
+      "gold": "nova:appendicitis",
+      "gold_position": 1,
+      "gold_tie_rank": null,
+      "top_5": [
+        "nova:appendicitis",
+        "dismech-disease:3-Hydroxy-3-Methylglutaryl-CoA_Synthase_Deficiency",
+        "dismech-disease:3-Hydroxyisobutyryl-CoA_Hydrolase_Deficiency",
+        "dismech-disease:3-Methylcrotonyl-CoA_Carboxylase_Deficiency",
+        "dismech-disease:AICA-ribosiduria"
+      ],
+      "latency_seconds": 0.028674
+    },
+    {
+      "case": "pilot-appendicitis",
+      "method": "weighted_evidence",
+      "gold": "nova:appendicitis",
+      "gold_position": 1,
+      "gold_tie_rank": 1,
+      "top_5": [
+        "nova:appendicitis",
+        "dismech-disease:3-Hydroxy-3-Methylglutaryl-CoA_Synthase_Deficiency",
+        "dismech-disease:3-Hydroxyisobutyryl-CoA_Hydrolase_Deficiency",
+        "dismech-disease:3-Methylcrotonyl-CoA_Carboxylase_Deficiency",
+        "dismech-disease:AICA-ribosiduria"
+      ],
+      "latency_seconds": 0.124605
+    },
+    {
+      "case": "pilot-appendicitis",
+      "method": "pilot_workflow",
+      "gold": "nova:appendicitis",
+      "gold_position": 1,
+      "gold_tie_rank": 1,
+      "top_5": [
+        "nova:appendicitis",
+        "nova:acute-pancreatitis",
+        "nova:celiac",
+        "nova:crohns",
+        "nova:kidney-stones"
+      ],
+      "latency_seconds": 0.052614
+    },
+    {
+      "case": "pilot-pancreatitis",
+      "method": "legacy_overlap",
+      "gold": "nova:acute-pancreatitis",
+      "gold_position": 1,
+      "gold_tie_rank": null,
+      "top_5": [
+        "nova:acute-pancreatitis",
+        "nova:peptic-ulcer",
+        "dismech-disease:3-Hydroxy-3-Methylglutaryl-CoA_Synthase_Deficiency",
+        "dismech-disease:3-Hydroxyisobutyryl-CoA_Hydrolase_Deficiency",
+        "dismech-disease:3-Methylcrotonyl-CoA_Carboxylase_Deficiency"
+      ],
+      "latency_seconds": 0.03362
+    },
+    {
+      "case": "pilot-pancreatitis",
+      "method": "weighted_evidence",
+      "gold": "nova:acute-pancreatitis",
+      "gold_position": 1,
+      "gold_tie_rank": 1,
+      "top_5": [
+        "nova:acute-pancreatitis",
+        "nova:peptic-ulcer",
+        "dismech-disease:3-Hydroxy-3-Methylglutaryl-CoA_Synthase_Deficiency",
+        "dismech-disease:3-Hydroxyisobutyryl-CoA_Hydrolase_Deficiency",
+        "dismech-disease:3-Methylcrotonyl-CoA_Carboxylase_Deficiency"
+      ],
+      "latency_seconds": 0.056907
+    },
+    {
+      "case": "pilot-pancreatitis",
+      "method": "pilot_workflow",
+      "gold": "nova:acute-pancreatitis",
+      "gold_position": 1,
+      "gold_tie_rank": 1,
+      "top_5": [
+        "nova:acute-pancreatitis",
+        "nova:peptic-ulcer",
+        "nova:appendicitis",
+        "nova:celiac",
+        "nova:crohns"
+      ],
+      "latency_seconds": 0.038882
+    },
+    {
+      "case": "pilot-stones",
+      "method": "legacy_overlap",
+      "gold": "nova:kidney-stones",
+      "gold_position": 1,
+      "gold_tie_rank": null,
+      "top_5": [
+        "nova:kidney-stones",
+        "dismech-disease:Adenine_Phosphoribosyltransferase_Deficiency",
+        "dismech-disease:Autosomal_Dominant_Polycystic_Kidney_Disease",
+        "dismech-disease:Chlorophacinone_Poisoning",
+        "dismech-disease:Chromophobe_Renal_Cell_Carcinoma"
+      ],
+      "latency_seconds": 0.028729
+    },
+    {
+      "case": "pilot-stones",
+      "method": "weighted_evidence",
+      "gold": "nova:kidney-stones",
+      "gold_position": 1,
+      "gold_tie_rank": 1,
+      "top_5": [
+        "nova:kidney-stones",
+        "dismech-disease:Adenine_Phosphoribosyltransferase_Deficiency",
+        "dismech-disease:Autosomal_Dominant_Polycystic_Kidney_Disease",
+        "dismech-disease:Chlorophacinone_Poisoning",
+        "dismech-disease:Chromophobe_Renal_Cell_Carcinoma"
+      ],
+      "latency_seconds": 0.179205
+    },
+    {
+      "case": "pilot-stones",
+      "method": "pilot_workflow",
+      "gold": "nova:kidney-stones",
+      "gold_position": 1,
+      "gold_tie_rank": 1,
+      "top_5": [
+        "nova:kidney-stones"
+      ],
+      "latency_seconds": 0.044765
+    },
+    {
+      "case": "unknown-invariance",
+      "method": "legacy_overlap",
+      "gold": "nova:appendicitis",
+      "gold_position": 1,
+      "gold_tie_rank": null,
+      "top_5": [
+        "nova:appendicitis"
+      ],
+      "latency_seconds": 0.031031
+    },
+    {
+      "case": "unknown-invariance",
+      "method": "weighted_evidence",
+      "gold": "nova:appendicitis",
+      "gold_position": 1,
+      "gold_tie_rank": 1,
+      "top_5": [
+        "nova:appendicitis"
+      ],
+      "latency_seconds": 0.165614
+    },
+    {
+      "case": "unknown-invariance",
+      "method": "pilot_workflow",
+      "gold": "nova:appendicitis",
+      "gold_position": 1,
+      "gold_tie_rank": 1,
+      "top_5": [
+        "nova:appendicitis"
+      ],
+      "latency_seconds": 0.041628
+    },
+    {
+      "case": "generic-fever",
+      "method": "legacy_overlap",
+      "gold": null,
+      "gold_position": null,
+      "gold_tie_rank": null,
+      "top_5": [
+        "dismech-disease:APL_PML_RARA",
+        "dismech-disease:Acrodermatitis_Enteropathica",
+        "dismech-disease:Actinomycosis",
+        "dismech-disease:Acute_Disseminated_Encephalomyelitis",
+        "dismech-disease:Acute_Erythroid_Leukemia"
+      ],
+      "latency_seconds": 0.029825
+    },
+    {
+      "case": "generic-fever",
+      "method": "weighted_evidence",
+      "gold": null,
+      "gold_position": null,
+      "gold_tie_rank": null,
+      "top_5": [
+        "dismech-disease:APL_PML_RARA",
+        "dismech-disease:Acrodermatitis_Enteropathica",
+        "dismech-disease:Actinomycosis",
+        "dismech-disease:Acute_Disseminated_Encephalomyelitis",
+        "dismech-disease:Acute_Erythroid_Leukemia"
+      ],
+      "latency_seconds": 0.05187
+    },
+    {
+      "case": "generic-fever",
+      "method": "pilot_workflow",
+      "gold": null,
+      "gold_position": null,
+      "gold_tie_rank": null,
+      "top_5": [
+        "nova:acute-pancreatitis",
+        "nova:appendicitis",
+        "nova:crohns",
+        "nova:viral-gastroenteritis"
+      ],
+      "latency_seconds": 0.042227
+    },
+    {
+      "case": "no-evidence",
+      "method": "legacy_overlap",
+      "gold": null,
+      "gold_position": null,
+      "gold_tie_rank": null,
+      "top_5": [],
+      "latency_seconds": 0.030299
+    },
+    {
+      "case": "no-evidence",
+      "method": "weighted_evidence",
+      "gold": null,
+      "gold_position": null,
+      "gold_tie_rank": null,
+      "top_5": [],
+      "latency_seconds": 0.15852
+    },
+    {
+      "case": "no-evidence",
+      "method": "pilot_workflow",
+      "gold": null,
+      "gold_position": null,
+      "gold_tie_rank": null,
+      "top_5": [],
+      "latency_seconds": 0.04108
+    }
+  ],
+  "actual_agent_comparison": {
+    "status": "not_run",
+    "reason": "No Doctor Agent implementation, SDK, adjudicated evaluation cases, or three-arm execution logs supplied. Ranking fixtures are not agent accuracy or clinical validation."
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "version": "ko-phrases-2026.10.13.1",
+  "review_status": "draft",
+  "description": "개발용 한국어 표현 매핑. 환자 상태를 자동 확정하지 않는다.",
+  "entries": [
+    {"id":"nova:fever","phrases":["발열","열이 나","열이 없","열은 없","열 있어"]},
+    {"id":"nova:vomiting","phrases":["구토","토했","토해","토하","토는 안"]},
+    {"id":"nova:nausea","phrases":["오심","메스꺼","메스껍","속이 울렁"]},
+    {"id":"nova:abdominal-pain","phrases":["복통","배가 아","배가 안 아","배는 안 아"]},
+    {"id":"nova:upper-abdominal-pain","phrases":["상복부 통증","명치가 아","명치 통증"]},
+    {"id":"nova:ruq-pain","phrases":["우상복부 통증","오른쪽 윗배가 아"]},
+    {"id":"nova:rlq-migration","phrases":["배꼽에서 오른쪽 아랫배로","배꼽 주변에서 우하복부로"]},
+    {"id":"nova:diarrhea","phrases":["설사"]},
+    {"id":"nova:constipation","phrases":["변비"]},
+    {"id":"nova:bloating","phrases":["복부 팽만","배가 더부룩","배에 가스"]},
+    {"id":"nova:weight-loss","phrases":["체중 감소","체중이 줄","살이 빠","몸무게가 줄"]},
+    {"id":"nova:fatigue","phrases":["피로","피곤"]},
+    {"id":"nova:hematuria","phrases":["혈뇨","소변에 피"]},
+    {"id":"nova:dysuria","phrases":["배뇨통","소변 볼 때 아"]},
+    {"english":"Cough","phrases":["기침"]},
+    {"english":"Dyspnea","phrases":["호흡곤란","숨이 차","숨이 안 차","숨쉬기 힘","숨쉬기 어렵"]},
+    {"english":"Headache","phrases":["두통","머리가 아","머리가 안 아"]},
+    {"english":"Chest pain","phrases":["흉통","가슴이 아","가슴 통증"]},
+    {"english":"Insomnia","phrases":["불면","잠이 안 와","잠을 못 자","잠을 잘 못 자","잠이 안와"]},
+    {"english":"Palpitations","phrases":["두근거","심계항진"]},
+    {"english":"Wheezing","phrases":["천명","쌕쌕"]},
+    {"english":"Short stature","phrases":["저신장","키가 작","키가 잘 안 커"]},
+    {"english":"Tremor","phrases":["진전","손떨림","손이 떨"]},
+    {"id":"nova:sedative-craving","phrases":["진정제 갈망","수면제 갈망"]}
+  ]
+}

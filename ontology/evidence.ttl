@@ -1,0 +1,15 @@
+@prefix nova: <https://nova.example/ontology/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+nova:Document a owl:Class ; rdfs:subClassOf nova:Concept .
+nova:ReferenceCandidate a owl:Class ;
+ rdfs:comment "Tentative disease-to-document relevance from a title phrase; not a clinical assertion." .
+nova:referenceDocument a owl:ObjectProperty ; rdfs:domain nova:ReferenceCandidate ; rdfs:range nova:Document .
+nova:referenceConcept a owl:ObjectProperty ; rdfs:domain nova:ReferenceCandidate ; rdfs:range nova:Disease .
+nova:has_reference_candidate a owl:ObjectProperty ; rdfs:domain nova:Disease ; rdfs:range nova:Document .
+nova:documentLicense a owl:DatatypeProperty ; rdfs:domain nova:Document ; rdfs:range xsd:string .
+nova:documentPath a owl:DatatypeProperty ; rdfs:domain nova:Document ; rdfs:range xsd:string .
+nova:documentYear a owl:DatatypeProperty ; rdfs:domain nova:Document ; rdfs:range xsd:string .
+nova:documentOrganization a owl:DatatypeProperty ; rdfs:domain nova:Document ; rdfs:range xsd:string .

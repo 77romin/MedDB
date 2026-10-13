@@ -1,0 +1,551 @@
+{
+  "data_version": "meddb-2026.10.13.1",
+  "data_sha256": "bc699e785eea76bad45f6e152d95f9942021fa6011a83815701bb92d6f3da81f",
+  "release_consistency": {
+    "release_sha256": "bc699e785eea76bad45f6e152d95f9942021fa6011a83815701bb92d6f3da81f",
+    "byte_hash_equal": true,
+    "json_content_equal": true
+  },
+  "profiles": {
+    "reviewed": {
+      "name": "reviewed",
+      "policy_sha256": "e53af777ee4f56aab3cb54ad15cbcc2a890df5ce0479eade56e59289358c2db8",
+      "include_draft": false,
+      "description": "검수 완료 관계만 사용. 현재 관계 0개이며 결과 없음은 명시적으로 처리한다.",
+      "assertions": 0,
+      "reviewed": 0,
+      "draft": 0
+    },
+    "pilot": {
+      "name": "pilot",
+      "policy_sha256": "e53af777ee4f56aab3cb54ad15cbcc2a890df5ce0479eade56e59289358c2db8",
+      "include_draft": true,
+      "source_prefix": "niddk-",
+      "description": "기존 복통 파일럿 출처만 포함하는 개발 실험. 임상 검수 완료가 아니다.",
+      "assertions": 50,
+      "reviewed": 0,
+      "draft": 50
+    },
+    "research": {
+      "name": "research",
+      "policy_sha256": "e53af777ee4f56aab3cb54ad15cbcc2a890df5ce0479eade56e59289358c2db8",
+      "include_draft": true,
+      "description": "전체 연구용 초안 포함. 대회 성능 비교용이며 검수 완료 지식이 아니다.",
+      "assertions": 114092,
+      "reviewed": 0,
+      "draft": 114092
+    }
+  },
+  "coverage": [
+    {
+      "phrases": [
+        "발열",
+        "열이 나",
+        "열이 없",
+        "열은 없",
+        "열 있어"
+      ],
+      "finding_ids": [
+        "nova:fever"
+      ],
+      "disease_count": 215,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "구토",
+        "토했",
+        "토해",
+        "토하",
+        "토는 안"
+      ],
+      "finding_ids": [
+        "nova:vomiting"
+      ],
+      "disease_count": 125,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "오심",
+        "메스꺼",
+        "메스껍",
+        "속이 울렁"
+      ],
+      "finding_ids": [
+        "nova:nausea"
+      ],
+      "disease_count": 58,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "복통",
+        "배가 아",
+        "배가 안 아",
+        "배는 안 아"
+      ],
+      "finding_ids": [
+        "nova:abdominal-pain"
+      ],
+      "disease_count": 153,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "상복부 통증",
+        "명치가 아",
+        "명치 통증"
+      ],
+      "finding_ids": [
+        "nova:upper-abdominal-pain"
+      ],
+      "disease_count": 2,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "우상복부 통증",
+        "오른쪽 윗배가 아"
+      ],
+      "finding_ids": [
+        "nova:ruq-pain"
+      ],
+      "disease_count": 1,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "배꼽에서 오른쪽 아랫배로",
+        "배꼽 주변에서 우하복부로"
+      ],
+      "finding_ids": [
+        "nova:rlq-migration"
+      ],
+      "disease_count": 1,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "설사"
+      ],
+      "finding_ids": [
+        "nova:diarrhea"
+      ],
+      "disease_count": 106,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "변비"
+      ],
+      "finding_ids": [
+        "nova:constipation"
+      ],
+      "disease_count": 108,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "복부 팽만",
+        "배가 더부룩",
+        "배에 가스"
+      ],
+      "finding_ids": [
+        "nova:bloating"
+      ],
+      "disease_count": 4,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "체중 감소",
+        "체중이 줄",
+        "살이 빠",
+        "몸무게가 줄"
+      ],
+      "finding_ids": [
+        "nova:weight-loss"
+      ],
+      "disease_count": 132,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "피로",
+        "피곤"
+      ],
+      "finding_ids": [
+        "nova:fatigue"
+      ],
+      "disease_count": 184,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "혈뇨",
+        "소변에 피"
+      ],
+      "finding_ids": [
+        "nova:hematuria"
+      ],
+      "disease_count": 1,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "배뇨통",
+        "소변 볼 때 아"
+      ],
+      "finding_ids": [
+        "nova:dysuria"
+      ],
+      "disease_count": 1,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "기침"
+      ],
+      "finding_ids": [
+        "hpo:HP:0012735"
+      ],
+      "disease_count": 60,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "호흡곤란",
+        "숨이 차",
+        "숨이 안 차",
+        "숨쉬기 힘",
+        "숨쉬기 어렵"
+      ],
+      "finding_ids": [
+        "hpo:HP:0002094"
+      ],
+      "disease_count": 120,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "두통",
+        "머리가 아",
+        "머리가 안 아"
+      ],
+      "finding_ids": [
+        "hpo:HP:0002315"
+      ],
+      "disease_count": 145,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "흉통",
+        "가슴이 아",
+        "가슴 통증"
+      ],
+      "finding_ids": [
+        "hpo:HP:0100749"
+      ],
+      "disease_count": 42,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "불면",
+        "잠이 안 와",
+        "잠을 못 자",
+        "잠을 잘 못 자",
+        "잠이 안와"
+      ],
+      "finding_ids": [
+        "hpo:HP:0100785"
+      ],
+      "disease_count": 15,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "두근거",
+        "심계항진"
+      ],
+      "finding_ids": [
+        "hpo:HP:0001962"
+      ],
+      "disease_count": 23,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "천명",
+        "쌕쌕"
+      ],
+      "finding_ids": [
+        "hpo:HP:0030828"
+      ],
+      "disease_count": 19,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "저신장",
+        "키가 작",
+        "키가 잘 안 커"
+      ],
+      "finding_ids": [
+        "hpo:HP:0004322"
+      ],
+      "disease_count": 354,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "진전",
+        "손떨림",
+        "손이 떨"
+      ],
+      "finding_ids": [
+        "hpo:HP:0001337"
+      ],
+      "disease_count": 82,
+      "status": "mapped_draft"
+    },
+    {
+      "phrases": [
+        "진정제 갈망",
+        "수면제 갈망"
+      ],
+      "finding_ids": [
+        "nova:sedative-craving"
+      ],
+      "disease_count": 1,
+      "status": "mapped_draft"
+    }
+  ],
+  "clinical_review_queue": [
+    {
+      "assertion_id": "dismech-assertion:006271",
+      "disease": "Adult-Onset Autosomal Dominant Demyelinating Leukodystrophy",
+      "finding": "Abnormal autonomic nervous system physiology",
+      "source_id": "dismech:Adult-Onset_Autosomal_Dominant_Demyelinating_Leukodystrophy",
+      "locator": "phenotypes[13]",
+      "context": "Curated as a deliberate negative contrast: autonomic features are the hallmark early sign of the duplication form but are largely absent early in the upstream-deletion form, appearing instead as a late consequence of established spasticity. This is one of the two OMIM criteria separating ADLDAT from ADLDTY.",
+      "polarity": "excluded",
+      "review_status": "draft"
+    },
+    {
+      "assertion_id": "dismech-assertion:014371",
+      "disease": "Autosomal Dominant Osteopetrosis Type I",
+      "finding": "Increased susceptibility to fractures",
+      "source_id": "dismech:Autosomal_Dominant_Osteopetrosis_Type_I",
+      "locator": "phenotypes[8]",
+      "context": "An increased fracture tendency is not characteristic of LRP5 high bone mass. This distinguishes it from many resorption-defect osteopetroses, but does not imply immunity to fractures: the historical review includes fracture cases.",
+      "polarity": "excluded",
+      "review_status": "draft"
+    },
+    {
+      "assertion_id": "dismech-assertion:016067",
+      "disease": "Autosomal Recessive Nonsyndromic Hearing Loss 79",
+      "finding": "Abnormal vestibular function",
+      "source_id": "dismech:Autosomal_Recessive_Nonsyndromic_Hearing_Loss_79",
+      "locator": "phenotypes[2]",
+      "context": "Balance is spared, and this is a positive finding rather than an absence of enquiry. Romberg and tandem gait testing were normal in the affected children of the progressive Pakistani family, and quantitative vestibular sensory evoked potentials in Tprn-null mice show no significant difference from wild-type littermates at postnatal day 30 or 60, with no circling or head bobbing at any age.\nRecorded explicitly because the neighbouring taper-region disease behaves differently: DFNB103 (CLIC5) presents with vestibular areflexia in patients and florid circling in mice. Two proteins in the same rings, and only one of them is needed for vestibular hair cells.\n`frequency: EXCLUDED` carries the absence, because that is what the HPOA exporter reads to emit a NOT-qualified row; `modifier: ABSENT` alone documents intent and is not consulted. Neither slot is a prevalence claim, and none is made here - three children with bedside tests is not a denominator, and the mouse data cannot supply one for humans.",
+      "polarity": "excluded",
+      "review_status": "draft"
+    },
+    {
+      "assertion_id": "dismech-assertion:030093",
+      "disease": "Charcot-Marie-Tooth disease, axonal, type 2JJ",
+      "finding": "Proximal muscle weakness",
+      "source_id": "dismech:Charcot-Marie-Tooth_Disease_Axonal_Type_2JJ",
+      "locator": "phenotypes[5]",
+      "context": "A negative that discriminates CMT2JJ from BAG3 myofibrillar myopathy, where proximal weakness is characteristic. Unlike the cardiac negative curated above, this one is not qualified by contrary pedigree data.",
+      "polarity": "excluded",
+      "review_status": "draft"
+    },
+    {
+      "assertion_id": "dismech-assertion:045317",
+      "disease": "Epilepsy with Generalized Tonic-Clonic Seizures Alone",
+      "finding": "Generalized non-motor (absence) seizure",
+      "source_id": "dismech:Epilepsy_with_Generalized_Tonic-Clonic_Seizures_Alone",
+      "locator": "phenotypes[5]",
+      "context": "A defining exclusion. Patients have no absence seizures; their presence reclassifies the patient as juvenile absence epilepsy, childhood absence epilepsy, or unclassified genetic generalized epilepsy. This negative criterion is curated as an explicit phenotype rather than left implicit because it is part of what makes EGTCA a separate entity.",
+      "polarity": "excluded",
+      "review_status": "draft"
+    },
+    {
+      "assertion_id": "dismech-assertion:045318",
+      "disease": "Epilepsy with Generalized Tonic-Clonic Seizures Alone",
+      "finding": "Myoclonic seizure",
+      "source_id": "dismech:Epilepsy_with_Generalized_Tonic-Clonic_Seizures_Alone",
+      "locator": "phenotypes[6]",
+      "context": "The second defining exclusion. Patients have no myoclonic jerks; their presence reclassifies the patient as juvenile myoclonic epilepsy or another generalized epilepsy. This exclusion is what makes the sodium-channel-blocker aggravation literature apply differently in EGTCA than in the sibling syndromes, since that literature concerns aggravation of myoclonic and absence seizures specifically.",
+      "polarity": "excluded",
+      "review_status": "draft"
+    },
+    {
+      "assertion_id": "dismech-assertion:053894",
+      "disease": "HOXC13-Related Pure Hair-Nail Ectodermal Dysplasia",
+      "finding": "Hypohidrosis",
+      "source_id": "dismech:HOXC13_Ectodermal_Dysplasia",
+      "locator": "phenotypes[4]",
+      "context": "A defining exclusion. Eccrine sweat gland function is preserved in pure hair and nail ectodermal dysplasia. Its absence is what separates ECTD9 from the hypohidrotic ectodermal dysplasias (EDA, EDAR, EDARADD), in which hypohidrosis and heat intolerance are cardinal and carry the principal morbidity.",
+      "polarity": "excluded",
+      "review_status": "draft"
+    },
+    {
+      "assertion_id": "dismech-assertion:053895",
+      "disease": "HOXC13-Related Pure Hair-Nail Ectodermal Dysplasia",
+      "finding": "Hypodontia",
+      "source_id": "dismech:HOXC13_Ectodermal_Dysplasia",
+      "locator": "phenotypes[5]",
+      "context": "The second defining exclusion. Dentition is normal in pure hair and nail ectodermal dysplasia. Tooth agenesis, conical teeth, and oligodontia belong to the hypohidrotic and TP63-related ectodermal dysplasias, and their presence should prompt reconsideration of the ECTD9 diagnosis.",
+      "polarity": "excluded",
+      "review_status": "draft"
+    },
+    {
+      "assertion_id": "dismech-assertion:053896",
+      "disease": "HOXC13-Related Pure Hair-Nail Ectodermal Dysplasia",
+      "finding": "Abnormal axial skeleton morphology",
+      "source_id": "dismech:HOXC13_Ectodermal_Dysplasia",
+      "locator": "phenotypes[6]",
+      "context": "A third exclusion, and the one that separates the human disease from its founding animal model. Hoxc13-null mice develop skeletal defects, progressive weight loss, and low viability; reported human ECTD9 patients have none of these. This exclusion is therefore also the anchor of the human/model mismatch discussion recorded on this entry.\nTerm-scope caveat: the bound term HP:0009121 is *Abnormal axial skeleton morphology*, which is narrower than the node name. The absence being asserted covers the skeleton generally - the murine phenotype is vertebral, so the axial term is the closest available match to the specific finding that is missing in humans, but it does not by itself exclude appendicular involvement. HP:0009121 was chosen over a broader skeletal term because it names what the mouse literature actually reports; read the exclusion as scoped to that.",
+      "polarity": "excluded",
+      "review_status": "draft"
+    },
+    {
+      "assertion_id": "dismech-assertion:054469",
+      "disease": "Hearing Loss Autosomal Dominant 75",
+      "finding": "Abnormal vestibular function",
+      "source_id": "dismech:Hearing_Loss_Autosomal_Dominant_75",
+      "locator": "phenotypes[4]",
+      "context": "Neither reported family had vestibular dysfunction or neurological abnormality on examination. This is what makes DFNA75 nonsyndromic, and it is also the observation that separates it clinically from the TRRAP neurodevelopmental phenotype. It is a negative finding from clinical examination in two families, not from systematic phenotyping.",
+      "polarity": "excluded",
+      "review_status": "draft"
+    },
+    {
+      "assertion_id": "dismech-assertion:054509",
+      "disease": "Hearing Loss Autosomal Dominant 82",
+      "finding": "Abnormal vestibular function",
+      "source_id": "dismech:Hearing_Loss_Autosomal_Dominant_82",
+      "locator": "phenotypes[2]",
+      "context": "There is no vestibular syndrome in DFNA82, and the negative is an examined one - but the paper's abstract states it more strongly than its own results section does, and this record follows the results section.\nWhat was actually found: vestibular history from all subjects and extensive testing of at least one affected subject in every family but one revealed only minor vestibular abnormalities. Two subjects did report vestibular complaints, and in both the cause was identifiable and unrelated to the genotype - benign paroxysmal positional vertigo in one, perilymph leakage after cholesteatoma surgery in the other. Testing was incomplete in places: saccular function could not be measured in three ears and utricular function in one, and one family was not tested at all.\nRecorded here because the mouse diverges sharply - homozygous Oblivion mice have severe vestibular dysfunction by two weeks, and deafwaddler is named for its gait - so an entry that imported the animal phenotype wholesale would predict a balance disorder these patients do not have. The resolution is allele dose: the human alleles are heterozygous and the florid mouse vestibular phenotype belongs to homozygotes.\n`frequen",
+      "polarity": "excluded",
+      "review_status": "draft"
+    },
+    {
+      "assertion_id": "dismech-assertion:064951",
+      "disease": "Jackson-Weiss Syndrome",
+      "finding": "Abnormality of the hand",
+      "source_id": "dismech:Jackson-Weiss_Syndrome",
+      "locator": "phenotypes[5]",
+      "context": "Unlike Apert and Pfeiffer syndromes, Jackson-Weiss syndrome typically does not involve hand abnormalities, which helps distinguish it from related FGFR2-associated craniosynostosis syndromes.\n",
+      "polarity": "excluded",
+      "review_status": "draft"
+    },
+    {
+      "assertion_id": "dismech-assertion:066204",
+      "disease": "KRT74-Related Pure Hair-Nail Ectodermal Dysplasia",
+      "finding": "Hypohidrosis",
+      "source_id": "dismech:KRT74_Ectodermal_Dysplasia",
+      "locator": "phenotypes[4]",
+      "context": "A defining exclusion. Sweating was normal in all affected members of the reported family. Preserved eccrine function is what separates ECTD7 from the hypohidrotic ectodermal dysplasias, in which hypohidrosis and heat intolerance carry the principal morbidity.",
+      "polarity": "excluded",
+      "review_status": "draft"
+    },
+    {
+      "assertion_id": "dismech-assertion:066205",
+      "disease": "KRT74-Related Pure Hair-Nail Ectodermal Dysplasia",
+      "finding": "Hypodontia",
+      "source_id": "dismech:KRT74_Ectodermal_Dysplasia",
+      "locator": "phenotypes[5]",
+      "context": "The second defining exclusion. Dentition was normal in all affected members of the reported family, consistent with the \"pure\" hair-and-nail restriction that names the entity.",
+      "polarity": "excluded",
+      "review_status": "draft"
+    },
+    {
+      "assertion_id": "dismech-assertion:076982",
+      "disease": "Mucopolysaccharidosis type X",
+      "finding": "Dysostosis multiplex",
+      "source_id": "dismech:Mucopolysaccharidosis_type_X",
+      "locator": "phenotypes[20]",
+      "context": "The defining exclusion of MPS X, and the reason it is not recognised as a mucopolysaccharidosis at the bedside. Dysostosis multiplex is the skeletal hallmark shared by MPS I, II, IV, VI, and VII; it is explicitly absent in MPS X. What is present instead is a narrower epiphyseal-metaphyseal dysplasia - metaphyseal striation, platyspondyly with anterior beaking, delayed carpal ossification - which reads as a primary skeletal dysplasia rather than as storage. This exclusion is why every published patient carried a spondyloepiphyseal-dysplasia, multiple-epiphyseal-dysplasia, or Legg-Calve-Perthes label before sequencing, and it is why MPS X is admitted to the Mucopolysaccharidoses grouping through the joint operands of the membership criterion rather than through the classic hallmarks.",
+      "polarity": "excluded",
+      "review_status": "draft"
+    },
+    {
+      "assertion_id": "dismech-assertion:076983",
+      "disease": "Mucopolysaccharidosis type X",
+      "finding": "Hepatosplenomegaly",
+      "source_id": "dismech:Mucopolysaccharidosis_type_X",
+      "locator": "phenotypes[21]",
+      "context": "Organomegaly is absent in every reported MPS X patient. This separates MPS X from the visceral-storage mucopolysaccharidoses (MPS I, II, VI, VII), in which hepatosplenomegaly is an early and near-universal finding, and it is consistent with the small overall storage burden that follows from ARSK acting on an uncommon GAG modification rather than a backbone feature.",
+      "polarity": "excluded",
+      "review_status": "draft"
+    },
+    {
+      "assertion_id": "dismech-assertion:076984",
+      "disease": "Mucopolysaccharidosis type X",
+      "finding": "Intellectual disability",
+      "source_id": "dismech:Mucopolysaccharidosis_type_X",
+      "locator": "phenotypes[22]",
+      "context": "Cognition is normal in MPS X. All four index patients attended regular school, two at A level, and no neurological deficit or cognitive impairment has been reported in any of the ten published patients. This is the mechanistic expectation rather than a surprise: the CNS-toxic mucopolysaccharidoses are the heparan-sulfate storers, and although heparan sulfate carries the ARSK-dependent modification, the fraction of chains stalled is too small to produce a neuronopathic burden. It also means MPS X sits with MPS IV, MPS VI, and MPS IX rather than with MPS I, II, III, or VII on the neuronopathic axis.",
+      "polarity": "excluded",
+      "review_status": "draft"
+    },
+    {
+      "assertion_id": "dismech-assertion:076985",
+      "disease": "Mucopolysaccharidosis type X",
+      "finding": "Hearing impairment",
+      "source_id": "dismech:Mucopolysaccharidosis_type_X",
+      "locator": "phenotypes[23]",
+      "context": "Hearing is normal in MPS X, on formal audiometry in the index family and on clinical examination in a later series. Worth recording as an exclusion because hearing loss is common enough across the other mucopolysaccharidoses to be part of their standard surveillance protocols, and its absence here contributes to the mild, narrowly skeletal character of the disease.",
+      "polarity": "excluded",
+      "review_status": "draft"
+    },
+    {
+      "assertion_id": "dismech-assertion:083815",
+      "disease": "Osteogenesis Imperfecta Type IV",
+      "finding": "Blue sclerae",
+      "source_id": "dismech:Osteogenesis_Imperfecta_Type_IV",
+      "locator": "phenotypes[2]",
+      "context": "Normal or near-normal sclerae are characteristic of type IV and help distinguish it from type I osteogenesis imperfecta.\n",
+      "polarity": "excluded",
+      "review_status": "draft"
+    },
+    {
+      "assertion_id": "dismech-assertion:083873",
+      "disease": "Osteogenesis Imperfecta Type V",
+      "finding": "Blue sclerae",
+      "source_id": "dismech:Osteogenesis_Imperfecta_Type_V",
+      "locator": "phenotypes[8]",
+      "context": "Blue sclerae are typically absent, helping distinguish OI type V from classical mild OI.\n",
+      "polarity": "excluded",
+      "review_status": "draft"
+    },
+    {
+      "assertion_id": "dismech-assertion:083874",
+      "disease": "Osteogenesis Imperfecta Type V",
+      "finding": "Dentinogenesis imperfecta",
+      "source_id": "dismech:Osteogenesis_Imperfecta_Type_V",
+      "locator": "phenotypes[9]",
+      "context": "Dentinogenesis imperfecta is typically absent in OI type V, despite other dental abnormalities such as hypodontia.\n",
+      "polarity": "excluded",
+      "review_status": "draft"
+    }
+  ],
+  "competition_example_gap": {
+    "source": "docs/nova_competition/deck_01/slides.md, slides 14 and 20",
+    "diagnosis": "수면제 의존",
+    "search_terms": [
+      "Sedative",
+      "Hypnotic"
+    ],
+    "found_ids": [
+      "nova:sedative-hypnotic-use-disorder",
+      "nova:sedative-hypnotic-use-disorder"
+    ],
+    "status": "needs terminology and disease coverage review; no diagnosis rule generated from one case"
+  }
+}

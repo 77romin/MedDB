@@ -1,0 +1,4 @@
+# Preserve the original bytes used by PPTX extraction manifests on every checkout.
+docs/nova_competition/**/package/** -text
+*.pptx -text
+*.gz -text

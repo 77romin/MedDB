@@ -1,0 +1,14 @@
+{
+  "type":"object","additionalProperties":false,
+  "required":["observations","events"],
+  "properties":{
+    "observations":{"type":"array","maxItems":100,"items":{"type":"object","additionalProperties":false,"required":["finding_id","state"],"properties":{"finding_id":{"type":"string"},"state":{"type":"string","enum":["present","absent","unknown"]},"evidence_ids":{"type":"array","items":{"type":"string"},"uniqueItems":true}}}},
+    "events":{"type":"array","maxItems":128,"items":{"type":"object","additionalProperties":false,"required":["id","kind","turn","content"],"properties":{"id":{"type":"string","minLength":1,"maxLength":100},"kind":{"type":"string","enum":["initial","say","exam","test"]},"turn":{"type":"integer","minimum":0,"maximum":50},"content":{"type":"string","minLength":1,"maxLength":2000}}}},
+    "patient":{"type":"object","additionalProperties":false,"properties":{"age":{"type":"number","minimum":0,"maximum":130},"sex":{"type":"string","enum":["female","male","unknown"]},"puberty_assessment":{"type":"string","enum":["appropriate","not_age_appropriate","unknown"]}}},
+    "patient_evidence":{"type":"object","additionalProperties":{"type":"array","items":{"type":"string"}}},
+    "history":{"type":"object","additionalProperties":{"type":"object","additionalProperties":false,"required":["status"],"properties":{"status":{"type":"string","enum":["unknown","confirmed","not_applicable"]},"value":{"type":"string"},"evidence_id":{"type":"string"}}}},
+    "profile":{"type":"string","enum":["reviewed","pilot","research"]},
+    "phase":{"type":"string","enum":["preliminary","final"]},
+    "limit":{"type":"integer","minimum":1,"maximum":10}
+  }
+}

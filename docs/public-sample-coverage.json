@@ -1,0 +1,104 @@
+{
+  "scope": "public sample coverage, not diagnosis accuracy",
+  "base_version": "meddb-2026.10.10.4",
+  "new_version": "meddb-2026.10.13.1",
+  "cases": [
+    {
+      "case": "C01",
+      "reference_diagnosis": "수면제 의존 (Sedative-Hypnotic Use Disorder)",
+      "base_matching_disease_ids": [],
+      "matching_disease_ids": [
+        "nova:sedative-hypnotic-use-disorder"
+      ],
+      "starting_information_mapped_mentions": 1,
+      "guideline_query": "hypnotic insomnia",
+      "retrieved_documents": [
+        {
+          "title": "Alliance for Sleep Clinical Practice Guideline on Switching or Deprescribing Hypnotic Medications for Insomnia",
+          "path": "US_EuropePMC/europepmc_PMC10095217.md",
+          "source_url": "https://europepmc.org/article/MED/37048577",
+          "license": "CC BY"
+        },
+        {
+          "title": "VA/DoD CPG: The Management of Chronic Insomnia Disorder and Obstructive Sleep Apnea (Insomnia/OSA) — Insomnia/OSA Full CPG (2025)",
+          "path": "US_VA-DoD/vadod_insomnia_i-osa-cpg-2025-guideline-final-20250915.md",
+          "source_url": "https://www.healthquality.va.gov/HEALTHQUALITY/guidelines/CD/insomnia/index.asp",
+          "license": "공공 도메인"
+        },
+        {
+          "title": "Pharmacotherapy Treatment Options for Insomnia: A Primer for Clinicians",
+          "path": "US_EuropePMC/europepmc_PMC4730295.md",
+          "source_url": "https://europepmc.org/article/MED/26729104",
+          "license": "CC BY"
+        }
+      ],
+      "purpose": "Offline terminology/reference coverage only; query uses reference diagnosis and is not a prospective diagnosis test."
+    },
+    {
+      "case": "C03",
+      "reference_diagnosis": "체질성 성장지연",
+      "base_matching_disease_ids": [],
+      "matching_disease_ids": [
+        "nova:constitutional-growth-delay"
+      ],
+      "starting_information_mapped_mentions": 0,
+      "guideline_query": "constitutional delay growth puberty",
+      "retrieved_documents": [
+        {
+          "title": "Constitutional Growth Delay",
+          "path": "US_StatPearls/statpearls_article-19914.md",
+          "source_url": "https://www.ncbi.nlm.nih.gov/books/n/statpearls/article-19914/",
+          "license": "CC BY-NC-ND"
+        },
+        {
+          "title": "Delayed Puberty",
+          "path": "US_StatPearls/statpearls_article-20323.md",
+          "source_url": "https://www.ncbi.nlm.nih.gov/books/n/statpearls/article-20323/",
+          "license": "CC BY-NC-ND"
+        },
+        {
+          "title": "Neurodevelopmental delay: Case definition & guidelines for data collection, analysis, and presentation of immunization safety data",
+          "path": "US_EuropePMC/europepmc_PMC6899448.md",
+          "source_url": "https://europepmc.org/article/MED/31783983",
+          "license": "CC BY"
+        }
+      ],
+      "purpose": "Offline terminology/reference coverage only; query uses reference diagnosis and is not a prospective diagnosis test."
+    },
+    {
+      "case": "C10",
+      "reference_diagnosis": "갑상샘항진증(그레이브스병)",
+      "base_matching_disease_ids": [
+        "dismech-disease:Graves_Disease"
+      ],
+      "matching_disease_ids": [
+        "dismech-disease:Graves_Disease"
+      ],
+      "starting_information_mapped_mentions": 1,
+      "guideline_query": "Graves Disease",
+      "retrieved_documents": [
+        {
+          "title": "Graves Disease",
+          "path": "US_StatPearls/statpearls_article-22414.md",
+          "source_url": "https://www.ncbi.nlm.nih.gov/books/n/statpearls/article-22414/",
+          "license": "CC BY-NC-ND"
+        },
+        {
+          "title": "Graves Disease Orbital Decompression",
+          "path": "US_StatPearls/statpearls_article-26294.md",
+          "source_url": "https://www.ncbi.nlm.nih.gov/books/n/statpearls/article-26294/",
+          "license": "CC BY-NC-ND"
+        },
+        {
+          "title": "Graves Orbitopathy",
+          "path": "US_StatPearls/statpearls_article-77297.md",
+          "source_url": "https://www.ncbi.nlm.nih.gov/books/n/statpearls/article-77297/",
+          "license": "CC BY-NC-ND"
+        }
+      ],
+      "purpose": "Offline terminology/reference coverage only; query uses reference diagnosis and is not a prospective diagnosis test."
+    }
+  ],
+  "actual_agent_diagnosis_evaluation": "not_run; no calls to paid model APIs or team credentials",
+  "sample_answers_in_runtime_bundle": false
+}

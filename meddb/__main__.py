@@ -1,3 +1,8 @@
+import sys
+if len(sys.argv) > 1 and sys.argv[1] == "clinical":
+    from .clinical_cli import main
+    raise SystemExit(main(sys.argv[2:]))
+
 import argparse
 import json
 from .kb import KB

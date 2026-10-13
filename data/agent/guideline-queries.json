@@ -1,0 +1,16 @@
+{
+  "version":"guideline-query-aliases-2026.10.13.1",
+  "review_status":"draft",
+  "interpretation":"Search expansion only; translations and related terms do not assert disease equivalence.",
+  "aliases":{
+    "불면":["insomnia"],
+    "수면제":["hypnotic"],
+    "수면제 의존":["sedative hypnotic","drug dependence"],
+    "체질성 성장지연":["constitutional growth delay"],
+    "성장지연":["growth delay"],
+    "저신장":["short stature"],
+    "그레이브스병":["Graves Disease"],
+    "갑상샘항진증":["hyperthyroidism"],
+    "갑상선항진증":["hyperthyroidism"]
+  }
+}

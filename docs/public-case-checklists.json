@@ -1,0 +1,214 @@
+{
+  "scope": "evaluation only; reference-derived checklist, never runtime patient evidence",
+  "version": "meddb-2026.10.13.1",
+  "sha256": "bc699e785eea76bad45f6e152d95f9942021fa6011a83815701bb92d6f3da81f",
+  "cases": [
+    {
+      "case_id": "C01",
+      "disease_id": "nova:sedative-hypnotic-use-disorder",
+      "patient_context": {
+        "age": 62,
+        "sex": "female"
+      },
+      "source": "C01/model_record.json",
+      "items": [
+        {
+          "id": "insomnia",
+          "area": "문진",
+          "label": "불면의 기간·양상과 약물 사용 관계",
+          "finding_id": "hpo:HP:0100785",
+          "locator": "S.hpi / A.differential",
+          "expectation": "불면 자체를 사용장애 확정 근거로 쓰지 않음",
+          "status": "no_direct_relation",
+          "evidence_ids": []
+        },
+        {
+          "id": "medication-details",
+          "area": "문진",
+          "label": "약 이름·회당 용량·복용 횟수·처방 출처",
+          "pathway": "sleep-medication",
+          "locator": "S.hpi / S.pmh",
+          "status": "draft_pathway"
+        },
+        {
+          "id": "reduction-history",
+          "area": "감별",
+          "label": "약의 효과 변화·감량 시 증상·감량 시도",
+          "pathway": "sleep-medication",
+          "locator": "A.evidence",
+          "status": "draft_pathway"
+        },
+        {
+          "id": "functional-impact",
+          "area": "감별",
+          "label": "일상 기능·안전·대인관계 영향",
+          "pathway": "sleep-medication",
+          "locator": "A.evidence",
+          "status": "draft_pathway"
+        },
+        {
+          "id": "acute-safety",
+          "area": "안전",
+          "label": "의식·호흡·급성 중독·심한 금단 위험",
+          "pathway": "sleep-medication",
+          "locator": "O.exam / P.disposition",
+          "status": "draft_pathway"
+        },
+        {
+          "id": "supervised-plan",
+          "area": "계획",
+          "label": "갑작스러운 중단을 지시하지 않고 전문 진료 계획 확인",
+          "pathway": "sleep-medication",
+          "locator": "P.treatment / P.follow_up",
+          "status": "draft_pathway"
+        }
+      ]
+    },
+    {
+      "case_id": "C03",
+      "disease_id": "nova:constitutional-growth-delay",
+      "patient_context": {
+        "age": 6,
+        "sex": "male",
+        "development_context": "prepubertal child"
+      },
+      "source": "C03/model_record.json",
+      "items": [
+        {
+          "id": "short-stature",
+          "area": "관찰",
+          "label": "정확한 키·체중과 연령별 성장도표",
+          "finding_id": "hpo:HP:0004322",
+          "locator": "A.evidence / P.tests",
+          "status": "draft_relation",
+          "evidence_ids": [
+            "nova-targeted:hpo:HP:0004322"
+          ]
+        },
+        {
+          "id": "growth-trajectory",
+          "area": "문진",
+          "label": "과거 계측치·성장속도·백분위 변화",
+          "pathway": "child-growth",
+          "locator": "S.hpi / A.evidence",
+          "status": "draft_pathway"
+        },
+        {
+          "id": "family-growth",
+          "area": "감별",
+          "label": "부모 키와 가족의 성장·사춘기 시기",
+          "pathway": "child-growth",
+          "locator": "S.fh / A.differential",
+          "status": "draft_pathway"
+        },
+        {
+          "id": "systemic-causes",
+          "area": "감별",
+          "label": "영양·만성질환·약물·발달·신체 비율",
+          "pathway": "child-growth",
+          "locator": "S.pmh / O.exam / A.differential",
+          "status": "draft_pathway"
+        },
+        {
+          "id": "age-context",
+          "area": "안전",
+          "label": "6세의 연령 적절한 사춘기 전 상태를 사춘기 지연으로 기록하지 않음",
+          "pathway": "child-growth",
+          "locator": "O.exam / A.evidence",
+          "status": "draft_pathway"
+        },
+        {
+          "id": "growth-followup",
+          "area": "계획",
+          "label": "골연령·원인 검사 계획과 연속 성장 추적",
+          "pathway": "child-growth",
+          "locator": "P.tests / P.follow_up",
+          "status": "draft_pathway"
+        }
+      ]
+    },
+    {
+      "case_id": "C10",
+      "disease_id": "dismech-disease:Graves_Disease",
+      "patient_context": {
+        "age": 32,
+        "sex": "female"
+      },
+      "source": "C10/model_record.json",
+      "items": [
+        {
+          "id": "weight-loss",
+          "area": "문진",
+          "label": "의도하지 않은 체중 감소",
+          "finding_id": "nova:weight-loss",
+          "locator": "S.hpi / A.evidence",
+          "status": "draft_relation",
+          "evidence_ids": [
+            "dismech-assertion:053249"
+          ]
+        },
+        {
+          "id": "polyphagia",
+          "area": "문진",
+          "label": "식욕·식사량 변화",
+          "finding_id": "hpo:HP:0002591",
+          "locator": "S.hpi / A.evidence",
+          "status": "draft_relation",
+          "evidence_ids": [
+            "dismech-assertion:053250"
+          ]
+        },
+        {
+          "id": "heat-intolerance",
+          "area": "문진",
+          "label": "더위 불내성",
+          "finding_id": "hpo:HP:0002046",
+          "locator": "S.hpi / A.evidence",
+          "status": "draft_relation",
+          "evidence_ids": [
+            "dismech-assertion:053251"
+          ]
+        },
+        {
+          "id": "goiter",
+          "area": "진찰",
+          "label": "갑상선 비대의 형태와 압통",
+          "finding_id": "hpo:HP:0000853",
+          "locator": "O.exam / A.evidence",
+          "status": "draft_relation",
+          "evidence_ids": [
+            "dismech-assertion:053243"
+          ]
+        },
+        {
+          "id": "eye-signs",
+          "area": "진찰",
+          "label": "안구·안검 소견",
+          "finding_id": "hpo:HP:0000520",
+          "locator": "O.exam / A.evidence",
+          "status": "draft_relation",
+          "evidence_ids": [
+            "dismech-assertion:053242"
+          ]
+        },
+        {
+          "id": "thyroid-differential",
+          "area": "감별",
+          "label": "갑상선염·결절성 원인·외인성 원인과 구분",
+          "pathway": "thyroid-excess",
+          "locator": "A.differential",
+          "status": "draft_pathway"
+        },
+        {
+          "id": "thyroid-plan",
+          "area": "계획",
+          "label": "갑상선 기능·항체 검사 계획과 긴급 평가 필요성",
+          "pathway": "thyroid-excess",
+          "locator": "P.tests / P.disposition / P.follow_up",
+          "status": "draft_pathway"
+        }
+      ]
+    }
+  ],
+  "interpretation": "Structural coverage only; a draft relation/pathway is not clinically verified. Missing direct relation may be intentional."
+}

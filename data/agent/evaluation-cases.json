@@ -1,0 +1,11 @@
+{
+  "kind":"synthetic software regression fixtures, not clinical validation",
+  "cases":[
+    {"id":"pilot-appendicitis","observations":{"nova:rlq-migration":"present","nova:vomiting":"present"},"gold":"nova:appendicitis"},
+    {"id":"pilot-pancreatitis","observations":{"nova:upper-abdominal-pain":"present","nova:back-radiation":"present","nova:vomiting":"present"},"gold":"nova:acute-pancreatitis"},
+    {"id":"pilot-stones","observations":{"nova:flank-pain":"present","nova:hematuria":"present"},"gold":"nova:kidney-stones"},
+    {"id":"unknown-invariance","observations":{"nova:rlq-migration":"present","nova:fever":"unknown"},"gold":"nova:appendicitis"},
+    {"id":"generic-fever","observations":{"nova:fever":"present"},"gold":null},
+    {"id":"no-evidence","observations":{},"gold":null}
+  ]
+}
