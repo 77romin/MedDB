@@ -28,7 +28,7 @@
           "label": "약 이름·회당 용량·복용 횟수·처방 출처",
           "pathway": "sleep-medication",
           "locator": "S.hpi / S.pmh",
-          "status": "missing_pathway"
+          "status": "draft_pathway"
         },
         {
           "id": "reduction-history",
@@ -36,7 +36,7 @@
           "label": "약의 효과 변화·감량 시 증상·감량 시도",
           "pathway": "sleep-medication",
           "locator": "A.evidence",
-          "status": "missing_pathway"
+          "status": "draft_pathway"
         },
         {
           "id": "functional-impact",
@@ -44,7 +44,7 @@
           "label": "일상 기능·안전·대인관계 영향",
           "pathway": "sleep-medication",
           "locator": "A.evidence",
-          "status": "missing_pathway"
+          "status": "draft_pathway"
         },
         {
           "id": "acute-safety",
@@ -52,7 +52,7 @@
           "label": "의식·호흡·급성 중독·심한 금단 위험",
           "pathway": "sleep-medication",
           "locator": "O.exam / P.disposition",
-          "status": "missing_pathway"
+          "status": "draft_pathway"
         },
         {
           "id": "supervised-plan",
@@ -60,7 +60,7 @@
           "label": "갑작스러운 중단을 지시하지 않고 전문 진료 계획 확인",
           "pathway": "sleep-medication",
           "locator": "P.treatment / P.follow_up",
-          "status": "missing_pathway"
+          "status": "draft_pathway"
         }
       ]
     },
@@ -91,7 +91,7 @@
           "label": "과거 계측치·성장속도·백분위 변화",
           "pathway": "child-growth",
           "locator": "S.hpi / A.evidence",
-          "status": "missing_pathway"
+          "status": "draft_pathway"
         },
         {
           "id": "family-growth",
@@ -99,7 +99,7 @@
           "label": "부모 키와 가족의 성장·사춘기 시기",
           "pathway": "child-growth",
           "locator": "S.fh / A.differential",
-          "status": "missing_pathway"
+          "status": "draft_pathway"
         },
         {
           "id": "systemic-causes",
@@ -107,7 +107,7 @@
           "label": "영양·만성질환·약물·발달·신체 비율",
           "pathway": "child-growth",
           "locator": "S.pmh / O.exam / A.differential",
-          "status": "missing_pathway"
+          "status": "draft_pathway"
         },
         {
           "id": "age-context",
@@ -115,7 +115,7 @@
           "label": "6세의 연령 적절한 사춘기 전 상태를 사춘기 지연으로 기록하지 않음",
           "pathway": "child-growth",
           "locator": "O.exam / A.evidence",
-          "status": "missing_pathway"
+          "status": "draft_pathway"
         },
         {
           "id": "growth-followup",
@@ -123,7 +123,7 @@
           "label": "골연령·원인 검사 계획과 연속 성장 추적",
           "pathway": "child-growth",
           "locator": "P.tests / P.follow_up",
-          "status": "missing_pathway"
+          "status": "draft_pathway"
         }
       ]
     },
@@ -197,7 +197,7 @@
           "label": "갑상선염·결절성 원인·외인성 원인과 구분",
           "pathway": "thyroid-excess",
           "locator": "A.differential",
-          "status": "missing_pathway"
+          "status": "draft_pathway"
         },
         {
           "id": "thyroid-plan",
@@ -205,7 +205,7 @@
           "label": "갑상선 기능·항체 검사 계획과 긴급 평가 필요성",
           "pathway": "thyroid-excess",
           "locator": "P.tests / P.disposition / P.follow_up",
-          "status": "missing_pathway"
+          "status": "draft_pathway"
         }
       ]
     }

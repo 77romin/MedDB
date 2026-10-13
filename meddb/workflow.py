@@ -111,12 +111,16 @@ def suggest(kb, observations, profile='reviewed', patient=None, category=None, l
         if neg and pos:
             separation += 1
         entry = templates.get(finding)
+        if kb.nodes[finding]['label_en']=='Delayed puberty' and (patient or {}).get('puberty_assessment')!='appropriate':
+            entry = None
         if entry and not policy['include_draft'] and entry['review_status']!='reviewed':
             entry = None
         relations = [a for d,rows in disease_rows.items() if d in polarities for a in rows]
         proposal = {'finding':finding,'label':kb.nodes[finding]['label_ko'],'separation_score':round(separation,4),'associated_candidates':pos,'excluded_candidates':neg,'unrecorded_candidates':sorted(selected-set(polarities)),'evidence':[{'assertion_id':a['id'],'source_id':a['source_id'],'locator':a['locator'],'context':a['context'],'review_status':a['review_status'],'polarity':relation_polarity(a)} for a in relations], 'action':entry['action'] if entry else None,'content':entry['content'] if entry else None,'template_status':entry['review_status'] if entry else 'missing','template_source':entry.get('source') if entry else None,'requires_clinical_review':True}
         recommendations.append(proposal)
     recommendations.sort(key=lambda a:(a['action'] is None,-a['separation_score'],a['finding']))
+    if (patient or {}).get('puberty_assessment')=='not_age_appropriate':
+        recommendations=[r for r in recommendations if kb.nodes[r['finding']]['label_en']!='Delayed puberty']
     checklists, checklist_digest = resource('checklists.json')
     activated = [entry for entry in checklists['entries'] if policy['include_draft'] and all(observations.get(f)=='present' for f in entry['trigger_all'])]
     return {'version':kb.version,'sha256':kb.sha256,'policy':policy,'action_dictionary_sha256':action_digest,'checklist_sha256':checklist_digest,'ranking':ranked,'recommendations':recommendations[:limit],'checklists':activated,'interpretation':'Advisory development proposals. An unrecorded phenotype is not an absent phenotype. EXAM recognition is not guaranteed by the competition server.'}

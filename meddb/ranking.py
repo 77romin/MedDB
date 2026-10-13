@@ -11,8 +11,10 @@ def relation_polarity(assertion):
 
 def rank_candidates(kb, observations, include_draft, limit, patient, category):
     patient = {} if patient is None else patient
-    if not isinstance(patient, dict) or set(patient) - {'age', 'sex'}:
-        raise ValueError('Patient supports age and sex only')
+    if not isinstance(patient, dict) or set(patient) - {'age', 'sex', 'puberty_assessment'}:
+        raise ValueError('Invalid patient fields')
+    if patient.get('puberty_assessment') not in {None,'unknown','appropriate','not_age_appropriate'}:
+        raise ValueError('Invalid puberty assessment context')
     age, sex = patient.get('age'), patient.get('sex')
     if age is not None and (type(age) not in {int, float} or not math.isfinite(age) or not 0 <= age <= 130):
         raise ValueError('Age must be between 0 and 130')
@@ -30,7 +32,10 @@ def rank_candidates(kb, observations, include_draft, limit, patient, category):
             if relation_polarity(a) == 'associated':
                 prevalence[a['object']].add(a['subject'])
     weights = {f: 1 + math.log((1 + len(diseases))/(1 + len(ds))) for f, ds in prevalence.items()}
-    known = {f: s for f, s in observations.items() if s != 'unknown'}
+    context_ignored=[]
+    if patient.get('puberty_assessment')=='not_age_appropriate':
+        context_ignored=[f for f in observations if kb.nodes[f]['label_en']=='Delayed puberty' and observations[f]!='unknown']
+    known = {f: s for f, s in observations.items() if s != 'unknown' and f not in context_ignored}
     # Normalize against the same patient evidence for every candidate, not each disease's record size.
     denominator = sum(weights.get(f, 1) for f in known) or 1
     candidates, filtered = [], []
@@ -93,4 +98,4 @@ def rank_candidates(kb, observations, include_draft, limit, patient, category):
         warnings.append('No reviewed age/sex eligibility rules in this snapshot; patient conditions did not filter diseases.')
     if include_draft:
         warnings.append('Draft medical relationships included.')
-    return {'version': kb.version, 'sha256': kb.sha256, 'total_candidates': total, 'interpretation': 'IDF-weighted evidence score; not diagnostic probability. Optional phenotype absence is weak counter-evidence. EXCLUDED is negative evidence.', 'score_method': 'phenotype-idf-v1', 'include_draft': include_draft, 'patient': patient, 'category': category, 'warnings': warnings, 'filtered': filtered, 'candidates': candidates, 'sources': [kb.sources[s] for s in sorted({a['source_id'] for c in candidates for a in c['evidence']})]}
+    return {'version': kb.version, 'sha256': kb.sha256, 'total_candidates': total, 'interpretation': 'IDF-weighted evidence score; not diagnostic probability. Optional phenotype absence is weak counter-evidence. EXCLUDED is negative evidence.', 'score_method': 'phenotype-idf-v2-context', 'include_draft': include_draft, 'patient': patient, 'category': category, 'context_ignored':context_ignored, 'warnings': warnings, 'filtered': filtered, 'candidates': candidates, 'sources': [kb.sources[s] for s in sorted({a['source_id'] for c in candidates for a in c['evidence']})]}
