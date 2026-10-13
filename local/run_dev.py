@@ -53,6 +53,7 @@ def main():
     ap.add_argument("--specs", default=str(HERE / "dev_specs.json"))
     ap.add_argument("--split", choices=["dev", "test", "all"], default="all")
     ap.add_argument("--summary-only", action="store_true")
+    ap.add_argument("--ids", nargs="*", help="이 증례만 실행 (요약은 결과가 있는 전체)")
     args = ap.parse_args()
     specs = {s["id"]: s for s in json.loads(Path(args.specs).read_text(encoding="utf-8"))["cases"]}
     db = MedDB.open()
@@ -74,7 +75,7 @@ def main():
         case_json.parent.mkdir(parents=True, exist_ok=True)
         case_json.write_text(json.dumps(case, ensure_ascii=False, indent=1), encoding="utf-8")
         result = out / f"dev_{cid}_{args.agent}.json"
-        if not args.summary_only:
+        if not args.summary_only and (not args.ids or cid in args.ids):
             print(f"--- {cid} ({args.agent}) {spec.get('diagnosis', '')}", flush=True)
             with open(out / f"dev_{cid}_{args.agent}.txt", "w", encoding="utf-8") as log:
                 subprocess.run([sys.executable, str(HERE / "local_run.py"), "--case", str(case_json),
