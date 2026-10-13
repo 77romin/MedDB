@@ -35,6 +35,9 @@ agentNormalizeButton.onclick=async()=>{
 const agentPolicyLabel=el('label','사용 자료 '),agentPolicySelect=el('select');agentPolicySelect.id='knowledge-profile';
 for(const[value,label]of [['research','전체 연구용 초안'],['pilot','복통 파일럿 초안']]){const o=el('option',label);o.value=value;agentPolicySelect.append(o)}
 agentPolicyLabel.append(agentPolicySelect);$('rank-draft').parentElement.before(agentPolicyLabel);agentPolicySelect.onchange=clearRank;
+const pubertyContextLabel=el('label','사춘기 지연 평가 맥락 '),pubertyContextSelect=el('select');pubertyContextSelect.id='patient-puberty-context';
+for(const[value,label]of [['unknown','미확인'],['not_age_appropriate','연령·발달상 평가 대상 아님'],['appropriate','평가가 적절함을 확인']]){const o=el('option',label);o.value=value;pubertyContextSelect.append(o)}
+pubertyContextLabel.append(pubertyContextSelect);$('patient-sex').parentElement.parentElement.append(pubertyContextLabel);pubertyContextSelect.onchange=clearRank;
 
 const guidelineSection=el('section'),guidelineQuery=el('input'),guidelineButton=el('button','지침 검색'),guidelineResults=el('div');
 guidelineQuery.type='search';guidelineQuery.placeholder='불면, 수면제 의존, 성장지연 등';guidelineQuery.setAttribute('aria-label','진료지침 검색어');

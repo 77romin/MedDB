@@ -28,3 +28,7 @@ class PathwayTests(unittest.TestCase):
         result=recommend(self.kb,{'hpo:HP:0004322':'present'},include_draft=True)
         self.assertEqual(result['pathways'][0]['id'],'child-growth')
         self.assertTrue(all('diagnosis' not in r for r in result['pathways'][0]['pending']))
+
+    def test_context_only_does_not_claim_age_fields_were_supplied(self):
+        result=self.kb.rank({},True,patient={'puberty_assessment':'not_age_appropriate'})
+        self.assertFalse(any(w.startswith('No reviewed age') for w in result['warnings']))

@@ -94,7 +94,7 @@ def rank_candidates(kb, observations, include_draft, limit, patient, category):
     candidates = candidates[:limit]
     active_constraints = any(n.get('clinical_constraints', {}).get('review_status') == 'reviewed' and n.get('clinical_constraints', {}).get('reviewer') and n.get('clinical_constraints', {}).get('source_id') in kb.sources and n.get('clinical_constraints', {}).get('locator') for n in diseases)
     warnings = []
-    if patient and not active_constraints:
+    if any(patient.get(field) is not None and patient.get(field)!='unknown' for field in ('age','sex')) and not active_constraints:
         warnings.append('No reviewed age/sex eligibility rules in this snapshot; patient conditions did not filter diseases.')
     if include_draft:
         warnings.append('Draft medical relationships included.')

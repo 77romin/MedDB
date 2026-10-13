@@ -1,0 +1,142 @@
+{
+  "mode": "offline_reference_fact_replay",
+  "revisions": {
+    "previous_kb": "9711bb85ff09a59af3df67154a7a665fa51a5763",
+    "improved_kb": "d766fd45f2f91687e3ac92207270158ca3cf9ec4"
+  },
+  "cases": 3,
+  "runs": [
+    {
+      "case_id": "C01",
+      "arm": "no_kb",
+      "knowledge_enabled": false,
+      "latency_seconds": null,
+      "response_bytes": 0,
+      "candidate_ids": [],
+      "pathway_requirements": 0,
+      "source_sha256": "0f38a63265017667fe91828ede0271a9c0f5575bc164d81a1f05540445586b71"
+    },
+    {
+      "case_id": "C01",
+      "arm": "previous_kb",
+      "knowledge_enabled": true,
+      "latency_seconds": 0.195662,
+      "response_bytes": 9646,
+      "candidate_ids": [
+        "dismech-disease:Alcohol_Use_Disorder",
+        "dismech-disease:Chromosome_Xq_Duplication",
+        "dismech-disease:Chronic_Insomnia_Disorder",
+        "dismech-disease:Cutaneous_Larva_Migrans",
+        "dismech-disease:Epilepsy"
+      ],
+      "pathway_requirements": 0,
+      "source_sha256": "0f38a63265017667fe91828ede0271a9c0f5575bc164d81a1f05540445586b71"
+    },
+    {
+      "case_id": "C01",
+      "arm": "improved_kb",
+      "knowledge_enabled": true,
+      "latency_seconds": 0.251821,
+      "response_bytes": 14637,
+      "candidate_ids": [
+        "dismech-disease:Alcohol_Use_Disorder",
+        "dismech-disease:Chromosome_Xq_Duplication",
+        "dismech-disease:Chronic_Insomnia_Disorder",
+        "dismech-disease:Cutaneous_Larva_Migrans",
+        "dismech-disease:Epilepsy"
+      ],
+      "pathway_requirements": 5,
+      "source_sha256": "0f38a63265017667fe91828ede0271a9c0f5575bc164d81a1f05540445586b71"
+    },
+    {
+      "case_id": "C03",
+      "arm": "no_kb",
+      "knowledge_enabled": false,
+      "latency_seconds": null,
+      "response_bytes": 0,
+      "candidate_ids": [],
+      "pathway_requirements": 0,
+      "source_sha256": "907dc541535dd939ec63fb19547f0d200e1f24264479729610c5d4bdf5343e07"
+    },
+    {
+      "case_id": "C03",
+      "arm": "previous_kb",
+      "knowledge_enabled": true,
+      "latency_seconds": 0.580534,
+      "response_bytes": 13000,
+      "candidate_ids": [
+        "dismech-disease:2q37_Microdeletion_Syndrome",
+        "dismech-disease:3-M_Syndrome",
+        "dismech-disease:3p-_Syndrome",
+        "dismech-disease:45_X_46_XY_Mixed_Gonadal_Dysgenesis",
+        "dismech-disease:6q16_Deletion_Syndrome"
+      ],
+      "pathway_requirements": 0,
+      "source_sha256": "907dc541535dd939ec63fb19547f0d200e1f24264479729610c5d4bdf5343e07"
+    },
+    {
+      "case_id": "C03",
+      "arm": "improved_kb",
+      "knowledge_enabled": true,
+      "latency_seconds": 0.210921,
+      "response_bytes": 20564,
+      "candidate_ids": [
+        "dismech-disease:2q37_Microdeletion_Syndrome",
+        "dismech-disease:3-M_Syndrome",
+        "dismech-disease:3p-_Syndrome",
+        "dismech-disease:45_X_46_XY_Mixed_Gonadal_Dysgenesis",
+        "dismech-disease:6q16_Deletion_Syndrome"
+      ],
+      "pathway_requirements": 5,
+      "source_sha256": "907dc541535dd939ec63fb19547f0d200e1f24264479729610c5d4bdf5343e07"
+    },
+    {
+      "case_id": "C10",
+      "arm": "no_kb",
+      "knowledge_enabled": false,
+      "latency_seconds": null,
+      "response_bytes": 0,
+      "candidate_ids": [],
+      "pathway_requirements": 0,
+      "source_sha256": "570a87bdf976a4c99052120aacee6a7af9777ca23226f41e97d211f404067311"
+    },
+    {
+      "case_id": "C10",
+      "arm": "previous_kb",
+      "knowledge_enabled": true,
+      "latency_seconds": 0.591572,
+      "response_bytes": 12540,
+      "candidate_ids": [
+        "dismech-disease:Graves_Disease",
+        "dismech-disease:Embryonal_Rhabdomyosarcoma",
+        "dismech-disease:Erdheim-Chester_Disease",
+        "dismech-disease:Fanconi_Anemia",
+        "dismech-disease:Granulomatosis_with_Polyangiitis"
+      ],
+      "pathway_requirements": 0,
+      "source_sha256": "570a87bdf976a4c99052120aacee6a7af9777ca23226f41e97d211f404067311"
+    },
+    {
+      "case_id": "C10",
+      "arm": "improved_kb",
+      "knowledge_enabled": true,
+      "latency_seconds": 0.306973,
+      "response_bytes": 15969,
+      "candidate_ids": [
+        "dismech-disease:Graves_Disease",
+        "dismech-disease:Embryonal_Rhabdomyosarcoma",
+        "dismech-disease:Erdheim-Chester_Disease",
+        "dismech-disease:Fanconi_Anemia",
+        "dismech-disease:Granulomatosis_with_Polyangiitis"
+      ],
+      "pathway_requirements": 2,
+      "source_sha256": "570a87bdf976a4c99052120aacee6a7af9777ca23226f41e97d211f404067311"
+    }
+  ],
+  "patient_interaction_performed": false,
+  "model_calls": 0,
+  "diagnostic_accuracy": null,
+  "doctor_turns": null,
+  "model_cost": null,
+  "interpretation": "Public source facts were provided directly, including selected exam-table entries. No autonomous patient interaction or clinical accuracy test. Knowledge latency and output size only."
+}

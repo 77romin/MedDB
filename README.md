@@ -107,6 +107,8 @@ KCD 자료는 저장소에 포함되지 않습니다. 아래 [KCD-9 로컬 조�
 
 ## API와 agent
 
+단계별 점검·지식 보강·출처 기반 조회 규약·오프라인 비교 기록은 [최신 개발 기록](docs/staged-development-2026-10-13.md)을 참고하세요. 팀 연결용 `POST /api/assist`는 확인한 소견·환자 조건과 실제 응답 이벤트의 연결을 요구합니다.
+
 한국어 표현 제안, 데이터 사용 정책, 다음 문진·진찰 제안 및 비교 평가는 [에이전트 연결 문서](docs/agent-integration.md)를 참고하세요. `POST /api/normalize`, `POST /api/suggest`, `kb.normalize(text)`, `kb.suggest(observations, profile="research")`를 지원합니다. 기본 정책은 검수 완료만 포함하며 개발용 초안 정책은 명시적으로 선택합니다.
 
 공식 진료지침 15,904개는 [문서 근거층과 런타임 검색](docs/nova-guidelines-integration.md)으로 연결했습니다. `kb.guidelines("hypnotic insomnia")`와 `POST /api/guidelines`를 사용할 수 있습니다. 대회에서는 `NOVA_GUIDELINES_DIR`의 원문을 읽으며 실행 ZIP에 지침 전체를 넣지 않습니다.

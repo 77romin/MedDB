@@ -81,12 +81,14 @@ async function rank(){
  if(!$('patient-age').checkValidity()){$('patient-age').reportValidity();return}
  if($('patient-age').value!=='')patient.age=Number($('patient-age').value);
  if($('patient-sex').value!=='unknown')patient.sex=$('patient-sex').value;
+ if($('patient-puberty-context').value!=='unknown')patient.puberty_assessment=$('patient-puberty-context').value;
  $('results').textContent='조회 중…';
  try{
   const workflow=await api('/api/suggest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({observations:obs,patient,category:$('patient-category').value||null,profile:$('rank-draft').checked?$('knowledge-profile').value:'reviewed',limit:5})});
   const r=workflow.ranking;
   if(ticket!==rankRequest)return;$('results').replaceChildren();
   $('results').append(el('p',r.total_candidates+'개 후보 · 상위 '+r.candidates.length+'개 표시 · 점수는 진단 확률이 아닙니다','sub'));
+  if(r.context_ignored?.length)$('results').append(el('p','연령·발달 맥락상 사춘기 지연 소견을 점수에서 제외했습니다.','notice'));
   for(const warning of r.warnings||[])$('results').append(el('p',warning.startsWith('No reviewed')?'현재 데이터에 검수된 나이·성별 조건이 없어 해당 조건은 후보 필터링에 반영되지 않았습니다.':'검수 전 초안 근거가 포함된 결과입니다.','notice'));
   for(const c of r.candidates){
    const card=el('div',undefined,'candidate'),title=el('button',`${c.rank}위 · ${c.disease.label_ko}`,'node-link');
