@@ -561,6 +561,8 @@ class MedDB:
         present, absent, asked, exams_done = set(present), set(absent), set(asked), set(exams_done)
         known = self._known(present, absent, exams_done)
         items = self.items[complaint]
+        exams_done = {eid for eid in exams_done
+                      if all(fid in known for fid in self.exam_findings.get(eid, []))}
         out: list[dict] = []
         seen: set[str] = set()
 

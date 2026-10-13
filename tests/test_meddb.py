@@ -115,20 +115,23 @@ class Query(unittest.TestCase):
         db = self.db
         self.assertFalse(db.ready("cough", age=40, sex="M")["ready"])
         state = {"present": set(), "absent": set(), "asked": set(), "exams_done": set()}
+        performed = 0
         for _ in range(60):
             acts = [a for a in db.next_actions("cough", age=40, sex="M", **state) if a["stage"] != "discriminate"]
             if not acts:
                 break
             act = acts[0]
+            performed += 1
             if act["type"] == "EXAM":
                 state["exams_done"].add(act["target"])
+                # This fixture simulates an explicitly normal exam, including its findings.
+                state['absent'].update(act.get('resolves', []))
             elif act["target"] in db.slots:
                 state["asked"].add(act["target"])
             else:
                 state["absent"].add(act["target"])
         self.assertTrue(db.ready("cough", age=40, sex="M", **state)["ready"])
-        turns = len(state["asked"]) + len(state["absent"]) + len(state["exams_done"])
-        self.assertLessEqual(turns, 25)
+        self.assertLessEqual(performed, 25)
 
     def test_normalize_diagnosis(self):
         self.assertEqual(self.db.normalize_diagnosis("급성 심근경색(STEMI 의심)")["id"], "mi")

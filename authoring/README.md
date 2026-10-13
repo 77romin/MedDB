@@ -17,5 +17,5 @@
 python tools/compile_kb.py authoring meddb/data     # 텍스트 → JSON
 python -m unittest discover -s tests              # 검증(30자, KCD 코드, 참조 등) 포함
 python tools/map_guidelines.py --catalog <catalog.csv>   # 새 주호소·질환을 넣었으면 지침 목록 연결도 갱신
-python -m meddb page                              # 시각화 페이지 갱신
+python -m meddb clinical page docs/viewer.html     # 시각화 페이지 갱신
 ```

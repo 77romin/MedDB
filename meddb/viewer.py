@@ -121,7 +121,7 @@ function actionFor(D, target, stage, why) {
 }
 function nextActions(D, complaint, present, absent, asked, examsDone, age, sex) {
   const C = D.complaints[complaint], known = knownSet(D, present, absent, examsDone);
-  const askedSet = new Set(asked), doneSet = new Set(examsDone), out = [], seen = new Set();
+  const askedSet = new Set(asked), doneSet = new Set(examsDone.filter(e => D.exams[e].findings.every(f => known.has(f)))), out = [], seen = new Set();
   const push = (target, stage, why) => {
     const row = D.slots[target] || D.findings[target] || {};
     if (!fits(row, age, sex)) return;

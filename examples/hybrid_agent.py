@@ -18,6 +18,7 @@ import json
 import re
 import time
 import unicodedata
+import os
 
 from meddb import MedDB
 from examples.consult_skeleton import (NovaError, RETRY_CODES, STOP_CODES, demographics, final_choice,
@@ -94,9 +95,17 @@ def fit(text: str) -> str:
 class Tracker:
     """KB 쪽 상태: 확인된 소견, 물은 것, 한 진찰, 기록 재료."""
 
-    def __init__(self, db: MedDB, complaint: str | None, age, sex, opening: str, vitals):
+    def __init__(self, db: MedDB, complaint: str | None, age, sex, opening: str, vitals,
+                 knowledge_mode='clinical', reference_profile='reviewed'):
+        if knowledge_mode not in {'clinical', 'ontology', 'integrated'}:
+            raise ValueError('Unknown knowledge mode')
+        self.knowledge_mode, self.reference_profile = knowledge_mode, reference_profile
+        self.bridge = None
+        if knowledge_mode != 'clinical':
+            from meddb.bridge import KnowledgeBridge
+            self.bridge = KnowledgeBridge(db)
         self.db, self.complaint, self.age, self.sex = db, complaint, age, sex
-        self.present: list[str] = db.vital_flags(vitals)
+        self.present: list[str] = []
         self.absent: list[str] = []
         self.asked: set[str] = set()
         self.exams_done: set[str] = set()
@@ -108,6 +117,8 @@ class Tracker:
         self.conflicts: set[str] = set()
         self.events: list[dict] = []
         self.exam_attempts: list[dict] = []
+        for fid in db.vital_flags(vitals):
+            self.mark(fid, '+', 0, str(vitals), 'initial')
         self.note_seen(opening, turn=0)
         when = re.search(r"[^.]*(?:전부터|동안|개월 전|년 전|주 전|일 전|어제|오늘|아침부터)[^.]*\.?", opening)
         if when and "onset" in db.slots:
@@ -118,12 +129,14 @@ class Tracker:
             self.exam_by_name[e["ko"]] = eid
             self.exam_by_name[e["action"]] = eid
 
-    def mark(self, fid: str, verdict: str, turn: int) -> None:
+    def mark(self, fid: str, verdict: str, turn: int, content='', kind='say') -> None:
         old = "+" if fid in self.present else "-" if fid in self.absent else "?"
-        self.events.append({"finding_id": fid, "state": verdict, "turn": turn})
+        self.events.append({"finding_id": fid, "state": verdict, "turn": turn, "content": content, "kind": kind})
         if old != "?" and verdict != "?" and old != verdict:
             self.conflicts.add(fid)
             verdict = "?"  # Reconcile contradictory statements before using either.
+        elif old == '?' and verdict in {'+', '-'}:
+            self.conflicts.discard(fid)
         for bucket in (self.present, self.absent):
             if fid in bucket:
                 bucket.remove(fid)
@@ -140,11 +153,11 @@ class Tracker:
         """환자 말에서 표현 사전으로 찾은 소견. 직접 묻지 않았어도 환자가 말한 것은 기록한다."""
         found = self.db.match_findings(text or "")
         for fid in found["present"]:
-            self.mark(fid, "+", turn)
+            self.mark(fid, "+", turn, text, 'initial' if turn == 0 else 'say')
         for fid in found["absent"]:
-            self.mark(fid, "-", turn)
+            self.mark(fid, "-", turn, text, 'initial' if turn == 0 else 'say')
         for fid in found.get("unknown", []):
-            self.mark(fid, "?", turn)
+            self.mark(fid, "?", turn, text, 'initial' if turn == 0 else 'say')
 
     def exam_id(self, text: str) -> str | None:
         if text in self.exam_by_name:
@@ -154,21 +167,22 @@ class Tracker:
 
     # ---- 프롬프트에 넣을 KB 판단 -------------------------------------------------
     def actions(self) -> list[dict]:
-        if not self.complaint:
+        if not self.complaint or self.knowledge_mode == 'ontology':
             return []
         acts = self.db.next_actions(self.complaint, self.present, self.absent, self.asked, self.exams_done,
                                     self.age, self.sex)
-        return acts[:SUGGEST]
+        repeat = [self.db._action(fid, 'discriminate', '상충하는 답변 재확인') for fid in sorted(self.conflicts)]
+        return [a for a in repeat + acts if a][:SUGGEST]
 
     def ranked(self, k: int = TOP_K) -> list[dict]:
-        if not self.complaint:
+        if not self.complaint or self.knowledge_mode == 'ontology':
             return []
         return self.db.candidates(self.complaint, self.present, self.absent, self.age, self.sex, k=k)
 
     def hint(self, acts: list[dict]) -> str:
         db = self.db
         lines = []
-        if self.complaint:
+        if self.complaint and self.knowledge_mode != 'ontology':
             lines.append(f"[지식베이스 판단] 주호소: {db.complaints[self.complaint]['ko']}")
             for i, c in enumerate(self.ranked(), 1):
                 got = ", ".join(db.findings[f]["ko"] for f in c["matched"][:5]) or "없음"
@@ -190,8 +204,9 @@ class Tracker:
                     if role != "against" and ex and db.exams[ex]["ko"] not in names:
                         names.append(db.exams[ex]["ko"])
         else:
-            lines.append("[지식베이스 판단] 이 주호소는 지식베이스 밖입니다. 일반적인 순서로 진료하세요.")
-            todo = [db.slots[r]["ko"] if r in db.slots else db.findings[r]["ko"]
+            lines.append("[지식베이스 판단] 온톨로지 근거로 진료하세요." if self.knowledge_mode == 'ontology'
+                         else "[지식베이스 판단] 이 주호소는 지식베이스 밖입니다. 일반적인 순서로 진료하세요.")
+            todo = [] if self.knowledge_mode == 'ontology' else [db.slots[r]["ko"] if r in db.slots else db.findings[r]["ko"]
                     for _, r in db.background if r not in self.asked]
             if todo:
                 lines.append("  아직 묻지 않은 기본 항목: " + ", ".join(todo))
@@ -199,10 +214,14 @@ class Tracker:
         names += [n for n in COMMON_EXAMS if n not in names]
         done = {db.exams[e]["ko"] for e in self.exams_done if e in db.exams}
         lines.append("[표준 진찰명] " + ", ".join(n for n in names if n not in done))
+        if self.bridge:
+            lines.append(self.bridge.hint(self, self.reference_profile))
+        if self.conflicts:
+            lines.append('[상충 진술: 재확인 필요] ' + ', '.join(sorted(self.conflicts)))
         return "\n".join(lines)
 
 
-def consult(client, db: MedDB, fallback=None):
+def consult(client, db: MedDB, fallback=None, knowledge_mode=None, reference_profile=None):
     """fallback은 받지만 쓰지 않는다(KB 밖이어도 하이브리드가 진료한다). run.py 연동 모양을 맞추기 위한 인자."""
     session = client.session()
     opening, vitals = session["initial"]["opening"], session["initial"]["vital_signs"]
@@ -211,7 +230,9 @@ def consult(client, db: MedDB, fallback=None):
         complaint = pick_complaint(client, db, opening)
     except NovaError:
         complaint = (db.match_complaint(opening) or [{"id": None}])[0]["id"]
-    kb = Tracker(db, complaint, age, sex, opening, vitals)
+    kb = Tracker(db, complaint, age, sex, opening, vitals,
+                 knowledge_mode or os.environ.get('NOVA_KNOWLEDGE_MODE', 'clinical'),
+                 reference_profile or os.environ.get('NOVA_REFERENCE_PROFILE', 'reviewed'))
     transcript: list[str] = []
     turn, budget, failures = 0, min(MAX_TURNS, session["turns_remaining"]), 0
 
@@ -262,7 +283,7 @@ def consult(client, db: MedDB, fallback=None):
                     if target in db.slots:
                         kb.answers[target] = answer
                     else:
-                        kb.mark(target, read_answer(client, text, answer, db.findings[target]["ko"]), turn)
+                        kb.mark(target, read_answer(client, text, answer, db.findings[target]["ko"]), turn, answer)
                 kb.note_seen(answer, turn)
             else:
                 reply = with_retry(client.exam, text)
@@ -275,15 +296,15 @@ def consult(client, db: MedDB, fallback=None):
                     kb.exam_results[target] = reply["result"]
                     signs = [db.findings[f] for f in db.exam_findings.get(target, []) if f in db.findings]
                     for fid, verdict in read_exam(client, reply["result"], signs).items():
-                        kb.mark(fid, verdict, turn)
+                        kb.mark(fid, verdict, turn, reply['result'], 'exam')
         except NovaError as exc:
             code = getattr(exc, "code", "")
-            if code in STOP_CODES or code in RETRY_CODES:
-                break
-            turn += 1  # 거절된 진찰도 1턴을 쓴다(10/11 규칙)
             if kind == "EXAM":
                 kb.exam_attempts[-1]["status"] = "rejected"
                 kb.exam_attempts[-1]["code"] = code
+            if code in STOP_CODES or code in RETRY_CODES:
+                break
+            turn += 1  # 거절된 진찰도 1턴을 쓴다(10/11 규칙)
             hint = "신체진찰이 아닙니다" if code == "EXAM_NOT_RECOGNIZED" else "하나만 구체적으로, 표준 진찰명으로"
             transcript.append(f"(알림: {text} 요청 거절 {code}. {hint})")
 
@@ -294,7 +315,7 @@ def consult(client, db: MedDB, fallback=None):
 def write_record(client, db: MedDB, kb: Tracker, opening, vitals, transcript):
     """KB 초안(확인된 사실만) → LLM이 대화와 맞춰 다듬음. LLM이 실패하면 KB 초안을 그대로 낸다."""
     draft, draft_dx, ranking = None, "", ""
-    if kb.complaint:
+    if kb.complaint and kb.knowledge_mode != 'ontology':
         ranked = kb.ranked(k=5)
         top = final_choice(ranked)
         record = db.record(kb.complaint, kb.present, kb.absent, answers=kb.answers, turns=kb.turns,

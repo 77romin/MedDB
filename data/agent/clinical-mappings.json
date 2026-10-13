@@ -1,0 +1,11 @@
+{
+  "version": "clinical-mappings-1",
+  "mappings": [
+    {"clinical_id": "fever", "finding_id": "nova:fever", "relation": "exact", "review_status": "draft", "basis": "Clinical label Fever and reference label Fever; semantic review pending"},
+    {"clinical_id": "cough", "finding_id": "hpo:HP:0012735", "relation": "exact", "review_status": "draft", "basis": "Clinical cough and reference Cough; semantic review pending"},
+    {"clinical_id": "dyspnea", "finding_id": "hpo:HP:0002094", "relation": "exact", "review_status": "draft", "basis": "Clinical dyspnea and reference Dyspnea; semantic review pending"},
+    {"clinical_id": "weight_loss", "finding_id": "nova:weight-loss", "relation": "exact", "review_status": "draft", "basis": "Clinical weight loss and reference Weight loss; semantic review pending"},
+    {"clinical_id": "abdominal_pain", "finding_id": "nova:abdominal-pain", "relation": "exact", "review_status": "draft", "basis": "Clinical abdominal pain and reference Abdominal pain; semantic review pending"}
+  ],
+  "interpretation": "No reviewed mappings yet. Compound or qualified findings must not be mapped to an unqualified finding by name alone."
+}

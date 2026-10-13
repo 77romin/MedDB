@@ -35,6 +35,8 @@ class ClinicalSafety(unittest.TestCase):
     def test_completed_exam_does_not_confirm_findings(self):
         self.assertEqual(self.db._known([], [], ['ex_abd_palp']), set())
         self.assertEqual(self.db._known(['rlq_tenderness'], [], ['ex_abd_palp']), {'rlq_tenderness'})
+        actions = self.db.next_actions('chest_pain', exams_done=['ex_lung_ausc'], age=58, sex='M')
+        self.assertIn('ex_lung_ausc', [a['target'] for a in actions])
 
     def test_contradiction_requires_reconfirmation_and_keeps_history(self):
         tracker = Tracker(self.db, 'chest_pain', 58, 'M', '', {})
@@ -61,6 +63,33 @@ class ClinicalSafety(unittest.TestCase):
                                        self.db, tracker, '', {}, [])
         self.assertEqual(note['A']['evidence'], '#1. ' + diagnosis)
         self.assertTrue(all(not value for value in note['P'].values()))
+
+    def test_rejected_exam_is_not_successful_evidence(self):
+        from unittest.mock import patch
+        from test_meddb import ScriptedLLM
+        from examples.hybrid_agent import consult
+
+        class Rejected(RuntimeError):
+            code = 'EXAM_NOT_RECOGNIZED'
+
+        class RejectClient(ScriptedLLM):
+            def exam(self, content):
+                raise Rejected('EXAM_NOT_RECOGNIZED')
+
+        captured = []
+        def make_tracker(*args, **kwargs):
+            tracker = Tracker(*args, **kwargs)
+            captured.append(tracker)
+            return tracker
+        client = RejectClient('58세 남자입니다. 가슴이 아파요.',
+                              [{'action': 'EXAM', 'content': '폐 청진을 하겠습니다.'}, {'action': 'DONE'}],
+                              {'S': {'cc': '흉통'}, 'diagnosis': '공황발작'})
+        with patch('examples.hybrid_agent.Tracker', side_effect=make_tracker):
+            consult(client, self.db, knowledge_mode='clinical')
+        tracker = captured[0]
+        self.assertFalse(tracker.exams_done)
+        self.assertFalse(tracker.exam_results)
+        self.assertEqual(tracker.exam_attempts[0]['status'], 'rejected')
 
 
 if __name__ == '__main__':

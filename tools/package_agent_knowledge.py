@@ -17,6 +17,8 @@ def run():
     target=folder/'nova-knowledge-bundle.zip'
     with zipfile.ZipFile(target,'w',zipfile.ZIP_DEFLATED) as archive:
         for file in (root/'meddb').glob('*.py'):archive.write(file,file.relative_to(root).as_posix())
+        for file in (root/'meddb/data').glob('*'):
+            if file.is_file():archive.write(file,file.relative_to(root).as_posix())
         for file in (root/'data/agent').glob('*.json'):
             if file.name!='evaluation-cases.json':archive.write(file,file.relative_to(root).as_posix())
         raw=kb.path.read_bytes()
