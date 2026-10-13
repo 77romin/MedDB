@@ -254,7 +254,10 @@ def consult(client, db: MedDB, fallback=None, knowledge_mode=None, reference_pro
         target = None
         if "pick" in step:
             try:
-                act = acts[int(step["pick"]) - 1]
+                pick = step['pick']
+                if type(pick) is not int or not 1 <= pick <= len(acts):
+                    raise ValueError('Recommendation number must be a positive integer in range')
+                act = acts[pick - 1]
             except (ValueError, TypeError, IndexError):
                 failures += 1
                 if failures >= 3:
@@ -332,6 +335,8 @@ def write_record(client, db: MedDB, kb: Tracker, opening, vitals, transcript):
     user = f"[시작 정보] {opening}\n[활력징후] {vitals}\n[대화 기록]\n" + "\n".join(transcript)
     if draft:
         user += f"\n[지식베이스 초안]\n{json.dumps(draft, ensure_ascii=False)}\n[진단 순위]\n{ranking}"
+    if kb.bridge:
+        user += '\n' + kb.bridge.hint(kb, kb.reference_profile)
     for _ in range(2):
         try:
             result = parse_json(chat(client, RECORD_SYSTEM, user, 4096)) or {}

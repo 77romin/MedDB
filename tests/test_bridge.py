@@ -53,6 +53,7 @@ class BridgeTests(unittest.TestCase):
                 self.assertIsNotNone(client.submitted)
                 hints = '\n'.join(client.prompts)
                 self.assertEqual('[온톨로지 참고 근거' in hints, mode != 'clinical')
+                self.assertEqual('[온톨로지 참고 근거' in client.prompts[-1], mode != 'clinical')
                 if mode == 'ontology':
                     self.assertNotIn('[추천 행동]', hints)
 

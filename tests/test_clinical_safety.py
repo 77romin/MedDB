@@ -97,6 +97,17 @@ class ClinicalSafety(unittest.TestCase):
         self.assertFalse(tracker.exam_results)
         self.assertEqual(tracker.exam_attempts[0]['status'], 'rejected')
 
+    def test_invalid_recommendation_numbers_do_not_execute_actions(self):
+        from test_meddb import ScriptedLLM
+        from examples.hybrid_agent import consult
+        for pick in (0, -1, True, 1.5, '1', 999):
+            with self.subTest(pick=pick):
+                client = ScriptedLLM('58세 남자입니다. 가슴이 아파요.',
+                                     [{'pick': pick}, {'action': 'DONE'}],
+                                     {'S': {'cc': '흉통'}, 'diagnosis': '공황발작'})
+                consult(client, self.db, knowledge_mode='clinical')
+                self.assertEqual(client.log, [])
+
 
 if __name__ == '__main__':
     unittest.main()
