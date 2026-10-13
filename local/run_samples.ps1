@@ -1,6 +1,6 @@
 ﻿# 공개 샘플 3건(C01, C03, C10)을 API 키 없이 로컬 Ollama로 돌린다.
 # nova-starter 폴더에서 실행:  powershell -ExecutionPolicy Bypass -File local\run_samples.ps1
-#   -Agent baseline (기본값) | meddb
+#   -Agent baseline (기본값) | meddb | hybrid
 #   case.md 위치: samples\C01\case.md (받은 폴더 그대로) 또는 samples\C01.md
 param(
     [string]$Agent = "baseline",

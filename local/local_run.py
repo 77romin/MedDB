@@ -10,7 +10,8 @@
   python local/local_run.py --case local/cases/C01_insomnia.json --agent meddb
 
 --agent baseline : 시작 패키지의 run.py (기본 에이전트)
---agent meddb    : examples/consult_skeleton.py (온톨로지 사용, KB 밖 주호소면 기본 에이전트로 넘김)
+--agent meddb    : examples/consult_skeleton.py (KB가 진료를 정함, KB 밖 주호소면 기본 에이전트로 넘김)
+--agent hybrid   : examples/hybrid_agent.py (LLM이 진료를 이끌고 KB가 매 턴 후보·추천·표준 진찰명을 줌)
 결과는 local/out/<증례>_<agent>.json 에도 저장한다.
 """
 from __future__ import annotations
@@ -179,6 +180,9 @@ def load_agent(name):
     baseline.NovaError = LocalError
     if name == "baseline":
         return baseline.prepare, baseline.consult
+    if name == "hybrid":
+        from examples.hybrid_agent import consult, prepare
+        return prepare, consult
     from examples.consult_skeleton import consult, prepare
     return prepare, (lambda client, db: consult(client, db, fallback=baseline.consult))
 
@@ -186,7 +190,7 @@ def load_agent(name):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--case", required=True)
-    ap.add_argument("--agent", choices=["baseline", "meddb"], default="baseline")
+    ap.add_argument("--agent", choices=["baseline", "meddb", "hybrid"], default="baseline")
     args = ap.parse_args()
     case = json.loads(Path(args.case).read_text(encoding="utf-8"))
     prepare, consult = load_agent(args.agent)

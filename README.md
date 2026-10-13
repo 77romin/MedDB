@@ -226,3 +226,14 @@ DDXPlus 문진 항목과 KB 소견의 대응은 `tools/ddxplus_map.json`에 있�
 
 - 가중치·한도는 감으로 정하지 않고 `eval_kb.py`로 비교해 정한다 (예: 감별 한도 4→10: 71%→81%, 미확인 핵심 소견 감점은 오히려 61~69%로 떨어져 채택하지 않음).
 - `dev_specs.json`의 `split=test` 증례는 점수만 보고, 그 증례에 맞춰 KB를 고치지 않는다. 공개 샘플 3건은 동작 확인용.
+
+## 에이전트 세 가지 (비교용)
+
+| 이름 | 파일 | 누가 진료를 이끄나 | KB 밖 주호소 |
+|---|---|---|---|
+| baseline | 시작 패키지 `run.py` | LLM (순서만 프롬프트로) | — |
+| meddb | `examples/consult_skeleton.py` | KB 규칙 (LLM은 답 판정만) | baseline으로 넘김 |
+| **hybrid** | `examples/hybrid_agent.py` | LLM, 매 턴 KB가 감별 후보·근거·남은 레드플래그·추천 행동(번호)·진찰표 표준명을 프롬프트에 넣음 | 표준 진찰명·기본 체크리스트만 주고 LLM이 진료 |
+
+hybrid의 기록지는 KB가 확인된 사실로 만든 초안을 LLM이 대화와 맞춰 다듬는다(LLM이 실패하면 KB 초안 그대로).
+제출 ZIP: `python tools/make_submission.py --starter <run.py> --agent hybrid|meddb`

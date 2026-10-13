@@ -338,6 +338,85 @@ class KBSelfConsistency(unittest.TestCase):
         self.assertGreaterEqual(r["top3"], 0.88)
 
 
+class ScriptedLLM:
+    """하이브리드 시험용 가짜 클라이언트. 의사 LLM의 답을 순서대로 내고, 환자는 정해진 말만 한다."""
+
+    def __init__(self, opening, steps, record, yes=()):
+        self.opening, self.steps, self.record, self.yes = opening, list(steps), record, yes
+        self.log, self.turn, self.submitted, self.prompts = [], 0, None, []
+
+    def session(self):
+        return {"initial": {"opening": self.opening, "vital_signs": "혈압 130/80 mmHg, 맥박 88 회/분, 체온 36.7°C"},
+                "turns_remaining": 50 - self.turn}
+
+    def chat(self, messages, max_tokens=2048):
+        text = messages[-1]["content"]
+        self.prompts.append(text)
+        if "주호소를 다음 중" in text:
+            out = "none"
+        elif "[대화 기록]" in text and "초진 기록" in messages[0]["content"]:
+            out = json.dumps(self.record, ensure_ascii=False)
+        elif "[남은 턴]" in text:
+            out = json.dumps(self.steps.pop(0) if self.steps else {"action": "DONE"}, ensure_ascii=False)
+        else:
+            out = "?"
+        return {"choices": [{"message": {"content": out}}]}
+
+    def say(self, content):
+        assert 0 < len(content) <= 30, content
+        self.turn += 1
+        self.log.append(("SAY", content))
+        answer = "네, 그래요." if any(k in content for k in self.yes) else "아니요, 없어요."
+        return {"content": answer, "turn": self.turn, "turns_remaining": 50 - self.turn}
+
+    def exam(self, content):
+        assert 0 < len(content) <= 30, content
+        self.turn += 1
+        self.log.append(("EXAM", content))
+        return {"result": "압통(-), 반발통(-)", "turn": self.turn, "turns_remaining": 50 - self.turn}
+
+    def diagnose(self, note, diagnosis):
+        self.submitted = (note, diagnosis)
+        return {"ok": True}
+
+
+class Hybrid(unittest.TestCase):
+    def test_in_kb_uses_hints_picks_and_free_actions(self):
+        from examples.hybrid_agent import consult, prepare
+        record = {"S": {"cc": "C.C : 흉통"}, "A": {"evidence": "#1. 급성 심근경색"}, "diagnosis": "급성 심근경색"}
+        steps = [{"pick": 1}, {"action": "SAY", "content": "가슴을 누르는 느낌인가요?"},
+                 {"action": "EXAM", "content": "심음 청진을 하겠습니다."}, {"pick": 99},
+                 {"action": "SAY", "content": "심장 검사가 바로 필요해요."}, {"action": "DONE"}]
+        client = ScriptedLLM("58세 남자입니다. 가슴이 아파서 왔어요.", steps, record, yes=("누르는",))
+        consult(client, prepare())
+        note, diagnosis = client.submitted
+        self.assertEqual(diagnosis, "급성 심근경색")
+        self.assertEqual(note["S"]["cc"], "C.C : 흉통")
+        self.assertTrue(note["P"]["tests"])               # LLM이 비운 칸은 KB 초안으로 채운다
+        self.assertIn("[추천 행동]", client.prompts[1])
+        self.assertIn("심음 청진", client.prompts[1])        # 표준 진찰명 힌트
+        self.assertEqual([k for k, _ in client.log], ["SAY", "SAY", "EXAM", "SAY"])
+
+    def test_outside_kb_still_runs_with_generic_hints(self):
+        from examples.hybrid_agent import consult, prepare
+        record = {"S": {"cc": "C.C : 기억력 저하"}, "diagnosis": "알츠하이머병 치매"}
+        steps = [{"action": "SAY", "content": "언제부터 깜빡하셨어요?"}, {"action": "DONE"}]
+        client = ScriptedLLM("78세 여자입니다. 기억력이 자꾸 깜빡깜빡해서 왔어요.", steps, record)
+        consult(client, prepare())
+        note, diagnosis = client.submitted
+        self.assertEqual(diagnosis, "알츠하이머병 치매")
+        self.assertIn("지식베이스 밖", client.prompts[1])
+        self.assertIn("의식·지남력 평가", client.prompts[1])
+
+    def test_falls_back_to_kb_draft_when_llm_record_fails(self):
+        from examples.hybrid_agent import consult, prepare
+        client = ScriptedLLM("58세 남자입니다. 가슴이 아파서 왔어요.", [{"pick": 1}, {"action": "DONE"}], record={})
+        consult(client, prepare())
+        note, diagnosis = client.submitted
+        self.assertTrue(diagnosis)
+        self.assertTrue(note["S"]["cc"])
+
+
 class Integration(unittest.TestCase):
     def test_skeleton_runs_a_case_end_to_end(self):
         from examples.consult_skeleton import consult, prepare

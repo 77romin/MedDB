@@ -48,7 +48,7 @@ def same_dx(db: MedDB, submitted: str, answer: str) -> str:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--agent", choices=["baseline", "meddb"], default="meddb")
+    ap.add_argument("--agent", choices=["baseline", "meddb", "hybrid"], default="meddb")
     ap.add_argument("--cases", default=str(ROOT / "dev_cases"))
     ap.add_argument("--specs", default=str(HERE / "dev_specs.json"))
     ap.add_argument("--split", choices=["dev", "test", "all"], default="all")
