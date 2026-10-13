@@ -1,0 +1,373 @@
+[slots]
+onset|발생 시점|S.현병력|언제부터 증상이 있으셨어요?
+course|경과|S.현병력|증상이 어떻게 변해 왔나요?
+location|부위|S.현병력|어디가 가장 불편하세요?
+pain_character|통증 양상|S.현병력|어떤 느낌으로 아프세요?
+character|증상 양상|S.현병력|어떤 느낌인지 말씀해 주시겠어요?
+duration|지속 시간|S.현병력|한 번 생기면 얼마나 지속되나요?
+aggravating|악화 요인|S.현병력|어떨 때 더 심해지나요?
+relieving|완화 요인|S.현병력|어떨 때 좀 나아지나요?
+severity|통증 강도|S.현병력|통증이 10점 중 몇 점인가요?
+episode_count|횟수|S.현병력|하루에 몇 번 정도 하시나요?
+lmp|최종 월경일|S.현병력|마지막 생리는 언제였나요?|sex=F,age=12-55
+pmh|과거력|S.과거력|앓고 계신 지병이 있으세요?
+meds|복용 약물|S.약물|드시고 있는 약이 있으세요?
+allergy|알레르기|S.알레르기|약이나 음식 알레르기가 있나요?
+family|가족력|S.가족력|가족 중 비슷한 병이 있었나요?
+[exams]
+ex_heart_ausc|심음 청진|심음을 청진하겠습니다.
+ex_lung_ausc|폐 청진|폐를 청진하겠습니다.
+ex_bp_both_arms|양팔 혈압 비교|양팔 혈압을 비교해 재겠습니다.
+ex_chest_wall_palp|흉벽 촉진|가슴 벽을 눌러 보겠습니다.
+ex_leg_inspect|하지 말초 진찰|하지 말초 진찰을 하겠습니다.
+ex_jvp|경정맥 시진|목 정맥을 살펴보겠습니다.
+ex_abd_palp|복부 촉진|복부를 촉진하겠습니다.
+ex_abd_ausc|장음 청진|장음을 청진하겠습니다.
+ex_murphy|머피 징후|머피 징후를 확인하겠습니다.
+ex_cva|늑골척추각 타진|옆구리를 두드려 보겠습니다.
+ex_neck_flex|경부 강직 검사|목을 앞으로 숙여 보겠습니다.
+ex_motor|사지 근력 검사|사지 근력 검사를 하겠습니다.
+ex_face|안면 운동 검사|얼굴 움직임을 확인하겠습니다.
+ex_pupil|동공 반사|동공 반응을 확인하겠습니다.
+ex_eye_inspect|안구 시진|눈의 충혈을 살펴보겠습니다.
+ex_conjunctiva|결막·공막 시진|결막·공막을 시진하겠습니다.
+ex_nystagmus|안구진탕 확인|안구진탕을 확인하겠습니다.
+ex_dix_hallpike|딕스-홀파이크 검사|딕스-홀파이크 검사를 하겠습니다.
+ex_gait|보행 관찰|보행을 관찰하겠습니다.
+ex_orthostatic_bp|기립성 혈압 측정|기립성 혈압을 측정하겠습니다.
+ex_slr|하지 직거상 검사|누워서 다리를 들어 올려 보겠습니다.
+ex_spine_percuss|척추 타진|척추를 두드려 보겠습니다.
+ex_paraspinal_palp|척추 주위근 촉진|허리 근육을 눌러 보겠습니다.
+ex_perianal_sens|항문 주위 감각 검사|항문 주위 감각을 확인하겠습니다.
+ex_throat|인두 시진|목 안을 살펴보겠습니다.
+ex_neck_nodes|경부 림프절 촉진|경부 림프절을 촉진하겠습니다.
+ex_skin_inspect|피부 시진|아픈 부위 피부를 살펴보겠습니다.
+ex_temporal_artery|측두동맥 촉진|관자놀이 동맥을 만져 보겠습니다.
+ex_sinus|부비동 압통 검사|얼굴 부비동을 눌러 보겠습니다.
+ex_mouth|구강 점막 시진|입안 점막을 살펴보겠습니다.
+ex_dre|직장수지검사|직장수지검사를 하겠습니다.
+ex_pelvic|골반 내진|골반 내진을 하겠습니다.
+ex_mental|의식·지남력 평가|의식·지남력 평가를 하겠습니다.
+[findings]
+fever|발열|symptom|전신|열이 나거나 오한이 있었나요?|열이 나;열이 있;오한;고열;몸이 뜨거
+weight_loss|체중 감소|symptom|전신|최근 체중이 많이 빠졌나요?|살이 빠;체중이 줄;체중이 빠
+night_sweats|야간 발한|symptom|전신|밤에 식은땀이 많이 나나요?|밤에 땀;자면서 땀
+fatigue|피로|symptom|전신|평소보다 많이 피곤하세요?|피곤;기운이 없;무기력
+diaphoresis|식은땀|symptom|전신|아플 때 식은땀이 났나요?|식은땀
+syncope|실신|symptom|전신|정신을 잃고 쓰러진 적 있나요?|쓰러졌;기절;정신을 잃
+poor_oral_intake|경구 섭취 불량|symptom|전신|물도 못 드실 정도인가요?|아무것도 못 먹;물도 못
+sudden_onset|갑작스러운 발생|symptom|전신|증상이 갑자기 시작됐나요?|갑자기
+recurrent_similar|반복되는 비슷한 증상|symptom|전신|전에도 비슷한 증상이 있었나요?|전에도
+myalgia|근육통|symptom|전신|온몸이 쑤시고 아픈가요?|몸살;온몸이 쑤
+stress_sleep|스트레스·수면 부족|history|전신|최근 스트레스나 수면 부족 있나요?||soap=S.사회력
+sick_contact|주변 유증상자|history|전신|주변에 비슷한 증상인 분 있나요?||soap=S.현병력
+immunocompromised|면역 저하 상태|history|전신|면역이 떨어지는 병이 있나요?|
+cancer_history|암 병력|history|전신|암 진단을 받은 적 있나요?|
+cv_risk|심혈관 위험인자(고혈압·당뇨·고지혈증)|history|심혈관|고혈압이나 당뇨가 있으세요?|고혈압;당뇨;고지혈증
+smoker|흡연|history|전신|담배를 피우시나요?|담배;흡연|soap=S.사회력,age=13-
+heavy_alcohol|과음|history|전신|술을 자주 많이 드시나요?|술을 많이;매일 술|soap=S.사회력,age=13-
+immobilization|최근 수술·장기 부동|history|심혈관|최근 수술이나 장거리 여행 했나요?|
+trauma_fall|외상·낙상|history|근골격|넘어지거나 다친 적이 있나요?||soap=S.현병력
+head_trauma|두부 외상|history|신경|최근 머리를 다친 적 있나요?||soap=S.현병력
+pressure_chest_pain|압박성 흉통|symptom|심혈관|가슴을 누르거나 조이는 느낌인가요?|조이;짓누르;쥐어짜;누르는 듯
+exertional_chest_pain|운동 시 악화되는 흉통|symptom|심혈관|움직이면 가슴이 더 아픈가요?|
+radiation_arm_jaw|팔·턱 방사통|symptom|심혈관|통증이 팔이나 턱으로 퍼지나요?|팔로 퍼;턱으로;어깨로 퍼;왼팔
+tearing_pain_back|찢어지는 듯한 등 방사통|symptom|심혈관|찢어지는 통증이 등으로 퍼지나요?|찢어지
+pleuritic_pain|흡기 시 악화되는 흉통|symptom|호흡기|숨을 깊이 쉬면 더 아픈가요?|숨 쉴 때 아;숨을 들이쉬면
+positional_relief|앞으로 숙이면 완화되는 흉통|symptom|심혈관|앞으로 숙이면 통증이 덜한가요?|
+palpitations|두근거림|symptom|심혈관|가슴이 두근거리나요?|두근
+orthopnea|기좌호흡|symptom|심혈관|누우면 숨이 더 차나요?|누우면 숨
+leg_swelling|하지 부종|symptom|심혈관|다리가 붓나요?|다리가 부;발이 부
+unilateral_leg_swelling|한쪽 다리 부종·통증|symptom|심혈관|한쪽 다리만 붓거나 아픈가요?|한쪽 다리;종아리가 아
+anxiety_trigger|심한 불안·공포감|symptom|정신|심한 불안이나 공포를 느끼셨나요?|불안;죽을 것 같
+paresthesia|손발 저림·떨림|symptom|신경|손발이 저리거나 떨리나요?|손이 저;손발이 저;손이 떨
+lightheaded|아찔함·눈앞 캄캄함|symptom|신경|눈앞이 캄캄해지는 느낌인가요?|캄캄;아찔
+dyspnea|호흡곤란|symptom|호흡기|숨이 차신가요?|숨이 차;숨쉬기 힘;호흡곤란;숨이 가쁘
+exertional_dyspnea|운동 시 호흡곤란|symptom|호흡기|움직일 때 숨이 더 차나요?|걸으면 숨;계단을 오르면
+cough|기침|symptom|호흡기|기침이 나나요?|기침
+sputum|가래|symptom|호흡기|가래가 나오나요?|가래
+purulent_sputum|화농성 가래|symptom|호흡기|가래가 누렇거나 녹색인가요?|누런 가래;노란 가래;녹색 가래
+hemoptysis|객혈|symptom|호흡기|가래에 피가 섞여 나오나요?|피가래;피 섞인 가래;각혈
+wheeze_sx|쌕쌕거림|symptom|호흡기|숨쉴 때 쌕쌕 소리가 나나요?|쌕쌕
+nocturnal_cough|야간·새벽 기침|symptom|호흡기|밤이나 새벽에 기침이 심한가요?|
+chronic_cough|2주 이상 지속되는 기침|symptom|호흡기|기침이 2주 넘게 계속되나요?|
+asthma_history|천식·알레르기 병력|history|호흡기|천식이나 알레르기 질환이 있나요?|
+tb_contact|결핵 접촉력|history|호흡기|결핵 환자와 접촉한 적 있나요?|
+new_bp_med|최근 시작한 혈압약|history|심혈관|혈압약을 새로 시작하셨나요?||soap=S.약물
+sore_throat|인후통|symptom|이비인후|목이 아프신가요?|목이 아;목이 따가;침 삼킬 때
+rhinorrhea|콧물·코막힘|symptom|이비인후|콧물이나 코막힘이 있나요?|콧물;코가 막
+postnasal_drip|후비루|symptom|이비인후|콧물이 목 뒤로 넘어가나요?|
+facial_pain_bending|숙일 때 악화되는 안면통|symptom|이비인후|고개를 숙이면 얼굴이 더 아픈가요?|
+hearing_loss_tinnitus|청력 저하·이명|symptom|이비인후|귀가 먹먹하거나 소리가 나나요?|이명;귀가 먹먹;귀에서 소리
+abdominal_pain|복통|symptom|소화기|배가 아프신가요?|배가 아;복통
+epigastric_pain|명치 통증|symptom|소화기|명치 부위가 아프신가요?|명치;윗배
+ruq_pain|우상복부 통증|symptom|소화기|오른쪽 윗배가 아프신가요?|오른쪽 윗배;오른쪽 갈비뼈 아래
+lower_abd_pain|하복부 통증|symptom|소화기|아랫배가 아프신가요?|아랫배
+rlq_migration|우하복부로 이동하는 통증|symptom|소화기|통증이 오른쪽 아랫배로 옮겼나요?|오른쪽 아랫배
+flank_pain|옆구리 통증|symptom|비뇨생식|옆구리가 아프신가요?|옆구리
+colicky_pain|산통(쥐어짜는 간헐적 통증)|symptom|소화기|통증이 쥐어짜듯 왔다 갔다 하나요?|
+pain_radiates_back|등으로 퍼지는 통증|symptom|소화기|통증이 등 쪽으로 퍼지나요?|등으로 퍼;등까지
+radiation_groin|사타구니 방사통|symptom|비뇨생식|통증이 사타구니로 뻗치나요?|사타구니
+nausea_vomiting|구역·구토|symptom|소화기|메스껍거나 토하셨나요?|토했;구토;메스꺼;울렁;구역
+diarrhea|설사|symptom|소화기|설사를 하시나요?|설사;묽은 변
+bloody_stool|혈변·흑색변|symptom|소화기|변에 피가 섞이거나 검은가요?|혈변;검은 변;피 섞인 변
+hematemesis|토혈|symptom|소화기|피를 토하셨나요?|피를 토
+no_flatus|가스·대변 배출 중단|symptom|소화기|방귀나 대변이 안 나오나요?|방귀가 안;가스가 안
+abdominal_distension|복부 팽만|symptom|소화기|배가 빵빵하게 부풀었나요?|배가 빵빵;배가 불러;더부룩
+anorexia|식욕 부진|symptom|소화기|입맛이 없으신가요?|입맛이 없;식욕이 없
+heartburn|속쓰림·신물 역류|symptom|소화기|신물이 올라오거나 속이 쓰린가요?|속이 쓰;신물;가슴이 타
+postprandial_worse|식후·누울 때 악화|symptom|소화기|식사 후나 누우면 더 심한가요?|
+fatty_food_trigger|기름진 식사 후 악화|symptom|소화기|기름진 음식 후에 더 아픈가요?|
+jaundice_sx|황달|symptom|소화기|눈이나 피부가 노랗게 됐나요?|노랗
+suspicious_food|의심 음식 섭취|history|소화기|최근 상한 음식을 드셨나요?||soap=S.현병력
+nsaid_use|소염진통제 복용|history|소화기|소염진통제를 자주 드시나요?||soap=S.약물
+abdominal_surgery_history|복부 수술력|history|소화기|배 수술을 받은 적 있나요?|
+recent_antibiotics|최근 항생제 복용|history|소화기|최근 항생제를 드셨나요?||soap=S.약물
+dysuria|배뇨통|symptom|비뇨생식|소변볼 때 아프거나 따가운가요?|소변볼 때 아;소변 볼 때 아;소변볼 때 따
+frequency_urgency|빈뇨·절박뇨|symptom|비뇨생식|소변이 자주 마렵거나 급한가요?|소변이 자주;소변을 자주;화장실을 자주
+hematuria|혈뇨|symptom|비뇨생식|소변에 피가 섞여 나오나요?|혈뇨;소변이 빨;소변에 피
+weak_stream|약한 소변 줄기|symptom|비뇨생식|소변 줄기가 약해졌나요?|줄기가 약;소변이 시원
+urethral_discharge|요도 분비물|symptom|비뇨생식|요도에서 분비물이 나오나요?||sex=M
+vaginal_discharge|질 분비물 증가|symptom|비뇨생식|질 분비물이 늘거나 냄새나나요?|냉이|sex=F
+vulvar_itching|외음부 가려움|symptom|비뇨생식|외음부가 가렵거나 따가운가요?||sex=F
+vaginal_bleeding|질 출혈|symptom|비뇨생식|질 출혈이 있으신가요?|하혈|sex=F
+pregnancy_possible|임신 가능성·무월경|history|비뇨생식|임신 가능성이 있으신가요?|생리가 늦;생리를 안|sex=F,age=12-55,soap=S.현병력
+heavy_menses|월경 과다|symptom|비뇨생식|생리 양이 많으신가요?||sex=F,age=12-55
+unprotected_sex|최근 새로운 성 접촉|history|비뇨생식|최근 새로운 성 접촉이 있었나요?||soap=S.사회력
+perineal_pain|회음부 통증|symptom|비뇨생식|회음부나 항문 쪽이 아픈가요?||sex=M
+bowel_bladder_dysfunction|대소변 장애|symptom|신경|대소변 보기가 어려워졌나요?|
+saddle_anesthesia|안장 부위 감각 저하|symptom|신경|엉덩이 주변 감각이 둔한가요?|
+polyuria_polydipsia|다뇨·다음|symptom|내분비|물을 많이 마시고 소변이 잦나요?|
+thunderclap|생애 최악의 두통|symptom|신경|살면서 가장 심한 두통인가요?|가장 심한 두통;망치로
+unilateral_throbbing|편측 박동성 두통|symptom|신경|한쪽 머리가 욱신거리나요?|욱신;지끈;한쪽 머리
+photophobia|빛·소리 과민|symptom|신경|빛이나 소리에 예민해지나요?|눈이 부시
+aura|조짐(시각 증상)|symptom|신경|두통 전에 번쩍이는 게 보였나요?|
+band_like|조이는 양측 두통|symptom|신경|머리 전체가 조이듯 아픈가요?|띠를 두른;머리가 조이
+periorbital_autonomic|안와 주위 통증·눈물|symptom|신경|한쪽 눈 주위가 아프고 눈물나나요?|
+neck_stiffness_sx|목 뻣뻣함|symptom|신경|목이 뻣뻣하거나 숙이기 힘든가요?|목이 뻣뻣
+altered_mental|의식 변화·혼동|symptom|신경|멍하거나 헷갈린 적이 있나요?|헛소리;정신이 없;멍하
+focal_weakness|편측 위약·감각 이상|symptom|신경|한쪽 팔다리에 힘이 빠지나요?|힘이 빠;마비
+speech_disturbance|언어 장애|symptom|신경|말이 어눌해지거나 안 나오나요?|말이 어눌;발음이
+diplopia|복시|symptom|신경|물체가 둘로 보이나요?|둘로 보;겹쳐 보
+vision_halos|시력 저하·달무리|symptom|눈|눈이 침침하거나 달무리 보이나요?|침침;뿌옇
+morning_headache|아침에 심한 두통|symptom|신경|아침에 두통이 더 심한가요?|
+jaw_claudication|턱 파행|symptom|신경|씹을 때 턱이 아프신가요?|
+vertigo|회전성 어지럼|symptom|신경|주변이 빙빙 도는 느낌인가요?|빙빙;빙글;천장이 돌
+positional_vertigo|자세 변화 시 짧은 어지럼|symptom|신경|고개 돌릴 때 잠깐 어지럽나요?|
+continuous_vertigo|하루 이상 지속되는 어지럼|symptom|신경|어지럼이 하루 넘게 계속되나요?|
+orthostatic_sx|기립 시 어지럼|symptom|신경|일어설 때 핑 도나요?|일어날 때;일어서면
+gait_unsteady|보행 시 쏠림|symptom|신경|걸을 때 한쪽으로 쏠리나요?|비틀
+diabetes_medication|당뇨약·인슐린 사용|history|내분비|당뇨약이나 인슐린을 쓰시나요?||soap=S.약물
+missed_meal|식사 거름|history|내분비|식사를 거르셨나요?||soap=S.현병력
+lifting_strain|무리한 동작 후 발생|history|근골격|무거운 걸 들다가 아프셨나요?||soap=S.현병력
+leg_radiation|하지 방사통|symptom|근골격|통증이 다리로 뻗치나요?|다리로 뻗;다리가 당기
+leg_numbness_weak|하지 저림·위약|symptom|신경|다리가 저리거나 힘이 빠지나요?|다리가 저리;다리에 힘
+night_rest_pain|야간·안정 시 통증|symptom|근골격|가만히 쉬거나 밤에도 아픈가요?|
+osteoporosis_steroid|골다공증·스테로이드 복용|history|근골격|골다공증이나 스테로이드 복용 있나요?|
+morning_stiffness|조조 강직|symptom|근골격|아침에 허리가 뻣뻣하다 풀리나요?|
+skin_redness_swelling|피부 발적·부종|symptom|피부|피부가 빨갛게 붓고 아픈 곳 있나요?|빨갛게 부
+rash|발진|symptom|피부|피부에 발진이 생겼나요?|발진;두드러기
+tachycardia|빈맥|vital|심혈관||
+hypotension|저혈압|vital|심혈관||
+severe_hypertension|중증 고혈압|vital|심혈관||
+tachypnea|빈호흡|vital|호흡기||
+hypoxia|저산소증|vital|호흡기||
+murmur|심잡음|sign|심혈관|ex_heart_ausc|
+pericardial_rub|심막 마찰음|sign|심혈관|ex_heart_ausc|
+irregular_rhythm|불규칙한 심박|sign|심혈관|ex_heart_ausc|
+s3_gallop|제3심음|sign|심혈관|ex_heart_ausc|
+crackles|수포음|sign|호흡기|ex_lung_ausc|
+wheezing_sign|천명음|sign|호흡기|ex_lung_ausc|
+decreased_breath_sounds|한쪽 호흡음 감소|sign|호흡기|ex_lung_ausc|
+bp_arm_difference|양팔 혈압 차이|sign|심혈관|ex_bp_both_arms|
+chest_wall_tenderness|흉벽 압통|sign|근골격|ex_chest_wall_palp|
+pitting_edema|함요 부종|sign|심혈관|ex_leg_inspect|
+calf_swelling_tender|한쪽 종아리 부종·압통|sign|심혈관|ex_leg_inspect|
+jvd|경정맥 확장|sign|심혈관|ex_jvp|
+rlq_tenderness|우하복부 압통|sign|소화기|ex_abd_palp|
+ruq_tenderness|우상복부 압통|sign|소화기|ex_abd_palp|
+epigastric_tenderness|명치 압통|sign|소화기|ex_abd_palp|
+llq_tenderness|좌하복부 압통|sign|소화기|ex_abd_palp|
+suprapubic_tenderness|치골상부 압통|sign|비뇨생식|ex_abd_palp|
+rebound_guarding|반발통·근성 방어|sign|소화기|ex_abd_palp|
+pulsatile_mass|박동성 복부 종괴|sign|심혈관|ex_abd_palp|
+bowel_sounds_abnormal|장음 이상(항진·소실)|sign|소화기|ex_abd_ausc|
+murphy_sign|머피 징후 양성|sign|소화기|ex_murphy|
+cva_tenderness|늑골척추각 압통|sign|비뇨생식|ex_cva|
+nuchal_rigidity|경부 강직|sign|신경|ex_neck_flex|
+motor_weakness_sign|편측 근력 저하|sign|신경|ex_motor|
+facial_droop|안면 비대칭|sign|신경|ex_face|
+pupil_abnormal|산대·고정된 동공|sign|눈|ex_pupil|
+red_eye|안구 충혈|sign|눈|ex_eye_inspect|
+pallor|결막 창백|sign|혈액|ex_conjunctiva|
+nystagmus_peripheral|수평 방향 고정 안진|sign|신경|ex_nystagmus|
+nystagmus_central|수직·방향 전환 안진|sign|신경|ex_nystagmus|
+dix_hallpike_positive|딕스-홀파이크 양성|sign|신경|ex_dix_hallpike|
+ataxia|실조성 보행|sign|신경|ex_gait|
+orthostatic_drop|기립성 혈압 저하|sign|심혈관|ex_orthostatic_bp|
+slr_positive|하지 직거상 검사 양성|sign|근골격|ex_slr|
+spinal_tenderness|척추 타진 압통|sign|근골격|ex_spine_percuss|
+paraspinal_tenderness|척추 주위근 압통|sign|근골격|ex_paraspinal_palp|
+saddle_anesthesia_sign|항문 주위 감각 저하|sign|신경|ex_perianal_sens|
+tonsillar_exudate|편도 삼출물|sign|이비인후|ex_throat|
+pharyngeal_erythema|인두 발적|sign|이비인후|ex_throat|
+cervical_lymphadenopathy|경부 림프절 종대|sign|이비인후|ex_neck_nodes|
+erythema_warmth|국소 발적·열감|sign|피부|ex_skin_inspect|
+temporal_artery_tender|측두동맥 압통|sign|신경|ex_temporal_artery|
+sinus_tenderness|부비동 압통|sign|이비인후|ex_sinus|
+dry_mucosa|구강 점막 건조|sign|전신|ex_mouth|
+prostate_tender|전립선 압통|sign|비뇨생식|ex_dre||sex=M
+prostate_enlarged|전립선 비대|sign|비뇨생식|ex_dre||sex=M
+cervical_motion_tenderness|자궁경부 운동 압통|sign|비뇨생식|ex_pelvic||sex=F
+adnexal_tenderness|부속기 압통|sign|비뇨생식|ex_pelvic||sex=F
+confusion_sign|지남력 저하|sign|신경|ex_mental|
+[slots]
+circumstances|발생 상황|S.현병력|그때 무엇을 하고 계셨나요?
+[exams]
+ex_ear|고막 시진|귀 안을 살펴보겠습니다.
+ex_thyroid|갑상선 촉진|갑상선을 촉진하겠습니다.
+ex_groin|서혜부 시진|사타구니를 살펴보겠습니다.
+ex_reflex|심부건반사|심부건반사를 확인하겠습니다.
+ex_eyelid|눈꺼풀 시진|눈꺼풀을 살펴보겠습니다.
+ex_pulse|요골동맥 맥박 촉진|요골동맥 맥박을 촉진하겠습니다.
+ex_rash|발진 시진|발진 부위를 살펴보겠습니다.
+ex_asterixis|퍼덕떨림 검사|손 떨림을 확인하겠습니다.
+[findings]
+lymph_node_swelling|림프절 종대|symptom|전신|목이나 겨드랑이에 멍울이 있나요?|멍울
+rest_chest_pain|안정 시 흉통|symptom|심혈관|가만히 있어도 가슴이 아픈가요?|
+crescendo_symptoms|점점 적은 활동에도 유발|symptom|심혈관|최근 더 적은 활동에도 생기나요?|
+thyroid_disease|갑상선 질환 병력|history|내분비|갑상선 질환이 있으신가요?|갑상선
+heart_disease_history|심장 질환 병력|history|심혈관|심장 질환을 진단받은 적 있나요?|
+allergen_exposure|알레르기 유발 물질 노출|history|피부|알레르기 있는 것에 노출됐나요?||soap=S.현병력
+seizure|경련|symptom|신경|몸을 떨며 의식을 잃었나요?|경련;발작;경기
+dysphagia|삼킴 곤란|symptom|이비인후|음식을 삼키기 어려우신가요?|삼키기 힘;삼킬 때 걸
+pnd|발작성 야간 호흡곤란|symptom|심혈관|자다가 숨이 차서 깨나요?|
+facial_weakness|안면 마비|symptom|신경|얼굴 한쪽이 처지거나 마비됐나요?|입이 돌아;얼굴이 마비
+bilateral_weakness|양측 사지 위약|symptom|신경|양쪽 팔다리에 힘이 빠지나요?|
+ascending_weakness|상행성 위약|symptom|신경|힘 빠짐이 발에서 위로 올라오나요?|
+fatigable_weakness|피로 시 악화되는 위약|symptom|신경|저녁이나 피곤할 때 더 힘이 빠지나요?|
+ptosis|눈꺼풀 처짐|symptom|신경|눈꺼풀이 처지나요?|눈꺼풀이 처
+anosmia|후각 저하|symptom|이비인후|냄새를 잘 못 맡으시나요?|냄새를 못
+whooping|흡기 시 훕 소리|symptom|호흡기|기침 끝에 숨 들이쉴 때 소리 나나요?|
+paroxysmal_cough|발작성 기침|symptom|호흡기|발작적으로 심한 기침을 하나요?|
+posttussive_vomiting|기침 후 구토|symptom|호흡기|기침하다가 토한 적이 있나요?|
+recent_uri|최근 감기·바이러스 감염|history|전신|최근 감기를 앓으셨나요?||soap=S.현병력
+chronic_lung_disease|만성 폐질환 병력|history|호흡기|만성 폐질환이 있으신가요?|
+swelling|부종|symptom|전신|몸에 부은 곳이 있나요?|
+irregular_palpitation|불규칙한 두근거림|symptom|심혈관|맥이 불규칙하게 뛰는 느낌인가요?|
+abrupt_onset_offset|갑자기 시작해 갑자기 멎는 두근거림|symptom|심혈관|갑자기 시작해 갑자기 멎나요?|
+stimulant_use|카페인·각성제 섭취|history|심혈관|카페인이나 각성제를 드셨나요?||soap=S.사회력
+heat_intolerance|더위 못 견딤|symptom|내분비|남들보다 더위를 많이 타시나요?|더위를 많이;더위를 타;덥다고
+purulent_nasal|화농성 콧물|symptom|이비인후|누런 콧물이 나오나요?|누런 콧물
+drooling|침 흘림|symptom|이비인후|침을 삼키기 힘들어 흘리나요?|
+stridor_sx|흡기 시 협착음|symptom|호흡기|숨 들이쉴 때 쇳소리가 나나요?|
+hoarseness|쉰 목소리|symptom|이비인후|목소리가 쉬었나요?|목이 쉬;목소리가 쉬
+muffled_voice|웅얼거리는 목소리|symptom|이비인후|목소리가 웅얼거리듯 변했나요?|
+trismus|개구 장애|symptom|이비인후|입을 벌리기 힘드신가요?|
+oral_ulcers|구강 궤양|symptom|이비인후|입안이 자주 허나요?|입안이 헐
+forceful_vomiting|심한 반복 구토|symptom|소화기|심하게 여러 번 토하셨나요?|
+movement_pain|움직일 때 악화되는 통증|symptom|근골격|몸을 움직이면 더 아픈가요?|
+strain_worse|기침·힘줄 때 악화|symptom|소화기|기침하거나 힘줄 때 더 아픈가요?|
+nasal_eye_itching|코·눈 가려움|symptom|이비인후|코나 눈이 가려우신가요?|
+ear_pain|귀 통증|symptom|이비인후|귀가 아프신가요?|귀가 아
+groin_lump|서혜부 덩이|symptom|소화기|사타구니에 불룩한 것이 있나요?|
+joint_pain|관절통·관절 부종|symptom|근골격|관절이 아프거나 붓나요?|관절이 아
+itching|가려움|symptom|피부|가려우신가요?|가려;가렵
+new_drug|최근 새로 시작한 약|history|피부|최근 새로 시작한 약이 있나요?||soap=S.약물
+dermatomal_pain|한쪽 띠 모양 통증|symptom|피부|한쪽에 띠 모양으로 아픈가요?|
+angioedema|입술·혀 부종|symptom|피부|입술이나 혀가 부었나요?|입술이 부;혀가 부
+contact_exposure|자극 물질 접촉|history|피부|새 화장품이나 금속에 닿았나요?||soap=S.현병력
+photosensitivity|광과민|symptom|피부|햇빛을 쬐면 발진이 심해지나요?|
+vasovagal_prodrome|실신 전 전구 증상|symptom|심혈관|쓰러지기 전 메스껍거나 땀이 났나요?|
+standing_trigger|장시간 기립·정서적 유발|history|심혈관|오래 서 있거나 놀란 뒤였나요?||soap=S.현병력
+exertional_syncope|운동 중 실신|symptom|심혈관|운동하다가 쓰러졌나요?|
+postictal_confusion|발작 후 혼동|symptom|신경|깨어난 뒤 한동안 멍했나요?|
+tongue_bite_incontinence|혀 깨묾·요실금|symptom|신경|혀를 깨물거나 소변을 지렸나요?|
+drug_overdose|약물 과다 복용 가능성|history|정신|약을 많이 드셨을 가능성 있나요?||soap=S.현병력
+liver_disease|간 질환 병력|history|소화기|간 질환이 있으신가요?|간경화;간경변
+diuretic_use|이뇨제 복용|history|내분비|이뇨제를 드시고 계신가요?||soap=S.약물
+tympanic_bulging|고막 발적·팽륜|sign|이비인후|ex_ear|
+goiter|갑상선 종대|sign|내분비|ex_thyroid|
+groin_bulge|서혜부 돌출|sign|소화기|ex_groin|
+areflexia|심부건반사 소실|sign|신경|ex_reflex|
+ptosis_sign|안검하수|sign|신경|ex_eyelid|
+irregular_pulse|불규칙한 맥박|sign|심혈관|ex_pulse|
+uvular_deviation|목젖 편위·편도 주위 종창|sign|이비인후|ex_throat|
+urticaria_wheals|팽진|sign|피부|ex_rash|
+vesicular_dermatomal|띠 모양 수포|sign|피부|ex_rash|
+malar_rash|뺨의 나비 모양 발진|sign|피부|ex_rash|
+petechiae|눌러도 사라지지 않는 출혈반|sign|피부|ex_rash|
+maculopapular_rash|전신 반구진 발진|sign|피부|ex_rash|
+asterixis|퍼덕떨림|sign|신경|ex_asterixis|
+[slots]
+sleep_schedule|수면 습관|S.현병력|보통 몇 시에 자고 일어나시나요?
+growth_history|성장 기록|S.현병력|예전에 잰 키 기록이 있나요?
+parent_height|부모 키|S.가족력|부모님 키는 각각 어떻게 되나요?
+[exams]
+ex_skin_temp|피부 온도·발한 촉진|피부 온도·발한 촉진을 하겠습니다.
+ex_cognitive|인지기능 선별검사|인지기능 선별검사를 하겠습니다.
+ex_sedation|주간 진정·불안 관찰|주간 진정·불안 관찰을 하겠습니다.
+ex_tremor|자세성 떨림|자세성 떨림을 확인하겠습니다.
+ex_thyroid_eye|갑상선 안징후 검사|갑상선 안징후 검사를 하겠습니다.
+ex_thyroid_bruit|갑상선 잡음 청진|갑상선 잡음을 청진하겠습니다.
+ex_anthro|신체 계측|신체 계측을 하겠습니다.
+ex_growth_chart|성장도표 백분위수 확인|성장도표 백분위수를 확인하겠습니다.
+ex_growth_velocity|성장 속도·중간부모키 산출|성장 속도·중간부모키를 산출하겠습니다.
+ex_body_prop|신체 비율 평가|신체 비율 평가를 하겠습니다.
+ex_striae|자주색 선조 시진|자주색 선조를 시진하겠습니다.
+ex_dysmorph|안면 기형 소견 시진|안면 기형 소견을 시진하겠습니다.
+ex_tanner|사춘기 성숙도 평가|사춘기 성숙도 평가를 하겠습니다.
+ex_liver_spleen|간·비장 촉진|간·비장을 촉진하겠습니다.
+ex_pretibial|경골앞 점액부종|경골앞 점액부종을 확인하겠습니다.
+[findings]
+sleep_onset_insomnia|잠들기 어려움|symptom|정신|잠드는 데 오래 걸리시나요?|잠들기;잠이 안 와;잠드는 데
+sleep_maintenance|자주 깸·일찍 깸|symptom|정신|자다가 자주 깨시나요?|자주 깨;새벽에 깨;중간에 깨
+hypnotic_use|수면제 복용|history|정신|수면제를 드시고 계신가요?|수면제;수면유도제;졸피뎀;스틸녹스|soap=S.약물
+dose_escalation|복용량 증가(내성)|symptom|정신|수면제 양이 점점 늘었나요?|양이 늘;알로 늘;더 먹어야
+withdrawal_sx|중단 시 금단 증상|symptom|정신|약을 안 먹으면 불안하거나 떨리나요?|
+failed_cut_down|감량 시도 실패|history|정신|약을 줄이려다 실패한 적 있나요?|줄이려;끊으려|soap=S.현병력
+multiple_prescribers|여러 병원에서 처방|history|정신|여러 병원에서 약을 받으시나요?|여러 병원|soap=S.현병력
+daytime_sedation|낮 졸림·멍함|symptom|정신|낮에 졸리거나 멍하신가요?|낮에 졸;낮에도 졸
+functional_impairment|일상생활 지장|symptom|정신|일상생활에 지장이 있으신가요?|지장이
+snoring_apnea|코골이·수면 중 무호흡|symptom|호흡기|자면서 코를 심하게 고시나요?|코를 골;숨을 멈
+depressed_mood|우울감·흥미 저하|symptom|정신|기분이 우울하거나 의욕이 없나요?|우울;의욕이 없
+suicidal_ideation|자살 사고|symptom|정신|죽고 싶다는 생각이 드신 적 있나요?|죽고 싶
+excessive_worry|지속적인 걱정·긴장|symptom|정신|평소 걱정이 많고 늘 긴장되나요?|걱정이 많;늘 긴장
+increased_appetite|식욕 증가|symptom|소화기|식욕이 오히려 늘었나요?|식욕이 좋;식욕이 늘;더 많이 먹
+hand_tremor|손떨림|symptom|신경|손이 떨리시나요?|손이 떨;손떨림;손이 덜덜
+frequent_stools|배변 횟수 증가|symptom|소화기|대변을 하루 여러 번 보시나요?|변을 자주;변이 묽
+menstrual_change|월경 변화|symptom|비뇨생식|생리 양이나 주기가 변했나요?|생리량;생리 양;생리 주기|sex=F,age=12-55
+eye_symptoms|눈 돌출감·뻑뻑함|symptom|눈|눈이 튀어나온 느낌이 있나요?|눈이 튀어;눈이 뻑뻑;눈이 나온
+neck_swelling|목 앞 부음|symptom|내분비|목 앞쪽이 부은 느낌이 있나요?|목이 두꺼;목 앞이 부;목 앞이 두꺼
+neck_pain_thyroid|목 앞 통증|symptom|내분비|목 앞쪽이 아프신가요?|목 앞이 아
+family_thyroid|갑상선 질환 가족력|history|내분비|가족 중 갑상선 질환이 있나요?||soap=S.가족력
+proximal_weakness_sx|계단 오를 때 다리 힘 빠짐|symptom|근골격|계단 오를 때 다리 힘이 빠지나요?|
+intentional_diet|의도적 다이어트·운동|history|전신|일부러 다이어트를 하셨나요?|다이어트를|soap=S.현병력
+body_image|체중 증가에 대한 두려움|symptom|정신|살이 찌는 게 많이 두려우신가요?|살찌는 게
+hyperpigmentation|피부색이 검어짐|symptom|피부|피부가 전보다 검어졌나요?|피부가 검
+cold_intolerance|추위를 많이 탐|symptom|내분비|추위를 유난히 많이 타나요?|추위를;몸이 차
+constipation|변비|symptom|소화기|변비가 있나요?|변비
+cushing_features|복부 비만·둥근 얼굴|symptom|내분비|얼굴이 둥글어지거나 배만 나왔나요?|얼굴이 둥글
+growth_slowing|키 크는 속도 둔화|symptom|성장|최근 키 크는 속도가 느려졌나요?|키가 별로;크지 않
+birth_abnormal|출생 시 이상(미숙아·저체중)|history|성장|일찍 태어나거나 작게 태어났나요?|미숙아;일찍 태어|soap=S.과거력
+developmental_delay|발달 지연|history|성장|말이나 걷기 발달이 늦었나요?|발달이 늦|soap=S.과거력
+family_short_stature|가족 중 저신장|history|성장|가족 중 키가 작은 분이 있나요?||soap=S.가족력
+family_late_puberty|부모의 늦은 사춘기|history|성장|부모님이 사춘기가 늦은 편이었나요?|늦게 컸;사춘기가 늦|soap=S.가족력
+chronic_illness|만성질환|history|전신|오래 앓고 있는 병이 있나요?||soap=S.과거력
+steroid_use|스테로이드 복용|history|내분비|스테로이드 약을 드신 적 있나요?|스테로이드|soap=S.약물
+sedation_sign|주간 진정(졸림·반응 지연)|sign|정신|ex_sedation|
+cognitive_impairment_sign|인지기능 저하|sign|신경|ex_cognitive|
+postural_tremor|자세성 떨림|sign|신경|ex_tremor|
+warm_moist_skin|피부 온난·습윤|sign|피부|ex_skin_temp|
+exophthalmos|안구 돌출·안검 지연|sign|눈|ex_thyroid_eye|
+thyroid_bruit|갑상선 잡음|sign|내분비|ex_thyroid_bruit|
+hyperreflexia|심부건반사 항진|sign|신경|ex_reflex|
+thyroid_nodule|갑상선 결절|sign|내분비|ex_thyroid|
+thyroid_tenderness|갑상선 압통|sign|내분비|ex_thyroid|
+pretibial_myxedema|경골앞 점액부종|sign|피부|ex_pretibial|
+height_below_p3|신장 3백분위수 미만|sign|성장|ex_growth_chart|
+growth_velocity_low|성장 속도 저하(연 4cm 미만)|sign|성장|ex_growth_velocity|
+disproportion|신체 비율 불균형|sign|성장|ex_body_prop|
+dysmorphic|안면 기형 소견|sign|성장|ex_dysmorph|
+purple_striae|자주색 선조·중심성 비만|sign|내분비|ex_striae|
+hepatosplenomegaly|간·비장 종대|sign|소화기|ex_liver_spleen|

@@ -1,5 +1,5 @@
 {
-  "meta": {"source": "N.O.V.A. 2026 진료지침 코퍼스 catalog.csv", "note": "서지 정보만 담음. 제목 일치로 고른 것이라 본문 적합성은 확인되지 않음. 문서를 쓸 때 라이선스와 출처를 함께 표시할 것.", "catalog_documents": 15904, "documents_linked": 405, "diseases_with_documents": 115, "complaints_with_documents": 16},
+  "meta": {"source": "N.O.V.A. 2026 진료지침 코퍼스 catalog.csv", "note": "서지 정보만 담음. 제목 일치로 고른 것이라 본문 적합성은 확인되지 않음. 문서를 쓸 때 라이선스와 출처를 함께 표시할 것.", "catalog_documents": 15904, "documents_linked": 460, "diseases_with_documents": 134, "complaints_with_documents": 19},
   "complaints": {
     "chest_pain": [
       {"file": "KR_HealthInfo/health_kdca_5337.md", "title": "흉통", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
@@ -89,6 +89,21 @@
       {"file": "KR_HealthInfo/health_kdca_5695.md", "title": "가려움증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
       {"file": "KR_HealthInfo/health_kdca_6552.md", "title": "항문 가려움증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
       {"file": "KR_Journals/kr_journal_10.5124_jkma.2019.62.1.37.md", "title": "만성두드러기의 최신 치료 가이드라인", "org": "건강보험심사평가원", "year": "2019", "lang": "ko", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "insomnia": [
+      {"file": "US_StatPearls/statpearls_article-19531.md", "title": "Chronic Insomnia", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-23557.md", "title": "Short-Term Insomnia", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-21637.md", "title": "Fatal Familial Insomnia", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_EuropePMC/europepmc_PMC7711116.md", "title": "Korean Clinical Practice Guideline for the Diagnosis and Treatment of Insomnia in Adults", "org": "Psychiatry investigation", "year": "2020", "lang": "en", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "weight_loss": [
+      {"file": "KR_HealthInfo/health_kdca_6546.md", "title": "체중 감소", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"}
+    ],
+    "short_stature": [
+      {"file": "KR_HealthInfo/health_kdca_5415.md", "title": "저신장", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-87579.md", "title": "Short Stature", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_HealthInfo/health_kdca_6616.md", "title": "특발성 저신장에서 성장호르몬 효과와 주의사항", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-21616.md", "title": "Familial Short Stature (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
     ]
   },
   "diseases": {
@@ -687,6 +702,95 @@
     "viral_exanthem": [
       {"file": "US_StatPearls/statpearls_article-24807.md", "title": "Measles", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
       {"file": "US_StatPearls/statpearls_article-83816.md", "title": "Rubeola (Measles) (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "toxic_nodular_goiter": [
+      {"file": "KR_HealthInfo/health_kdca_6683.md", "title": "갑상선 결절", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-22351.md", "title": "Goiter", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-30147.md", "title": "Thyroid Nodule", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-22354.md", "title": "Nontoxic Goiter", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "thyroiditis": [
+      {"file": "KR_HealthInfo/health_kdca_1322.md", "title": "갑상선염", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"}
+    ],
+    "diabetes_mellitus": [
+      {"file": "KR_HealthInfo/health_kdca_5305.md", "title": "당뇨병", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_HealthInfo/health_kdca_6691.md", "title": "임신당뇨병", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_HealthInfo/health_kdca_5306.md", "title": "노인 당뇨병", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_HealthInfo/health_kdca_6692.md", "title": "당뇨병성 족부병증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"}
+    ],
+    "occult_malignancy": [
+      {"file": "KR_HealthInfo/health_kdca_6546.md", "title": "체중 감소", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_EuropePMC/europepmc_PMC11413447.md", "title": "Expert Consensus Statement on an Updated Definition of Unintended Weight Loss Among Persons With Human Immunodeficiency Virus in the Modern Treatment Era", "org": "Clinical infectious diseases : an official publication of the Infectious Diseases Society of America", "year": "2024", "lang": "en", "type": "합의문", "license": "CC BY"}
+    ],
+    "adrenal_insufficiency": [
+      {"file": "US_StatPearls/statpearls_article-17241.md", "title": "Adrenal Insufficiency", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_HealthInfo/health_kdca_5257.md", "title": "부신부전증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"}
+    ],
+    "crohn_disease": [
+      {"file": "US_StatPearls/statpearls_article-20133.md", "title": "Crohn Disease", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-32741.md", "title": "Cutaneous Crohn Disease", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-540.md", "title": "Crohn Disease Stricturoplasty", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_Journals/kr_journal_10.4166_kjg.2012.59.2.141.md", "title": "크론병 치료 가이드라인", "org": "the Korean Association for the Study", "year": "2012", "lang": "ko", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "anorexia_nervosa": [
+      {"file": "US_StatPearls/statpearls_article-17626.md", "title": "Anorexia Nervosa", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "sedative_use_disorder": [
+      {"file": "US_StatPearls/statpearls_article-31475.md", "title": "Zolpidem", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-30312.md", "title": "Benzodiazepine Toxicity", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-311.md", "title": "Anxiolytics and Sedative-Hypnotics Toxicity", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_EuropePMC/europepmc_PMC12463801.md", "title": "Joint Clinical Practice Guideline on Benzodiazepine Tapering: Considerations When Risks Outweigh Benefits", "org": "DescriptionThe American Society of Addiction Medicine", "year": "2025", "lang": "en", "type": "진료지침", "license": "CC BY"}
+    ],
+    "chronic_insomnia": [
+      {"file": "US_EuropePMC/europepmc_PMC13076838.md", "title": "Combination treatment for chronic insomnia disorder in adults: an American Academy of Sleep Medicine clinical practice guideline", "org": "American Academy of Sleep Medicine", "year": "2026", "lang": "en", "type": "진료지침", "license": "CC BY-NC-ND"},
+      {"file": "US_VA-DoD/vadod_insomnia_i-osa-cpg-2025-guideline-final-20250915.md", "title": "VA/DoD CPG: The Management of Chronic Insomnia Disorder and Obstructive Sleep Apnea (Insomnia/OSA) — Insomnia/OSA Full CPG (2025)", "org": "U.S. Department of Veterans Affairs (VA) / U.S. Department of Defense (DoD)", "year": "2025", "lang": "en", "type": "진료지침", "license": "공공 도메인"},
+      {"file": "US_VA-DoD/vadod_insomnia_i-osa-2025-pocket-card-final-20250205.md", "title": "VA/DoD CPG: The Management of Chronic Insomnia Disorder and Obstructive Sleep Apnea (Insomnia/OSA) — Insomnia/OSA Pocket Card (2025)", "org": "U.S. Department of Veterans Affairs (VA) / U.S. Department of Defense (DoD)", "year": "2025", "lang": "en", "type": "요약본", "license": "공공 도메인"},
+      {"file": "US_VA-DoD/vadod_insomnia_i-osa-2025-patient-summary-final-20250205.md", "title": "VA/DoD CPG: The Management of Chronic Insomnia Disorder and Obstructive Sleep Apnea (Insomnia/OSA) — Insomnia/OSA Patient Summary (2025)", "org": "U.S. Department of Veterans Affairs (VA) / U.S. Department of Defense (DoD)", "year": "2025", "lang": "en", "type": "요약본 (일반인용)", "license": "공공 도메인"}
+    ],
+    "depression": [
+      {"file": "US_StatPearls/statpearls_article-24655.md", "title": "Major Depressive Disorder", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_KoMGI/komgi_chronic98_5.md", "title": "우울증 환자에게 필요한 정보", "org": "대한의학회·질병관리청", "year": "2023", "lang": "ko", "type": "요약본 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "KR_KoMGI/komgi_chronic98_4.md", "title": "우울증 Practical tip", "org": "대한의학회·질병관리청", "year": "2023", "lang": "ko", "type": "요약본", "license": "공공누리 제4유형"},
+      {"file": "KR_KoMGI/komgi_chronic98_6.md", "title": "나와 가족을 위한 우울증 예방과 관리 정보 책자", "org": "대한의학회·질병관리청", "year": "2023", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 (유형 미표기, 제4유형 기준)"}
+    ],
+    "gad": [
+      {"file": "US_StatPearls/statpearls_article-22130.md", "title": "Generalized Anxiety Disorder", "org": "StatPearls Publishing", "year": "2022", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "osa": [
+      {"file": "KR_HealthInfo/health_kdca_6308.md", "title": "수면무호흡증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-26084.md", "title": "Obstructive Sleep Apnea", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_NECA/neca_rpt307_main307.md", "title": "구강내장치를 이용한 폐쇄성 수면무호흡증 치료의 안전성, 유효성 평가 및 치료 가이드라인 개발", "org": "한국보건의료연구원", "year": "2021", "lang": "ko", "type": "진료지침", "license": "공공누리 제4유형"},
+      {"file": "KR_EuropePMC/europepmc_PMC13256478.md", "title": "Guideline for the Management of Obesity in Adult Patients With Obstructive Sleep Apnea", "org": "MethodsThe Korean Society of Sleep and Breathing", "year": "2026", "lang": "en", "type": "진료지침", "license": "CC BY-NC"}
+    ],
+    "constitutional_delay": [
+      {"file": "US_StatPearls/statpearls_article-20323.md", "title": "Delayed Puberty", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-87579.md", "title": "Short Stature", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-21616.md", "title": "Familial Short Stature (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "familial_short_stature": [
+      {"file": "US_StatPearls/statpearls_article-21616.md", "title": "Familial Short Stature (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "gh_deficiency": [
+      {"file": "KR_Journals/kr_journal_J_Korean_Endocr_Soc_KM2391900.md", "title": "Evaluation and Treatment of Adult Growth Hormone Deficiency: An American Endocrine Society Clinical Practice Guideline", "org": "Journal of Korean Endocrine Society", "year": "2006", "lang": "ko", "type": "근거 리뷰", "license": "CC BY-NC"}
+    ],
+    "hypothyroidism": [
+      {"file": "KR_HealthInfo/health_kdca_5810.md", "title": "갑상선기능저하증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-23304.md", "title": "Hypothyroidism", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "KR_HealthInfo/health_kdca_6701.md", "title": "선천갑상샘저하증", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_StatPearls/statpearls_article-23305.md", "title": "Congenital Hypothyroidism", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "cushing_syndrome": [
+      {"file": "US_StatPearls/statpearls_article-20178.md", "title": "Cushing Syndrome (Archived)", "org": "StatPearls Publishing", "year": "2023", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-23170.md", "title": "Hypercortisolism (Cushing Syndrome)", "org": "StatPearls Publishing", "year": "2025", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_EuropePMC/europepmc_PMC7596972.md", "title": "Clinical management of patients with Cushing syndrome treated with mifepristone: consensus recommendations", "org": "Clinical diabetes and endocrinology", "year": "2020", "lang": "en", "type": "합의문", "license": "CC BY"},
+      {"file": "US_EuropePMC/europepmc_PMC9387700.md", "title": "Whom Should We Screen for Cushing Syndrome? The Endocrine Society Practice Guideline Recommendations 2008 Revisited", "org": "Endocrine Society", "year": "2022", "lang": "en", "type": "진료지침", "license": "CC BY-NC-ND"}
+    ],
+    "celiac_disease": [
+      {"file": "US_StatPearls/statpearls_article-19095.md", "title": "Celiac Disease", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_USPSTF/uspstf_celiac-disease-screening.md", "title": "Celiac Disease: Screening", "org": "U.S. Preventive Services Task Force (USPSTF) / AHRQ", "year": "2017", "lang": "en", "type": "권고문", "license": "USPSTF 저작권 고지"}
+    ],
+    "turner_syndrome": [
+      {"file": "US_StatPearls/statpearls_article-30694.md", "title": "Turner Syndrome", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
     ]
   }
 }

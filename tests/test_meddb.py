@@ -267,6 +267,63 @@ class FakeClient:
         return {"ok": True}
 
 
+class SkeletonHelpers(unittest.TestCase):
+    """공개 샘플(C01·C03·C10)에서 드러난 문제의 회귀 테스트."""
+
+    def test_korean_number_ages(self):
+        from examples.consult_skeleton import demographics
+        self.assertEqual(demographics("저는 박선희이고, 예순두 살 여자이다."), (62, "F"))
+        self.assertEqual(demographics("김도현이고, 여섯 살 남자아이이다. 엄마 김지영, 서른일곱 살이"), (6, "M"))
+        self.assertEqual(demographics("육십오 세 남자"), (65, "M"))
+        self.assertEqual(demographics("58세 남자"), (58, "M"))
+        self.assertEqual(demographics("살이 많이 빠져서 왔다")[0], None)
+
+    def test_sample_openings_route_to_new_complaints(self):
+        db = MedDB.open()
+        cases = {"잠을 잘 못 자서 병원에 왔다. 수면제를 처방해 달라고 왔다.": "insomnia",
+                 "도현이가 또래보다 작다는 말을 듣기 시작했다고 했다.": "short_stature",
+                 "최근 석 달 동안 살이 많이 빠져서 병원에 오게 되었다.": "weight_loss"}
+        for text, cid in cases.items():
+            self.assertEqual(db.match_complaint(text)[0]["id"], cid, text)
+
+    def test_model_complaint_answer_must_be_exact(self):
+        from examples.consult_skeleton import pick_complaint
+
+        class Says:
+            def __init__(self, text):
+                self.text = text
+
+            def chat(self, messages, max_tokens=2048):
+                return {"choices": [{"message": {"content": self.text}}]}
+
+        db = MedDB.open()
+        opening = "기억이 자꾸 깜빡깜빡해서 왔어요."
+        self.assertEqual(pick_complaint(Says("dizziness"), db, opening), "dizziness")
+        self.assertIsNone(pick_complaint(Says("none (headache, dizziness 아님)"), db, opening))
+
+    def test_exam_results_are_read_conservatively(self):
+        from examples.consult_skeleton import read_exam
+
+        class Asks:
+            calls = 0
+
+            def chat(self, messages, max_tokens=2048):
+                Asks.calls += 1
+                return {"choices": [{"message": {"content": "+"}}]}
+
+        sign = [{"id": "x", "ko": "x"}]
+        self.assertEqual(read_exam(Asks(), "비대(-), 결절(-), 압통(-)", sign), {"x": "-"})
+        self.assertEqual(Asks.calls, 0)
+        # "정상 하한" 같은 말이 있어도 서술형 결과는 모델이 읽는다
+        self.assertEqual(read_exam(Asks(), "신장 3백분위수 미만, 성장속도 5cm/년(정상 하한)", sign), {"x": "+"})
+
+    def test_exam_actions_use_standard_exam_names(self):
+        db = MedDB.open()
+        for eid in ("ex_thyroid_eye", "ex_tremor", "ex_growth_chart", "ex_sedation", "ex_conjunctiva"):
+            ex = db.exams[eid]
+            self.assertIn(ex["ko"].split()[0], ex["action"], eid)
+
+
 class Integration(unittest.TestCase):
     def test_skeleton_runs_a_case_end_to_end(self):
         from examples.consult_skeleton import consult, prepare

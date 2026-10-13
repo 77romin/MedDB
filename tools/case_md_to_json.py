@@ -63,7 +63,9 @@ def find_diagnosis(folder):
                 rest = re.split(r"[:：]", line, maxsplit=1)
                 if len(rest) == 2 and rest[1].strip(" *#|"):
                     return rest[1].strip(" *#|")
-                for nxt in lines[i + 1:i + 4]:
+                for nxt in lines[i + 1:i + 6]:
+                    if nxt.strip().startswith("```"):
+                        continue
                     if nxt.strip(" -*#|>"):
                         return nxt.strip(" -*#|>")
     return ""

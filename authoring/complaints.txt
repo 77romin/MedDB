@@ -1,0 +1,132 @@
+#chest_pain|흉통
+alias: 가슴이 아; 가슴 통증; 흉통; 가슴이 답답; 가슴이 조; 가슴이 뻐근; 가슴 아
+slots: onset, pain_character, aggravating
+ask: diaphoresis, dyspnea
+exams: ex_heart_ausc, ex_lung_ausc
+diseases: mi, unstable_angina, aortic_dissection, pulmonary_embolism, pneumothorax, pericarditis, gerd, costochondritis, pneumonia, panic_attack, stable_angina, myocarditis, rib_fracture, boerhaave
+
+#dyspnea|호흡곤란
+alias: 숨이 차; 숨쉬기 힘; 호흡곤란; 숨이 가쁘; 숨이 막; 숨쉬기가 힘
+slots: onset, course, aggravating
+ask: cough, fever, orthopnea, leg_swelling, wheeze_sx
+exams: ex_lung_ausc, ex_heart_ausc
+diseases: heart_failure, asthma, copd_exacerbation, pneumonia, pulmonary_embolism, pneumothorax, mi, anemia, panic_attack, pulmonary_edema, anaphylaxis, myocarditis
+
+#abdominal_pain|복통
+alias: 배가 아; 복통; 배 아; 명치가 아; 아랫배가 아; 윗배가 아; 속이 아
+slots: onset, location, pain_character, aggravating, lmp
+ask: nausea_vomiting, fever, diarrhea, bloody_stool
+exams: ex_abd_palp
+diseases: appendicitis, cholecystitis, biliary_colic, cholangitis, pancreatitis, peptic_ulcer, perforated_ulcer, gastroenteritis, bowel_obstruction, ureteral_stone, diverticulitis, ectopic_pregnancy, ovarian_torsion, pid, aaa_rupture, inguinal_hernia, pancreatic_cancer
+
+#headache|두통
+alias: 머리가 아; 두통; 머리 아; 머리가 깨질; 머리가 지끈; 머리가 띵
+slots: onset, location, pain_character, course
+ask: nausea_vomiting, photophobia, fever
+exams: ex_neck_flex, ex_motor
+diseases: tension_headache, migraine, cluster_headache, sah, meningitis, ich, subdural_hematoma, brain_tumor, temporal_arteritis, acute_glaucoma, sinusitis
+
+#fever|발열
+alias: 열이 나; 열이 있; 발열; 고열; 오한; 몸살; 열나
+slots: onset, course
+ask: cough, sore_throat, dysuria, diarrhea
+exams: ex_throat, ex_lung_ausc
+diseases: uri, influenza, tonsillitis, pneumonia, pyelonephritis, gastroenteritis, cellulitis, meningitis, sepsis, tuberculosis, viral_pharyngitis, otitis_media, acute_hiv, infectious_mononucleosis, sle
+
+#dizziness|어지럼
+alias: 어지러; 어지럼; 어지럽; 빙빙; 핑 돌; 현기증
+slots: onset, character, duration, aggravating
+ask: vertigo, hearing_loss_tinnitus, nausea_vomiting
+exams: ex_nystagmus, ex_gait
+diseases: bppv, vestibular_neuritis, meniere, ischemic_stroke, orthostatic_hypotension, arrhythmia, anemia, hypoglycemia, atrial_fibrillation
+
+#back_pain|요통
+alias: 허리가 아; 요통; 허리 통증; 허리를 삐; 허리 아; 허리가 끊어
+slots: onset, pain_character, aggravating
+ask: leg_radiation, leg_numbness_weak, fever, trauma_fall
+exams: ex_slr, ex_spine_percuss
+diseases: lumbar_strain, disc_herniation, cauda_equina, compression_fracture, spinal_infection, spinal_metastasis, ankylosing_spondylitis, ureteral_stone, pyelonephritis, aaa_rupture
+
+#cough|기침
+alias: 기침; 가래; 콜록
+slots: onset, course
+ask: sputum, fever, dyspnea, rhinorrhea
+exams: ex_lung_ausc, ex_throat
+diseases: uri, acute_bronchitis, pneumonia, asthma, copd_exacerbation, allergic_rhinitis, gerd, tuberculosis, lung_cancer, ace_cough, heart_failure, pertussis, bronchiectasis, chronic_sinusitis, laryngitis, sarcoidosis
+
+#vomiting_diarrhea|구토·설사
+alias: 토했; 토해; 토하; 구토; 설사; 메스꺼; 울렁; 속이 안 좋; 체한
+slots: onset, episode_count, lmp
+ask: abdominal_pain, fever, suspicious_food, poor_oral_intake
+exams: ex_abd_palp, ex_mouth
+diseases: gastroenteritis, food_poisoning, appendicitis, bowel_obstruction, pancreatitis, upper_gi_bleeding, dka, c_diff_colitis, ulcerative_colitis, hyperemesis
+
+#urinary|배뇨 증상
+alias: 소변볼 때; 소변 볼 때; 오줌; 소변이 자주; 소변을 자주; 소변에 피; 혈뇨; 소변이 안
+slots: onset, lmp
+ask: dysuria, frequency_urgency, hematuria, fever, flank_pain
+exams: ex_cva, ex_abd_palp
+diseases: cystitis, pyelonephritis, urethritis, prostatitis, bph, ureteral_stone, bladder_cancer, vaginitis, pid
+
+#sore_throat|인후통
+alias: 목이 아; 목이 따가; 목이 부; 침 삼킬 때; 인후통; 목구멍; 목이 쉬
+slots: onset, course
+ask: fever, cough, rhinorrhea, dysphagia, hoarseness
+exams: ex_throat, ex_neck_nodes
+diseases: viral_pharyngitis, tonsillitis, uri, influenza, laryngitis, epiglottitis, peritonsillar_abscess, infectious_mononucleosis, gerd
+
+#palpitations|두근거림
+alias: 가슴이 두근; 두근거; 심장이 빨리; 심장이 뛰; 심장이 쿵
+slots: onset, duration, aggravating
+ask: abrupt_onset_offset, irregular_palpitation, lightheaded, dyspnea, stimulant_use
+exams: ex_pulse, ex_heart_ausc
+diseases: psvt, atrial_fibrillation, arrhythmia, panic_attack, anemia, hyperthyroidism, hypoglycemia
+
+#weakness|근력 약화·마비
+alias: 힘이 빠; 힘이 없; 마비; 힘이 안 들어; 팔다리에 힘; 입이 돌아
+slots: onset, location, course
+ask: focal_weakness, bilateral_weakness, facial_weakness, speech_disturbance, paresthesia
+exams: ex_motor, ex_face, ex_reflex
+diseases: ischemic_stroke, ich, gbs, myasthenia_gravis, bell_palsy, hypokalemia, hypoglycemia, cauda_equina, spinal_metastasis, subdural_hematoma
+
+#syncope|실신
+alias: 쓰러졌; 쓰러져; 기절; 실신; 정신을 잃; 의식을 잃
+slots: onset, circumstances
+ask: vasovagal_prodrome, palpitations, exertional_syncope, tongue_bite_incontinence, postictal_confusion
+exams: ex_heart_ausc, ex_orthostatic_bp
+diseases: vasovagal_syncope, orthostatic_hypotension, arrhythmia, atrial_fibrillation, aortic_stenosis, seizure_disorder, pulmonary_embolism, hypoglycemia, sah, upper_gi_bleeding, ectopic_pregnancy
+
+#altered_mental|의식 변화
+alias: 헛소리; 정신이 없; 의식이 흐; 횡설수설; 사람을 못 알아; 자꾸 자려; 깨워도; 멍해; 정신이 이상
+slots: onset, course
+ask: fever, head_trauma, heavy_alcohol, diabetes_medication, focal_weakness
+exams: ex_mental, ex_neck_flex, ex_motor
+diseases: sepsis, hypoglycemia, dka, ischemic_stroke, ich, subdural_hematoma, meningitis, seizure_disorder, alcohol_intoxication, hepatic_encephalopathy, drug_intoxication
+
+#rash|발진
+alias: 발진; 두드러기; 피부에 뭐가; 가려워; 가려움; 가렵; 물집; 피부가 빨갛; 반점
+slots: onset, location, course
+ask: itching, fever, new_drug, allergen_exposure
+exams: ex_rash
+diseases: urticaria, anaphylaxis, contact_dermatitis, drug_eruption, herpes_zoster, viral_exanthem, cellulitis, sle, meningitis, acute_hiv
+
+#insomnia|불면·수면제 요구
+alias: 잠을 잘 못; 잠을 못; 잠이 안; 불면; 수면제; 잠들기 어렵; 잠을 설치
+slots: onset, sleep_schedule
+ask: hypnotic_use, dose_escalation, withdrawal_sx, failed_cut_down, daytime_sedation, snoring_apnea, depressed_mood
+exams: ex_mental, ex_sedation, ex_cognitive, ex_tremor, ex_thyroid
+diseases: sedative_use_disorder, chronic_insomnia, depression, gad, osa, hyperthyroidism
+
+#weight_loss|체중 감소
+alias: 살이 빠; 살이 많이 빠; 체중이 줄; 체중이 빠; 몸무게가 줄; 몸무게가 빠; 체중 감소
+slots: onset
+ask: increased_appetite, heat_intolerance, palpitations, hand_tremor, polyuria_polydipsia, night_sweats, intentional_diet
+exams: ex_thyroid, ex_thyroid_eye, ex_tremor, ex_skin_temp, ex_thyroid_bruit, ex_neck_nodes
+diseases: hyperthyroidism, toxic_nodular_goiter, thyroiditis, diabetes_mellitus, occult_malignancy, tuberculosis, depression, adrenal_insufficiency, crohn_disease, anorexia_nervosa
+
+#short_stature|저신장(키가 작음)
+alias: 키가 작; 키가 안 크; 키가 크지 않; 또래보다 작; 또래에 비해 작; 또래보다 키가 작; 성장이 느; 저신장
+slots: onset, growth_history, parent_height
+ask: birth_abnormal, developmental_delay, family_late_puberty, chronic_illness, steroid_use, cold_intolerance
+exams: ex_anthro, ex_growth_chart, ex_growth_velocity, ex_body_prop, ex_dysmorph, ex_tanner
+diseases: constitutional_delay, familial_short_stature, gh_deficiency, hypothyroidism, cushing_syndrome, celiac_disease, turner_syndrome, brain_tumor

@@ -138,7 +138,12 @@ def validate(data: dict) -> tuple[list[str], list[str]]:
     for e in data["exams"]:
         act = e["action"]
         _check_say(act, f"exams.{e['id']}.action", errors, question=False)
-        if any(j in act for j in _EXAM_JOIN):
+        # 진찰표 표준명 자체에 든 '·'(예: 결막·공막 시진)는 묶음이 아니다
+        bare = act
+        for word in e["ko"].split():
+            if "·" in word:
+                bare = bare.replace(word, "")
+        if any(j in bare for j in _EXAM_JOIN):
             errors.append(f"exams.{e['id']}: 진찰 동작은 하나만 — {act}")
 
     kinds: dict[str, str] = {}

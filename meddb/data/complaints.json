@@ -142,5 +142,32 @@
     "ask": ["itching", "fever", "new_drug", "allergen_exposure"],
     "exams": ["ex_rash"],
     "diseases": ["urticaria", "anaphylaxis", "contact_dermatitis", "drug_eruption", "herpes_zoster", "viral_exanthem", "cellulitis", "sle", "meningitis", "acute_hiv"]
+  },
+  {
+    "id": "insomnia",
+    "ko": "불면·수면제 요구",
+    "alias": ["잠을 잘 못", "잠을 못", "잠이 안", "불면", "수면제", "잠들기 어렵", "잠을 설치"],
+    "slots": ["onset", "sleep_schedule"],
+    "ask": ["hypnotic_use", "dose_escalation", "withdrawal_sx", "failed_cut_down", "daytime_sedation", "snoring_apnea", "depressed_mood"],
+    "exams": ["ex_mental", "ex_sedation", "ex_cognitive", "ex_tremor", "ex_thyroid"],
+    "diseases": ["sedative_use_disorder", "chronic_insomnia", "depression", "gad", "osa", "hyperthyroidism"]
+  },
+  {
+    "id": "weight_loss",
+    "ko": "체중 감소",
+    "alias": ["살이 빠", "살이 많이 빠", "체중이 줄", "체중이 빠", "몸무게가 줄", "몸무게가 빠", "체중 감소"],
+    "slots": ["onset"],
+    "ask": ["increased_appetite", "heat_intolerance", "palpitations", "hand_tremor", "polyuria_polydipsia", "night_sweats", "intentional_diet"],
+    "exams": ["ex_thyroid", "ex_thyroid_eye", "ex_tremor", "ex_skin_temp", "ex_thyroid_bruit", "ex_neck_nodes"],
+    "diseases": ["hyperthyroidism", "toxic_nodular_goiter", "thyroiditis", "diabetes_mellitus", "occult_malignancy", "tuberculosis", "depression", "adrenal_insufficiency", "crohn_disease", "anorexia_nervosa"]
+  },
+  {
+    "id": "short_stature",
+    "ko": "저신장(키가 작음)",
+    "alias": ["키가 작", "키가 안 크", "키가 크지 않", "또래보다 작", "또래에 비해 작", "또래보다 키가 작", "성장이 느", "저신장"],
+    "slots": ["onset", "growth_history", "parent_height"],
+    "ask": ["birth_abnormal", "developmental_delay", "family_late_puberty", "chronic_illness", "steroid_use", "cold_intolerance"],
+    "exams": ["ex_anthro", "ex_growth_chart", "ex_growth_velocity", "ex_body_prop", "ex_dysmorph", "ex_tanner"],
+    "diseases": ["constitutional_delay", "familial_short_stature", "gh_deficiency", "hypothyroidism", "cushing_syndrome", "celiac_disease", "turner_syndrome", "brain_tumor"]
   }
 ]

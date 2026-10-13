@@ -14,5 +14,8 @@
   {"id": "meds", "ko": "복용 약물", "soap": "S.약물", "ask": "드시고 있는 약이 있으세요?"},
   {"id": "allergy", "ko": "알레르기", "soap": "S.알레르기", "ask": "약이나 음식 알레르기가 있나요?"},
   {"id": "family", "ko": "가족력", "soap": "S.가족력", "ask": "가족 중 비슷한 병이 있었나요?"},
-  {"id": "circumstances", "ko": "발생 상황", "soap": "S.현병력", "ask": "그때 무엇을 하고 계셨나요?"}
+  {"id": "circumstances", "ko": "발생 상황", "soap": "S.현병력", "ask": "그때 무엇을 하고 계셨나요?"},
+  {"id": "sleep_schedule", "ko": "수면 습관", "soap": "S.현병력", "ask": "보통 몇 시에 자고 일어나시나요?"},
+  {"id": "growth_history", "ko": "성장 기록", "soap": "S.현병력", "ask": "예전에 잰 키 기록이 있나요?"},
+  {"id": "parent_height", "ko": "부모 키", "soap": "S.가족력", "ask": "부모님 키는 각각 어떻게 되나요?"}
 ]
