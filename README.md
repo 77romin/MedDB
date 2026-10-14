@@ -222,7 +222,7 @@ python tools/build_public_checklists.py
 python tools/compare_knowledge_offline.py
 ```
 
-최근 Python 실행 결과는 **총 121개 중 117개 통과, RDF/SHACL 관련 4개 skip**입니다. 구조·출처·초안 정책·부정/미확인·환자 맥락·조회 계약·HTTP handler·버전 재현 및 임상 KB 통합을 확인합니다. 웹의 그래프·표현 해석·후보 조회·지침 검색을 실제 브라우저에서도 확인했습니다.
+최근 Python 실행 결과는 **총 132개 중 128개 통과, RDF/SHACL 관련 4개 skip**입니다. 구조·출처·초안 정책·부정/미확인·환자 맥락·조회 계약·HTTP handler·버전 재현 및 임상 KB 통합을 확인합니다. 웹의 그래프·표현 해석·후보 조회·지침 검색을 실제 브라우저에서도 확인했습니다.
 
 공개 증례 3건의 19항목 점검표와 9회의 고정 버전 KB 비교를 만들었습니다. 비교는 시작 정보와 일부 진찰표 소견을 평가자가 직접 제공한 **오프라인 참고 사실 재생**입니다. 모델 호출은 0회이며 실제 진단 정확도·진료 턴·모델 비용·SOAP 점수를 측정하지 않았습니다. 추가 정보가 생겼지만 응답 크기도 증가했으므로 성능·효율 개선으로 단정하지 않습니다.
 
@@ -265,3 +265,13 @@ python tools/import_dismech.py /path/to/pinned/dismech /path/to/hp.obo --version
 [이용 조건·변환 내역](docs/THIRD_PARTY_NOTICES.md) · [분석과 남은 작업](docs/ontology-review-2026-10-13.md) · [사이트 실행 문제](docs/site-restoration.md)
 
 화면 구성은 [참고 KB 탐색기](https://bbi-bbo.github.io/medagent-kb/)를 참고해 자체 구현했습니다. 해당 팀의 코드·폰트·번들 데이터는 복사하지 않았습니다. 발표 자료의 원본과 추출 파일은 `docs/nova_competition/`에 보존합니다.
+
+## 2026-10-14 성능 개선 후보 E2
+
+[기존 제출·팀원 개선 점수 분석](docs/performance-review-2026-10-14.md)을 바탕으로 별도 hybrid_care 후보를 추가했습니다. E1 hybrid_comm은 유지하며, 필수 병력·진찰 누락, 개별 추적 계획 유실, 마무리 설명·이해 확인, HTTP 재시도를 보완합니다. 최종 E2 점수는 아직 측정되지 않았습니다.
+
+`powershell
+python -X utf8 tools/make_submission.py --starter data/external/starter/run.py --agent hybrid_care --knowledge-mode clinical --out dist/submission_E2_hybrid_care.zip
+`
+
+샘플 ID나 정답으로 진단을 고정하지 않습니다. 모델 선택 비용과 실제 행동 수를 함께 확인하며, 새 ZIP을 샘플 검증한 뒤 영역별 점수로 다음 개선을 결정합니다.
