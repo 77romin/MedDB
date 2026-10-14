@@ -67,7 +67,7 @@ def _fits(text: str) -> bool:
     return 0 < len(_nfc(text)) <= MAX_CHARS
 
 
-def consult(client, db: MedDB, fallback=None, knowledge_mode=None, reference_profile=None):
+def consult(client, db: MedDB, fallback=None, knowledge_mode=None, reference_profile=None, coverage=False):
     session = client.session()
     opening, vitals = session["initial"]["opening"], session["initial"]["vital_signs"]
     age, sex = demographics(opening)
@@ -79,9 +79,13 @@ def consult(client, db: MedDB, fallback=None, knowledge_mode=None, reference_pro
                    knowledge_mode or os.environ.get("NOVA_KNOWLEDGE_MODE", "clinical"),
                    reference_profile or os.environ.get("NOVA_REFERENCE_PROFILE", "reviewed"))
     transcript: list[str] = []
+    care = None
+    if coverage:
+        from meddb.coverage import CareCoverage
+        care = CareCoverage(db, complaint, age, sex)
     st = {"turn": 0, "stopped": False, "empathy": 0, "distress": False}
     total = session["turns_remaining"]
-    ask_budget = min(ASK_TURNS, max(1, total - CLOSING_TURNS))
+    ask_budget = min(36 if care else ASK_TURNS, max(1, total - (9 if care else CLOSING_TURNS)))
     failures = 0
 
     def say(text: str, target: str | None = None, sent: str | None = None) -> str:
@@ -91,6 +95,8 @@ def consult(client, db: MedDB, fallback=None, knowledge_mode=None, reference_pro
         st["turn"] = reply.get("turn", st["turn"] + 1)
         answer = reply["content"]
         transcript.extend([f"의사: {out}", f"환자: {answer}"])
+        if care:
+            care.observe(target, out, answer, st['turn'])
         if target:
             kb.asked.add(target)
             kb.turns.setdefault(target, st["turn"])
@@ -119,13 +125,18 @@ def consult(client, db: MedDB, fallback=None, knowledge_mode=None, reference_pro
     # 2) B와 같은 질문·진찰 루프 (설명 규칙만 마무리 단계로 옮김)
     while not st["stopped"] and st["turn"] < ask_budget and seconds_left(session) > TIME_MARGIN:
         acts = kb.actions()
+        required = care.needed(kb) if care else []
         left = ask_budget - st["turn"]
         user = (f"[시작 정보] {opening}\n[활력징후] {vitals}\n[대화 기록]\n"
                 + "\n".join(transcript[-H.HISTORY_LINES:]) + f"\n[남은 질문·진찰 턴] {left}\n" + kb.hint(acts))
-        try:
-            step = H.parse_json(H.chat(client, STEP_SYSTEM, user, 2048)) or {}
-        except NovaError:
-            break
+        if required:
+            selected = required[0]
+            step = {'action': selected['type'], 'content': selected['text']}
+        else:
+            try:
+                step = H.parse_json(H.chat(client, STEP_SYSTEM, user, 2048)) or {}
+            except NovaError:
+                break
         target = None
         if "pick" in step:
             pick = step["pick"]
@@ -138,7 +149,12 @@ def consult(client, db: MedDB, fallback=None, knowledge_mode=None, reference_pro
             kind, text, target = act["type"], act["text"], act["target"]
         else:
             kind = str(step.get("action", "")).upper()
-            text = H.fit(step.get("content", ""))
+            raw = _nfc(step.get('content', ''))
+            if care and not _fits(raw) and kind != 'DONE':
+                failures += 1
+                if failures >= 3: break
+                continue
+            text = raw if care else H.fit(raw)
             if kind == "DONE":
                 break
             if kind not in ("SAY", "EXAM") or not text:
@@ -148,6 +164,20 @@ def consult(client, db: MedDB, fallback=None, knowledge_mode=None, reference_pro
                 continue
             if kind == "EXAM":
                 target = kb.exam_id(text)
+            elif care:
+                # Link freely written standard questions to the same coverage target.
+                from meddb.api import norm
+                target = next((fid for fid, row in {**db.slots, **db.findings}.items()
+                               if row.get('ask') and norm(row['ask']) == norm(text)), None)
+            if required:
+                target = selected['target']
+        if care and not required and not care.allow_action(kb, kind, text, target):
+            transcript.append('(확인된 항목의 반복 또는 연령에 맞지 않는 요청은 생략함)')
+            failures += 1
+            if failures >= 3: break
+            continue
+        if care and target:
+            care.attempts[target] = care.attempts.get(target, 0) + 1
         failures = 0
         if kind == "EXAM":
             kb.exam_attempts.append({"target": target, "content": text, "status": "attempted"})
@@ -176,6 +206,14 @@ def consult(client, db: MedDB, fallback=None, knowledge_mode=None, reference_pro
                 break
             if code in RETRY_CODES:
                 break
+            if care and code not in {'EXAM_NOT_RECOGNIZED', 'EXAM_NOT_SPECIFIC'}:
+                # A transport/provider failure is not a completed or rejected clinical action.
+                try:
+                    current = with_retry(client.session)
+                    st['turn'] = total - current['turns_remaining']
+                except NovaError:
+                    pass
+                break
             st["turn"] += 1  # 거절된 진찰도 1턴을 쓴다(10/11 규칙)
             hint = "신체진찰이 아닙니다" if code == "EXAM_NOT_RECOGNIZED" else "하나만 구체적으로, 표준 진찰명으로"
             transcript.append(f"(알림: {text} 요청 거절 {code}. {hint})")
@@ -191,10 +229,13 @@ def consult(client, db: MedDB, fallback=None, knowledge_mode=None, reference_pro
         except NovaError as exc:
             st["stopped"] = getattr(exc, "code", "") in STOP_CODES
 
-    note, diagnosis = H.write_record(client, db, kb, opening, vitals, transcript)
+    note, diagnosis = H.write_record(client, db, kb, opening, vitals, transcript, contextual_plan=bool(care))
+    if care:
+        care.append_record(note)
+    facts_at_record = (tuple(kb.present), tuple(kb.absent), tuple(sorted(kb.unknown)))
     said: list[str] = []
     if room():
-        for sentence in _closing_sentences(client, db, note, diagnosis, concern):
+        for sentence in _closing_sentences(client, db, note, diagnosis, concern, comprehensive=bool(care)):
             if not room():
                 break
             try:
@@ -216,6 +257,19 @@ def consult(client, db: MedDB, fallback=None, knowledge_mode=None, reference_pro
     if said:
         line = "환자에게 설명함: " + " / ".join(said)
         note["P"]["education"] = (note["P"]["education"].rstrip() + "\n" + line).strip()
+    if care and room():
+        # Teach-back asks for understanding rather than equating 'no questions' with understanding.
+        try:
+            understood = say('집에서 어떻게 하실지 말씀해 주시겠어요?')
+            note['P']['education'] += '\n이해 확인 답변: ' + understood
+        except NovaError:
+            pass
+    if care and facts_at_record != (tuple(kb.present), tuple(kb.absent), tuple(sorted(kb.unknown))):
+        # New clinical information during closing must not be submitted with a stale record.
+        updated, diagnosis = H.write_record(client, db, kb, opening, vitals, transcript, contextual_plan=True)
+        care.append_record(updated)
+        updated['P']['education'] = (updated['P']['education'] + '\n' + note['P']['education']).strip()
+        note = updated
     return client.diagnose(note=note, diagnosis=diagnosis)
 
 
@@ -226,25 +280,37 @@ def _record_brief(note: dict, diagnosis: str) -> str:
             f"추적: {p.get('follow_up', '')[:200]}")
 
 
-def _closing_sentences(client, db: MedDB, note: dict, diagnosis: str, concern: str) -> list[str]:
+def _closing_sentences(client, db: MedDB, note: dict, diagnosis: str, concern: str, comprehensive=False) -> list[str]:
     """[진단 설명, 계획 설명, 걱정에 대한 답]. 모델 1회 호출, 형식·길이가 틀리면 KB 설명·기본 문장으로."""
     chosen = db.normalize_diagnosis(diagnosis) if diagnosis else None
     kb_explain = list(db.plan(chosen["id"]).get("explain", [])) if chosen and chosen.get("id") else []
     fallback = [kb_explain[0] if kb_explain else H.fit(f"{diagnosis} 가능성이 높아요."),
                 kb_explain[1] if len(kb_explain) > 1 else "몇 가지 검사로 원인을 확인할게요.",
                 "걱정하신 부분도 함께 확인해 볼게요."]
+    keys = ('diagnosis', 'plan', 'concern')
+    system = CLOSING_SYSTEM
+    if comprehensive:
+        keys = ('diagnosis', 'plan', 'follow_up', 'safety', 'concern')
+        fallback = [kb_explain[0] if kb_explain and _fits(kb_explain[0]) else '증상을 설명할 원인을 찾았어요.',
+                    '필요한 검사 후 치료를 정할게요.',
+                    '검사 결과를 확인할 재진을 잡을게요.',
+                    '갑자기 더 힘들어지면 바로 진료받으세요.',
+                    '걱정하신 부분도 함께 확인해 볼게요.']
+        system += '\nJSON 키는 diagnosis, plan, follow_up, safety, concern입니다. follow_up은 재진 시점·목적, safety는 기록에 있는 구체적 위험 증상과 대처입니다. 각 문장은 30자 이내로 완결하세요.'
     got = {}
     try:
         user = _record_brief(note, diagnosis) + f"\n[환자 걱정] {concern or '(말하지 않음)'}"
-        got = H.parse_json(H.chat(client, CLOSING_SYSTEM, user, 1536)) or {}
+        if comprehensive:
+            user += '\n처치 결정: ' + note['P']['disposition'] + '\n교육·주의: ' + note['P']['education']
+        got = H.parse_json(H.chat(client, system, user, 1536)) or {}
     except NovaError:
         got = {}
     out = []
-    for key, default in zip(("diagnosis", "plan", "concern"), fallback):
+    for key, default in zip(keys, fallback):
         text = _nfc(got.get(key, ""))
         out.append(text if _fits(text) and "?" not in text else default)
     if not concern or NO_QUESTION.search(_nfc(concern)):
-        out = out[:2]  # 걱정을 말하지 않았으면 답할 문장은 생략
+        out = out[:-1]  # 걱정을 말하지 않았으면 답할 문장은 생략
     return [s for s in out if _fits(s)]
 
 

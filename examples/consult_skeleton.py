@@ -26,7 +26,7 @@ EXPLAIN_TURNS = 2
 DISCRIMINATE_MAX = 10   # 필수 단계 뒤 감별 행동 최대 수. tools/eval_kb.py 비교: 4→71%, 8→79%, 10→81% (평균 +1턴)
 TIME_MARGIN = 180      # 마감 3분 전부터는 기록 작성으로 넘어간다
 RETRY_CODES = {"PROVIDER_UNAVAILABLE", "PROVIDER_RESPONSE_INVALID", "PATIENT_RESPONSE_INVALID",
-               "EXAMINER_RESPONSE_INVALID", "API_UNAVAILABLE"}   # 서버 쪽 일시 오류, 턴을 쓰지 않음
+               "EXAMINER_RESPONSE_INVALID", "API_UNAVAILABLE", "REQUEST_PENDING", "ACTION_IN_PROGRESS"}
 STOP_CODES = {"TURN_LIMIT_REACHED", "SESSION_EXPIRED", "SESSION_CLOSED", "RUN_NOT_ACTIVE"}
 YES = ("네", "예", "맞아", "있어", "있습", "그래", "그렇")
 NO = ("아니", "없어", "없습", "없었", "없는", "전혀", "그런 건 없", "그런 적 없")
@@ -72,12 +72,23 @@ def demographics(opening: str) -> tuple[int | None, str | None]:
 
 def with_retry(call, *args, **kwargs):
     """서버 쪽 일시 오류(503)는 2·5·10초 뒤 다시 보낸다. 그 밖의 오류는 그대로 올린다."""
-    for wait in (2, 5, 10, None):
+    import inspect
+    import uuid
+    # Keep one request ID across transport retries; the first request may have succeeded.
+    if 'request_id' in inspect.signature(call).parameters and 'request_id' not in kwargs:
+        kwargs['request_id'] = str(uuid.uuid4())
+    for wait in (2, 5, 10, 15, 20, 30, 30, None):
         try:
             return call(*args, **kwargs)
         except NovaError as exc:
-            if getattr(exc, "code", None) not in RETRY_CODES or wait is None:
+            status = getattr(exc, 'status', None)
+            transient_http = getattr(exc, 'code', None) == 'INVALID_API_RESPONSE' and (
+                status == 429 or isinstance(status, int) and (500 <= status < 600 or 200 <= status < 300))
+            if (getattr(exc, "code", None) not in RETRY_CODES and not transient_http) or wait is None:
                 raise
+            if getattr(exc, 'code', None) in {'PROVIDER_RESPONSE_INVALID', 'PATIENT_RESPONSE_INVALID', 'EXAMINER_RESPONSE_INVALID'} and 'request_id' in kwargs:
+                # The server says invalid generated replies are terminal and need a new request.
+                kwargs['request_id'] = str(uuid.uuid4())
             time.sleep(wait)
 
 

@@ -76,8 +76,8 @@ def build_run_py(starter_run: str, agent: str = "hybrid", knowledge_mode='clinic
     text = text.replace("def consult(client, model):", "def baseline_consult(client, model):", 1)
     text = re.sub(r"\nif __name__ == '__main__':\n    run_agent\(prepare, consult\)\n?\Z", "\n", text)
     assert "def baseline_consult(" in text and "run_agent(prepare, consult)" not in text, "시작 패키지 run.py 형식이 다름"
-    module = {"hybrid": "hybrid_agent", "hybrid_comm": "hybrid_comm", "meddb": "consult_skeleton"}[agent]
-    options = f", knowledge_mode={knowledge_mode!r}, reference_profile={reference_profile!r}" if agent in ('hybrid', 'hybrid_comm') else ''
+    module = {"hybrid": "hybrid_agent", "hybrid_comm": "hybrid_comm", "hybrid_care": "hybrid_care", "meddb": "consult_skeleton"}[agent]
+    options = f", knowledge_mode={knowledge_mode!r}, reference_profile={reference_profile!r}" if agent in ('hybrid', 'hybrid_comm', 'hybrid_care') else ''
     return text.rstrip() + "\n" + RUN_TAIL.replace("{module}", module).replace('{options}', options)
 
 
@@ -85,7 +85,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--starter", required=True, help="시작 패키지의 run.py")
     ap.add_argument("--sdk", help="시작 패키지의 nova_sdk.py (생략하면 run.py와 같은 폴더)")
-    ap.add_argument("--agent", choices=["hybrid", "hybrid_comm", "meddb"], default="hybrid")
+    ap.add_argument("--agent", choices=["hybrid", "hybrid_comm", "hybrid_care", "meddb"], default="hybrid")
     ap.add_argument('--knowledge-mode', choices=['clinical', 'ontology', 'integrated'], default='clinical')
     ap.add_argument('--reference-profile', choices=['reviewed', 'pilot', 'research'], default='reviewed')
     ap.add_argument("--out")
@@ -100,8 +100,10 @@ def main() -> None:
              "examples/__init__.py": "",
              "examples/consult_skeleton.py": (ROOT / "examples" / "consult_skeleton.py").read_text(encoding="utf-8"),
              "examples/hybrid_agent.py": (ROOT / "examples" / "hybrid_agent.py").read_text(encoding="utf-8")}
-    if args.agent == "hybrid_comm":  # hybrid_agent 위에 의사소통 층을 얹는 모듈
+    if args.agent in ('hybrid_comm', 'hybrid_care'):
         files["examples/hybrid_comm.py"] = (ROOT / "examples" / "hybrid_comm.py").read_text(encoding="utf-8")
+    if args.agent == 'hybrid_care':
+        files['examples/hybrid_care.py'] = (ROOT / 'examples/hybrid_care.py').read_text(encoding='utf-8')
     with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as zf:
         for name, text in files.items():
             zf.writestr(name, text)

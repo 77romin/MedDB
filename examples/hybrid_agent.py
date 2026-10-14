@@ -320,7 +320,7 @@ def consult(client, db: MedDB, fallback=None, knowledge_mode=None, reference_pro
     return client.diagnose(note=note, diagnosis=diagnosis)
 
 
-def write_record(client, db: MedDB, kb: Tracker, opening, vitals, transcript):
+def write_record(client, db: MedDB, kb: Tracker, opening, vitals, transcript, contextual_plan=False):
     """KB 초안(확인된 사실만) → LLM이 대화와 맞춰 다듬음. LLM이 실패하면 KB 초안을 그대로 낸다."""
     draft, draft_dx, ranking = None, "", ""
     if kb.complaint and kb.knowledge_mode != 'ontology':
@@ -337,9 +337,16 @@ def write_record(client, db: MedDB, kb: Tracker, opening, vitals, transcript):
         user += f"\n[지식베이스 초안]\n{json.dumps(draft, ensure_ascii=False)}\n[진단 순위]\n{ranking}"
     if kb.bridge:
         user += '\n' + kb.bridge.hint(kb, kb.reference_profile)
+    system = RECORD_SYSTEM
+    if contextual_plan:
+        system = system.replace('DM / HTN (-/-)', '미확인 질환은 미확인으로 표시')
+        system += '\n실제 문진·진찰만 S/O에 기록하세요. 포괄적인 지병 없음 답변을 개별 질환의 음성으로 확대하지 마세요.\n'
+        system += '환자의 약물·알레르기·임신·수유와 미확인 조건을 고려하여 계획을 세우세요. 검사는 계획이며 시행 결과가 아닙니다.\n'
+        system += 'P에는 필요한 검사와 이유, 결과 확인·재진 시점과 목적, 악화 시 행동, 처치 전 확인 조건을 구체적으로 쓰세요.\n'
+        system += '약물 의존이 의심되면 임의 증량이나 갑작스러운 중단을 권하지 말고 전문 평가·감량 계획을 논의하세요.\n'
     for _ in range(2):
         try:
-            result = parse_json(chat(client, RECORD_SYSTEM, user, 4096)) or {}
+            result = parse_json(chat(client, system, user, 4096)) or {}
         except NovaError:
             break
         note = MedDB.empty_note()
@@ -359,7 +366,18 @@ def write_record(client, db: MedDB, kb: Tracker, opening, vitals, transcript):
                 if chosen and chosen.get("id"):
                     consistent = db.assessment_plan(kb.complaint, chosen["id"], kb.present, kb.absent,
                                                     turns=kb.turns, age=kb.age, sex=kb.sex)
-                    note["A"], note["P"] = consistent["A"], consistent["P"]
+                    if contextual_plan:
+                        evidence = note['A']['evidence'].strip()
+                        if evidence.startswith('#1. ' + diagnosis):
+                            note['A']['evidence'] = evidence.replace('#1. ' + diagnosis, '#1. ' + chosen['ko'], 1)
+                        else:
+                            note['A']['evidence'] = consistent['A']['evidence']
+                        note['A']['differential'] = note['A']['differential'] or consistent['A']['differential']
+                        for field in note['P']:
+                            note['P'][field] = note['P'][field] or consistent['P'][field]
+                    else:
+                        note['A'] = consistent['A']
+                        note['P'] = consistent['P']
                     diagnosis = chosen["ko"]
                 elif not note["A"]["evidence"].strip().startswith("#1. " + diagnosis):
                     # No KB plan exists for this diagnosis: never reuse another disease's plan.
