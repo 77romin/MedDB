@@ -8,6 +8,23 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class ReportTests(unittest.TestCase):
+    def test_closing_coverage_counts_successful_say_events_only(self):
+        from nova_agent.analysis import analyze
+        from nova_agent.telemetry import Trace
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)/'trace.jsonl'; trace=Trace(path)
+            trace.emit('closing_generated',tag='concern')
+            trace.emit('closing_say',tag='safety_net')
+            trace.emit('closing_say',tag='safety_net')
+            trace.emit('closing_question',response='언제인가요?')
+            trace.emit('closing_budget_omission',tag='concern')
+            trace.emit('experiment_complete')
+            result=analyze(path)
+            self.assertEqual(result['closing_sent_by_tag'],{'safety_net':2})
+            self.assertEqual(result['closing_omissions_by_tag'],{'concern':1})
+            self.assertEqual(result['closing_question_reviews'],1)
+            self.assertTrue(any(f['category']=='closing_omission' for f in result['findings']))
+
     def test_inflight_run_has_no_false_missing_submission_failure(self):
         from nova_agent.analysis import analyze
         from nova_agent.telemetry import Trace

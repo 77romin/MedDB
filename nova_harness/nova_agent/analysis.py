@@ -23,6 +23,12 @@ def analyze(path):
             final = r['body']
     rejected = [code for code in errors if code in {'EXAM_NOT_SPECIFIC', 'EXAM_NOT_RECOGNIZED', 'CONTENT_TOO_LONG', 'EMPTY_CONTENT'}]
     findings = []
+    closing_sent = Counter(r.get('tag', 'unknown') for r in rows if r['event'] == 'closing_say')
+    closing_omissions = Counter(r.get('tag', 'unknown') for r in rows
+                               if r['event'] in {'closing_missing', 'closing_budget_omission'})
+    if finished and closing_omissions:
+        findings.append({'category': 'closing_omission', 'counts': dict(closing_omissions),
+                         'next_step': '실제 SAY 원문과 비교해 생성 실패·턴 부족·질문 대응의 원인을 구분; 태그만으로 임상 충분성을 인정하지 않음'})
     if rejected:
         findings.append({'category': 'action_rejection', 'evidence': {k: errors[k] for k in rejected},
                          'next_step': '진찰 목적과 구체적 동작을 검토하고 거절된 표현을 회귀 시나리오에 추가'})
@@ -65,6 +71,9 @@ def analyze(path):
         'returned_models': sorted({c['model'] for c in chats.values() if isinstance(c.get('model'), str)}),
         'closure_reviews': sum(r['event'] == 'closure_review' for r in rows),
         'closure_followups': sum(r['event'] == 'closure_followup' for r in rows),
+        'closing_sent_by_tag': dict(closing_sent),
+        'closing_omissions_by_tag': dict(closing_omissions),
+        'closing_question_reviews': sum(r['event'] == 'closing_question' for r in rows),
         'patient_compound_refusals': sum('한 번에 하나씩' in str(v.get('content', '')) for v in actions.values()),
         'elapsed_seconds': round(rows[-1]['monotonic']-rows[0]['monotonic'], 3) if rows else 0,
         'http_wait_seconds': round(sum(latency), 3), 'diagnosis': final.get('diagnosis') if final else None,
@@ -82,6 +91,8 @@ def write_report(trace_path):
              f"- Doctor 고유 요청: {result['doctor_attempted_request_ids']} / 성공 {result['doctor_successful_request_ids']}",
              f"- 입력/출력 토큰: {result['prompt_tokens']} / {result['completion_tokens']}",
              f"- 최대 확인 서버 턴: {result['max_server_turn']}", f"- 실행 시간: {result['elapsed_seconds']}초", '',
+             f"- 실제 종료 SAY 태그별 횟수: {result['closing_sent_by_tag']}",
+             f"- 종료 설명 누락 이벤트: {result['closing_omissions_by_tag']}", '',
              '임상 적절성·정답 일치·공식 영역 점수는 이 분석만으로 판정하지 않습니다.', '']
     for finding in result['findings']:
         lines += ['## '+finding['category'], '', json.dumps(finding, ensure_ascii=False, indent=2), '']
