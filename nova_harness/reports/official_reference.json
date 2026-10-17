@@ -1,0 +1,41 @@
+{
+  "source": "user-provided screenshot",
+  "mode": "official_leaderboard",
+  "submission": "submission_E2_hybrid_care.zip",
+  "zip_sha256": "dbe1570ef5608314cb134a0bf66acf13ca842d07cd986bfbf64bd9e5989d13ac",
+  "scores": {
+    "total": 67.132,
+    "information": 12.9,
+    "reasoning": 12.0,
+    "tests_followup": 6.75,
+    "safety": 15.0,
+    "communication": 7.1,
+    "efficiency": 13.38
+  },
+  "cases": [
+    {
+      "turns": 42,
+      "seconds": 249
+    },
+    {
+      "turns": 45,
+      "seconds": 267
+    },
+    {
+      "turns": 42,
+      "seconds": 365
+    },
+    {
+      "turns": 37,
+      "seconds": 209
+    },
+    {
+      "turns": 39,
+      "seconds": 197
+    }
+  ],
+  "mean_turns": 41,
+  "mean_seconds": 257.4,
+  "upstream_commit_inspected": "63743a8b8a2e278b426d18fc040e880740318ae3",
+  "zip_matches_upstream_verified": false
+}
