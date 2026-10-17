@@ -57,6 +57,18 @@ def make_record(state, proposed):
             v = plan.get(k, '')
             if isinstance(v, str):
                 note['P'][k] = v
+    # Provider education is a proposed plan, never evidence that teaching happened.
+    planned = note['P']['education'].strip()
+    actual = state.delivered_explanations()
+    parts = []
+    if actual:
+        parts.append('실제 전달한 SAY 원문(내용의 충분성은 별도 검토):\n'+'\n'.join(
+            f'[{e.id}, 턴 {e.turn}] {e.question}' for e in actual))
+    else:
+        parts.append('태그로 연결된 실제 설명 SAY 없음; 교육 완료로 간주하지 않음')
+    if planned:
+        parts.append('추가 교육 계획(수행 확인 아님):\n'+planned)
+    note['P']['education'] = '\n\n'.join(parts)
     # Bound oversized provider responses without silently changing their meaning.
     for section in note.values():
         for key, text in section.items():

@@ -56,7 +56,7 @@ class ClinicalTests(unittest.TestCase):
         c=ScriptClient([{'next_action':{'type':'DONE'}},initial,initial,sentences,initial],['걱정돼요']+['네']*6)
         result=consult(c,prepare(),Config(max_turns=10))
         self.assertEqual(result['status'],'completed')
-        self.assertIn('실제 SAY 설명:',c.submitted['note']['P']['education'])
+        self.assertIn('실제 전달한 SAY 원문',c.submitted['note']['P']['education'])
         self.assertIn('어떻게 하실지',c.submitted['note']['S']['hpi'])
         self.assertLessEqual(50-c.turns,10)
 

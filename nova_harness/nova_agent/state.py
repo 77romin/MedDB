@@ -10,6 +10,7 @@ class Evidence:
     response: str
     turn: int
     target: str = ''
+    communication: tuple = ()
 
 
 @dataclass
@@ -23,7 +24,7 @@ class PatientState:
     seen: set = field(default_factory=set)
     turns_used: int = 0
 
-    def add_response(self, action, content, reply, target=''):
+    def add_response(self, action, content, reply, target='', communication=()):
         response = reply.get('content' if action == 'SAY' else 'result', '')
         if not isinstance(response, str):
             response = json.dumps(response, ensure_ascii=False)
@@ -31,9 +32,20 @@ class PatientState:
         if not isinstance(turn, int):
             turn = self.turns_used+1
         self.turns_used = turn
-        item = Evidence(f'e{len(self.evidence)+1}', action, content, response, turn, target)
+        allowed = {'empathy', 'assessment', 'plan', 'follow_up', 'safety_net', 'concern',
+                   'answer', 'teach_back', 'concern_question'}
+        tags = [communication] if isinstance(communication, str) else communication
+        tags = tags if isinstance(tags, (list, tuple, set)) else ()
+        tags = tuple(t for t in tags if isinstance(t, str) and t in allowed) if action == 'SAY' else ()
+        item = Evidence(f'e{len(self.evidence)+1}', action, content, response, turn, target, tags)
         self.evidence.append(item)
+        self.communication.update(tags)
         return item
+
+    def delivered_explanations(self):
+        """Actual successful SAYs with declared purpose; tags do not prove clinical adequacy."""
+        kinds = {'assessment', 'plan', 'follow_up', 'safety_net', 'concern', 'answer'}
+        return [e for e in self.evidence if e.action == 'SAY' and kinds.intersection(e.communication)]
 
     def accept_facts(self, proposed):
         accepted, rejected = [], []

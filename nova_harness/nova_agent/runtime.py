@@ -123,13 +123,10 @@ def consult(client, knowledge, config=None, trace=None):
             target = proposal.get('target', '')
             if target not in targets or action_key(action,text) != action_key(targets[target]['type'],targets[target]['content']):
                 target = ''
-            evidence = state.add_response(action, text, reply, target)
+            tags = proposal.get('communication', [])
+            evidence = state.add_response(action, text, reply, target, communication=tags)
             server_remaining = int(reply.get('turns_remaining', initial_server_remaining-state.turns_used))
             remaining = max(0, min(remaining-1, config.max_turns-(initial_server_remaining-server_remaining), server_remaining))
-            tags = proposal.get('communication', [])
-            tags = [tags] if isinstance(tags, str) else tags if isinstance(tags, list) else []
-            if action == 'SAY':
-                state.communication.update(t for t in tags if isinstance(t, str) and t in knowledge['communication_slots'])
             trace.emit('evidence_added', evidence=vars(evidence), remaining=remaining)
         except NovaError as exc:
             state.errors.append({'action': action, 'content': text, 'code': exc.code})
