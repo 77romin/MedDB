@@ -1,0 +1,13 @@
+.env
+.env.*
+.git
+vendor
+downloads
+results
+dist
+tests
+tools
+nova_reference
+__pycache__
+**/__pycache__
+*.pyc

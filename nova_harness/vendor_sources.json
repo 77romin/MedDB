@@ -1,0 +1,17 @@
+[
+  {
+    "name": "starter",
+    "url": "https://nova.snubhai.org/docs/starter.zip",
+    "sha256": "35a914ab22aba2cbe0da4719a146ad9bc4f1e88d5b3f19ac239abe1d8996db87"
+  },
+  {
+    "name": "devkit",
+    "url": "https://nova.snubhai.org/docs/devkit.zip",
+    "sha256": "8a23f11b96a3712d460f8d665592349a40f24d062e37120dd6a0c2b8810a416a"
+  },
+  {
+    "name": "samples",
+    "url": "https://nova.snubhai.org/downloads/nova-samples-2026.zip",
+    "sha256": "2ffd8caea1e07b8616de67b5e15de72c08c1cc92b66da115fe40738658c581c4"
+  }
+]
