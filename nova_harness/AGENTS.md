@@ -17,7 +17,7 @@
 ## 저장소와 산출물
 
 - 원격 저장소는 `https://github.com/SSAFY16-S11-NOVA2026/MedDB.git`, 작업 브랜치는 `codex/nova-harness-rebuild`, 원격 프로젝트 경로는 `nova_harness/`다. 원본 MedDB 루트는 보존한다.
-- 독립 로컬 개발 폴더와 원격 checkout이 별도로 있을 수 있다. 이 경우 `vendor/meddb/nova_harness/`의 게시본과 현재 프로젝트를 명시적 파일 목록으로 동기화한다. 원격에서 `nova_harness/`를 직접 작업하는 경우 해당 폴더가 곧 프로젝트다. 단순 파일 복사로 `.git`이나 다른 프로젝트를 덮어쓰지 않는다.
+- 독립 로컬 개발 폴더와 원격 checkout이 별도로 있을 수 있다. 이 경우 `vendor/meddb-publish/nova_harness/`의 게시본과 현재 프로젝트를 명시적 파일 목록으로 동기화한다. `vendor/meddb/`는 고정 커밋의 비교용 원본이므로 게시 브랜치로 전환하지 않는다. 원격에서 `nova_harness/`를 직접 작업하는 경우 해당 폴더가 곧 프로젝트다. 단순 파일 복사로 `.git`이나 다른 프로젝트를 덮어쓰지 않는다.
 - 커밋은 기능별로 구분한다. 이번에 승인된 초기 게시 이후의 추가 푸시는 사용자 요청 범위에 따라 판단한다. force push·main 직접 변경·PR 자동 생성은 하지 않는다.
 - `.env`, 키, 토큰, `results/`, `downloads/`, `vendor/`, `dist/`, 가상환경·캐시는 Git에 올리지 않는다. 제출 ZIP은 명시적 허용 목록으로 만든다. 공개 가능한 집계 보고서·테스트 fixture와 원문 실행 로그를 구분한다.
 - `DECISIONS.md`와 `docs/REPOSITORY_HANDOFF.md`는 개발 문서이며 진료 런타임 및 제출 ZIP에 포함하지 않는다.

@@ -68,4 +68,4 @@ python3 -m unittest discover -s tests -q
 
 ## 독립 개발 폴더에서 이어갈 때
 
-현재 별도 개발 폴더를 계속 사용할 경우, 이 문서의 포함 목록을 `vendor/meddb/nova_harness/` 게시본으로 복사한 뒤 해당 checkout에서 명시적 경로를 stage한다. `vendor/meddb/` 전체나 개발 폴더 전체를 재귀 복사하지 않는다. 변경 내용과 `DECISIONS.md`를 함께 확인하고 테스트·비밀정보 검사를 거쳐 커밋한다. 원격 checkout의 `nova_harness/`를 직접 작업한다면 이 동기화는 필요 없다.
+현재 별도 개발 폴더를 계속 사용할 경우, 이 문서의 포함 목록을 `vendor/meddb-publish/nova_harness/` 게시본으로 복사한 뒤 해당 checkout에서 명시적 경로를 stage한다. `vendor/meddb/`는 비교·재현용 고정 커밋 `63743a8b8a2e278b426d18fc040e880740318ae3`로 유지한다. 게시용 checkout과 분리하여 브랜치 커밋 때문에 임포트의 고정 커밋 검증이 깨지지 않게 했다. vendor 전체나 개발 폴더 전체를 재귀 복사하지 않는다. 변경 내용과 `DECISIONS.md`를 함께 확인하고 테스트·비밀정보 검사를 거쳐 커밋한다. 원격 checkout의 `nova_harness/`를 직접 작업한다면 이 동기화는 필요 없다.
