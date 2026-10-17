@@ -2,7 +2,7 @@
 
 예선 고정 Doctor `openai/gpt-6-luna`를 사용하는 표준 라이브러리 기반 개발 하네스다. 설계 자료는 [자료 목차](nova_reference/README.md), 상세 계획은 [구현계획](nova_reference/08_implementation_plan.md)에 있다.
 
-기존 프로젝트의 점수 정체를 해결하기 위해 새로 개발하는 독립 프로젝트다. MedDB 저장소의 `codex/nova-harness-rebuild` 브랜치에서 `nova_harness/`에 보관하며, 아래 명령은 이 디렉터리 안에서 실행한다. [의사결정 기록](DECISIONS.md)에 사용자 의도·고민·실험의 채택 이유를 대화마다 갱신한다. 공식 목표는 **≥78 → ≥85 → ≥90점**이며, 목표 확인 전 PR은 만들지 않는다. [저장소 전달 기록](docs/REPOSITORY_HANDOFF.md)에서 커밋 구분과 복원 방법을 확인할 수 있다.
+기존 프로젝트의 점수 정체를 해결하기 위해 새로 개발하는 독립 프로젝트다. MedDB 저장소의 `codex/nova-harness-rebuild` 브랜치에서 `nova_harness/`에 보관하며, 아래 명령은 이 디렉터리 안에서 실행한다. [의사결정 기록](DECISIONS.md)에 사용자 의도·고민·실험의 채택 이유를 대화마다 갱신한다. 공식 목표는 **≥78 → ≥85 → ≥90점**이다. 사용자의 변경 요청으로 목표 달성 전 [PR #5](https://github.com/SSAFY16-S11-NOVA2026/MedDB/pull/5)를 열어 개발을 이어간다. [저장소 전달 기록](docs/REPOSITORY_HANDOFF.md)에서 커밋 구분과 복원 방법을 확인할 수 있다.
 
 실제 개발 API 실행·원인 분석·수정 이력은 [개발 1차 보고서](reports/development_001.md)에 정리했다. 현재는 실험용 초기 버전이다.
 
@@ -12,16 +12,18 @@
 
 MedDB 적용 내용과 후보 비교는 [3차 보고서](reports/meddb_review_003.md), [MedDB 벤치마크](reports/meddb_benchmark_003.md)에 있다. 공식 67.132점과 개발용 자가평가를 구분한다.
 
+PR 생성 후 다중 문장 설명·환자 질문 응답·교육 기록 분리는 [4차 보고서](reports/development_004.md), [비교 표](reports/benchmark_004.md)에 정리한다. 최종 v0.4.1은 불완전한 연결절을 거절하고 종료 자체도 최대 12턴으로 제한한다. v0.4.0 개발 API 결과와 후속 v0.4.1의 단위 검증을 구분하며, 공식 제출 후보로 채택하지 않았다.
+
 - `run.py`: 공식 `prepare → ready → consult → diagnose` 진입점.
 - `nova_agent/protocol.py`: SDK 래퍼, 같은 작업 ID 재시도와 무효 응답 새 ID 재시도, 시간·호출·토큰 예산.
 - `nova_agent/state.py`: 환자별 원문 증거와 턴, 모델 추출 사실의 출처·부정·주체·시간 상태.
 - `nova_agent/ontology.json`: 초진 정보 구조 시드. MedDB 임상 관계는 `clinical_graph.json`에 별도 보관하며 검수 전 초안이다.
 - `nova_agent/clinical.py`: MedDB의 주호소·감별 관계에서 다음 행동을 제안한다. `--no-meddb`로 제거 실험할 수 있다.
-- `nova_agent/closing.py`: 개인별 계획으로 실제 SAY 설명을 생성·검증·수리하고 이해 확인 후 최종 판단을 재검토한다.
+- `nova_agent/closing.py`: 개인별 설명을 여러 완결 문장으로 나누고, 중간 환자 질문에 최대 2회 답변 생성, 이해 확인 후 한 번 오해 교정을 수행한다. 각 SAY는 30자 제한을 지킨다.
 - `nova_agent/meddb_overlay.py`: 원본 E2 문진·진단을 유지하는 별도 확장. 원본 파일을 수정하지 않고 복용 내역 확인과 설명만 보완한다.
 - `nova_agent/runtime.py`, `prompts.py`: 사실 갱신·다음 행동 선택·설명·최종 판단 흐름.
 - `nova_agent/closure.py`: 종료 직전 한 번만 중요한 누락 검토. 긴급 종료·시간/턴 부족·검토 실패 시 추가 질문을 강제하지 않는다. 현재 기본 비활성화이며 `--closure-audit`로 선택적 실험 가능.
-- `nova_agent/records.py`: S/O를 실제 응답으로 구성하는 SOAP 생성. 모델이 환자 나이·복용량·진찰 결과를 다시 써서 바꾸는 경로를 줄였다.
+- `nova_agent/records.py`: S/O를 실제 응답으로 구성하고 P.education의 교육 계획과 실제 성공한 SAY를 출처 ID·턴으로 구분한다. 태그가 설명 내용의 임상 충분성을 증명하지는 않는다.
 - `nova_agent/telemetry.py`, `analysis.py`: 인증정보를 제외한 JSONL 로그와 실행 분석. 임상 정확도·공식 점수는 자동 판정하지 않는다.
 - `tools/experiment.py`: 공식 원본 baseline 또는 하네스를 공개 개발 샘플로 실행. 리더보드 제출 기능은 없다.
 
@@ -62,7 +64,7 @@ python3 tools/package_submission.py
 
 완료된 공개 샘플 실행은 세션 밖 개발용 `openai/gpt-6.1-sol`로 별도 검토할 수 있다. 이 명령도 개발 크레딧을 사용하며 `local_review.json`의 점수는 공식 점수와 다르다. 공개 비교 대본·모범 기록은 이 평가 도구만 읽고 진료 에이전트에는 전달하지 않는다.
 
-MedDB 비교 실행에는 `vendor/meddb`에 고정 커밋의 저장소가 필요하다. `meddb_e2`와 `meddb_e2_plus`는 원본의 최대 36턴 수집+마무리·서버 최대 50턴 정책을 유지하며 `--max-turns`로 덮어쓰지 않는다. 이 정책은 manifest에 명시된다. harness는 지정 상한에서 마무리 8턴을 예약한다.
+MedDB 비교 실행에는 `vendor/meddb`에 고정 커밋의 저장소가 필요하다. `meddb_e2`와 `meddb_e2_plus`는 원본의 최대 36턴 수집+마무리·서버 최대 50턴 정책을 유지하며 `--max-turns`로 덮어쓰지 않는다. 이 정책은 manifest에 명시된다. v0.4.x harness는 지정 상한에서 마무리 12턴을 예약한다(이전 8턴). v0.4.1부터 실제 마무리도 12턴으로 제한한다. 충분한 문진·진찰을 위한 턴과 설명 턴의 균형은 계속 측정한다.
 
 새 환경에서 MedDB 비교본과 ZIP을 복원할 때는 다음 순서로 고정 커밋을 준비한다. 이미 있는 checkout에는 `git clone`을 다시 실행하지 않는다.
 
