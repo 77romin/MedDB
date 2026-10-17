@@ -43,7 +43,11 @@ def statement_parts(value):
             try:
                 if '?' in sentence or '？' in sentence:
                     raise ValueError('explanations must be statements')
-                accepted.append(validate_action({'type': 'SAY', 'content': sentence})[1])
+                sentence = validate_action({'type': 'SAY', 'content': sentence})[1]
+                # A connecting ending alone is visibly unfinished; this is not a grammar proof.
+                if re.search(r'(?:지만|으나|이며|인데|다면|라면|하면|면서)[.!。]*$', sentence):
+                    raise ValueError('unfinished connecting clause; regenerate a complete statement')
+                accepted.append(sentence)
             except ValueError:
                 invalid.append(sentence)
     if value and not values:
@@ -53,8 +57,16 @@ def statement_parts(value):
 
 def short_statement(text):
     """Legacy E2 adapter; the new harness consumes all validated statement parts."""
-    parts, _ = statement_parts(text)
-    return parts[0] if parts else None
+    if not isinstance(text, str):
+        return None
+    for sentence in [text.strip(), *re.split(r'(?<=[.!?。])\s+', text.strip())]:
+        if not sentence or '?' in sentence or '？' in sentence:
+            continue
+        try:
+            return validate_action({'type': 'SAY', 'content': sentence})[1]
+        except ValueError:
+            pass
+    return None
 
 
 def is_patient_question(text):

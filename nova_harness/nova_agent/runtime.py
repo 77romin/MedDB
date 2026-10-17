@@ -167,7 +167,12 @@ def consult(client, knowledge, config=None, trace=None):
         proposed = {}
     if config.structured_closing and remaining > 0:
         from .closing import close_consultation
-        proposed, remaining = close_consultation(gateway, state, proposed, remaining, trace, advisor)
+        # An early DONE must not spend every unused collection turn repeating explanations.
+        allowance = min(remaining, config.closing_turns)
+        unspent_collection = remaining-allowance
+        trace.emit('closing_budget', allowance=allowance, unspent_collection=unspent_collection)
+        proposed, closing_left = close_consultation(gateway, state, proposed, allowance, trace, advisor)
+        remaining = unspent_collection+closing_left
     note, diagnosis = make_record(state, proposed)
     trace.emit('record_ready', note=note, diagnosis=diagnosis, fallback=not bool(proposed))
     result = gateway.invoke('diagnose', note=note, diagnosis=diagnosis, final=True)

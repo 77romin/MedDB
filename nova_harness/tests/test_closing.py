@@ -21,6 +21,16 @@ class ClosingTests(unittest.TestCase):
         self.assertIsNone(short_statement('가'*31))
         self.assertIsNone(short_statement('무슨 약인가요?'))
 
+    def test_legacy_adapter_preserves_two_short_sentences_when_whole_value_fits(self):
+        text='검사로 확인해요. 결과를 기다려요.'
+        self.assertLessEqual(len(text),30)
+        self.assertEqual(short_statement(text),text)
+
+    def test_connecting_clause_is_not_a_complete_statement(self):
+        parts,bad=statement_parts(['원인이 의심되지만','검사로 확인해야 합니다.'])
+        self.assertEqual(parts,['검사로 확인해야 합니다.'])
+        self.assertEqual(bad,['원인이 의심되지만'])
+
     def test_real_overlong_closing_has_complete_short_sentences(self):
         messages=json.loads((Path(__file__).parent/'fixtures/overlong_closing.json').read_text())
         self.assertTrue(all(len(x)>30 for x in messages.values()))
@@ -129,6 +139,16 @@ class ClosingTests(unittest.TestCase):
         self.assertEqual(left,0)
         self.assertEqual(len(state.evidence),2)
         self.assertFalse(state.delivered_explanations())
+
+    def test_early_done_cannot_spend_all_unused_collection_turns_on_closing(self):
+        from nova_agent.runtime import consult
+        plan={'diagnosis':'평가 중','plan':{}}
+        messages={tag:[f'{i}번 내용을 설명드려요.',f'{i}번 내용을 보완해요.',f'{i}번 안내를 마칩니다.']
+                  for i,tag in enumerate(('assessment','plan','follow_up','safety_net','concern'))}
+        client=ScriptClient([{'next_action':{'type':'DONE'}},plan,plan,messages,plan],['걱정돼요']+['네']*20)
+        consult(client,prepare(),Config(max_turns=45,closing_turns=8,meddb=False))
+        self.assertLessEqual(50-client.turns,8)
+        self.assertEqual(client.submitted['diagnosis'],'평가 중')
 
 
 if __name__=='__main__':unittest.main()
