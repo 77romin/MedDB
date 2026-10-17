@@ -1,0 +1,114 @@
+# NOVA Doctor Agent
+
+예선 고정 Doctor `openai/gpt-6-luna`를 사용하는 표준 라이브러리 기반 개발 하네스다. 설계 자료는 [자료 목차](nova_reference/README.md), 상세 계획은 [구현계획](nova_reference/08_implementation_plan.md)에 있다.
+
+기존 프로젝트의 점수 정체를 해결하기 위해 새로 개발하는 독립 프로젝트다. MedDB 저장소의 `codex/nova-harness-rebuild` 브랜치에서 `nova_harness/`에 보관하며, 아래 명령은 이 디렉터리 안에서 실행한다. [의사결정 기록](DECISIONS.md)에 사용자 의도·고민·실험의 채택 이유를 대화마다 갱신한다. 공식 목표는 **≥78 → ≥85 → ≥90점**이며, 목표 확인 전 PR은 만들지 않는다. [저장소 전달 기록](docs/REPOSITORY_HANDOFF.md)에서 커밋 구분과 복원 방법을 확인할 수 있다.
+
+실제 개발 API 실행·원인 분석·수정 이력은 [개발 1차 보고서](reports/development_001.md)에 정리했다. 현재는 실험용 초기 버전이다.
+
+공개 샘플 확장과 종료 검토의 채택 결정은 [개발 2차 보고서](reports/development_002.md), 증례별 수치는 [벤치마크](reports/benchmark_002.md)에 있다. 현재 하네스의 전반적 우수성은 확인되지 않았다.
+
+## 현재 구현 범위
+
+MedDB 적용 내용과 후보 비교는 [3차 보고서](reports/meddb_review_003.md), [MedDB 벤치마크](reports/meddb_benchmark_003.md)에 있다. 공식 67.132점과 개발용 자가평가를 구분한다.
+
+- `run.py`: 공식 `prepare → ready → consult → diagnose` 진입점.
+- `nova_agent/protocol.py`: SDK 래퍼, 같은 작업 ID 재시도와 무효 응답 새 ID 재시도, 시간·호출·토큰 예산.
+- `nova_agent/state.py`: 환자별 원문 증거와 턴, 모델 추출 사실의 출처·부정·주체·시간 상태.
+- `nova_agent/ontology.json`: 초진 정보 구조 시드. MedDB 임상 관계는 `clinical_graph.json`에 별도 보관하며 검수 전 초안이다.
+- `nova_agent/clinical.py`: MedDB의 주호소·감별 관계에서 다음 행동을 제안한다. `--no-meddb`로 제거 실험할 수 있다.
+- `nova_agent/closing.py`: 개인별 계획으로 실제 SAY 설명을 생성·검증·수리하고 이해 확인 후 최종 판단을 재검토한다.
+- `nova_agent/meddb_overlay.py`: 원본 E2 문진·진단을 유지하는 별도 확장. 원본 파일을 수정하지 않고 복용 내역 확인과 설명만 보완한다.
+- `nova_agent/runtime.py`, `prompts.py`: 사실 갱신·다음 행동 선택·설명·최종 판단 흐름.
+- `nova_agent/closure.py`: 종료 직전 한 번만 중요한 누락 검토. 긴급 종료·시간/턴 부족·검토 실패 시 추가 질문을 강제하지 않는다. 현재 기본 비활성화이며 `--closure-audit`로 선택적 실험 가능.
+- `nova_agent/records.py`: S/O를 실제 응답으로 구성하는 SOAP 생성. 모델이 환자 나이·복용량·진찰 결과를 다시 써서 바꾸는 경로를 줄였다.
+- `nova_agent/telemetry.py`, `analysis.py`: 인증정보를 제외한 JSONL 로그와 실행 분석. 임상 정확도·공식 점수는 자동 판정하지 않는다.
+- `tools/experiment.py`: 공식 원본 baseline 또는 하네스를 공개 개발 샘플로 실행. 리더보드 제출 기능은 없다.
+
+원문 일치 검증은 모델이 추출한 의미·부정·시간의 정확성을 보증하지 않는다. 현재 사실 매핑과 임상 판단은 아직 검토 대상이다. S/O는 출처 보존을 우선한 초안 형식이다. 질환 관계의 임상 검수, 독립 검증 세트, 정교한 임상 기록 문장화는 다음 단계다.
+
+## 실행
+
+Python 3.12를 권장한다. 다운로드한 SDK는 1.0.1이며 원본을 수정하지 않았다. 첫 복원 시:
+
+```sh
+python3 tools/bootstrap.py
+python3 -m unittest discover -s tests -v
+```
+
+프로젝트 `.env`에 로컬 개발 키를 설정한다. 실행 도구만 `.env`를 읽으며 제출 진입점은 읽지 않는다. `.env`는 Git·제출 ZIP에서 제외된다. 키 내용은 공유하지 않는다.
+
+```text
+NOVA_API_BASE=https://nova.snubhai.org
+NOVA_DEV_KEY=발급받은_개인_개발키
+```
+
+```sh
+python3 tools/experiment.py check
+python3 tools/experiment.py list
+python3 tools/experiment.py run --case 공개_UUID --agent baseline --max-turns 30
+python3 tools/experiment.py run --case 공개_UUID --agent harness --max-turns 30
+python3 tools/experiment.py run --case 공개_UUID --agent harness --max-turns 30 --no-closure-audit
+python3 tools/experiment.py run --case 공개_UUID --agent harness --max-turns 30 --closure-audit
+python3 tools/experiment.py run --case 공개_UUID --agent harness --max-turns 45 --no-meddb --no-structured-closing
+python3 tools/experiment.py run --case 공개_UUID --agent meddb_e2
+python3 tools/experiment.py run --case 공개_UUID --agent meddb_e2_plus
+python3 tools/experiment.py analyze results/실험폴더/trace.jsonl
+python3 tools/compare.py results/기준실행 results/하네스실행
+python3 tools/package_submission.py
+```
+
+`list`는 공개 증례와 운영진이 공개한 정답 메타데이터를 보여 줄 수 있다. 이를 Planner 입력으로 사용하지 않는다. 런타임은 공개 대본·모범 기록·정답 파일을 읽지 않는다. 키는 공식 HTTPS origin에만 전송한다. `run`은 개발 크레딧과 샘플 생성 횟수를 사용하며, 진료 실행 자체는 공식 채점이 아니다.
+
+완료된 공개 샘플 실행은 세션 밖 개발용 `openai/gpt-6.1-sol`로 별도 검토할 수 있다. 이 명령도 개발 크레딧을 사용하며 `local_review.json`의 점수는 공식 점수와 다르다. 공개 비교 대본·모범 기록은 이 평가 도구만 읽고 진료 에이전트에는 전달하지 않는다.
+
+MedDB 비교 실행에는 `vendor/meddb`에 고정 커밋의 저장소가 필요하다. `meddb_e2`와 `meddb_e2_plus`는 원본의 최대 36턴 수집+마무리·서버 최대 50턴 정책을 유지하며 `--max-turns`로 덮어쓰지 않는다. 이 정책은 manifest에 명시된다. harness는 지정 상한에서 마무리 8턴을 예약한다.
+
+새 환경에서 MedDB 비교본과 ZIP을 복원할 때는 다음 순서로 고정 커밋을 준비한다. 이미 있는 checkout에는 `git clone`을 다시 실행하지 않는다.
+
+```sh
+git clone https://github.com/SSAFY16-S11-NOVA2026/MedDB.git vendor/meddb
+git -C vendor/meddb checkout 63743a8b8a2e278b426d18fc040e880740318ae3
+python3 tools/import_meddb.py
+python3 vendor/meddb/tools/make_submission.py --starter vendor/starter/run.py --agent hybrid_care --knowledge-mode clinical --reference-profile reviewed --out dist/submission_meddb_E2_reference.zip
+python3 tools/package_meddb_plus.py
+```
+
+```sh
+python3 tools/judge.py results/완료된실험 --public-case C01
+```
+
+## 실험 결과
+
+각 실행을 `results/KST시각_에이전트/`에 저장한다.
+
+| 파일 | 내용 |
+| --- | --- |
+| `manifest.json` | 증례·모델·버전별 파일 해시·실험 조건 |
+| `source_snapshot.zip` | 실험 시작 당시의 허용된 코드 파일 사본. 키·샘플 정답 제외 |
+| `trace.jsonl` | 요청·응답·오류·재시도·선택 목적·사실 갱신·제출 |
+| `analysis.json` | 성공 여부·요청 수·토큰·시간·문제 분류 |
+| `analysis.md` | 분석 요약과 다음 점검 항목 |
+| `local_review.json` | 선택적 개발용 평가 모델의 비공식 영역별 추정·문제 인용 |
+
+`judge_trace.jsonl`에는 개발용 평가자의 입력·출력·사용량을 별도로 보관한다. 같은 실행을 다시 검토할 때는 저장된 결과를 재사용하며 추가 유료 검토는 `--force`로 명시한다.
+
+인증정보를 가려도 임상 대화 자체는 로그에 남는다. 현재 공개 가상환자용이며 실제 환자 데이터 운영을 위한 접근통제·보존정책을 구현한 제품은 아니다. 실험 로그는 Git·제출 자산에서 제외하고 실행마다 상태를 초기화한다.
+
+비교는 같은 증례·턴 상한·Doctor로 수행하되 단일 실행의 우열을 일반화하지 않는다. baseline은 공식 파일을 그대로 불러오며 `MAX_TURNS`만 실험 조건으로 설정한다. baseline과 하네스의 재시도·종료 여유·프롬프트는 다르므로 전체 시스템 비교이며 개별 기능의 인과 효과를 의미하지 않는다.
+
+선택적 종료 검토는 충분한 시간과 7턴 이상의 여유가 있고 응답 증거가 5개 이상일 때 첫 DONE에 한 번만 적용한다. 검토자는 최대 3개 누락과 다음 행동 하나를 제안한다. 중요한 누락이 없거나 긴급 처치를 지연할 경우 종료하며, 검토 실패도 제출을 막지 않는다. v0.2.0의 C01 실행에서 개선이 관찰되지 않아 v0.2.1은 이 기능을 기본 비활성화했다. 다중 공개 증례 결과는 `tools/benchmark_report.py`로 합칠 수 있다.
+
+## 제출·환경 확인
+
+`tools/package_submission.py`는 진입점·SDK·requirements, `nova_agent`의 Python/JSON, `third_party/meddb`의 출처·통지를 포함한다. 개발 키·공개 정답·vendor·결과·테스트·도구는 제외한다. ZIP을 자동 업로드하지 않는다. E2 확장 후보는 `tools/package_meddb_plus.py`로 별도 생성한다.
+
+`local.Dockerfile`은 공식 파일이다. 실제 환경 확인은 제출 ZIP을 별도 폴더에 풀어 그 폴더만 Docker build context로 사용한다. 개발 폴더 전체로 이미지를 만들면 `.env`가 복사될 수 있으므로 `.dockerignore`도 함께 제공한다.
+
+```sh
+docker build -f local.Dockerfile -t nova-agent .
+docker run --rm --network=none --read-only --tmpfs /tmp nova-agent \
+  python -c "from run import prepare; prepare(); print('prepare OK')"
+```
+
+Docker 실행과 실제 서버 샘플 검증을 통과하기 전에는 서버 환경 재현 검증을 완료했다고 간주하지 않는다.
