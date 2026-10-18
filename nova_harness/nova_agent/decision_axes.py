@@ -30,7 +30,7 @@ def decision_axes(state, clinical=None):
             scopes.append('치료 선택 전 임신 가능성/계획·수유 여부를 해당 환자에게 확인; 미확인은 음성이 아님')
         axes.append({'type':'thyroid_treatment_readiness', 'scope':scopes,
                      'not_equivalent':['진단 가설 ≠ 확진','가임 연령 ≠ 임신','운동 중 숨참 ≠ 안정 시 숨참 부인']})
-    if re.search(r'저신장|성장|작은\s*키|키가\s*작', text) and (clinical.get('age') is None or clinical['age'] < 19):
+    if (clinical.get('complaint') == 'short_stature' or re.search(r'저신장|성장|작은\s*키|키가\s*작', text)) and (clinical.get('age') is None or clinical['age'] < 19):
         axes.append({'type':'growth_trajectory', 'scope':[
             '본인의 연속 측정 시점·키·성장속도와 출생/만성질환/영양 맥락; 단일 키와 장기 경과 구분',
             '부모 각각의 성인 키, 어릴 때 키, 사춘기 시점 분리; 어린 시절 작은 부친을 성인 저신장으로 코딩하지 않기',

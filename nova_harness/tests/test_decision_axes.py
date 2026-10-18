@@ -38,3 +38,7 @@ class DecisionAxesTest(unittest.TestCase):
         self.assertEqual(decision_axes(s,{'age':9})['axes'][0]['type'],'growth_trajectory')
         self.assertFalse(s.facts)
         self.assertIsNone(decision_axes(s,{'age':40}))
+
+    def test_growth_complaint_handles_nonadjacent_opening_wording(self):
+        s=PatientState({'opening':'키가 또래에 비해 많이 작은 것 같아요'}, {})
+        self.assertEqual(decision_axes(s,{'age':6,'complaint':'short_stature'})['axes'][0]['type'],'growth_trajectory')
