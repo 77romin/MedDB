@@ -107,5 +107,18 @@ class ReportTests(unittest.TestCase):
             self.assertEqual(future['questions_detected'],0)
             self.assertIsNone(future['goal_updates'])
 
+    def test_interrupted_measurement_is_not_running_or_a_zero_score(self):
+        from tools.stage_report import collect_plans
+        from nova_agent.telemetry import Trace
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);run=root/'frozen/results/run';run.mkdir(parents=True)
+            (run/'manifest.json').write_text(json.dumps({'label':'interrupted','case_id':'fixture','fingerprint':{}}))
+            Trace(run/'trace.jsonl').emit('experiment_start')
+            (run/'interruption.json').write_text('{"status":"interrupted"}')
+            plan=root/'plan.json';plan.write_text(json.dumps([{'source':str(root/'frozen'),'label':'interrupted','case_id':'fixture'}]))
+            row=collect_plans([plan])[0]
+            self.assertEqual(row['status'],'interrupted')
+            self.assertIsNone(row['score']);self.assertIsNone(row['official_score'])
+
 
 if __name__ == '__main__': unittest.main()

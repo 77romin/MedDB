@@ -38,7 +38,7 @@ def collect_plans(plans):
             review=json.loads((d/'local_review.json').read_text()) if (d/'local_review.json').exists() else None
             value.update(directory=str(d),version=m.get('agent_version'),
                          source_sha256=hashlib.sha256(json.dumps(m['fingerprint'],sort_keys=True).encode()).hexdigest(),
-                         status='completed' if data['completed'] else 'failed' if data['experiment_finished'] else 'running',
+                         status='completed' if data['completed'] else 'failed' if data['experiment_finished'] else 'interrupted' if (d/'interruption.json').exists() else 'running',
                          score=review['estimated_total'] if review else None,
                          areas={k:v['score'] for k,v in review['scores'].items()} if review else {},
                          review_prompt_sha256=review.get('review_prompt_sha256') if review else None,
