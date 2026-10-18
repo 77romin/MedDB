@@ -27,6 +27,8 @@ def review_closure(gateway, state, hypotheses, goals=None):
 단일 슬롯의 initial_coverage나 resolved가 모든 시간·구성 항목을 확인했다는 뜻은 아닙니다.
 이미 제공된 값을 다시 묻거나 같은 결과를 주는 진찰은 하지 않습니다. 남은 불확실성을 계획으로 다뤄도 충분하면 ready=true입니다.
 당장 필요한 안전 행동이 있다면 추가 문진보다 먼저 한 문장으로 제안하고 긴급 처치를 지연하지 않습니다.'''
+        prompt += '''\n일반적인 진단·계획 설명은 이 검토 뒤 별도 마무리 단계에서 전송하므로 아직 설명하지 않은 것만으로 추가 수집 행동을 제안하지 않습니다.
+SAY content는 환자에게 직접 할 완결된 존댓말이며 '설명한다/확인한다/물어본다' 같은 의사에게 주는 지시가 아닙니다.'''
     response = gateway.chat([{'role': 'system', 'content': prompt},
                              {'role': 'user', 'content': json.dumps(payload, ensure_ascii=False)}])
     try:
