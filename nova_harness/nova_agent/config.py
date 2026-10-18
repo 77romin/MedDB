@@ -19,6 +19,8 @@ class Config:
     closure_audit: bool = False  # experimental; C01 did not improve with it enabled
     meddb: bool = True
     coverage: bool = True
+    compact_context: bool = True
+    guidelines: bool = False  # optional ablation, not a clinically validated default
     structured_closing: bool = True
     closing_turns: int = 12  # multiple complete sentences, teach-back, one correction
     retry_delays: tuple = (2, 5, 10)

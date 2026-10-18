@@ -82,11 +82,11 @@ class CoverageTests(unittest.TestCase):
         state=PatientState({'opening':opening},{c['id']:c for c in advisor.concepts()})
         return advisor,state,CoveragePlanner(advisor,state)
 
-    def test_done_is_replaced_with_unasked_core_observation(self):
+    def test_done_is_not_overridden_by_advisory_collection(self):
         _,s,c=self.setup_case()
         action,event=c.choose({'type':'DONE'},45,12)
-        self.assertEqual(action['target'],'meddb:onset')
-        self.assertEqual(event['reason'],'unasked_core_observation')
+        self.assertEqual(action,{'type':'DONE'})
+        self.assertIsNone(event)
         self.assertEqual(len(s.evidence),0)
 
     def test_attempt_unknown_and_resolved_are_different(self):
@@ -94,7 +94,7 @@ class CoverageTests(unittest.TestCase):
         s.add_response('SAY',a['content'],{'content':'모르겠어요'},a['target'])
         self.assertEqual(c.status(a),'attempted_unresolved')
         next_action,_=c.choose({'type':'DONE'},45,12)
-        self.assertNotEqual(next_action['target'],a['target'])
+        self.assertEqual(next_action,{'type':'DONE'})
         s.facts.append({'concept_id':a['target'],'assertion':'unknown'})
         self.assertEqual(c.status(a),'attempted_unresolved')
         s.facts.append({'concept_id':a['target'],'assertion':'present'})
@@ -105,21 +105,21 @@ class CoverageTests(unittest.TestCase):
     def test_urgent_bypass_needs_real_source_ids_and_reason(self):
         _,_,c=self.setup_case()
         p={'type':'DONE','urgent_exit':True,'urgency_evidence_ids':['made-up'],'urgent_reason':'즉시 평가'}
-        self.assertIsNotNone(c.choose(p,45,12)[1])
+        self.assertFalse(c.urgent_exit(p))
         p['urgency_evidence_ids']=['initial']
-        self.assertIsNone(c.choose(p,45,12)[1])
+        self.assertTrue(c.urgent_exit(p))
         p['urgent_reason']=''
-        self.assertIsNotNone(c.choose(p,45,12)[1])
+        self.assertFalse(c.urgent_exit(p))
 
     def test_immediate_safety_statement_is_not_overridden(self):
         _,_,c=self.setup_case()
         p={'type':'SAY','content':'지금 즉시 도움을 요청하세요.','communication':['safety_net']}
         self.assertEqual(c.choose(p,15,12),(p,None))
 
-    def test_premature_plan_is_redirected_but_answer_is_allowed(self):
+    def test_plan_and_patient_answer_are_not_overridden(self):
         _,_,c=self.setup_case()
         p={'type':'SAY','content':'계획을 설명드리겠습니다.','communication':['plan']}
-        self.assertIsNotNone(c.choose(p,45,12)[1])
+        self.assertEqual(c.choose(p,45,12),(p,None))
         p['communication']=['answer']
         self.assertIsNone(c.choose(p,45,12)[1])
 
@@ -153,8 +153,8 @@ class CoverageTests(unittest.TestCase):
         _,_,c=self.setup_case()
         self.assertEqual(c.choose([],45,12),([],None))
 
-    def test_runtime_executes_core_question_instead_of_early_done(self):
-        client=ScriptClient([{'next_action':{'type':'DONE'}},{'diagnosis':'평가 중'}],['세 달 전부터요'])
+    def test_runtime_executes_model_selected_core_question(self):
+        client=ScriptClient([{'next_action':{'type':'SAY','target':'meddb:onset','content':'언제부터 증상이 있으셨어요?'}},{'diagnosis':'평가 중'}],['세 달 전부터요'])
         consult(client,prepare(),Config(max_turns=1,structured_closing=False))
         self.assertEqual(50-client.turns,1)
         self.assertIn('세 달 전부터요',client.submitted['note']['S']['hpi'])

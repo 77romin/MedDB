@@ -112,7 +112,7 @@ class ClosingTests(unittest.TestCase):
                             ['걱정돼요','치료할 수 있나요?','네','네','알겠습니다'])
         close_consultation(Gateway(client),state,plan,10,Trace())
         actual=[e.question for e in state.evidence]
-        index=actual.index(messages['assessment'][0])
+        index=actual.index(messages['plan'][0])
         self.assertEqual(actual[index+1],answer)
         self.assertEqual(state.evidence[index+1].communication,('answer',))
 

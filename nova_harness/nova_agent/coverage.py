@@ -113,6 +113,8 @@ class CoveragePlanner:
             observations = [{k:r[k] for k in ('target','status')} for r in observations]
         secondary = self.secondary_complaint()
         return {'observations':observations,
+                'performed_exams':[{'target':a['target'],'status':self.status(a)} for a in actions
+                                   if a['type']=='EXAM' and self.status(a) in {'exam_result_obtained','exam_result_model_mapped'}],
                 'secondary_complaint':secondary['id'] if secondary else None,
                 'next_unasked': [a for a in actions if self.status(a) == 'unasked'][:4],
                 'objective_next':[a for a in actions if a['type']=='EXAM' and self.status(a)=='unasked'][:2],
@@ -128,6 +130,22 @@ class CoveragePlanner:
     def choose(self, proposal, remaining, reserve):
         if not isinstance(proposal,dict):
             return proposal, None
+        if str(proposal.get('type','')).upper() == 'EXAM':
+            target = proposal.get('target') or self.target_for('EXAM',proposal.get('content',''))
+            action = next((a for a in self.actions() if a['target']==target and a['type']=='EXAM'),None)
+            if action and self.status(action) in {'exam_result_obtained','exam_result_model_mapped'}:
+                sources = {e.id:e for e in self.state.evidence}
+                related = [e for e in self.state.evidence if e.action=='EXAM' and e.target==target]
+                related += [sources[f['evidence_id']] for f in self.state.facts
+                            if self.state.concepts.get(f['concept_id'],{}).get('exam_target')==target
+                            and f.get('evidence_id') in sources and sources[f['evidence_id']].action=='EXAM']
+                latest = max((e.turn for e in related),default=self.state.turns_used)
+                ids = proposal.get('reassessment_evidence_ids',[])
+                justified = (isinstance(proposal.get('reassessment_reason'),str) and bool(proposal['reassessment_reason'].strip())
+                             and isinstance(ids,list) and bool(ids)
+                             and all(isinstance(eid,str) and eid in sources and sources[eid].turn>latest for eid in ids))
+                if not justified:
+                    raise ValueError('exam already obtained for this target; choose another action or cite newer evidence and reassessment_reason')
         pending = [a for a in self.actions() if self.status(a) == 'unasked']
         if not pending:
             return proposal, None
@@ -138,7 +156,7 @@ class CoveragePlanner:
         tags = proposal.get('communication', [])
         tags = [tags] if isinstance(tags, str) else tags if isinstance(tags, list) else []
         # A valid core choice should not be displaced by the late-turn queue rule.
-        if kind in {'SAY','EXAM'} and not tags and (not urgent or kind=='EXAM'):
+        if kind == 'EXAM' and not tags:
             core = next((a for a in pending if a['type']==kind and (a['target']==proposal.get('target')
                         or (isinstance(proposal.get('content'),str) and action_key(kind,proposal['content'])==action_key(kind,a['content'])))), None)
             if core:
@@ -146,12 +164,8 @@ class CoveragePlanner:
                 event = None if canonical.get('content')==proposal.get('content') else {
                     'reason':'canonical_target_action','original':proposal,'target':core['target']}
                 return canonical,event
-        if urgent:
-            return proposal, None
-        safety = 'safety_net' in tags
-        early_explanation = bool({'assessment','plan'}.intersection(tags)) and not safety
-        exhausted_frontier = remaining-reserve <= len(pending)+1 and not safety and kind == 'SAY' and not tags
-        if kind == 'DONE' or early_explanation or exhausted_frontier:
-            return dict(pending[0]), {'reason':'unasked_core_observation', 'original':proposal,
-                                     'pending_count':len(pending), 'target':pending[0]['target']}
+        # Coverage is advice, not a compulsory checklist. In particular an untagged
+        # safety question outside the graph must never be replaced by background history.
+        # Source-linked urgent exit remains available to the planner, but no longer
+        # serves as a prerequisite for escaping the queue.
         return proposal, None

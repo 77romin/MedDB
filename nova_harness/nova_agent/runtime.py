@@ -38,7 +38,7 @@ def consult(client, knowledge, config=None, trace=None):
     gateway = Gateway(client, config, trace)
     session = client.session()
     gateway.deadline = session.get('deadline')
-    state = PatientState(session['initial'], {c['id']: c for c in knowledge['concepts']})
+    state = PatientState(session['initial'], {c['id']: c for c in knowledge['concepts']}, compact_context=config.compact_context)
     advisor = ClinicalAdvisor(knowledge['clinical_graph'], str(state.initial.get('opening',''))) if config.meddb else None
     if advisor:
         state.concepts.update({c['id']:c for c in advisor.concepts()})
@@ -62,7 +62,7 @@ def consult(client, knowledge, config=None, trace=None):
             concepts = list({c['id']:c for c in concepts}.values())
             ontology_context = {'concepts': [{k:c[k] for k in ('id','label','field','kind','exam_target') if c.get(k) is not None} for c in concepts],
                                 'relations': knowledge['relations']}
-            user = {'patient': state.prompt_snapshot(), 'ontology': ontology_context,
+            user = {'patient': state.prompt_snapshot([c['id'] for c in concepts]), 'ontology': ontology_context,
                     'latest_evidence_id': state.evidence[-1].id if state.evidence else None,
                     'turns_remaining_local': remaining, 'seconds_remaining': min(99999, seconds_left(session)),
                     'instruction_feedback': feedback[-3:]}
@@ -167,9 +167,22 @@ def consult(client, knowledge, config=None, trace=None):
     proposed = {}
     if advisor:
         trace.emit('clinical_state', context=advisor.context(state))
+    guideline_context = None
+    if config.guidelines:
+        from .guidelines import Guidelines
+        try:
+            hypotheses = advisor.context(state)['hypotheses'] if advisor else []
+            terms = [advisor.diseases[h['id']].get('en','') for h in hypotheses[:2]] if advisor else []
+            query = ' '.join(terms) or str(state.initial.get('opening',''))[:200]
+            guideline_context = Guidelines().search(query[:500],limit=2)
+            trace.emit('guideline_retrieval', result=guideline_context)
+        except (OSError,ValueError,UnicodeError) as exc:
+            trace.emit('guideline_unavailable', exception=type(exc).__name__)
     for _ in range(2):
         try:
             payload = {'patient':state.prompt_snapshot(),'clinical_advisor':advisor.context(state) if advisor else None}
+            if guideline_context:
+                payload['guideline_references'] = guideline_context
             proposed = normalize_assessment(content_of(gateway.chat([{'role': 'system', 'content': FINAL},
                                                {'role': 'user', 'content': json.dumps(payload, ensure_ascii=False)}], final=True)))
             note, diagnosis = make_record(state, proposed)

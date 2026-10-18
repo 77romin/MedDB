@@ -27,12 +27,20 @@ def make_record(state, proposed):
     if vitals:
         note['O']['exam'] = '시작 정보 활력징후: ' + (vitals if isinstance(vitals, str) else json.dumps(vitals, ensure_ascii=False))
     routed = set()
+    rendered_sources = set()
     for f in state.facts:
         source = next(e for e in state.evidence if e.id == f['evidence_id'])
         field = state.concepts[f['concept_id']]['field']
         if field == 'exam':
             continue  # O already renders the complete actual EXAM result below.
+        key = (field,source.id)
+        if key in rendered_sources:
+            note['S'][field] += '\n추가 모델 추출: '+json.dumps({k:f[k] for k in ('id','concept_id','assertion','attribute','value','unit','time_anchor') if k in f},ensure_ascii=False)
+            continue
+        rendered_sources.add(key)
         item = f"[{f['id']}, {source.id}, 턴 {source.turn}, {f['subject']}, {f['temporality']}, {f['assertion']}] 질문: {source.question} / 환자 원문 전체: {source.response}"
+        if f.get('attribute'):
+            item += ' / 출처 검증 관찰: '+json.dumps({k:f[k] for k in ('attribute','value','unit','time_anchor') if k in f},ensure_ascii=False)
         note['S'][field] += ('\n' if note['S'][field] else '')+item
         routed.add(source.id)
     explanations = {e.id for e in state.delivered_explanations()}
