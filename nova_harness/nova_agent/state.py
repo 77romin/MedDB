@@ -25,6 +25,7 @@ class PatientState:
     seen: set = field(default_factory=set)
     turns_used: int = 0
     compact_context: bool = True
+    decision_goals: list = field(default_factory=list)
 
     def add_response(self, action, content, reply, target='', communication=()):
         response = reply.get('content' if action == 'SAY' else 'result', '')
@@ -121,10 +122,13 @@ class PatientState:
     def snapshot(self):
         covered = {f['concept_id'] for f in self.facts if f['assertion'] in {'present', 'absent'}}
         # Semantic negation/temporality is model-extracted, not established by substring validation.
-        return {'initial': self.initial, 'facts': self.facts,
+        value = {'initial': self.initial, 'facts': self.facts,
                 'evidence': [vars(e) for e in self.evidence],
                 'unconfirmed_slots': [c for c in self.concepts if c not in covered],
                 'communication_claimed_sent': sorted(self.communication), 'errors': self.errors[-8:]}
+        if self.decision_goals:
+            value['decision_goals'] = self.decision_goals
+        return value
 
     def prompt_snapshot(self, relevant_concepts=None):
         """Keep every original response, but avoid repeating its quote again in the fact list."""

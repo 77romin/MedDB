@@ -15,10 +15,19 @@ JSON 객체 하나만 출력합니다:
 최대 700자 이내로 답하세요. 숨은 사고과정 대신 근거와 누락만 간결히 제공합니다.'''
 
 
-def review_closure(gateway, state, hypotheses):
-    payload = {'patient': state.snapshot(), 'hypotheses': hypotheses,
+def review_closure(gateway, state, hypotheses, goals=None):
+    payload = {'patient': state.prompt_snapshot(), 'hypotheses': hypotheses,
                'seconds_remaining': min(99999, gateway.remaining())}
-    response = gateway.chat([{'role': 'system', 'content': PROMPT},
+    prompt = PROMPT
+    if goals is not None:
+        payload['decision_goals'] = goals
+        prompt += '''\n결정 목표의 완료는 모델 해석이며 정확한 인용만으로 의미가 입증되지 않습니다.
+최근/평소, 특정 상황/일반 상태, 정보 존재/실제 수치, 진찰 요청/반환 결과 범위를 구분합니다.
+진료 종료를 바꿀 가장 중요한 미해결 정보 하나만 제안하고 일반 병력 채우기는 하지 않습니다.
+단일 슬롯의 initial_coverage나 resolved가 모든 시간·구성 항목을 확인했다는 뜻은 아닙니다.
+이미 제공된 값을 다시 묻거나 같은 결과를 주는 진찰은 하지 않습니다. 남은 불확실성을 계획으로 다뤄도 충분하면 ready=true입니다.
+당장 필요한 안전 행동이 있다면 추가 문진보다 먼저 한 문장으로 제안하고 긴급 처치를 지연하지 않습니다.'''
+    response = gateway.chat([{'role': 'system', 'content': prompt},
                              {'role': 'user', 'content': json.dumps(payload, ensure_ascii=False)}])
     try:
         raw = response['choices'][0]['message']['content']

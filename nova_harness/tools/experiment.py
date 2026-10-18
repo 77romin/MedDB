@@ -56,6 +56,7 @@ def main():
     r.add_argument('--no-meddb', action='store_true', help='ablation: disable imported clinical graph advice')
     r.add_argument('--no-structured-closing', action='store_true', help='ablation: let the planner manage closing')
     r.add_argument('--no-coverage', action='store_true', help='ablation: disable graph-derived collection gate')
+    r.add_argument('--no-decision-review', action='store_true', help='ablation: disable scoped goals and bounded DONE review')
     r.add_argument('--planner-effort', choices=['low','medium','high'], default=Config().planner_reasoning_effort)
     r.add_argument('--full-context', action='store_true', help='ablation: retain all unconfirmed ontology ids')
     r.add_argument('--guidelines', action='store_true', help='optional read-only official guideline retrieval')
@@ -93,6 +94,7 @@ def main():
                 'meddb': args.agent == 'harness' and not args.no_meddb,
                 'structured_closing': args.agent == 'harness' and not args.no_structured_closing,
                 'coverage':args.agent == 'harness' and not args.no_coverage,
+                'decision_review':args.agent == 'harness' and not args.no_decision_review,
                 'compact_context':args.agent == 'harness' and not args.full_context,
                 'guidelines':args.agent == 'harness' and args.guidelines,
                 'closing_turns':Config().closing_turns,
@@ -140,6 +142,7 @@ def main():
         else:
             outcome = consult(client, prepare(), Config(max_turns=args.max_turns, closure_audit=args.closure_audit,
                                 meddb=not args.no_meddb, coverage=not args.no_coverage, compact_context=not args.full_context, guidelines=args.guidelines,
+                                decision_review=not args.no_decision_review,
                                 planner_reasoning_effort=args.planner_effort, structured_closing=not args.no_structured_closing), trace)
         trace.emit('experiment_complete', result=outcome)
     except Exception as exc:

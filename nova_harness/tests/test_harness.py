@@ -18,6 +18,7 @@ from nova_agent.validation import action_key, parse_object, validate_action, val
 def Config(**kwargs):
     kwargs.setdefault('meddb', False)
     kwargs.setdefault('structured_closing', False)
+    kwargs.setdefault('decision_review', False)
     return RuntimeConfig(**kwargs)
 
 

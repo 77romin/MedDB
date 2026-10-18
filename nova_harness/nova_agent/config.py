@@ -17,6 +17,7 @@ class Config:
     reasoning_effort: str = 'medium'
     planner_reasoning_effort: str = 'medium'  # low remains an explicit development experiment
     closure_audit: bool = False  # experimental; C01 did not improve with it enabled
+    decision_review: bool = True  # one bounded review of decision scope before ordinary DONE
     meddb: bool = True
     coverage: bool = True
     compact_context: bool = True

@@ -13,6 +13,7 @@ from .validation import action_key, parse_object, validate_action
 from .closure import review_closure
 from .clinical import ClinicalAdvisor
 from .coverage import CoveragePlanner
+from .goals import DecisionGoals
 
 STOP = {'TURN_LIMIT_REACHED', 'SESSION_EXPIRED', 'SESSION_CLOSED', 'RUN_NOT_ACTIVE', 'LOCAL_DEADLINE'}
 REJECTED = {'CONTENT_TOO_LONG', 'EMPTY_CONTENT', 'EXAM_NOT_SPECIFIC', 'EXAM_NOT_RECOGNIZED', 'ACTION_NOT_AVAILABLE'}
@@ -43,6 +44,7 @@ def consult(client, knowledge, config=None, trace=None):
     if advisor:
         state.concepts.update({c['id']:c for c in advisor.concepts()})
     coverage = CoveragePlanner(advisor, state) if advisor and config.coverage else None
+    goals = DecisionGoals(state) if config.decision_review else None
     initial_server_remaining = int(session['turns_remaining'])
     remaining = min(config.max_turns, initial_server_remaining)
     trace.emit('consult_start', version=__version__, model=config.model, config=vars(config), initial=state.initial)
@@ -70,8 +72,11 @@ def consult(client, knowledge, config=None, trace=None):
                 user['clinical_advisor'] = clinical
             if coverage:
                 user['collection_coverage'] = coverage.snapshot(compact=True)
+            if goals:
+                user['patient'].pop('decision_goals', None)
+                user['decision_goals'] = goals.snapshot()
             if config.structured_closing:
-                user['closing_policy'] = '진단·계획·추적·안전·걱정·이해 확인은 별도 마무리 단계에서 수행합니다. 지금은 필요한 문진·진찰을 수행하고 충분하면 DONE. 긴급성은 근거에 맞춰 판단합니다.'
+                user['closing_policy'] = '일반 설명은 별도 마무리 단계에서 수행합니다. 지금 필요한 안전 행동은 마무리까지 기다리지 말고 실제 SAY로 안내합니다. 필요한 문진·진찰이 충분하면 DONE이며 긴급 대응을 지연하지 않습니다.'
             if closure_missing:
                 user['closure_review_missing'] = closure_missing
                 user['closure_review_instruction'] = '지적된 누락 중 아직 중요하고 미확인인 항목을 우선 확인합니다. 이미 답을 얻었거나 즉시 이송을 지연하면 반복하지 않습니다.'
@@ -86,6 +91,10 @@ def consult(client, knowledge, config=None, trace=None):
                 result = content_of(completion)
                 accepted, rejected = state.accept_facts(result.get('facts', []))
                 trace.emit('facts_updated', accepted=accepted, rejected=rejected)
+                if goals:
+                    accepted_goals, rejected_goals = goals.update(result.get('goal_updates', []))
+                    trace.emit('decision_goals_updated', accepted=accepted_goals, rejected=rejected_goals)
+                    feedback.extend(rejected_goals[-1:])
                 proposal = result.get('next_action', {})
                 if coverage:
                     coverage.accept_initial(result.get('initial_coverage', []))
@@ -109,14 +118,25 @@ def consult(client, knowledge, config=None, trace=None):
             break
         action, text, proposal = selected
         if action == 'DONE':
-            if (config.closure_audit and not closure_reviewed and len(state.evidence) >= 5
-                    and remaining > 6 and seconds_left(session) > config.time_margin+180):
+            urgent = (proposal.get('urgent_exit') is True
+                      and isinstance(proposal.get('urgent_reason'), str) and bool(proposal['urgent_reason'].strip())
+                      and isinstance(proposal.get('urgency_evidence_ids'), list) and bool(proposal['urgency_evidence_ids'])
+                      and all(eid in {'initial'} | {e.id for e in state.evidence}
+                              for eid in proposal['urgency_evidence_ids'] if isinstance(eid, str))
+                      and all(isinstance(eid, str) for eid in proposal['urgency_evidence_ids']))
+            if urgent:
+                stop_reason = 'urgent_exit_source_checked'; break
+            if ((config.closure_audit or goals is not None) and not closure_reviewed
+                    and len(state.evidence) >= (3 if goals else 5)
+                    and remaining > max(6, reserve+1) and seconds_left(session) > config.time_margin+180):
                 closure_reviewed = True  # once, even on invalid/failed review; never loop indefinitely
                 try:
-                    audit = review_closure(gateway, state, result.get('hypotheses', []))
+                    audit = review_closure(gateway, state, result.get('hypotheses', []), goals.snapshot() if goals else None)
                     trace.emit('closure_review', review=audit)
                     if not audit['ready'] and not audit['urgent_exit']:
                         proposal = audit['next_action']
+                        if coverage:
+                            proposal, _ = coverage.choose(proposal, remaining, reserve)
                         action, text = validate_action(proposal, state.seen)
                         closure_missing = audit['missing']
                         trace.emit('closure_followup', action=action, content=text, missing=closure_missing)

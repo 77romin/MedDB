@@ -22,6 +22,7 @@ def initial_steps():
 def Config(**kwargs):
     kwargs.setdefault('meddb', False)
     kwargs.setdefault('structured_closing', False)
+    kwargs.setdefault('decision_review', False)
     return RuntimeConfig(**kwargs)
 
 
