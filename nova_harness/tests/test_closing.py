@@ -112,7 +112,7 @@ class ClosingTests(unittest.TestCase):
                             ['걱정돼요','치료할 수 있나요?','네','네','알겠습니다'])
         close_consultation(Gateway(client),state,plan,10,Trace())
         actual=[e.question for e in state.evidence]
-        index=actual.index(messages['plan'][0])
+        index=actual.index(messages['assessment'][0])
         self.assertEqual(actual[index+1],answer)
         self.assertEqual(state.evidence[index+1].communication,('answer',))
 
@@ -169,6 +169,40 @@ class ClosingTests(unittest.TestCase):
         consult(client,prepare(),Config(max_turns=45,closing_turns=8,meddb=False))
         self.assertLessEqual(50-client.turns,8)
         self.assertEqual(client.submitted['diagnosis'],'평가 중')
+
+    def test_question_in_answer_interrupts_stale_complement(self):
+        plan={'diagnosis':'평가 중','plan':{}}
+        messages={'assessment':['키가 작은 편입니다.'], 'plan':['기록을 함께 확인하겠습니다.'],
+                  'follow_up':['다음 방문에 경과를 확인합니다.']}
+        first={'answer':['현재 또래보다 작은 편입니다.','다른 걱정도 확인하겠습니다.']}
+        second={'answer':['성장 가능성은 경과로 확인합니다.']}
+        client=ScriptClient([plan,messages,first,second,plan],
+                            ['걱정돼요','많이 작은 건가요?','더 클 수 있나요?']+['네']*8)
+        state=self.state()
+        close_consultation(Gateway(client),state,plan,12,Trace())
+        actual=[e.question for e in state.evidence]
+        i=actual.index(first['answer'][0])
+        self.assertEqual(actual[i+1],second['answer'][0])
+        self.assertNotIn(first['answer'][1],actual)
+        self.assertEqual(len(state.patient_questions),2)
+        self.assertTrue(all(q['answer_evidence_ids'] for q in state.patient_questions))
+        self.assertTrue(all(q['status']=='answer_sent_unverified' for q in state.patient_questions))
+
+    def test_followup_and_action_cores_survive_many_patient_questions(self):
+        plan={'diagnosis':'평가 중','plan':{}}
+        messages={'assessment':['추가 평가가 필요합니다.'],'plan':['오늘 진료받으세요.'],
+                  'follow_up':['내일 결과를 확인하세요.'],'safety_net':['흉통이면 즉시 응급실로 가세요.'],
+                  'concern':['걱정하실 수 있습니다.']}
+        answer={'answer':['확인한 범위에서 말씀드립니다.']}
+        client=ScriptClient([plan,messages]+[answer]*3+[plan],['다음은 어떻게 되나요?']*20)
+        state=self.state()
+        close_consultation(Gateway(client),state,plan,12,Trace())
+        actual=[e.question for e in state.evidence]
+        for tag in ('plan','follow_up','safety_net'):
+            self.assertIn(messages[tag][0],actual)
+        self.assertIn('앞으로 어떻게 하실지 말씀해 주세요.',actual)
+        self.assertLessEqual(len(actual),12)
+        self.assertTrue(any(q['status']=='pending' for q in state.patient_questions))
 
 
 if __name__=='__main__':unittest.main()

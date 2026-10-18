@@ -26,6 +26,7 @@ class PatientState:
     turns_used: int = 0
     compact_context: bool = True
     decision_goals: list = field(default_factory=list)
+    patient_questions: list = field(default_factory=list)
 
     def add_response(self, action, content, reply, target='', communication=()):
         response = reply.get('content' if action == 'SAY' else 'result', '')
@@ -128,6 +129,8 @@ class PatientState:
                 'communication_claimed_sent': sorted(self.communication), 'errors': self.errors[-8:]}
         if self.decision_goals:
             value['decision_goals'] = self.decision_goals
+        if self.patient_questions:
+            value['patient_questions'] = self.patient_questions
         return value
 
     def prompt_snapshot(self, relevant_concepts=None):
