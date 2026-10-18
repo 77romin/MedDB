@@ -54,6 +54,7 @@ def consult(client, knowledge, config=None, trace=None):
     reserve = config.closing_turns if config.structured_closing else 0
     while remaining > reserve and seconds_left(session) > config.time_margin:
         selected = None
+        retry_tokens = None
         for _ in range(3):
             clinical = advisor.context(state) if advisor else None
             concepts = list(knowledge['concepts'])
@@ -88,10 +89,12 @@ def consult(client, knowledge, config=None, trace=None):
                 user['phase_hint'] = '불필요한 질문을 줄이고 실제 SAY로 판단·계획·경고 증상을 설명한 뒤 마무리하세요.'
             try:
                 completion = gateway.chat([{'role': 'system', 'content': STEP},
-                                           {'role': 'user', 'content': json.dumps(user, ensure_ascii=False,separators=(',',':'))}])
+                                           {'role': 'user', 'content': json.dumps(user, ensure_ascii=False,separators=(',',':'))}],
+                                           max_tokens=retry_tokens)
                 choices = completion.get('choices')
                 if isinstance(choices, list) and choices and isinstance(choices[0], dict) and choices[0].get('finish_reason') == 'length':
                     trace.emit('output_truncated', stage='planner')
+                    retry_tokens = max(config.step_tokens, 3072)
                 result = content_of(completion)
                 accepted, rejected = state.accept_facts(result.get('facts', []))
                 trace.emit('facts_updated', accepted=accepted, rejected=rejected)

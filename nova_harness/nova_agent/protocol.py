@@ -103,7 +103,10 @@ class Gateway:
                             input_tokens=self.input_tokens, output_tokens=self.output_tokens)
             return result
 
-    def chat(self, messages, final=False):
+    def chat(self, messages, final=False, max_tokens=None):
+        limit = max_tokens if max_tokens is not None else self.config.record_tokens if final else self.config.step_tokens
+        if isinstance(limit,bool) or not isinstance(limit,int) or not 1 <= limit <= 8000:
+            raise ValueError('invalid local completion token limit')
         return self.invoke('chat', messages, final=final, model=self.config.model,
-                           max_tokens=self.config.record_tokens if final else self.config.step_tokens,
+                           max_tokens=limit,
                            reasoning_effort=self.config.reasoning_effort if final else self.config.planner_reasoning_effort)
