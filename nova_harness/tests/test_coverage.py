@@ -10,6 +10,49 @@ from test_harness import ScriptClient
 
 
 class CoverageTests(unittest.TestCase):
+    def test_observed_associated_symptom_links_its_own_graph(self):
+        _,s,c=self.setup_case('살이 많이 빠져요.')
+        self.assertIsNone(c.secondary_complaint())
+        s.facts.append({'concept_id':'meddb:palpitations','assertion':'present','subject':'patient'})
+        self.assertEqual(c.secondary_complaint()['id'],'palpitations')
+        targets={a['target'] for a in c.actions()}
+        self.assertTrue({'meddb:dyspnea','meddb:irregular_palpitation','meddb:ex_pulse','meddb:ex_heart_ausc'} <= targets)
+
+    def test_family_negative_or_conflicting_symptom_does_not_trigger_secondary_graph(self):
+        _,s,c=self.setup_case('살이 많이 빠져요.')
+        for subject,assertion in [('family','present'),('patient','absent')]:
+            s.facts=[{'concept_id':'meddb:palpitations','assertion':assertion,'subject':subject}]
+            self.assertIsNone(c.secondary_complaint())
+        s.facts=[{'concept_id':'meddb:palpitations','assertion':assertion,'subject':'patient'} for assertion in ('present','absent')]
+        self.assertIsNone(c.secondary_complaint())
+
+    def test_asking_about_symptom_does_not_assert_it(self):
+        _,s,c=self.setup_case('살이 많이 빠져요.')
+        s.add_response('SAY','두근거리나요?',{'content':'모르겠어요'},'meddb:palpitations')
+        self.assertIsNone(c.secondary_complaint())
+
+    def test_model_linked_exam_evidence_avoids_repeating_same_exam(self):
+        _,s,c=self.setup_case('살이 많이 빠져요.')
+        s.add_response('EXAM','눈의 돌출을 살펴볼게요.',{'result':'안구 돌출 관찰'})
+        s.accept_facts([{'concept_id':'meddb:exophthalmos','assertion':'present','evidence_id':'e1','quote':'안구 돌출'}])
+        action=next(a for a in c.actions() if a['target']=='meddb:ex_thyroid_eye')
+        self.assertEqual(c.status(action),'exam_result_model_mapped')
+
+    def test_secondary_expansion_is_bounded_and_has_no_duplicate_targets(self):
+        _,s,c=self.setup_case('살이 많이 빠져요.')
+        s.facts=[{'concept_id':'meddb:'+fid,'assertion':'present','subject':'patient'} for fid in ('palpitations','dyspnea')]
+        actions=c.actions();self.assertEqual(len(actions),len({a['target'] for a in actions}))
+        self.assertLessEqual(sum('동반 증상' in a['purpose'] for a in actions),6)
+
+    def test_secondary_graph_does_not_chain_into_every_new_positive_symptom(self):
+        _,s,c=self.setup_case('살이 많이 빠져요.')
+        s.facts=[{'concept_id':'meddb:palpitations','assertion':'present','subject':'patient'}]
+        self.assertEqual(c.secondary_complaint()['id'],'palpitations')
+        s.facts.append({'concept_id':'meddb:fever','assertion':'present','subject':'patient'})
+        self.assertEqual(c.secondary_complaint()['id'],'palpitations')
+        s.facts.append({'concept_id':'meddb:palpitations','assertion':'absent','subject':'patient'})
+        self.assertIsNone(c.secondary_complaint())
+
     def test_objective_exams_are_visible_before_history_queue_is_exhausted(self):
         a,s,c=self.setup_case()
         actions=a.context(s)['actions']

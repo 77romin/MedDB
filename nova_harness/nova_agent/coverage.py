@@ -7,6 +7,25 @@ class CoveragePlanner:
         self.advisor = advisor
         self.state = state
         self.initial = {}
+        self.secondary_selected = None
+
+    def secondary_complaint(self):
+        primary = self.advisor.complaint
+        if not primary: return None
+        present, absent = set(), set()
+        for fact in self.state.facts:
+            if fact.get('subject','patient') != 'patient': continue
+            fid = fact['concept_id'].removeprefix('meddb:')
+            if fact['assertion']=='present':present.add(fid)
+            if fact['assertion']=='absent':absent.add(fid)
+        # Explicit concept identity only; no substring inference from unrelated patient text.
+        if self.secondary_selected is not None:
+            return next((c for c in self.advisor.graph['complaints']
+                         if c['id']==self.secondary_selected and c['id'] in present-absent),None)
+        chosen = next((c for c in self.advisor.graph['complaints']
+                       if c['id'] != primary['id'] and c['id'] in present-absent), None)
+        if chosen:self.secondary_selected=chosen['id']
+        return chosen
 
     def actions(self):
         a = self.advisor
@@ -24,6 +43,10 @@ class CoveragePlanner:
             rows.append({'type':kind, 'content':text, 'target':'meddb:'+fid,
                          'priority':priority, 'purpose':purpose, 'communication':[]})
         for fid in a.complaint.get('slots', []): add(fid, 1, '주호소 경과')
+        secondary = self.secondary_complaint()
+        if secondary:
+            for fid in secondary.get('ask',[])[:4]: add(fid,1.5,'동반 증상 평가: '+secondary['ko'])
+            for fid in secondary.get('exams',[])[:2]: add(fid,2.4,'동반 증상 진찰: '+secondary['ko'])
         for fid in a.complaint.get('ask', []): add(fid, 2, '주호소 구분')
         ranked = a.context(self.state)['hypotheses']
         if ranked and ranked[0]['heuristic_score'] >= 4 and len(ranked[0]['supported']) >= 2:
@@ -71,6 +94,12 @@ class CoveragePlanner:
                         for e in self.state.evidence)
         if action['type'] == 'EXAM' and attempted:
             return 'exam_result_obtained'
+        if action['type'] == 'EXAM':
+            sources = {e.id:e for e in self.state.evidence}
+            if any(self.state.concepts.get(f['concept_id'],{}).get('exam_target') == target
+                   and f['assertion'] in {'present','absent'} and f.get('evidence_id') in sources
+                   and sources[f['evidence_id']].action == 'EXAM' for f in self.state.facts):
+                return 'exam_result_model_mapped'
         if attempted or facts:
             return 'attempted_unresolved'
         if action_key(action['type'], action['content']) in self.state.seen:
@@ -82,8 +111,11 @@ class CoveragePlanner:
         observations = [{**a, 'status':self.status(a), 'initial_quote':self.initial.get(a['target'])} for a in actions]
         if compact:
             observations = [{k:r[k] for k in ('target','status')} for r in observations]
+        secondary = self.secondary_complaint()
         return {'observations':observations,
+                'secondary_complaint':secondary['id'] if secondary else None,
                 'next_unasked': [a for a in actions if self.status(a) == 'unasked'][:4],
+                'objective_next':[a for a in actions if a['type']=='EXAM' and self.status(a)=='unasked'][:2],
                 'warning':'Coverage is collection status, not diagnosis or clinical verification. Unknown/partial answers are unresolved.'}
 
     def urgent_exit(self, proposal):
