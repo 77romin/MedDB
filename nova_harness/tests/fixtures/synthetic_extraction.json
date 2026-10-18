@@ -189,6 +189,22 @@
       },
       "expected_accept": false,
       "reason": "본인의 횟수는 unknown인데 가족의 값을 옮겨 본인의 양성 사실로 만들었다. 값과 시간이 인용문에 모두 일치하더라도 경험 주체가 다르므로, 단순 인용 일치는 질문 대상에 대한 근거를 보증하지 않는다."
+    },
+    {
+      "id": "promoted_holdout_comparison_13",
+      "question": "한 알의 함량이 5mg보다 적나요?",
+      "response": "5mg보다 적다는 뜻은 아니고, 정확한 함량은 몰라요.",
+      "proposed_fact": {
+        "concept_id": "test:observation",
+        "evidence_id": "e1",
+        "quote": "5mg보다 적다는 뜻은 아니고",
+        "assertion": "present",
+        "attribute": "strength",
+        "value": "5",
+        "unit": "mg"
+      },
+      "expected_accept": false,
+      "reason": "단순 인용 일치가 의미를 보증하지 않는 반례다. 5mg은 비교 기준으로 등장하며, 비교 표현의 부정이 정확히 5mg이라는 진술을 뜻하지 않는다. 답변은 정확한 함량을 모른다고도 명시한다."
     }
   ],
   "provenance": {

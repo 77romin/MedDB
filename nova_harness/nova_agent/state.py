@@ -101,6 +101,16 @@ class PatientState:
                 value_unit = re.escape(fields['value'])+r'\s*'+re.escape(fields.get('unit',''))
                 if assertion in {'present','absent'} and re.search(value_unit+r'(?:인지|였는지|었는지).{0,20}(?:모르|기억)',quote):
                     rejected.append('explicit uncertainty attached to the observed value cannot establish it'); continue
+                uncertainty_cues = {
+                    'strength':r'함량|밀리그램|mg', 'dose_count':r'몇\s*알|개수|복용량|용량',
+                    'frequency':r'횟수|몇\s*번', 'duration':r'기간|며칠|언제부터',
+                    'last_dose':r'마지막|언제|시점', 'measurement':r'수치|측정값',
+                }
+                cues = uncertainty_cues.get(attribute)
+                if assertion in {'present','absent'} and cues and re.search(r'(?:'+cues+r').{0,18}(?:모르|몰라|기억.{0,4}안)',source.response):
+                    rejected.append('the response explicitly leaves this attribute unknown'); continue
+                if assertion in {'present','absent'} and re.search(value_unit+r'\s*(?:보다|이상|이하|미만|초과|에서|~|정도|쯤)',source.response):
+                    rejected.append('a comparative/range/approximate value is not an exact measurement; retain the full response as uncertain'); continue
                 candidate.update(attribute=attribute, **fields)
             if any(all(f.get(k) == candidate[k] for k in candidate) for f in self.facts):
                 continue

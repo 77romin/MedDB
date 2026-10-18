@@ -1,2 +1,2 @@
 """NOVA preliminary-round harness. No patient state persists between consultations."""
-__version__ = '0.7.2'
+__version__ = '0.7.3'

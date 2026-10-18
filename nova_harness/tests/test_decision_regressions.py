@@ -76,6 +76,17 @@ class DecisionRegressions(unittest.TestCase):
         fact={'concept_id':'dose','assertion':'present','evidence_id':'e1','quote':'두 알','value':'두','attribute':[]}
         self.assertFalse(s.accept_facts([fact])[0])
 
+    def test_comparison_reference_is_not_patient_exact_dose(self):
+        for response in ['10mg보다 적다는 뜻은 아니고, 정확한 함량은 몰라요.',
+                         '10mg에서 20mg 사이였어요.','10mg 정도라고만 들었어요.']:
+            with self.subTest(response=response):
+                s=PatientState({}, {'dose':{'field':'pmh'}})
+                s.add_response('SAY','한 알의 함량은요?',{'content':response})
+                fact={'concept_id':'dose','evidence_id':'e1','quote':response,'assertion':'present',
+                      'attribute':'strength','value':'10','unit':'mg'}
+                self.assertFalse(s.accept_facts([fact])[0])
+                self.assertIn(response,s.prompt_snapshot()['evidence'][0]['response'])
+
     def test_context_scoping_retains_all_raw_evidence_and_facts(self):
         s=PatientState({'opening':'시작'}, {str(i):{} for i in range(325)})
         s.add_response('SAY','질문',{'content':'원문 답변'})
