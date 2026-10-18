@@ -8,9 +8,9 @@
 
 공개 샘플 확장과 종료 검토의 채택 결정은 [개발 2차 보고서](reports/development_002.md), 증례별 수치는 [벤치마크](reports/benchmark_002.md)에 있다. 현재 하네스의 전반적 우수성은 확인되지 않았다.
 
-최신 [5차 보고서](reports/development_005.md)와 [10회 비교](reports/benchmark_005.md)는 새 기준 67/77, v0.5.2 66/76, low 문진 62/74의 비공식 추정을 기록한다. 전체 점수 향상은 확인되지 않았다. 현재 v0.6.1은 근거 범위 검사·수집 상태·동반 증상 연결과 502/503/504 전송 복구를 포함한다. 최종 버전 테스트 94개 통과와 전체 API 미재측정을 구분한다.
+최신 [5차 보고서](reports/development_005.md)와 [10회 비교](reports/benchmark_005.md)는 새 기준 67/77, v0.5.2 66/76, low 문진 62/74의 비공식 추정을 기록한다. 전체 점수 향상은 확인되지 않았다. 5차 최종 v0.6.1은 근거 범위 검사·수집 상태·동반 증상 연결과 502/503/504 전송 복구를 포함한다. 최종 버전 테스트 94개 통과와 전체 API 미재측정을 구분한다.
 
-점수 정체의 코드·로그 근거와 다음 승인 범위는 [6차 심층 분석·계획](reports/analysis_plan_006.md)에 있다. 새 개선 개발과 유료 비교는 사용자 승인 후 시작한다.
+점수 정체의 코드·로그 근거와 다음 승인 범위는 [6차 심층 분석·계획](reports/analysis_plan_006.md)에 있다. 사용자가 승인해 [7차 개발·비교](reports/development_007.md)를 진행 중이다.
 
 ## 현재 구현 범위
 
@@ -106,6 +106,20 @@ python3 tools/judge.py results/완료된실험 --public-case C01
 비교는 같은 증례·턴 상한·Doctor로 수행하되 단일 실행의 우열을 일반화하지 않는다. baseline은 공식 파일을 그대로 불러오며 `MAX_TURNS`만 실험 조건으로 설정한다. baseline과 하네스의 재시도·종료 여유·프롬프트는 다르므로 전체 시스템 비교이며 개별 기능의 인과 효과를 의미하지 않는다.
 
 선택적 종료 검토는 충분한 시간과 7턴 이상의 여유가 있고 응답 증거가 5개 이상일 때 첫 DONE에 한 번만 적용한다. 검토자는 최대 3개 누락과 다음 행동 하나를 제안한다. 중요한 누락이 없거나 긴급 처치를 지연할 경우 종료하며, 검토 실패도 제출을 막지 않는다. v0.2.0의 C01 실행에서 개선이 관찰되지 않아 v0.2.1은 이 기능을 기본 비활성화했다. 다중 공개 증례 결과는 `tools/benchmark_report.py`로 합칠 수 있다.
+
+## 7차 후보의 비교 옵션
+
+v0.7.2는 미질문 큐로 자유 질문을 강제 교체하지 않고, 정량·시간 속성의 원문과 진찰 재평가 출처를 검사한다. 종료 설명은 계획·추적을 반복 판단보다 앞서 전달한다. 실제 의미·임상 충분성은 별도 검토가 필요하다. 테스트 통과를 공식 성능으로 해석하지 않는다.
+
+```sh
+python3 tools/experiment.py run --case 공개_UUID --agent harness --max-turns 45
+python3 tools/experiment.py run --case 공개_UUID --agent harness --max-turns 45 --full-context
+python3 tools/fetch_guidelines.py
+NOVA_GUIDELINES_DIR="$PWD/vendor/guidelines/guidelines" python3 tools/experiment.py run --case 공개_UUID --agent harness --max-turns 45 --guidelines
+python3 tools/judge.py results/완료된실험 --public-case C01 --review-tag calibration
+```
+
+지침은 기본 비활성화다. 공식 서버에서는 제공된 `NOVA_GUIDELINES_DIR`를 읽으며 실행 중 내려받지 않는다. 로컬 복원은 공개 해시를 확인한다. 코퍼스·원문 발췌는 Git·제출 ZIP에서 제외한다. `tools/run_suite.py`는 `results/` 아래 고정 소스의 한정된 실행 계획을 재개하며 키 파일을 복사하지 않는다. `tools/development_review.py`는 세션 밖 개발 모델로 합성 추출 반례를 생성한다. 반례의 의미·라벨은 검토가 필요하며 대회 증례나 임상 검증 데이터가 아니다.
 
 ## 제출·환경 확인
 
