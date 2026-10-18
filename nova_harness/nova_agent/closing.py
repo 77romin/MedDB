@@ -17,8 +17,9 @@ BUNDLE_PROMPT = '''확인된 진료 자료와 계획으로 환자에게 실제 �
 새 진단·약물·용량·처치를 만들지 않습니다. 확정과 의심을 구분합니다. 환자가 실제로 표현한 걱정·질문에 직접 답하고 의뢰 안내만 반복하지 않습니다.
 필요한 내용을 한 문장에 압축하지 말고, 각 항목을 최대 3개의 독립된 완결 문장으로 나눕니다. 각 문장은 공백 포함 NFC 30자 이내이며 24자 정도를 권장합니다. 질문문은 금지합니다.
 JSON 하나: {"assessment":["판단과 근거","불확실성"],"plan":["개인별 다음 계획"],"follow_up":["확인된 계획의 시점과 목적"],"safety_net":["구체적 위험 증상","해당 시 대처"],"concern":["환자 걱정에 직접 답"]}
-각 항목의 첫 문장은 반드시 전달할 핵심을 담고, 뒤 문장은 보완합니다. safety_net의 첫 문장은 위험과 대처를 가능한 함께 표현합니다. 서로 다른 항목에서 같은 안내를 반복하지 않습니다.
+각 항목의 첫 문장은 핵심 행동을 담습니다. 뒤 문장도 별도의 필수 행동·담당자·시점·조건이면 essential로 표시합니다. 단순 배경 설명만 보완입니다. safety_net의 첫 문장은 위험과 대처를 가능한 함께 표현합니다. 서로 다른 항목에서 같은 안내를 반복하지 않습니다.
 전체 문장 수는 available_statements 이하입니다. 판단 설명을 여러 번 반복하지 말고 다음 실제 행동과 추적 시점·목적을 우선합니다. follow_up에는 재평가 시점과 목적을 쓰며 약 포장 확인 등은 plan입니다. 이 환자에게 필요한 치료·복용 안전·이동 안내를 단순 응급 경고 문구로 대신하지 않습니다.
+검사 결과 재진과 장기 경과 추적, 현재 대응과 안정 후 치료 조절처럼 목적·시점이 다르면 각기 완결 문장으로 보존합니다. 앞 문장 하나로 전체 계획을 전달했다고 보지 않습니다.
 필수 보완 문장은 JSON의 essential:[{"tag":"plan","index":1}]에 배열의 0부터 시작하는 위치로 표시합니다. 임상적으로 필요한 내용만 선택합니다. 이 표시는 의미 검증이 아니라 전달 우선순위 제안입니다.
 의심하는 원인과 실제 소견의 관계, 현재 가능한 다음 치료 방향을 계획 범위 안에서 설명합니다. 불확실성만 반복하지 않습니다.
 각 문장은 앞뒤가 떨어져도 의미가 통하도록 작성하고 '이때/그때/생기면'만으로 경고와 대처를 분리하지 않습니다.
@@ -37,7 +38,7 @@ PRIORITY = ('safety_net', 'assessment', 'plan', 'concern', 'follow_up')
 
 def statement_queue(messages, parsed):
     """One core per purpose; prioritize declared essentials and action/timing over repetition."""
-    order = ('safety_net','assessment','plan','follow_up','concern')
+    order = ('safety_net','assessment','plan','follow_up')
     queue = [(tag, parsed[tag][0][0]) for tag in order if parsed[tag][0]]
     essentials = messages.get('essential', [])
     if isinstance(essentials,list):
@@ -50,11 +51,29 @@ def statement_queue(messages, parsed):
             if not isinstance(raw,list) or raw != parsed[tag][0] or not 0 <= index < len(raw): continue
             pair = (tag,raw[index])
             if pair not in queue: queue.append(pair)
+    if parsed['concern'][0]:
+        pair = ('concern',parsed['concern'][0][0])
+        if pair not in queue: queue.append(pair)
     for i in (1,2):
         for tag in ('plan','follow_up','safety_net','concern','assessment'):
             if len(parsed[tag][0]) > i and (tag,parsed[tag][0][i]) not in queue:
                 queue.append((tag,parsed[tag][0][i]))
     return queue
+
+
+def required_statements(messages, parsed):
+    """Concrete sentence identities, not a clinical proof of semantic coverage."""
+    required = {(tag,parsed[tag][0][0]) for tag in ('plan','follow_up','safety_net') if parsed[tag][0]}
+    essentials = messages.get('essential', [])
+    for item in essentials[:15] if isinstance(essentials,list) else []:
+        if not isinstance(item,dict): continue
+        tag,index = item.get('tag'),item.get('index')
+        if not isinstance(tag,str) or tag not in parsed or parsed[tag][1]: continue
+        raw = messages.get(tag)
+        if (isinstance(index,int) and not isinstance(index,bool) and isinstance(raw,list)
+                and raw == parsed[tag][0] and 0 <= index < len(raw)):
+            required.add((tag,raw[index]))
+    return required
 
 
 def statement_parts(value):
@@ -226,6 +245,8 @@ def close_consultation(gateway, state, proposed, remaining, trace, advisor=None)
 
     # Give each purpose one turn, then spend spare turns on supporting statements.
     queue = statement_queue(messages, parsed)
+    required = required_statements(messages, parsed)
+    trace.emit('closing_required_statements', statements=[{'tag':t,'content':x} for t,x in queue if (t,x) in required])
     for tag in TAGS:
         if not parsed[tag][0]:
             trace.emit('closing_missing', tag=tag)
@@ -234,15 +255,18 @@ def close_consultation(gateway, state, proposed, remaining, trace, advisor=None)
             trace.emit('closing_budget_omission', tag=tag)
             continue
         # A concern question may itself receive a question; do not drop it.
-        protected_tags = {t for t, _ in queue[index:] if t in {'plan','follow_up','safety_net'} and t not in delivered}
+        protected = {pair for pair in queue[index:] if pair in required and pair[1] not in sent}
         if index > 0 or not parsed['safety_net'][0]:
-            answer_questions(2+len(protected_tags))
+            answer_questions(2+len(protected))
         if remaining <= 2:
             trace.emit('closing_budget_omission', tag=tag)
             continue
         say(text, tag)
-        protected_tags.discard(tag)
-        answer_questions(2+len(protected_tags))
+        if text in sent:
+            protected.discard((tag,text))
+        answer_questions(2+len(protected))
+    for tag,text in sorted(required):
+        trace.emit('closing_required_delivery', tag=tag, content=text, sent=text in sent)
     answer_questions()
     if remaining > 0:
         say('앞으로 어떻게 하실지 말씀해 주세요.', 'teach_back')

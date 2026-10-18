@@ -237,5 +237,31 @@ class ClosingTests(unittest.TestCase):
         self.assertIn(messages['plan'][0],actual)
         self.assertIn(messages['follow_up'][0],actual)
 
+    def test_second_required_followup_survives_repeated_patient_questions(self):
+        plan={'diagnosis':'평가 중','plan':{}}
+        messages={'assessment':['성장 경과를 확인해야 합니다.'],
+                  'plan':['성장 기록을 확인하겠습니다.'],
+                  'follow_up':['다음 주 검사 결과를 확인해요.','세 달 후 키를 다시 재겠습니다.'],
+                  'safety_net':['심한 두통이면 즉시 진료받으세요.'],
+                  'essential':[{'tag':'follow_up','index':1}]}
+        answer={'answer':['검사와 경과로 확인하겠습니다.','결과를 확인한 뒤 설명드리겠습니다.']}
+        state=self.state()
+        client=ScriptClient([plan,messages]+[answer]*3+[plan],['더 클 수 있나요?']*20)
+        close_consultation(Gateway(client),state,plan,10,Trace())
+        actual=[e.question for e in state.evidence]
+        for text in messages['follow_up']:
+            self.assertIn(text,actual)
+        self.assertIn(messages['plan'][0],actual)
+        self.assertIn(messages['safety_net'][0],actual)
+        self.assertLessEqual(len(actual),10)
+
+    def test_repair_cannot_reuse_essential_index_for_a_different_sentence(self):
+        from nova_agent.closing import required_statements, statement_queue, TAGS
+        messages={'follow_up':['가'*31], 'essential':[{'tag':'follow_up','index':1}]}
+        parsed={tag:([],[]) for tag in TAGS}
+        parsed['follow_up']=(['결과를 확인하겠습니다.','추가 안내입니다.'],[])
+        self.assertNotIn(('follow_up','추가 안내입니다.'),required_statements(messages,parsed))
+        self.assertEqual(statement_queue(messages,parsed)[0],('follow_up','결과를 확인하겠습니다.'))
+
 
 if __name__=='__main__':unittest.main()
