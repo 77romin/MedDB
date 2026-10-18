@@ -12,6 +12,8 @@
 
 점수 정체의 코드·로그 근거와 다음 승인 범위는 [6차 심층 분석·계획](reports/analysis_plan_006.md)에 있다. 사용자 승인 후 [7차 개발·비교](reports/development_007.md)를 완료했다. v0.7.3의 [18회 반복 집계](reports/repeated_007.md)와 [26회 전체 결과](reports/benchmark_007.md)를 함께 확인한다. 작은 비공식 평균 차이를 공식 성능 향상으로 해석하지 않는다.
 
+버전별 실제 문진·진찰·설명·기록의 실패 경로와 다음 개발 우선순위는 [8차 로그 비교·개선안](reports/log_comparison_008.md)에 있다. 분석 보고이며 런타임과 제출 ZIP은 변경하지 않았다.
+
 ## 현재 구현 범위
 
 MedDB 적용 내용과 후보 비교는 [3차 보고서](reports/meddb_review_003.md), [MedDB 벤치마크](reports/meddb_benchmark_003.md)에 있다. 공식 67.132점과 개발용 자가평가를 구분한다.
