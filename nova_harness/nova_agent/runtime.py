@@ -14,6 +14,7 @@ from .closure import review_closure
 from .clinical import ClinicalAdvisor
 from .coverage import CoveragePlanner
 from .goals import DecisionGoals
+from .decision_axes import decision_axes
 
 STOP = {'TURN_LIMIT_REACHED', 'SESSION_EXPIRED', 'SESSION_CLOSED', 'RUN_NOT_ACTIVE', 'LOCAL_DEADLINE'}
 REJECTED = {'CONTENT_TOO_LONG', 'EMPTY_CONTENT', 'EXAM_NOT_SPECIFIC', 'EXAM_NOT_RECOGNIZED', 'ACTION_NOT_AVAILABLE'}
@@ -70,6 +71,9 @@ def consult(client, knowledge, config=None, trace=None):
                     'instruction_feedback': feedback[-3:]}
             if clinical:
                 user['clinical_advisor'] = clinical
+            axes = decision_axes(state, clinical)
+            if axes:
+                user['decision_axes'] = axes
             if coverage:
                 user['collection_coverage'] = coverage.snapshot(compact=True)
             if goals:
