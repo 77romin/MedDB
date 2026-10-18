@@ -97,13 +97,25 @@ class CoveragePlanner:
         if not isinstance(proposal,dict):
             return proposal, None
         pending = [a for a in self.actions() if self.status(a) == 'unasked']
-        if not pending or self.urgent_exit(proposal):
+        if not pending:
             return proposal, None
+        urgent = self.urgent_exit(proposal)
         kind = str(proposal.get('type', '')).upper()
         if kind not in {'SAY','EXAM','DONE'}:
             return proposal, None
         tags = proposal.get('communication', [])
         tags = [tags] if isinstance(tags, str) else tags if isinstance(tags, list) else []
+        # A valid core choice should not be displaced by the late-turn queue rule.
+        if kind in {'SAY','EXAM'} and not tags and (not urgent or kind=='EXAM'):
+            core = next((a for a in pending if a['type']==kind and (a['target']==proposal.get('target')
+                        or (isinstance(proposal.get('content'),str) and action_key(kind,proposal['content'])==action_key(kind,a['content'])))), None)
+            if core:
+                canonical = {**proposal,'content':core['content'],'target':core['target']}
+                event = None if canonical.get('content')==proposal.get('content') else {
+                    'reason':'canonical_target_action','original':proposal,'target':core['target']}
+                return canonical,event
+        if urgent:
+            return proposal, None
         safety = 'safety_net' in tags
         early_explanation = bool({'assessment','plan'}.intersection(tags)) and not safety
         exhausted_frontier = remaining-reserve <= len(pending)+1 and not safety and kind == 'SAY' and not tags

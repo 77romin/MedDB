@@ -91,9 +91,14 @@ class ClinicalAdvisor:
         candidates.sort(key=lambda a:a['priority'])
         # Prompt only the decision frontier. Full graph stays local; no clinical evidence is removed.
         ranked = [{**d,'missing':d['missing'][:3],'supported':d['supported'][:4],'opposed':d['opposed'][:3]} for d in ranked[:3]]
-        relevant = {a['target'] for a in candidates[:8]}
+        # Do not hide all objective exams behind the history queue.
+        frontier = [a for a in candidates if a['type']=='SAY'][:6]+[a for a in candidates if a['type']=='EXAM'][:2]
+        for action in candidates:
+            if len(frontier)>=8: break
+            if action not in frontier:frontier.append(action)
+        relevant = {a['target'] for a in frontier}
         for d in ranked: relevant.update('meddb:'+f for f in d['supported']+d['missing']+d['opposed'])
         return {'review':self.graph['review'],'complaint':self.complaint['id'] if self.complaint else None,
-                'age':self.age,'sex':self.sex,'hypotheses':ranked,'actions':candidates[:8],
+                'age':self.age,'sex':self.sex,'hypotheses':ranked,'actions':frontier,
                 'conflicts':sorted(conflicts),'relevant_concepts':sorted(relevant),
                 'warning':'Draft relations and uncalibrated heuristic ranks; not diagnoses or confirmed absences. Attempted questions do not mean resolved findings.'}

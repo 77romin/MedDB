@@ -13,6 +13,13 @@ from test_harness import ScriptClient
 
 
 class ClosingTests(unittest.TestCase):
+    def test_teach_back_does_not_assume_patient_is_at_home(self):
+        plan={'diagnosis':'평가 중','plan':{}}
+        state=self.state();client=ScriptClient([plan,{},plan],['걱정돼요','알겠습니다'])
+        close_consultation(Gateway(client),state,plan,8,Trace())
+        self.assertTrue(any('어떻게 하실지' in e.question for e in state.evidence))
+        self.assertFalse(any('집에서' in e.question for e in state.evidence))
+
     def state(self):
         return PatientState({'opening':'환자 시작 정보'}, {c['id']:c for c in prepare()['concepts']})
 

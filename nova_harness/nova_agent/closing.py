@@ -176,7 +176,7 @@ def close_consultation(gateway, state, proposed, remaining, trace, advisor=None)
             continue
         answer_question(say(text, tag))
     if remaining > 0:
-        say('집에서 어떻게 하실지 말씀해 주시겠어요?', 'teach_back')
+        say('앞으로 어떻게 하실지 말씀해 주세요.', 'teach_back')
 
     # One final review can correct a misunderstanding; the correction must actually be sent.
     if sent and not actions_stopped and gateway.remaining() > 120:

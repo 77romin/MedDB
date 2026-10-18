@@ -10,6 +10,30 @@ from test_harness import ScriptClient
 
 
 class CoverageTests(unittest.TestCase):
+    def test_objective_exams_are_visible_before_history_queue_is_exhausted(self):
+        a,s,c=self.setup_case()
+        actions=a.context(s)['actions']
+        self.assertLessEqual(len(actions),8)
+        self.assertEqual(sum(x['type']=='EXAM' for x in actions),2)
+
+    def test_declared_core_target_uses_canonical_single_action(self):
+        _,_,c=self.setup_case()
+        proposal={'type':'EXAM','target':'meddb:ex_mental','content':'정신 상태를 보겠습니다.'}
+        action,event=c.choose(proposal,45,12)
+        self.assertEqual(action['content'],'의식·지남력 평가를 하겠습니다.')
+        self.assertEqual(event['reason'],'canonical_target_action')
+
+    def test_valid_core_choice_is_not_displaced_near_turn_limit(self):
+        _,_,c=self.setup_case()
+        proposal={'type':'SAY','target':'meddb:withdrawal_sx','content':'약을 안 드실 때는 어떤가요?'}
+        action,_=c.choose(proposal,14,12)
+        self.assertEqual(action['target'],'meddb:withdrawal_sx')
+
+    def test_safety_statement_with_target_is_never_rewritten_as_question(self):
+        _,_,c=self.setup_case()
+        proposal={'type':'SAY','target':'meddb:onset','content':'지금 즉시 도움을 요청하세요.','communication':['safety_net']}
+        self.assertEqual(c.choose(proposal,45,12),(proposal,None))
+
     def setup_case(self, opening='잠을 잘 못 자요.'):
         advisor=ClinicalAdvisor(prepare()['clinical_graph'],opening)
         state=PatientState({'opening':opening},{c['id']:c for c in advisor.concepts()})
