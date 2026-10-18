@@ -78,7 +78,7 @@ class Gateway:
                                 code=exc.code, status=exc.status)
                 # A proxy can return HTML instead of API JSON after accepting an action.
                 # Keep its id and body: a new id could consume another patient turn.
-                transient_proxy = exc.code == 'INVALID_API_RESPONSE' and exc.status in {502, 503, 504}
+                transient_proxy = exc.code == 'INVALID_API_RESPONSE' and exc.status in {502, 503, 504, 524}
                 if (exc.code not in SAME_ID | NEW_ID and not transient_proxy) or attempt >= len(self.config.retry_delays):
                     raise
                 delay = self.config.retry_delays[attempt]

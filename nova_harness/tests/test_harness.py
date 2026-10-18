@@ -109,7 +109,7 @@ class HarnessTests(unittest.TestCase):
         self.assertEqual(c.turns, 49)
 
     def test_proxy_non_json_failure_reuses_action_id(self):
-        for status in (502, 503, 504):
+        for status in (502, 503, 504, 524):
             with self.subTest(status=status):
                 c = ScriptClient(action_results=[NovaError('INVALID_API_RESPONSE', status), '어제부터요'])
                 Gateway(c, sleeper=lambda _: None).invoke('say', '언제부터요?')
@@ -123,11 +123,21 @@ class HarnessTests(unittest.TestCase):
                 with self.assertRaises(NovaError):
                     Gateway(c, sleeper=lambda _: None).invoke('say', '언제부터요?')
                 self.assertEqual(len(c.requests), 1)
-        c = ScriptClient(action_results=[NovaError('INVALID_API_RESPONSE', 502)]*4)
+        c = ScriptClient(action_results=[NovaError('INVALID_API_RESPONSE', 502)]*6)
         with self.assertRaises(NovaError):
             Gateway(c, sleeper=lambda _: None).invoke('say', '언제부터요?')
+        self.assertEqual(len(c.requests), 6)
+        self.assertEqual(len({rid for _, rid in c.requests}), 1)
+
+    def test_524_then_pending_reuses_one_action_id_until_success(self):
+        c = ScriptClient(action_results=[NovaError('INVALID_API_RESPONSE', 524),
+                                         NovaError('REQUEST_PENDING', 409),
+                                         NovaError('REQUEST_PENDING', 409),
+                                         '어제부터요'])
+        Gateway(c, sleeper=lambda _: None).invoke('say', '언제부터요?')
         self.assertEqual(len(c.requests), 4)
         self.assertEqual(len({rid for _, rid in c.requests}), 1)
+        self.assertEqual(c.turns, 49)
 
     def test_permanent_rejection_not_retried(self):
         c = ScriptClient(action_results=[NovaError('EXAM_NOT_SPECIFIC')])

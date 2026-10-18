@@ -24,4 +24,7 @@ class Config:
     guidelines: bool = False  # optional ablation, not a clinically validated default
     structured_closing: bool = True
     closing_turns: int = 12  # multiple complete sentences, teach-back, one correction
-    retry_delays: tuple = (2, 5, 10)
+    # Development runs can return an edge-proxy 524 while the accepted request
+    # is still being processed.  Keep the same request id and allow enough time
+    # for the subsequent REQUEST_PENDING responses to settle.
+    retry_delays: tuple = (2, 5, 10, 20, 30)
