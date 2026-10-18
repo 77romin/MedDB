@@ -223,6 +223,8 @@ def consult(client, knowledge, config=None, trace=None):
         proposed, closing_left = close_consultation(gateway, state, proposed, allowance, trace, advisor)
         remaining = unspent_collection+closing_left
     note, diagnosis = make_record(state, proposed)
+    from .history import history_routes
+    trace.emit('record_evidence_audit', state=state.snapshot(), history_routes=history_routes(state, proposed))
     trace.emit('record_ready', note=note, diagnosis=diagnosis, fallback=not bool(proposed))
     result = gateway.invoke('diagnose', note=note, diagnosis=diagnosis, final=True)
     trace.emit('consult_complete', result=result, diagnosis=diagnosis,

@@ -31,7 +31,9 @@ guideline_references가 있으면 일부 원문 발췌일 뿐입니다. 환자 �
 JSON 하나만 출력합니다:
 {"diagnosis":"가장 가능성 높은 주진단 하나", "certainty":"confirmed|suspected|provisional", "diagnostic_basis":"clinical_evidence|exposure_risk_only|insufficient", "evidence_ids":["e1"],
 "risk_assessment":[{"condition":"평가가 필요한 위험(주진단과 구분)","evidence_ids":["e1"]}],
-"differential":[{"diagnosis":"감별진단","evidence_ids":["e1"]}],
+"differential":[{"diagnosis":"감별진단","evidence_ids":["e1"],"reason":"지지/반박/미확인 이유"}],
+"assessment_reason":"유력 판단과 대안의 근거·한계", "chief_complaint_quote":"opening의 짧은 정확한 인용",
+"history_routes":{"hpi":["e1"],"pmh":[],"fh":[],"sh":[],"ros":[]},
 "plan":{"tests":"필요한 추가 검사와 이유","treatment":"확인된 정보에 맞는 안전한 치료 방향","disposition":"귀가/추적/의뢰 등 처치 결정과 이유","follow_up":"재진 시점과 즉시 재평가할 경고 증상","education":"환자 교육 계획"}}
 검사를 시행한 척하거나 음성 소견·약물·용량·나이를 추가하지 않습니다. 처방 결정에 필요한 정보가 부족하면 제한과 추가 확인 필요를 계획에 명시합니다.
 안전 위험과 실제 진단을 구분합니다. 응급평가 필요성은 disposition과 risk_assessment에 명시합니다. 높은 노출량·위험 가능성만 있고 해당 임상 상태를 확인하지 못했다면 exposure_risk_only이며 확정 진단을 하지 않습니다. 경과·현재 상태·만성 문제를 함께 비교하고 주진단은 실제 확보한 근거로 정합니다. 내원 중인지 집인지 제공된 진료 환경을 바꾸지 않습니다.
@@ -41,4 +43,6 @@ P에는 앞으로 할 검사·치료·의뢰·추적 행동을 씁니다. 환자
 treatment에는 현재 가능한 안전한 방향, 판단 전에 필요한 정보, 확인 후 고려할 조건부 치료 경로를 구분합니다. 정보 부족을 임의 처방·용량으로 메우지 않습니다.
 follow_up에는 검사 결과를 누구에게 언제 확인할지와 장기 경과 추적을 구분합니다. 예약·시행하지 않은 것은 계획으로만 표현합니다.
 환자의 실제 질문과 걱정을 계획에서 다룹니다. 조건부 전망·치료의 목적·진행 과정과 아직 알 수 없는 범위를 구분합니다.
-불충분한 정보는 불충분하다고 표현합니다. note의 환자 사실 부분은 코드가 원문으로 구성하므로 다시 작성하지 않습니다.'''
+불충분한 정보는 불충분하다고 표현합니다. history_routes는 실제 SAY 응답의 ID를 병력별로 분류합니다. 가족의 질환은 fh, 본인의 과거력·약물·알레르기는 pmh, 생활·사회력은 sh입니다. 인용 내용은 코드가 원문 전체로 보존하므로 환자 사실을 새 문장으로 생성하지 않습니다.
+한 응답을 여러 칸에 중복하지 않습니다. EXAM·의사 설명·단순 동의·되말하기를 병력으로 분류하지 않습니다. 설명 중 새 임상 정보가 나온 실제 환자 응답은 맞는 S 칸에 연결합니다. 분류가 모호하면 hpi에 원문으로 남깁니다.
+assessment_reason과 differential.reason은 실제 근거의 지지/반박/미확인 의미를 설명하는 모델 판단이며 사실 확인을 대신하지 않습니다. 새로운 소견·확정된 음성을 만들지 않습니다.'''

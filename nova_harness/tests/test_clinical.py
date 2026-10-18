@@ -57,7 +57,8 @@ class ClinicalTests(unittest.TestCase):
         result=consult(c,prepare(),Config(max_turns=10))
         self.assertEqual(result['status'],'completed')
         self.assertIn('실제 전달한 SAY 원문',c.submitted['note']['P']['education'])
-        self.assertIn('어떻게 하실지',c.submitted['note']['S']['hpi'])
+        self.assertNotIn('어떻게 하실지',c.submitted['note']['S']['hpi'])
+        self.assertIn('어떻게 하실지',c.submitted['note']['P']['education'])
         self.assertLessEqual(50-c.turns,10)
 
     def test_overlong_closing_never_sent_or_claimed(self):
