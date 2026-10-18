@@ -57,6 +57,8 @@ def main():
     r.add_argument('--no-structured-closing', action='store_true', help='ablation: let the planner manage closing')
     r.add_argument('--no-coverage', action='store_true', help='ablation: disable graph-derived collection gate')
     r.add_argument('--planner-effort', choices=['low','medium','high'], default=Config().planner_reasoning_effort)
+    r.add_argument('--full-context', action='store_true', help='ablation: retain all unconfirmed ontology ids')
+    r.add_argument('--guidelines', action='store_true', help='optional read-only official guideline retrieval')
     closure = r.add_mutually_exclusive_group()
     closure.add_argument('--closure-audit', action='store_true', help='experimental: enable one bounded pre-exit review')
     closure.add_argument('--no-closure-audit', action='store_true', help='explicit control: disable pre-exit review (default)')
@@ -91,6 +93,8 @@ def main():
                 'meddb': args.agent == 'harness' and not args.no_meddb,
                 'structured_closing': args.agent == 'harness' and not args.no_structured_closing,
                 'coverage':args.agent == 'harness' and not args.no_coverage,
+                'compact_context':args.agent == 'harness' and not args.full_context,
+                'guidelines':args.agent == 'harness' and args.guidelines,
                 'closing_turns':Config().closing_turns,
                 'planner_reasoning_effort':args.planner_effort if args.agent == 'harness' else None,
                 'final_reasoning_effort':Config().reasoning_effort if args.agent == 'harness' else None,
@@ -135,7 +139,7 @@ def main():
                     restore(original)
         else:
             outcome = consult(client, prepare(), Config(max_turns=args.max_turns, closure_audit=args.closure_audit,
-                                meddb=not args.no_meddb, coverage=not args.no_coverage,
+                                meddb=not args.no_meddb, coverage=not args.no_coverage, compact_context=not args.full_context, guidelines=args.guidelines,
                                 planner_reasoning_effort=args.planner_effort, structured_closing=not args.no_structured_closing), trace)
         trace.emit('experiment_complete', result=outcome)
     except Exception as exc:

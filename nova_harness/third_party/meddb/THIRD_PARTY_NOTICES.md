@@ -9,3 +9,12 @@ HPO — Human Phenotype Ontology Consortium, Peter Robinson, Sebastian Köhler, 
 NIDDK — source URLs and accessed versions accompany each original pilot claim. No full pages or article quotations are copied.
 
 The BBI-BBO viewer was visually inspected as a design reference. Its application code, fonts and bundled dataset were not copied into NOVA.
+
+
+## Optional guideline reader adaptation (2026-10-18)
+
+`nova_agent/guidelines.py` adapts the read-only metadata retrieval code from
+`meddb/guidelines.py` at commit `63743a8b8a2e278b426d18fc040e880740318ae3`.
+It adds a server-path default and a title-matching fallback when SQLite FTS5 is unavailable.
+The official guideline corpus is not included in this repository or submission archive.
+Runtime source excerpts retain the document URL, organization, year, license, path, lines and hash.
