@@ -204,5 +204,10 @@ class ClosingTests(unittest.TestCase):
         self.assertLessEqual(len(actual),12)
         self.assertTrue(any(q['status']=='pending' for q in state.patient_questions))
 
+    def test_concrete_fear_after_explanation_gets_a_direct_response(self):
+        from nova_agent.closing import is_patient_question
+        self.assertTrue(is_patient_question('줄이면 잠을 못 잘까 봐 두려워요.'))
+        self.assertFalse(is_patient_question('네, 알겠습니다.'))
+
 
 if __name__=='__main__':unittest.main()

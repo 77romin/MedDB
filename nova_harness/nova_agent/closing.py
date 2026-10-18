@@ -99,7 +99,9 @@ def short_statement(text):
 
 
 def is_patient_question(text):
-    return isinstance(text, str) and bool(re.search(r'[?？]|(?:까요|나요|가요|인지요)|알려\s*주세요|궁금', text))
+    # Explicit questions and concrete fears both call for a direct response.
+    # This remains a heuristic detector, not proof that every concern was found.
+    return isinstance(text, str) and bool(re.search(r'[?？]|(?:까요|나요|가요|인지요)|알려\s*주세요|궁금|까\s*봐|두려워|무서워|겁나', text))
 
 
 def close_consultation(gateway, state, proposed, remaining, trace, advisor=None):
