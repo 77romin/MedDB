@@ -1,0 +1,740 @@
+[
+  {
+    "case": "C01",
+    "version": "0.7.3",
+    "source_sha256": "104165614bf339819e84e0068b3187749742f1bff84e4476f27a808836689577",
+    "options": {
+      "closing_turns": 12,
+      "closure_audit": false,
+      "compact_context": true,
+      "coverage": true,
+      "decision_review": null,
+      "final_reasoning_effort": "medium",
+      "guidelines": false,
+      "max_turns": 45,
+      "meddb": true,
+      "planner_reasoning_effort": "medium",
+      "structured_closing": true
+    },
+    "runs": 1,
+    "completed": 1,
+    "reviewed": 1,
+    "mean_estimate": 61,
+    "range": [
+      61,
+      61
+    ],
+    "mean_input": 159482,
+    "mean_output": 33039,
+    "mean_attempts": 30,
+    "mean_seconds": 641.652,
+    "areas": {
+      "information_gathering": 17,
+      "diagnostic_reasoning": 12,
+      "tests_followup": 4,
+      "safety": 10,
+      "communication": 9,
+      "efficiency": 9
+    },
+    "directories": [
+      "/Users/mink/Documents/ChatGPT/NOVA medic Agent/results/stage_control_v073_009/results/20261018_183146_809319_harness"
+    ]
+  },
+  {
+    "case": "C01",
+    "version": "0.8.0",
+    "source_sha256": "4bec344b36beac1ff05f52c0969604d6280a7df04b223814247a43e3252349dc",
+    "options": {
+      "closing_turns": 12,
+      "closure_audit": false,
+      "compact_context": true,
+      "coverage": true,
+      "decision_review": true,
+      "final_reasoning_effort": "medium",
+      "guidelines": false,
+      "max_turns": 45,
+      "meddb": true,
+      "planner_reasoning_effort": "medium",
+      "structured_closing": true
+    },
+    "runs": 1,
+    "completed": 1,
+    "reviewed": 1,
+    "mean_estimate": 70,
+    "range": [
+      70,
+      70
+    ],
+    "mean_input": 266726,
+    "mean_output": 41176,
+    "mean_attempts": 40,
+    "mean_seconds": 695.314,
+    "areas": {
+      "information_gathering": 18,
+      "diagnostic_reasoning": 13,
+      "tests_followup": 5,
+      "safety": 11,
+      "communication": 10,
+      "efficiency": 13
+    },
+    "directories": [
+      "/Users/mink/Documents/ChatGPT/NOVA medic Agent/results/stage_goals_v080_009/results/20261018_183341_896265_harness"
+    ]
+  },
+  {
+    "case": "C01",
+    "version": "0.8.0.1",
+    "source_sha256": "e839fc2e3a6a8a4976f5cc14b686018a7a36dd0e5d75b4753edcebfd81f1e12c",
+    "options": {
+      "closing_turns": 12,
+      "closure_audit": false,
+      "compact_context": true,
+      "coverage": true,
+      "decision_review": true,
+      "final_reasoning_effort": "medium",
+      "guidelines": false,
+      "max_turns": 45,
+      "meddb": true,
+      "planner_reasoning_effort": "medium",
+      "structured_closing": true
+    },
+    "runs": 1,
+    "completed": 1,
+    "reviewed": 1,
+    "mean_estimate": 68,
+    "range": [
+      68,
+      68
+    ],
+    "mean_input": 317592,
+    "mean_output": 59578,
+    "mean_attempts": 45,
+    "mean_seconds": 1144.739,
+    "areas": {
+      "information_gathering": 19,
+      "diagnostic_reasoning": 13,
+      "tests_followup": 5,
+      "safety": 10,
+      "communication": 9,
+      "efficiency": 12
+    },
+    "directories": [
+      "/Users/mink/Documents/ChatGPT/NOVA medic Agent/results/stage_goals_v0801_009/results/20261018_184518_639876_harness"
+    ]
+  },
+  {
+    "case": "C01",
+    "version": "0.8.1",
+    "source_sha256": "a34571553cf4093ff1aa95824dd7015493e4a2f3366783a5b7991a63d65d2bf5",
+    "options": {
+      "closing_turns": 12,
+      "closure_audit": false,
+      "compact_context": true,
+      "coverage": true,
+      "decision_review": true,
+      "final_reasoning_effort": "medium",
+      "guidelines": false,
+      "max_turns": 45,
+      "meddb": true,
+      "planner_reasoning_effort": "medium",
+      "structured_closing": true
+    },
+    "runs": 1,
+    "completed": 1,
+    "reviewed": 1,
+    "mean_estimate": 66,
+    "range": [
+      66,
+      66
+    ],
+    "mean_input": 325451,
+    "mean_output": 61043,
+    "mean_attempts": 44,
+    "mean_seconds": 1051.809,
+    "areas": {
+      "information_gathering": 18,
+      "diagnostic_reasoning": 12,
+      "tests_followup": 4,
+      "safety": 10,
+      "communication": 10,
+      "efficiency": 12
+    },
+    "directories": [
+      "/Users/mink/Documents/ChatGPT/NOVA medic Agent/results/stage_closing_v081_009/results/20261018_184551_708445_harness"
+    ]
+  },
+  {
+    "case": "C01",
+    "version": "0.8.2",
+    "source_sha256": "a9478ea6d6011aa0213a5a50d3fd6f0222ace2efd366077c6403e3d17b7acf22",
+    "options": {
+      "closing_turns": 12,
+      "closure_audit": false,
+      "compact_context": true,
+      "coverage": true,
+      "decision_review": true,
+      "final_reasoning_effort": "medium",
+      "guidelines": false,
+      "max_turns": 45,
+      "meddb": true,
+      "planner_reasoning_effort": "medium",
+      "structured_closing": true
+    },
+    "runs": 1,
+    "completed": 1,
+    "reviewed": 1,
+    "mean_estimate": 66,
+    "range": [
+      66,
+      66
+    ],
+    "mean_input": 348163,
+    "mean_output": 62685,
+    "mean_attempts": 49,
+    "mean_seconds": 1292.33,
+    "areas": {
+      "information_gathering": 18,
+      "diagnostic_reasoning": 13,
+      "tests_followup": 5,
+      "safety": 9,
+      "communication": 10,
+      "efficiency": 11
+    },
+    "directories": [
+      "/Users/mink/Documents/ChatGPT/NOVA medic Agent/results/stage_records_v082_009/results/20261018_185554_539305_harness"
+    ]
+  },
+  {
+    "case": "C01",
+    "version": "0.8.3",
+    "source_sha256": "fc76e8689351031f030359e0a8213f64d4c656441a2538865d9127002d6043bd",
+    "options": {
+      "closing_turns": 12,
+      "closure_audit": false,
+      "compact_context": true,
+      "coverage": true,
+      "decision_review": true,
+      "final_reasoning_effort": "medium",
+      "guidelines": false,
+      "max_turns": 45,
+      "meddb": true,
+      "planner_reasoning_effort": "medium",
+      "structured_closing": true
+    },
+    "runs": 1,
+    "completed": 1,
+    "reviewed": 1,
+    "mean_estimate": 66,
+    "range": [
+      66,
+      66
+    ],
+    "mean_input": 375960,
+    "mean_output": 70801,
+    "mean_attempts": 51,
+    "mean_seconds": 1132.16,
+    "areas": {
+      "information_gathering": 17,
+      "diagnostic_reasoning": 13,
+      "tests_followup": 5,
+      "safety": 9,
+      "communication": 10,
+      "efficiency": 12
+    },
+    "directories": [
+      "/Users/mink/Documents/ChatGPT/NOVA medic Agent/results/stage_recovery_v083_009/results/20261018_192150_713725_harness"
+    ]
+  },
+  {
+    "case": "C03",
+    "version": "0.7.3",
+    "source_sha256": "104165614bf339819e84e0068b3187749742f1bff84e4476f27a808836689577",
+    "options": {
+      "closing_turns": 12,
+      "closure_audit": false,
+      "compact_context": true,
+      "coverage": true,
+      "decision_review": null,
+      "final_reasoning_effort": "medium",
+      "guidelines": false,
+      "max_turns": 45,
+      "meddb": true,
+      "planner_reasoning_effort": "medium",
+      "structured_closing": true
+    },
+    "runs": 1,
+    "completed": 1,
+    "reviewed": 1,
+    "mean_estimate": 69,
+    "range": [
+      69,
+      69
+    ],
+    "mean_input": 161468,
+    "mean_output": 35034,
+    "mean_attempts": 31,
+    "mean_seconds": 686.983,
+    "areas": {
+      "information_gathering": 18,
+      "diagnostic_reasoning": 10,
+      "tests_followup": 6,
+      "safety": 12,
+      "communication": 8,
+      "efficiency": 15
+    },
+    "directories": [
+      "/Users/mink/Documents/ChatGPT/NOVA medic Agent/results/stage_control_v073_009/results/20261018_183145_786873_harness"
+    ]
+  },
+  {
+    "case": "C03",
+    "version": "0.8.0",
+    "source_sha256": "4bec344b36beac1ff05f52c0969604d6280a7df04b223814247a43e3252349dc",
+    "options": {
+      "closing_turns": 12,
+      "closure_audit": false,
+      "compact_context": true,
+      "coverage": true,
+      "decision_review": true,
+      "final_reasoning_effort": "medium",
+      "guidelines": false,
+      "max_turns": 45,
+      "meddb": true,
+      "planner_reasoning_effort": "medium",
+      "structured_closing": true
+    },
+    "runs": 1,
+    "completed": 1,
+    "reviewed": 1,
+    "mean_estimate": 68,
+    "range": [
+      68,
+      68
+    ],
+    "mean_input": 134994,
+    "mean_output": 27559,
+    "mean_attempts": 24,
+    "mean_seconds": 433.951,
+    "areas": {
+      "information_gathering": 15,
+      "diagnostic_reasoning": 11,
+      "tests_followup": 7,
+      "safety": 11,
+      "communication": 10,
+      "efficiency": 14
+    },
+    "directories": [
+      "/Users/mink/Documents/ChatGPT/NOVA medic Agent/results/stage_goals_v080_009/results/20261018_183342_926450_harness"
+    ]
+  },
+  {
+    "case": "C03",
+    "version": "0.8.0.1",
+    "source_sha256": "e839fc2e3a6a8a4976f5cc14b686018a7a36dd0e5d75b4753edcebfd81f1e12c",
+    "options": {
+      "closing_turns": 12,
+      "closure_audit": false,
+      "compact_context": true,
+      "coverage": true,
+      "decision_review": true,
+      "final_reasoning_effort": "medium",
+      "guidelines": false,
+      "max_turns": 45,
+      "meddb": true,
+      "planner_reasoning_effort": "medium",
+      "structured_closing": true
+    },
+    "runs": 1,
+    "completed": 1,
+    "reviewed": 1,
+    "mean_estimate": 71,
+    "range": [
+      71,
+      71
+    ],
+    "mean_input": 176615,
+    "mean_output": 30588,
+    "mean_attempts": 28,
+    "mean_seconds": 595.284,
+    "areas": {
+      "information_gathering": 18,
+      "diagnostic_reasoning": 10,
+      "tests_followup": 6,
+      "safety": 12,
+      "communication": 10,
+      "efficiency": 15
+    },
+    "directories": [
+      "/Users/mink/Documents/ChatGPT/NOVA medic Agent/results/stage_goals_v0801_009/results/20261018_184519_668602_harness"
+    ]
+  },
+  {
+    "case": "C03",
+    "version": "0.8.1",
+    "source_sha256": "a34571553cf4093ff1aa95824dd7015493e4a2f3366783a5b7991a63d65d2bf5",
+    "options": {
+      "closing_turns": 12,
+      "closure_audit": false,
+      "compact_context": true,
+      "coverage": true,
+      "decision_review": true,
+      "final_reasoning_effort": "medium",
+      "guidelines": false,
+      "max_turns": 45,
+      "meddb": true,
+      "planner_reasoning_effort": "medium",
+      "structured_closing": true
+    },
+    "runs": 1,
+    "completed": 1,
+    "reviewed": 1,
+    "mean_estimate": 71,
+    "range": [
+      71,
+      71
+    ],
+    "mean_input": 162209,
+    "mean_output": 31317,
+    "mean_attempts": 25,
+    "mean_seconds": 519.304,
+    "areas": {
+      "information_gathering": 16,
+      "diagnostic_reasoning": 11,
+      "tests_followup": 7,
+      "safety": 12,
+      "communication": 10,
+      "efficiency": 15
+    },
+    "directories": [
+      "/Users/mink/Documents/ChatGPT/NOVA medic Agent/results/stage_closing_v081_009/results/20261018_184552_240213_harness"
+    ]
+  },
+  {
+    "case": "C03",
+    "version": "0.8.2",
+    "source_sha256": "a9478ea6d6011aa0213a5a50d3fd6f0222ace2efd366077c6403e3d17b7acf22",
+    "options": {
+      "closing_turns": 12,
+      "closure_audit": false,
+      "compact_context": true,
+      "coverage": true,
+      "decision_review": true,
+      "final_reasoning_effort": "medium",
+      "guidelines": false,
+      "max_turns": 45,
+      "meddb": true,
+      "planner_reasoning_effort": "medium",
+      "structured_closing": true
+    },
+    "runs": 1,
+    "completed": 1,
+    "reviewed": 1,
+    "mean_estimate": 72,
+    "range": [
+      72,
+      72
+    ],
+    "mean_input": 194785,
+    "mean_output": 39220,
+    "mean_attempts": 31,
+    "mean_seconds": 793.624,
+    "areas": {
+      "information_gathering": 17,
+      "diagnostic_reasoning": 11,
+      "tests_followup": 7,
+      "safety": 13,
+      "communication": 10,
+      "efficiency": 14
+    },
+    "directories": [
+      "/Users/mink/Documents/ChatGPT/NOVA medic Agent/results/stage_records_v082_009/results/20261018_185554_010846_harness"
+    ]
+  },
+  {
+    "case": "C03",
+    "version": "0.8.3",
+    "source_sha256": "fc76e8689351031f030359e0a8213f64d4c656441a2538865d9127002d6043bd",
+    "options": {
+      "closing_turns": 12,
+      "closure_audit": false,
+      "compact_context": true,
+      "coverage": true,
+      "decision_review": true,
+      "final_reasoning_effort": "medium",
+      "guidelines": false,
+      "max_turns": 45,
+      "meddb": true,
+      "planner_reasoning_effort": "medium",
+      "structured_closing": true
+    },
+    "runs": 1,
+    "completed": 1,
+    "reviewed": 1,
+    "mean_estimate": 66,
+    "range": [
+      66,
+      66
+    ],
+    "mean_input": 204420,
+    "mean_output": 39459,
+    "mean_attempts": 31,
+    "mean_seconds": 659.873,
+    "areas": {
+      "information_gathering": 16,
+      "diagnostic_reasoning": 11,
+      "tests_followup": 7,
+      "safety": 11,
+      "communication": 9,
+      "efficiency": 12
+    },
+    "directories": [
+      "/Users/mink/Documents/ChatGPT/NOVA medic Agent/results/stage_recovery_v083_009/results/20261018_192150_174775_harness"
+    ]
+  },
+  {
+    "case": "C10",
+    "version": "0.7.3",
+    "source_sha256": "104165614bf339819e84e0068b3187749742f1bff84e4476f27a808836689577",
+    "options": {
+      "closing_turns": 12,
+      "closure_audit": false,
+      "compact_context": true,
+      "coverage": true,
+      "decision_review": null,
+      "final_reasoning_effort": "medium",
+      "guidelines": false,
+      "max_turns": 45,
+      "meddb": true,
+      "planner_reasoning_effort": "medium",
+      "structured_closing": true
+    },
+    "runs": 1,
+    "completed": 1,
+    "reviewed": 1,
+    "mean_estimate": 78,
+    "range": [
+      78,
+      78
+    ],
+    "mean_input": 223340,
+    "mean_output": 31546,
+    "mean_attempts": 33,
+    "mean_seconds": 562.052,
+    "areas": {
+      "information_gathering": 18,
+      "diagnostic_reasoning": 14,
+      "tests_followup": 8,
+      "safety": 12,
+      "communication": 11,
+      "efficiency": 15
+    },
+    "directories": [
+      "/Users/mink/Documents/ChatGPT/NOVA medic Agent/results/stage_control_v073_009/results/20261018_183146_326351_harness"
+    ]
+  },
+  {
+    "case": "C10",
+    "version": "0.8.0",
+    "source_sha256": "4bec344b36beac1ff05f52c0969604d6280a7df04b223814247a43e3252349dc",
+    "options": {
+      "closing_turns": 12,
+      "closure_audit": false,
+      "compact_context": true,
+      "coverage": true,
+      "decision_review": true,
+      "final_reasoning_effort": "medium",
+      "guidelines": false,
+      "max_turns": 45,
+      "meddb": true,
+      "planner_reasoning_effort": "medium",
+      "structured_closing": true
+    },
+    "runs": 1,
+    "completed": 1,
+    "reviewed": 1,
+    "mean_estimate": 74,
+    "range": [
+      74,
+      74
+    ],
+    "mean_input": 237854,
+    "mean_output": 33587,
+    "mean_attempts": 34,
+    "mean_seconds": 565.777,
+    "areas": {
+      "information_gathering": 17,
+      "diagnostic_reasoning": 13,
+      "tests_followup": 8,
+      "safety": 12,
+      "communication": 10,
+      "efficiency": 14
+    },
+    "directories": [
+      "/Users/mink/Documents/ChatGPT/NOVA medic Agent/results/stage_goals_v080_009/results/20261018_183342_425093_harness"
+    ]
+  },
+  {
+    "case": "C10",
+    "version": "0.8.0.1",
+    "source_sha256": "e839fc2e3a6a8a4976f5cc14b686018a7a36dd0e5d75b4753edcebfd81f1e12c",
+    "options": {
+      "closing_turns": 12,
+      "closure_audit": false,
+      "compact_context": true,
+      "coverage": true,
+      "decision_review": true,
+      "final_reasoning_effort": "medium",
+      "guidelines": false,
+      "max_turns": 45,
+      "meddb": true,
+      "planner_reasoning_effort": "medium",
+      "structured_closing": true
+    },
+    "runs": 1,
+    "completed": 1,
+    "reviewed": 1,
+    "mean_estimate": 79,
+    "range": [
+      79,
+      79
+    ],
+    "mean_input": 264414,
+    "mean_output": 40729,
+    "mean_attempts": 36,
+    "mean_seconds": 731.208,
+    "areas": {
+      "information_gathering": 19,
+      "diagnostic_reasoning": 14,
+      "tests_followup": 8,
+      "safety": 13,
+      "communication": 10,
+      "efficiency": 15
+    },
+    "directories": [
+      "/Users/mink/Documents/ChatGPT/NOVA medic Agent/results/stage_goals_v0801_009/results/20261018_184519_168412_harness"
+    ]
+  },
+  {
+    "case": "C10",
+    "version": "0.8.1",
+    "source_sha256": "a34571553cf4093ff1aa95824dd7015493e4a2f3366783a5b7991a63d65d2bf5",
+    "options": {
+      "closing_turns": 12,
+      "closure_audit": false,
+      "compact_context": true,
+      "coverage": true,
+      "decision_review": true,
+      "final_reasoning_effort": "medium",
+      "guidelines": false,
+      "max_turns": 45,
+      "meddb": true,
+      "planner_reasoning_effort": "medium",
+      "structured_closing": true
+    },
+    "runs": 1,
+    "completed": 1,
+    "reviewed": 1,
+    "mean_estimate": 76,
+    "range": [
+      76,
+      76
+    ],
+    "mean_input": 229256,
+    "mean_output": 35180,
+    "mean_attempts": 30,
+    "mean_seconds": 598.252,
+    "areas": {
+      "information_gathering": 17,
+      "diagnostic_reasoning": 14,
+      "tests_followup": 8,
+      "safety": 12,
+      "communication": 10,
+      "efficiency": 15
+    },
+    "directories": [
+      "/Users/mink/Documents/ChatGPT/NOVA medic Agent/results/stage_closing_v081_009/results/20261018_184552_751211_harness"
+    ]
+  },
+  {
+    "case": "C10",
+    "version": "0.8.2",
+    "source_sha256": "a9478ea6d6011aa0213a5a50d3fd6f0222ace2efd366077c6403e3d17b7acf22",
+    "options": {
+      "closing_turns": 12,
+      "closure_audit": false,
+      "compact_context": true,
+      "coverage": true,
+      "decision_review": true,
+      "final_reasoning_effort": "medium",
+      "guidelines": false,
+      "max_turns": 45,
+      "meddb": true,
+      "planner_reasoning_effort": "medium",
+      "structured_closing": true
+    },
+    "runs": 1,
+    "completed": 1,
+    "reviewed": 1,
+    "mean_estimate": 73,
+    "range": [
+      73,
+      73
+    ],
+    "mean_input": 307479,
+    "mean_output": 48320,
+    "mean_attempts": 40,
+    "mean_seconds": 885.895,
+    "areas": {
+      "information_gathering": 17,
+      "diagnostic_reasoning": 14,
+      "tests_followup": 8,
+      "safety": 12,
+      "communication": 10,
+      "efficiency": 12
+    },
+    "directories": [
+      "/Users/mink/Documents/ChatGPT/NOVA medic Agent/results/stage_records_v082_009/results/20261018_185555_037719_harness"
+    ]
+  },
+  {
+    "case": "C10",
+    "version": "0.8.3",
+    "source_sha256": "fc76e8689351031f030359e0a8213f64d4c656441a2538865d9127002d6043bd",
+    "options": {
+      "closing_turns": 12,
+      "closure_audit": false,
+      "compact_context": true,
+      "coverage": true,
+      "decision_review": true,
+      "final_reasoning_effort": "medium",
+      "guidelines": false,
+      "max_turns": 45,
+      "meddb": true,
+      "planner_reasoning_effort": "medium",
+      "structured_closing": true
+    },
+    "runs": 1,
+    "completed": 1,
+    "reviewed": 1,
+    "mean_estimate": 75,
+    "range": [
+      75,
+      75
+    ],
+    "mean_input": 325237,
+    "mean_output": 55624,
+    "mean_attempts": 42,
+    "mean_seconds": 860.613,
+    "areas": {
+      "information_gathering": 18,
+      "diagnostic_reasoning": 14,
+      "tests_followup": 8,
+      "safety": 12,
+      "communication": 9,
+      "efficiency": 14
+    },
+    "directories": [
+      "/Users/mink/Documents/ChatGPT/NOVA medic Agent/results/stage_recovery_v083_009/results/20261018_192151_226300_harness"
+    ]
+  }
+]

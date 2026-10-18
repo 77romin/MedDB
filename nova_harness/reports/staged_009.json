@@ -29,10 +29,10 @@
     },
     "truncations": 1,
     "collection_stop": "doctor_done",
-    "goal_updates": 0,
-    "goal_rejections": 0,
-    "questions_detected": 0,
-    "questions_without_sent_answer": 0,
+    "goal_updates": null,
+    "goal_rejections": null,
+    "questions_detected": null,
+    "questions_without_sent_answer": null,
     "closing_turns": 11,
     "history_empty_fields": [
       "fh",
@@ -75,10 +75,10 @@
     },
     "truncations": 1,
     "collection_stop": "doctor_done",
-    "goal_updates": 0,
-    "goal_rejections": 0,
-    "questions_detected": 0,
-    "questions_without_sent_answer": 0,
+    "goal_updates": null,
+    "goal_rejections": null,
+    "questions_detected": null,
+    "questions_without_sent_answer": null,
     "closing_turns": 11,
     "history_empty_fields": [
       "sh"
@@ -117,10 +117,10 @@
     "errors": {},
     "truncations": 0,
     "collection_stop": "doctor_done",
-    "goal_updates": 0,
-    "goal_rejections": 0,
-    "questions_detected": 0,
-    "questions_without_sent_answer": 0,
+    "goal_updates": null,
+    "goal_rejections": null,
+    "questions_detected": null,
+    "questions_without_sent_answer": null,
     "closing_turns": 11,
     "history_empty_fields": [
       "pmh",
@@ -165,8 +165,8 @@
     "collection_stop": "turn_budget",
     "goal_updates": 0,
     "goal_rejections": 0,
-    "questions_detected": 0,
-    "questions_without_sent_answer": 0,
+    "questions_detected": null,
+    "questions_without_sent_answer": null,
     "closing_turns": 11,
     "history_empty_fields": [
       "fh",
@@ -208,8 +208,8 @@
     "collection_stop": "doctor_done",
     "goal_updates": 0,
     "goal_rejections": 0,
-    "questions_detected": 0,
-    "questions_without_sent_answer": 0,
+    "questions_detected": null,
+    "questions_without_sent_answer": null,
     "closing_turns": 11,
     "history_empty_fields": [
       "sh"
@@ -250,8 +250,8 @@
     "collection_stop": "doctor_done",
     "goal_updates": 0,
     "goal_rejections": 0,
-    "questions_detected": 0,
-    "questions_without_sent_answer": 0,
+    "questions_detected": null,
+    "questions_without_sent_answer": null,
     "closing_turns": 11,
     "history_empty_fields": [
       "fh",
@@ -295,8 +295,8 @@
     "collection_stop": "doctor_done",
     "goal_updates": 15,
     "goal_rejections": 2,
-    "questions_detected": 0,
-    "questions_without_sent_answer": 0,
+    "questions_detected": null,
+    "questions_without_sent_answer": null,
     "closing_turns": 11,
     "history_empty_fields": [
       "fh"
@@ -339,8 +339,8 @@
     "collection_stop": "reviewed_done",
     "goal_updates": 18,
     "goal_rejections": 0,
-    "questions_detected": 0,
-    "questions_without_sent_answer": 0,
+    "questions_detected": null,
+    "questions_without_sent_answer": null,
     "closing_turns": 11,
     "history_empty_fields": [
       "sh"
@@ -381,8 +381,8 @@
     "collection_stop": "doctor_done",
     "goal_updates": 6,
     "goal_rejections": 0,
-    "questions_detected": 0,
-    "questions_without_sent_answer": 0,
+    "questions_detected": null,
+    "questions_without_sent_answer": null,
     "closing_turns": 11,
     "history_empty_fields": [
       "fh",
@@ -660,91 +660,131 @@
   {
     "label": "v0.8.3-recovery-009-C01-r1",
     "case": "C01",
-    "status": "running",
-    "score": null,
+    "status": "completed",
+    "score": 66,
     "official_score": null,
     "directory": "results/stage_recovery_v083_009/results/20261018_192150_713725_harness",
     "version": "0.8.3",
     "source_sha256": "fc76e8689351031f030359e0a8213f64d4c656441a2538865d9127002d6043bd",
-    "areas": {},
-    "review_prompt_sha256": null,
-    "review_reference_sha256": null,
-    "input_tokens": 60530,
-    "output_tokens": 12979,
-    "doctor_attempts": 11,
-    "errors": {},
-    "truncations": 0,
-    "collection_stop": null,
-    "goal_updates": 9,
+    "areas": {
+      "information_gathering": 17,
+      "diagnostic_reasoning": 13,
+      "tests_followup": 5,
+      "safety": 9,
+      "communication": 10,
+      "efficiency": 12
+    },
+    "review_prompt_sha256": "bd7516d97974fcb9c1bbf4105235779643a206266fcf949f4cb3a6257481135f",
+    "review_reference_sha256": {
+      "case.json": "0f38a63265017667fe91828ede0271a9c0f5575bc164d81a1f05540445586b71",
+      "model_record.json": "e8e1879cf11e11e6e55da44d65000e1c40ac0d611ebbc0fc1d9c3022efcbf91f"
+    },
+    "input_tokens": 375960,
+    "output_tokens": 70801,
+    "doctor_attempts": 51,
+    "errors": {
+      "PROVIDER_RESPONSE_INVALID": 4
+    },
+    "truncations": 5,
+    "collection_stop": "turn_budget",
+    "goal_updates": 27,
     "goal_rejections": 0,
-    "questions_detected": 0,
+    "questions_detected": 3,
     "questions_without_sent_answer": 0,
-    "closing_turns": 0,
-    "history_empty_fields": [],
-    "note_bytes": null,
+    "closing_turns": 12,
+    "history_empty_fields": [
+      "fh"
+    ],
+    "note_bytes": 11340,
     "collection_actions": {
-      "SAY": 7,
-      "EXAM": 2
+      "SAY": 30,
+      "EXAM": 3
     }
   },
   {
     "label": "v0.8.3-recovery-009-C03-r1",
     "case": "C03",
-    "status": "running",
-    "score": null,
+    "status": "completed",
+    "score": 66,
     "official_score": null,
     "directory": "results/stage_recovery_v083_009/results/20261018_192150_174775_harness",
     "version": "0.8.3",
     "source_sha256": "fc76e8689351031f030359e0a8213f64d4c656441a2538865d9127002d6043bd",
-    "areas": {},
-    "review_prompt_sha256": null,
-    "review_reference_sha256": null,
-    "input_tokens": 69179,
-    "output_tokens": 12800,
-    "doctor_attempts": 11,
-    "errors": {},
-    "truncations": 0,
-    "collection_stop": null,
-    "goal_updates": 10,
+    "areas": {
+      "information_gathering": 16,
+      "diagnostic_reasoning": 11,
+      "tests_followup": 7,
+      "safety": 11,
+      "communication": 9,
+      "efficiency": 12
+    },
+    "review_prompt_sha256": "bd7516d97974fcb9c1bbf4105235779643a206266fcf949f4cb3a6257481135f",
+    "review_reference_sha256": {
+      "case.json": "907dc541535dd939ec63fb19547f0d200e1f24264479729610c5d4bdf5343e07",
+      "model_record.json": "4d06e95ca1b81a4b9632e01b82b5ee6f72d2b875c02a01cb3342eabe81d53e55"
+    },
+    "input_tokens": 204420,
+    "output_tokens": 39459,
+    "doctor_attempts": 31,
+    "errors": {
+      "PROVIDER_RESPONSE_INVALID": 1
+    },
+    "truncations": 1,
+    "collection_stop": "reviewed_done",
+    "goal_updates": 18,
     "goal_rejections": 0,
-    "questions_detected": 0,
+    "questions_detected": 2,
     "questions_without_sent_answer": 0,
-    "closing_turns": 0,
-    "history_empty_fields": [],
-    "note_bytes": null,
+    "closing_turns": 11,
+    "history_empty_fields": [
+      "sh"
+    ],
+    "note_bytes": 9121,
     "collection_actions": {
-      "EXAM": 3,
-      "SAY": 7
+      "EXAM": 5,
+      "SAY": 16
     }
   },
   {
     "label": "v0.8.3-recovery-009-C10-r1",
     "case": "C10",
-    "status": "running",
-    "score": null,
+    "status": "completed",
+    "score": 75,
     "official_score": null,
     "directory": "results/stage_recovery_v083_009/results/20261018_192151_226300_harness",
     "version": "0.8.3",
     "source_sha256": "fc76e8689351031f030359e0a8213f64d4c656441a2538865d9127002d6043bd",
-    "areas": {},
-    "review_prompt_sha256": null,
-    "review_reference_sha256": null,
-    "input_tokens": 83418,
-    "output_tokens": 11876,
-    "doctor_attempts": 14,
-    "errors": {},
-    "truncations": 0,
-    "collection_stop": null,
-    "goal_updates": 2,
-    "goal_rejections": 0,
-    "questions_detected": 0,
+    "areas": {
+      "information_gathering": 18,
+      "diagnostic_reasoning": 14,
+      "tests_followup": 8,
+      "safety": 12,
+      "communication": 9,
+      "efficiency": 14
+    },
+    "review_prompt_sha256": "bd7516d97974fcb9c1bbf4105235779643a206266fcf949f4cb3a6257481135f",
+    "review_reference_sha256": {
+      "case.json": "570a87bdf976a4c99052120aacee6a7af9777ca23226f41e97d211f404067311",
+      "model_record.json": "3111067fae15cf6a8d6be6b7a9d5d81bc19fcb6e9d4b4673be6d85285afaf9a0"
+    },
+    "input_tokens": 325237,
+    "output_tokens": 55624,
+    "doctor_attempts": 42,
+    "errors": {
+      "PROVIDER_RESPONSE_INVALID": 1
+    },
+    "truncations": 2,
+    "collection_stop": "doctor_done",
+    "goal_updates": 15,
+    "goal_rejections": 2,
+    "questions_detected": 1,
     "questions_without_sent_answer": 0,
-    "closing_turns": 0,
+    "closing_turns": 11,
     "history_empty_fields": [],
-    "note_bytes": null,
+    "note_bytes": 11869,
     "collection_actions": {
-      "SAY": 9,
-      "EXAM": 4
+      "SAY": 24,
+      "EXAM": 8
     }
   }
 ]
