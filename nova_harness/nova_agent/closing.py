@@ -150,7 +150,7 @@ def close_consultation(gateway, state, proposed, remaining, trace, advisor=None)
         response = reply.get('content', '')
         if is_patient_question(response):
             item = {'evidence_id': state.evidence[-1].id, 'question': response,
-                    'status': 'pending', 'answer_evidence_ids': []}
+                    'status': 'pending', 'answer_evidence_ids': [], 'attempts': 0}
             questions.append(item)
             trace.emit('patient_question_pending', **item)
         return response
@@ -164,9 +164,13 @@ def close_consultation(gateway, state, proposed, remaining, trace, advisor=None)
             if item is None:
                 break
             answer_calls += 1
+            item['attempts'] += 1
             trace.emit('closing_question', response=item['question'], evidence_id=item['evidence_id'], answer_call=answer_calls)
             try:
-                response = chat(ANSWER_PROMPT, {**context(), 'latest_patient_question': item['question'],
+                prompt = ANSWER_PROMPT
+                if item['attempts'] > 1:
+                    prompt += '\n직전 응답은 출력 형식 검증에 실패해 전송되지 않았습니다. 같은 질문에 JSON 객체 하나만 출력하고 answer의 각 문장은 24자 이내로 다시 작성하세요.'
+                response = chat(prompt, {**context(), 'latest_patient_question': item['question'],
                                               'question_evidence_id': item['evidence_id']})
                 parts, invalid = statement_parts(response.get('answer'))
                 if invalid:
@@ -180,11 +184,14 @@ def close_consultation(gateway, state, proposed, remaining, trace, advisor=None)
                         item['answer_evidence_ids'].append(state.evidence[-1].id)
                     if len(questions) > question_count:
                         break
-                item['status'] = 'answer_sent_unverified' if item['answer_evidence_ids'] else 'not_answered'
+                item['status'] = ('answer_sent_unverified' if item['answer_evidence_ids']
+                                  else 'pending' if item['attempts'] < 2 else 'not_answered')
                 trace.emit('patient_question_answer_attempt', **item)
-            except (ValueError, TypeError, NovaError):
-                item['status'] = 'not_answered'
-                trace.emit('closing_answer_unavailable', evidence_id=item['evidence_id'])
+            except (ValueError, TypeError, NovaError) as exc:
+                retryable = isinstance(exc, (ValueError, TypeError)) and item['attempts'] < 2
+                item['status'] = 'pending' if retryable else 'not_answered'
+                trace.emit('closing_answer_unavailable', evidence_id=item['evidence_id'],
+                           exception=type(exc).__name__, code=getattr(exc, 'code', None), retryable=retryable)
 
     concern = say('가장 걱정되시는 점은 무엇인가요?', 'concern_question')
     if concern is not None and gateway.remaining() > 120:

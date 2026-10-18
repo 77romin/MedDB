@@ -219,5 +219,23 @@ class ClosingTests(unittest.TestCase):
         self.assertEqual(state.patient_questions[0]['answer_evidence_ids'],['e3'])
         self.assertEqual(state.patient_questions[0]['status'],'answer_sent_unverified')
 
+    def test_plain_text_answer_is_regenerated_for_the_same_question_before_queue(self):
+        plan={'diagnosis':'평가 중','plan':{}}
+        messages={'assessment':['추가 평가가 필요합니다.'],'plan':['검사 후 계획을 정합니다.'],
+                  'follow_up':['내일 결과를 확인하세요.']}
+        answer={'answer':['검사 결과에 따라 결정합니다.']}
+        client=ScriptClient([plan,messages,'검사 결과를 보고 결정합니다.',answer,plan],
+                            ['걱정돼요','치료는 가능한가요?']+['네']*8)
+        state=self.state()
+        close_consultation(Gateway(client),state,plan,12,Trace())
+        actual=[e.question for e in state.evidence]
+        i=actual.index(messages['assessment'][0])
+        self.assertEqual(actual[i+1],answer['answer'][0])
+        self.assertNotIn('검사 결과를 보고 결정합니다.',actual)
+        self.assertEqual(state.patient_questions[0]['attempts'],2)
+        self.assertEqual(state.patient_questions[0]['status'],'answer_sent_unverified')
+        self.assertIn(messages['plan'][0],actual)
+        self.assertIn(messages['follow_up'][0],actual)
+
 
 if __name__=='__main__':unittest.main()

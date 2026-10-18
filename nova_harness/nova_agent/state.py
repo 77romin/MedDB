@@ -136,6 +136,9 @@ class PatientState:
     def prompt_snapshot(self, relevant_concepts=None):
         """Keep every original response, but avoid repeating its quote again in the fact list."""
         value = self.snapshot()
+        if self.decision_goals:
+            from .goals import visible_goals
+            value['decision_goals'] = visible_goals(self.decision_goals)
         value['facts'] = [{k:v for k,v in f.items() if k not in {'quote','status'}} for f in self.facts]
         if self.compact_context:
             if relevant_concepts is None:

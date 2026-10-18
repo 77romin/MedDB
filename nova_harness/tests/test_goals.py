@@ -55,5 +55,27 @@ class DecisionGoalTests(unittest.TestCase):
         consult(client,prepare(),Config(max_turns=20,decision_review=True))
         self.assertEqual(sum(method=='chat' for method,_ in client.requests),5)
 
+    def test_completed_goals_do_not_block_new_active_information(self):
+        s=PatientState({'opening':'기존 응답'},{});g=DecisionGoals(s)
+        for i in range(8):
+            a,r=g.update([goal(id='closed_'+str(i),status='resolved',evidence=[{'id':'initial','quote':'기존 응답'}])])
+            self.assertFalse(r)
+        a,r=g.update([goal(id='new_safety_need')])
+        self.assertTrue(a);self.assertFalse(r)
+        self.assertEqual(len(s.decision_goals),9)
+        self.assertEqual(g.snapshot()['active_count'],1)
+        self.assertEqual(g.snapshot()['archived_count'],4)
+        self.assertEqual(len(g.snapshot()['goals']),5)
+        self.assertEqual(len(s.prompt_snapshot()['decision_goals']),5)
+        self.assertEqual(len(s.snapshot()['decision_goals']),9)
+
+    def test_active_goal_limit_does_not_allow_reactivation_to_bypass_bound(self):
+        s=PatientState({'opening':'응답'},{});g=DecisionGoals(s)
+        g.update([goal(id='closed',status='resolved',evidence=[{'id':'initial','quote':'응답'}])])
+        for i in range(8):self.assertTrue(g.update([goal(id='active_'+str(i))])[0])
+        self.assertFalse(g.update([goal(id='closed')])[0])
+        self.assertFalse(g.update([goal(id='new')])[0])
+        self.assertEqual(g.snapshot()['active_count'],8)
+
 
 if __name__=='__main__':unittest.main()

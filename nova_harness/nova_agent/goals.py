@@ -2,6 +2,13 @@
 import re
 
 
+def visible_goals(items):
+    """Keep active needs plus recent closure context; full history remains in the audit."""
+    active = [g for g in items if g['status'] in {'open', 'partial'}]
+    closed = [g for g in items if g['status'] in {'resolved', 'deferred'}]
+    return active + closed[-4:]
+
+
 class DecisionGoals:
     def __init__(self, state):
         self.state = state
@@ -39,17 +46,25 @@ class DecisionGoals:
             prior = self.items.get(gid)
             if prior and prior['scope'] != item['scope']:
                 rejected.append('scope is immutable; use a new goal for a different time/subject/range'); continue
-            if not prior and len(self.items) >= 8:
-                rejected.append('at most eight active goals; update an existing goal'); continue
+            becoming_active = status in {'open', 'partial'} and (not prior or prior['status'] not in {'open', 'partial'})
+            active_count = sum(g['status'] in {'open', 'partial'} for g in self.items.values())
+            if becoming_active and active_count >= 8:
+                rejected.append('at most eight open/partial goals; explicitly resolve or defer an existing need'); continue
+            if not prior and len(self.items) >= 64:
+                rejected.append('goal history limit reached; no new identity accepted'); continue
             value = {k: item[k] for k in ('id', 'need', 'scope', 'status', 'priority', 'reason')}
             value['evidence'] = refs
             value['verification'] = 'source_checked_model_interpretation'
+            self.items.pop(gid, None)
             self.items[gid] = value
             accepted.append(value)
         self.state.decision_goals = list(self.items.values())
         return accepted, rejected
 
     def snapshot(self):
-        return {'goals': list(self.items.values()),
+        items = list(self.items.values())
+        visible = visible_goals(items)
+        return {'goals': visible, 'archived_count': len(items)-len(visible),
+                'active_count': sum(g['status'] in {'open', 'partial'} for g in items),
                 'warning': 'Model-scoped decision needs, not a mandatory checklist or clinically verified completion. '
                            'Resolved source quotes do not establish unasked subjects/times/components.'}
