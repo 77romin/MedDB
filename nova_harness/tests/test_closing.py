@@ -230,6 +230,33 @@ class ClosingTests(unittest.TestCase):
         self.assertTrue(is_patient_question('줄이면 잠을 못 잘까 봐 두려워요.'))
         self.assertFalse(is_patient_question('네, 알겠습니다.'))
 
+    def test_opening_concern_is_answered_by_bundle_without_separate_answer_call(self):
+        plan={'diagnosis':'평가 중','plan':{}}
+        messages={'assessment':['원인을 더 확인해야 합니다.'],
+                  'plan':['검사 후 계획을 정하겠습니다.'],
+                  'concern':['치료 방법을 함께 찾겠습니다.']}
+        client=ScriptClient([plan,messages,plan],
+                            ['치료할 수 있을지 궁금해요.','네','네','네','알겠습니다'])
+        state=self.state()
+        close_consultation(Gateway(client),state,plan,10,Trace())
+        self.assertFalse(state.patient_questions)
+        self.assertIn(messages['concern'][0],[e.question for e in state.evidence])
+        self.assertEqual(len([r for r in client.requests if r[0]=='chat']),3)
+
+    def test_repeated_fear_after_answer_does_not_start_an_answer_loop(self):
+        plan={'diagnosis':'평가 중','plan':{}}
+        messages={'assessment':['원인을 더 확인해야 합니다.'],
+                  'plan':['검사 후 계획을 정하겠습니다.']}
+        answer={'answer':['안전하게 줄이는 방법이 있습니다.']}
+        client=ScriptClient([plan,messages,answer,plan],
+                            ['걱정돼요','줄이면 잠을 못 잘까 봐요.','그래도 줄이는 게 두려워요.',
+                             '네','알겠습니다'])
+        state=self.state()
+        close_consultation(Gateway(client),state,plan,10,Trace())
+        self.assertEqual(len(state.patient_questions),1)
+        self.assertEqual(state.patient_questions[0]['attempts'],1)
+        self.assertIn(answer['answer'][0],[e.question for e in state.evidence])
+
     def test_final_answer_is_linked_only_after_successful_say(self):
         plan={'diagnosis':'평가 중','plan':{}}
         messages={'plan':['다음 진료에서 확인하겠습니다.']}

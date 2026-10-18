@@ -128,6 +128,12 @@ def is_patient_question(text):
     return isinstance(text, str) and bool(re.search(r'[?？]|(?:까요|나요|가요|인지요)|알려\s*주세요|궁금|까\s*봐|두려워|무서워|겁나', text))
 
 
+def is_explicit_patient_question(text):
+    """A direct question, excluding a fear statement that the concern bundle can answer."""
+    return isinstance(text, str) and bool(re.search(
+        r'[?？]|(?:까요|나요|가요|인지요)|알려\s*주세요|궁금', text))
+
+
 def close_consultation(gateway, state, proposed, remaining, trace, advisor=None):
     from .runtime import content_of
     sent = []
@@ -173,11 +179,23 @@ def close_consultation(gateway, state, proposed, remaining, trace, advisor=None)
         delivered.add(tag)
         trace.emit('closing_say', tag=tag, content=text, response=reply)
         response = reply.get('content', '')
-        if is_patient_question(response):
+        # The opening concern is already an input to the bundle's concern field.
+        # Do not spend a separate answer call on the same concern. Likewise, a
+        # repeated fear after an answer is left for the remaining concern text or
+        # final reconciliation; only a new explicit question interrupts an answer.
+        track_question = (tag != 'concern_question' and is_patient_question(response)
+                          and (tag != 'answer' or is_explicit_patient_question(response)))
+        if track_question:
             item = {'evidence_id': state.evidence[-1].id, 'question': response,
                     'status': 'pending', 'answer_evidence_ids': [], 'attempts': 0}
             questions.append(item)
             trace.emit('patient_question_pending', **item)
+        elif tag == 'concern_question' and is_patient_question(response):
+            trace.emit('patient_concern_for_bundle', evidence_id=state.evidence[-1].id,
+                       concern=response)
+        elif tag == 'answer' and is_patient_question(response):
+            trace.emit('patient_answer_followup_deferred', evidence_id=state.evidence[-1].id,
+                       concern=response)
         return response
 
     def answer_questions(protected=2):
