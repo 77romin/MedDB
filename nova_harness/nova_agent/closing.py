@@ -228,7 +228,8 @@ def close_consultation(gateway, state, proposed, remaining, trace, advisor=None)
             continue
         # A concern question may itself receive a question; do not drop it.
         protected_tags = {t for t, _ in queue[index:] if t in {'plan','follow_up','safety_net'} and t not in delivered}
-        answer_questions(2+len(protected_tags))
+        if index > 0 or not parsed['safety_net'][0]:
+            answer_questions(2+len(protected_tags))
         if remaining <= 2:
             trace.emit('closing_budget_omission', tag=tag)
             continue
@@ -243,14 +244,21 @@ def close_consultation(gateway, state, proposed, remaining, trace, advisor=None)
     if sent and not actions_stopped and gateway.remaining() > 120:
         try:
             from .records import make_record
-            revised = chat(FINAL+'\n마지막 환자 답변에서 질문이나 오해가 있으면 clarification에 직접 답하는 완결 문장 하나를 추가하세요. '
+            revised = chat(FINAL+'\n마지막 환자 답변이나 patient_questions에 아직 답하지 못한 중요한 질문/우려가 있으면 '
+                           'clarification에 직접 답하는 완결 문장 하나를 추가하고 clarification_for에 해당 질문의 evidence_id를 씁니다. '
                            'NFC 30자 이내이며 새 치료를 만들지 마세요. 없으면 []입니다.', context())
             make_record(state, revised)
             proposed = revised
             trace.emit('closing_reconciled')
             parts, _ = statement_parts(revised.get('clarification'))
             if parts and remaining > 0:
+                before = len(state.evidence)
                 say(parts[0], 'answer')
+                if len(state.evidence) > before:
+                    for item in questions:
+                        if item['evidence_id'] == revised.get('clarification_for'):
+                            item['answer_evidence_ids'].append(state.evidence[-1].id)
+                            item['status'] = 'answer_sent_unverified'
         except (ValueError, TypeError, NovaError):
             trace.emit('closing_reconcile_unavailable')
     for item in questions:

@@ -209,5 +209,15 @@ class ClosingTests(unittest.TestCase):
         self.assertTrue(is_patient_question('줄이면 잠을 못 잘까 봐 두려워요.'))
         self.assertFalse(is_patient_question('네, 알겠습니다.'))
 
+    def test_final_answer_is_linked_only_after_successful_say(self):
+        plan={'diagnosis':'평가 중','plan':{}}
+        revised={**plan,'clarification':['다음 진료에서 확인하겠습니다.'],'clarification_for':'e2'}
+        client=ScriptClient([plan,revised],['걱정돼요','다음에는 어떻게 하나요?','알겠습니다'])
+        state=self.state()
+        close_consultation(Gateway(client),state,plan,3,Trace())
+        self.assertEqual(state.patient_questions[0]['evidence_id'],'e2')
+        self.assertEqual(state.patient_questions[0]['answer_evidence_ids'],['e3'])
+        self.assertEqual(state.patient_questions[0]['status'],'answer_sent_unverified')
+
 
 if __name__=='__main__':unittest.main()
