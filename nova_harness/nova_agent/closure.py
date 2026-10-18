@@ -15,7 +15,7 @@ JSON 객체 하나만 출력합니다:
 최대 700자 이내로 답하세요. 숨은 사고과정 대신 근거와 누락만 간결히 제공합니다.'''
 
 
-def review_closure(gateway, state, hypotheses, goals=None):
+def review_closure(gateway, state, hypotheses, goals=None, axes=None, coverage=None):
     payload = {'patient': state.prompt_snapshot(), 'hypotheses': hypotheses,
                'seconds_remaining': min(99999, gateway.remaining())}
     prompt = PROMPT
@@ -29,6 +29,14 @@ def review_closure(gateway, state, hypotheses, goals=None):
 당장 필요한 안전 행동이 있다면 추가 문진보다 먼저 한 문장으로 제안하고 긴급 처치를 지연하지 않습니다.'''
         prompt += '''\n일반적인 진단·계획 설명은 이 검토 뒤 별도 마무리 단계에서 전송하므로 아직 설명하지 않은 것만으로 추가 수집 행동을 제안하지 않습니다.
 SAY content는 환자에게 직접 할 완결된 존댓말이며 '설명한다/확인한다/물어본다' 같은 의사에게 주는 지시가 아닙니다.'''
+    if axes is not None:
+        payload['decision_axes'] = axes
+        prompt += '''\ndecision_axes는 환자별 판단 범위이지 확인된 소견이나 의무 체크리스트가 아닙니다.
+실제 evidence와 대조해 진단·안전·치료 선택을 바꿀 미확인 범위가 있으면 가장 가치 높은 하나만 제안합니다.'''
+    if coverage is not None:
+        payload['collection_coverage'] = coverage
+        prompt += '''\ncollection_coverage의 상태는 수집 계측입니다. attempted는 해결이 아니며 unasked를 모두 채우지 않습니다.
+남은 턴에서 실제 판단을 바꿀 항목만 decision_axes와 함께 검토합니다.'''
     response = gateway.chat([{'role': 'system', 'content': prompt},
                              {'role': 'user', 'content': json.dumps(payload, ensure_ascii=False)}])
     try:

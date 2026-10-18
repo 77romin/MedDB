@@ -43,7 +43,7 @@ class DecisionGoalTests(unittest.TestCase):
                'next_action':{'type':'SAY','content':'기록된 수치를 알려주시겠어요?'}}
         client=ScriptClient(steps+[{'next_action':{'type':'DONE'}},audit,{'next_action':{'type':'DONE'}},
                                    {'diagnosis':'평가 중'}],['기록 있어요']*3+['그 수치는 몰라요'])
-        result=consult(client,prepare(),Config(max_turns=20,decision_review=True))
+        result=consult(client,prepare(),Config(max_turns=20,decision_review=True,closure_review_limit=1))
         self.assertEqual(result['status'],'completed')
         self.assertEqual(sum(method=='say' for method,_ in client.requests),4)
 

@@ -48,6 +48,20 @@ class ClosureTests(unittest.TestCase):
         self.assertEqual(len([r for r in client.requests if r[0] == 'say']), 6)
         self.assertEqual(len([r for r in client.requests if r[0] == 'chat']), 9)
 
+    def test_decision_review_allows_two_bounded_high_value_followups(self):
+        first = {'ready': False, 'urgent_exit': False, 'missing': ['최근 노출 범위'],
+                 'reason': '처분을 바꿀 수 있음',
+                 'next_action': {'type': 'SAY', 'content': '낮에도 추가로 드셨나요?'}}
+        second = {'ready': False, 'urgent_exit': False, 'missing': ['기능 손상'],
+                  'reason': '진단 범위를 바꿀 수 있음',
+                  'next_action': {'type': 'SAY', 'content': '약 때문에 일상이 힘든가요?'}}
+        scripted = initial_steps()+[done(), first, done(), second, done(), {'diagnosis': '추가 평가 필요'}]
+        client = ScriptClient(scripted, ['네']*7)
+        config = Config(max_turns=25, decision_review=True)
+        self.assertEqual(consult(client, prepare(), config)['status'], 'completed')
+        self.assertEqual(len([r for r in client.requests if r[0] == 'say']), 7)
+        self.assertEqual(len([r for r in client.requests if r[0] == 'chat']), 11)
+
     def test_urgent_exit_does_not_add_questions(self):
         audit = {'ready': False, 'urgent_exit': True, 'reason': '즉시 처치 지연 방지', 'missing': []}
         client = ScriptClient(initial_steps()+[done(), audit, {'diagnosis': '추가 평가 필요'}], ['네']*5)

@@ -50,7 +50,7 @@ def consult(client, knowledge, config=None, trace=None):
     remaining = min(config.max_turns, initial_server_remaining)
     trace.emit('consult_start', version=__version__, model=config.model, config=vars(config), initial=state.initial)
     feedback, stop_reason = [], 'turn_budget'
-    closure_reviewed, closure_missing = False, []
+    closure_reviews, closure_missing = 0, []
     reserve = config.closing_turns if config.structured_closing else 0
     while remaining > reserve and seconds_left(session) > config.time_margin:
         selected = None
@@ -133,12 +133,15 @@ def consult(client, knowledge, config=None, trace=None):
                       and all(isinstance(eid, str) for eid in proposal['urgency_evidence_ids']))
             if urgent:
                 stop_reason = 'urgent_exit_source_checked'; break
-            if ((config.closure_audit or goals is not None) and not closure_reviewed
+            review_limit = config.closure_review_limit if goals is not None else 1
+            if ((config.closure_audit or goals is not None) and closure_reviews < review_limit
                     and len(state.evidence) >= (3 if goals else 5)
                     and remaining > max(6, reserve+1) and seconds_left(session) > config.time_margin+180):
-                closure_reviewed = True  # once, even on invalid/failed review; never loop indefinitely
+                closure_reviews += 1  # bounded even on invalid/failed review
                 try:
-                    audit = review_closure(gateway, state, result.get('hypotheses', []), goals.snapshot() if goals else None)
+                    audit = review_closure(
+                        gateway, state, result.get('hypotheses', []), goals.snapshot() if goals else None,
+                        decision_axes(state, clinical), coverage.snapshot(compact=True) if coverage else None)
                     trace.emit('closure_review', review=audit)
                     if not audit['ready'] and not audit['urgent_exit']:
                         proposal = audit['next_action']

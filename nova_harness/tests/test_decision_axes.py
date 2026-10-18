@@ -15,6 +15,8 @@ class DecisionAxesTest(unittest.TestCase):
         axes=decision_axes(s)['axes']
         self.assertEqual(axes[0]['type'],'medication_exposure')
         self.assertIn('24시간',str(axes))
+        self.assertIn('처방기관',str(axes))
+        self.assertIn('중증 금단',str(axes))
         self.assertFalse(s.facts)
         self.assertFalse(s.decision_goals)
         self.assertNotIn('resolved',str(axes))
@@ -29,6 +31,7 @@ class DecisionAxesTest(unittest.TestCase):
         c={'age':28,'sex':'F','hypotheses':[{'label':'갑상선기능항진증'}]}
         result=decision_axes(s,c)
         self.assertIn('임신',str(result));self.assertEqual(len(result['axes']),1)
+        self.assertIn('근력 저하',str(result))
         self.assertFalse(s.facts)
         c['sex']='M';self.assertNotIn('임신 가능성/계획',str(decision_axes(s,c)))
         c.update(sex='F',age=70);self.assertNotIn('임신 가능성/계획',str(decision_axes(s,c)))
@@ -36,6 +39,7 @@ class DecisionAxesTest(unittest.TestCase):
     def test_growth_family_temporal_distinctions_do_not_invent_family_facts(self):
         s=PatientState({'opening':'아이가 키가 작아요'}, {})
         self.assertEqual(decision_axes(s,{'age':9})['axes'][0]['type'],'growth_trajectory')
+        self.assertIn('영양 섭취',str(decision_axes(s,{'age':9})))
         self.assertFalse(s.facts)
         self.assertIsNone(decision_axes(s,{'age':40}))
 
