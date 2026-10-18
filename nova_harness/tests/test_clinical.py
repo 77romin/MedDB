@@ -46,7 +46,7 @@ class ClinicalTests(unittest.TestCase):
         s.add_response('SAY','어떤가요?',{'content':'정상'})
         fact={'concept_id':sign['id'],'evidence_id':'e1','quote':'정상','assertion':'absent'}
         self.assertFalse(s.accept_facts([fact])[0])
-        s.add_response('EXAM','진찰합니다',{'result':'정상'})
+        s.add_response('EXAM','진찰합니다',{'result':'정상'},sign['exam_target'])
         fact['evidence_id']='e2';self.assertTrue(s.accept_facts([fact])[0])
 
     def test_full_closing_sends_and_records_actual_sent_messages(self):

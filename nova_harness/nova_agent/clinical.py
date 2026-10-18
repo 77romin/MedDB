@@ -40,7 +40,8 @@ class ClinicalAdvisor:
         for category, rows in [('finding',self.findings),('slot',self.slots)]:
             for key, row in rows.items():
                 field = 'exam' if row.get('kind') == 'sign' else mapping.get(row.get('soap'), 'ros' if row.get('kind') == 'symptom' else 'hpi')
-                result.append({'id': 'meddb:'+key, 'label': row['ko'], 'field': field, 'kind': row.get('kind',category), 'source':'MedDB team draft'})
+                result.append({'id': 'meddb:'+key, 'label': row['ko'], 'field': field, 'kind': row.get('kind',category),
+                               'exam_target':'meddb:'+row['exam'] if row.get('exam') else None, 'source':'MedDB team draft'})
         return result
 
     def fits(self, row):
@@ -52,6 +53,7 @@ class ClinicalAdvisor:
         present, absent = set(), set()
         for f in state.facts:
             if not f['concept_id'].startswith('meddb:'): continue
+            if f.get('subject') == 'family' and state.concepts.get(f['concept_id'], {}).get('field') != 'fh': continue
             fid = f['concept_id'][6:]
             if f['assertion']=='present': present.add(fid)
             if f['assertion']=='absent': absent.add(fid)

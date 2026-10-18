@@ -6,12 +6,13 @@ from . import __version__
 from .config import Config
 from .protocol import Gateway, seconds_left
 from .prompts import STEP, FINAL
-from .records import make_record
+from .records import make_record, normalize_assessment
 from .state import PatientState
 from .telemetry import Trace
 from .validation import action_key, parse_object, validate_action
 from .closure import review_closure
 from .clinical import ClinicalAdvisor
+from .coverage import CoveragePlanner
 
 STOP = {'TURN_LIMIT_REACHED', 'SESSION_EXPIRED', 'SESSION_CLOSED', 'RUN_NOT_ACTIVE', 'LOCAL_DEADLINE'}
 REJECTED = {'CONTENT_TOO_LONG', 'EMPTY_CONTENT', 'EXAM_NOT_SPECIFIC', 'EXAM_NOT_RECOGNIZED', 'ACTION_NOT_AVAILABLE'}
@@ -41,6 +42,7 @@ def consult(client, knowledge, config=None, trace=None):
     advisor = ClinicalAdvisor(knowledge['clinical_graph'], str(state.initial.get('opening',''))) if config.meddb else None
     if advisor:
         state.concepts.update({c['id']:c for c in advisor.concepts()})
+    coverage = CoveragePlanner(advisor, state) if advisor and config.coverage else None
     initial_server_remaining = int(session['turns_remaining'])
     remaining = min(config.max_turns, initial_server_remaining)
     trace.emit('consult_start', version=__version__, model=config.model, config=vars(config), initial=state.initial)
@@ -54,7 +56,11 @@ def consult(client, knowledge, config=None, trace=None):
             concepts = list(knowledge['concepts'])
             if clinical:
                 concepts += [state.concepts[c] for c in clinical['relevant_concepts'] if c in state.concepts]
-            ontology_context = {'concepts': [{k: c[k] for k in ('id', 'label', 'field')} for c in concepts],
+            if coverage and state.evidence:
+                latest_target = state.evidence[-1].target
+                concepts += [c for c in state.concepts.values() if c['id'] == latest_target or c.get('exam_target') == latest_target]
+            concepts = list({c['id']:c for c in concepts}.values())
+            ontology_context = {'concepts': [{k:c[k] for k in ('id','label','field','kind','exam_target') if c.get(k) is not None} for c in concepts],
                                 'relations': knowledge['relations']}
             user = {'patient': state.prompt_snapshot(), 'ontology': ontology_context,
                     'latest_evidence_id': state.evidence[-1].id if state.evidence else None,
@@ -62,6 +68,8 @@ def consult(client, knowledge, config=None, trace=None):
                     'instruction_feedback': feedback[-3:]}
             if clinical:
                 user['clinical_advisor'] = clinical
+            if coverage:
+                user['collection_coverage'] = coverage.snapshot(compact=True)
             if config.structured_closing:
                 user['closing_policy'] = '진단·계획·추적·안전·걱정·이해 확인은 별도 마무리 단계에서 수행합니다. 지금은 필요한 문진·진찰을 수행하고 충분하면 DONE. 긴급성은 근거에 맞춰 판단합니다.'
             if closure_missing:
@@ -79,6 +87,10 @@ def consult(client, knowledge, config=None, trace=None):
                 accepted, rejected = state.accept_facts(result.get('facts', []))
                 trace.emit('facts_updated', accepted=accepted, rejected=rejected)
                 proposal = result.get('next_action', {})
+                if coverage:
+                    coverage.accept_initial(result.get('initial_coverage', []))
+                    proposal, override = coverage.choose(proposal, remaining, reserve)
+                    if override: trace.emit('coverage_override', **override)
                 action, text = validate_action(proposal, state.seen)
                 if action == 'DONE' and not config.structured_closing and not state.communication.intersection({'plan', 'safety_net'}) and remaining > 2:
                     raise ValueError('DONE before sending patient plan/safety-net SAY; explain if clinically possible')
@@ -123,6 +135,8 @@ def consult(client, knowledge, config=None, trace=None):
             target = proposal.get('target', '')
             if target not in targets or action_key(action,text) != action_key(targets[target]['type'],targets[target]['content']):
                 target = ''
+            if coverage:
+                target = coverage.target_for(action, text) or target
             tags = proposal.get('communication', [])
             evidence = state.add_response(action, text, reply, target, communication=tags)
             server_remaining = int(reply.get('turns_remaining', initial_server_remaining-state.turns_used))
@@ -146,6 +160,8 @@ def consult(client, knowledge, config=None, trace=None):
     if seconds_left(session) <= config.time_margin:
         stop_reason = 'time_margin'
     trace.emit('collection_finished', reason=stop_reason, state=state.snapshot(), remaining=remaining)
+    if coverage:
+        trace.emit('coverage_finished', coverage=coverage.snapshot(), reason=stop_reason)
     if stop_reason in {'SESSION_CLOSED', 'SESSION_EXPIRED', 'RUN_NOT_ACTIVE', 'LOCAL_DEADLINE'}:
         raise NovaError(stop_reason)
     proposed = {}
@@ -154,8 +170,8 @@ def consult(client, knowledge, config=None, trace=None):
     for _ in range(2):
         try:
             payload = {'patient':state.prompt_snapshot(),'clinical_advisor':advisor.context(state) if advisor else None}
-            proposed = content_of(gateway.chat([{'role': 'system', 'content': FINAL},
-                                               {'role': 'user', 'content': json.dumps(payload, ensure_ascii=False)}], final=True))
+            proposed = normalize_assessment(content_of(gateway.chat([{'role': 'system', 'content': FINAL},
+                                               {'role': 'user', 'content': json.dumps(payload, ensure_ascii=False)}], final=True)))
             note, diagnosis = make_record(state, proposed)
             break
         except (ValueError, TypeError) as exc:

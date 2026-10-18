@@ -26,6 +26,11 @@ def analyze(path):
     closing_sent = Counter(r.get('tag', 'unknown') for r in rows if r['event'] == 'closing_say')
     closing_omissions = Counter(r.get('tag', 'unknown') for r in rows
                                if r['event'] in {'closing_missing', 'closing_budget_omission'})
+    coverage_final = next((r.get('coverage',{}) for r in reversed(rows) if r['event'] == 'coverage_finished'),{})
+    coverage_counts = Counter(r['status'] for r in coverage_final.get('observations',[]))
+    if finished and coverage_counts.get('unasked'):
+        findings.append({'category':'unasked_core_observations','count':coverage_counts['unasked'],
+                         'next_step':'긴급성·시간·턴 제한에 따른 유보인지, 조기 종료로 인한 누락인지 실제 근거와 대조'})
     if finished and closing_omissions:
         findings.append({'category': 'closing_omission', 'counts': dict(closing_omissions),
                          'next_step': '실제 SAY 원문과 비교해 생성 실패·턴 부족·질문 대응의 원인을 구분; 태그만으로 임상 충분성을 인정하지 않음'})
@@ -74,6 +79,9 @@ def analyze(path):
         'closing_sent_by_tag': dict(closing_sent),
         'closing_omissions_by_tag': dict(closing_omissions),
         'closing_question_reviews': sum(r['event'] == 'closing_question' for r in rows),
+        'coverage_overrides':sum(r['event'] == 'coverage_override' for r in rows),
+        'coverage_final_counts':dict(coverage_counts),
+        'fact_scope_rejections':sum(len(r.get('rejected',[])) for r in rows if r['event'] == 'facts_updated'),
         'patient_compound_refusals': sum('한 번에 하나씩' in str(v.get('content', '')) for v in actions.values()),
         'elapsed_seconds': round(rows[-1]['monotonic']-rows[0]['monotonic'], 3) if rows else 0,
         'http_wait_seconds': round(sum(latency), 3), 'diagnosis': final.get('diagnosis') if final else None,

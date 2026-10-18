@@ -15,6 +15,7 @@ sys.path.insert(0, str(ROOT))
 
 from nova_agent.analysis import write_report
 from nova_agent.config import Config
+from nova_agent import __version__
 from nova_agent.protocol import Gateway, LoggedClient
 from nova_agent.runtime import prepare, consult
 from nova_agent.telemetry import Trace
@@ -54,6 +55,7 @@ def main():
     r.add_argument('--label', default='')
     r.add_argument('--no-meddb', action='store_true', help='ablation: disable imported clinical graph advice')
     r.add_argument('--no-structured-closing', action='store_true', help='ablation: let the planner manage closing')
+    r.add_argument('--no-coverage', action='store_true', help='ablation: disable graph-derived collection gate')
     closure = r.add_mutually_exclusive_group()
     closure.add_argument('--closure-audit', action='store_true', help='experimental: enable one bounded pre-exit review')
     closure.add_argument('--no-closure-audit', action='store_true', help='explicit control: disable pre-exit review (default)')
@@ -82,10 +84,13 @@ def main():
     directory.mkdir(parents=True, mode=0o700)
     trace = Trace(directory/'trace.jsonl', secrets=[key])
     manifest = {'agent': args.agent, 'case_id': args.case, 'label': args.label,
+                'agent_version':__version__,
                 'max_turns': args.max_turns, 'fingerprint': fingerprint(), 'model': Config().model,
                 'closure_audit': args.agent == 'harness' and args.closure_audit,
                 'meddb': args.agent == 'harness' and not args.no_meddb,
                 'structured_closing': args.agent == 'harness' and not args.no_structured_closing,
+                'coverage':args.agent == 'harness' and not args.no_coverage,
+                'closing_turns':Config().closing_turns,
                 'python': sys.version, 'started_kst': stamp,
                 'evaluation_mode': 'development_sample_no_official_score'}
     if args.agent in {'meddb_e2','meddb_e2_plus'}:
@@ -127,7 +132,7 @@ def main():
                     restore(original)
         else:
             outcome = consult(client, prepare(), Config(max_turns=args.max_turns, closure_audit=args.closure_audit,
-                                meddb=not args.no_meddb, structured_closing=not args.no_structured_closing), trace)
+                                meddb=not args.no_meddb, coverage=not args.no_coverage, structured_closing=not args.no_structured_closing), trace)
         trace.emit('experiment_complete', result=outcome)
     except Exception as exc:
         code = 1

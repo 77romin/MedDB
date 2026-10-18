@@ -84,8 +84,12 @@ def close_consultation(gateway, state, proposed, remaining, trace, advisor=None)
                 'clinical_advisor': advisor.context(state) if advisor else None}
 
     def chat(prompt, payload):
-        return content_of(gateway.chat([{'role': 'system', 'content': prompt},
+        result = content_of(gateway.chat([{'role': 'system', 'content': prompt},
                                        {'role': 'user', 'content': json.dumps(payload, ensure_ascii=False)}], final=True))
+        if prompt.startswith(FINAL):
+            from .records import normalize_assessment
+            result = normalize_assessment(result)
+        return result
 
     def say(text, tag):
         nonlocal remaining, actions_stopped

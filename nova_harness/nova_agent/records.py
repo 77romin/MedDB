@@ -4,8 +4,21 @@ from nova_sdk import empty_record
 from .validation import validate_record
 
 
+def normalize_assessment(proposed):
+    """A model-declared exposure risk is never rendered as a confirmed clinical syndrome."""
+    value = dict(proposed)
+    if value.get('diagnostic_basis') in {'exposure_risk_only','insufficient'}:
+        value['certainty'] = 'suspected'
+    diagnosis = value.get('diagnosis')
+    if value.get('certainty') in {'suspected','provisional'} and isinstance(diagnosis,str) and diagnosis.strip():
+        if not any(word in diagnosis for word in ('의심','미정','미확정','가능성','평가 필요','확인 필요')):
+            value['diagnosis'] = diagnosis.strip()+' (의심; 추가 확인 필요)'
+    return value
+
+
 def make_record(state, proposed):
     """Render S/O from verbatim evidence; model supplies only assessments and future plans."""
+    proposed = normalize_assessment(proposed)
     note = empty_record()
     initial = state.initial
     opening = initial.get('opening', '')
@@ -19,13 +32,18 @@ def make_record(state, proposed):
         field = state.concepts[f['concept_id']]['field']
         if field == 'exam':
             continue  # O already renders the complete actual EXAM result below.
-        item = f"[{f['id']}, 턴 {source.turn}, {f['subject']}, {f['temporality']}, {f['assertion']}] 질문: {source.question} / 환자 원문 전체: {source.response}"
+        item = f"[{f['id']}, {source.id}, 턴 {source.turn}, {f['subject']}, {f['temporality']}, {f['assertion']}] 질문: {source.question} / 환자 원문 전체: {source.response}"
         note['S'][field] += ('\n' if note['S'][field] else '')+item
         routed.add(source.id)
-    unassigned = [f'(턴 {e.turn}) 질문: {e.question} / 환자: {e.response}' for e in state.evidence if e.action == 'SAY' and e.id not in routed]
+    explanations = {e.id for e in state.delivered_explanations()}
+    unassigned = [f'[{e.id}, 턴 {e.turn}] 질문: {e.question} / 환자: {e.response}' for e in state.evidence
+                  if e.action == 'SAY' and e.id not in routed and e.id not in explanations]
+    additional = [f'[{e.id}, 턴 {e.turn}] 설명 중 환자 추가 응답: {e.response}' for e in state.evidence
+                  if e.id in explanations and e.id not in routed and e.response.strip(' .!。') not in {'네','예','알겠습니다','네, 알겠습니다','감사합니다'}]
+    unassigned += additional
     if unassigned:
         note['S']['hpi'] += ('\n' if note['S']['hpi'] else '')+'미분류 원문 대화:\n'+'\n'.join(unassigned)
-    exams = [f'(턴 {e.turn}) {e.question}: {e.response}' for e in state.evidence if e.action == 'EXAM']
+    exams = [f'[{e.id}, 턴 {e.turn}] {e.question}: {e.response}' for e in state.evidence if e.action == 'EXAM']
     if exams:
         note['O']['exam'] += ('\n' if note['O']['exam'] else '')+'\n'.join(exams)
     diagnosis = proposed.get('diagnosis')
@@ -51,6 +69,13 @@ def make_record(state, proposed):
                 valid = [eid for eid in ids if isinstance(eid, str) and eid in sources] if isinstance(ids, list) else []
                 lines.append('r/o '+d['diagnosis']+' (근거: '+(', '.join(valid) or '추가 확인 필요')+')')
         note['A']['differential'] = '\n'.join(lines)
+    risks = proposed.get('risk_assessment', [])
+    if isinstance(risks,list):
+        for risk in risks[:3]:
+            if not isinstance(risk,dict) or not isinstance(risk.get('condition'),str): continue
+            ids = risk.get('evidence_ids',[])
+            valid = [eid for eid in ids if isinstance(eid,str) and (eid == 'initial' or eid in sources)] if isinstance(ids,list) else []
+            note['A']['differential'] += ('\n' if note['A']['differential'] else '')+'위험 평가(확정 진단 아님): '+risk['condition']+' / 근거 '+(', '.join(valid) or '추가 확인 필요')
     plan = proposed.get('plan', {})
     if isinstance(plan, dict):
         for k in note['P']:

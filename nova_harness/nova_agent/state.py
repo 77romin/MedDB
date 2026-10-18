@@ -1,4 +1,5 @@
 import json
+import re
 from dataclasses import dataclass, field
 
 
@@ -64,6 +65,16 @@ class PatientState:
             kind = self.concepts[concept].get('kind')
             if (source.action == 'EXAM') != (kind == 'sign'):
                 rejected.append('physical signs require EXAM evidence; history/symptoms require patient answers'); continue
+            if assertion in {'present','absent'} and re.fullmatch(r'\s*(?:모르겠어요|모릅니다|기억이?\s*안\s*나요)[.!。]?\s*', source.response):
+                rejected.append('explicit unknown answer cannot establish presence or absence'); continue
+            if assertion == 'absent' and source.action == 'SAY':
+                if not re.search(r'아니|아닙|없|않|못|부인|(?:^|\s)안\s|안(?:먹|마시|피우|해|드|하)', source.response):
+                    rejected.append('absence needs explicit negative response; positive answer cannot deny another symptom'); continue
+                if re.search(r'(?:평소|이전|전보다|더).*(?:심하|나쁘|악화).*(?:않|아니)', source.response):
+                    rejected.append('comparative non-worsening does not establish absolute absence'); continue
+            expected_exam = self.concepts[concept].get('exam_target')
+            if assertion == 'absent' and source.action == 'EXAM' and expected_exam and source.target != expected_exam:
+                rejected.append('normality in another or unidentified exam cannot deny this sign'); continue
             if source.response.strip() in {'한 번에 하나씩 물어봐 주세요.', '한 번에 하나씩 물어봐 주세요'}:
                 rejected.append('patient refused a compound question; no clinical fact'); continue
             subject = p.get('subject', 'patient')
