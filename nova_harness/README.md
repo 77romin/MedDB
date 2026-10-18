@@ -8,6 +8,8 @@
 
 공개 샘플 확장과 종료 검토의 채택 결정은 [개발 2차 보고서](reports/development_002.md), 증례별 수치는 [벤치마크](reports/benchmark_002.md)에 있다. 현재 하네스의 전반적 우수성은 확인되지 않았다.
 
+최신 [5차 보고서](reports/development_005.md)와 [10회 비교](reports/benchmark_005.md)는 새 기준 67/77, v0.5.2 66/76, low 문진 62/74의 비공식 추정을 기록한다. 전체 점수 향상은 확인되지 않았다. 현재 v0.6.1은 근거 범위 검사·수집 상태·동반 증상 연결과 502/503/504 전송 복구를 포함한다. 최종 버전 테스트 94개 통과와 전체 API 미재측정을 구분한다.
+
 ## 현재 구현 범위
 
 MedDB 적용 내용과 후보 비교는 [3차 보고서](reports/meddb_review_003.md), [MedDB 벤치마크](reports/meddb_benchmark_003.md)에 있다. 공식 67.132점과 개발용 자가평가를 구분한다.
@@ -18,6 +20,7 @@ PR 생성 후 다중 문장 설명·환자 질문 응답·교육 기록 분리�
 - `nova_agent/protocol.py`: SDK 래퍼, 같은 작업 ID 재시도와 무효 응답 새 ID 재시도, 시간·호출·토큰 예산.
 - `nova_agent/state.py`: 환자별 원문 증거와 턴, 모델 추출 사실의 출처·부정·주체·시간 상태.
 - `nova_agent/ontology.json`: 초진 정보 구조 시드. MedDB 임상 관계는 `clinical_graph.json`에 별도 보관하며 검수 전 초안이다.
+- `nova_agent/coverage.py`: 그래프 기반 미질문·미해결·상충·진찰 획득 구분, 제한된 동반 증상 연결. `--no-coverage`로 제거 비교한다. 의미 매핑의 임상 검증은 남아 있다.
 - `nova_agent/clinical.py`: MedDB의 주호소·감별 관계에서 다음 행동을 제안한다. `--no-meddb`로 제거 실험할 수 있다.
 - `nova_agent/closing.py`: 개인별 설명을 여러 완결 문장으로 나누고, 중간 환자 질문에 최대 2회 답변 생성, 이해 확인 후 한 번 오해 교정을 수행한다. 각 SAY는 30자 제한을 지킨다.
 - `nova_agent/meddb_overlay.py`: 원본 E2 문진·진단을 유지하는 별도 확장. 원본 파일을 수정하지 않고 복용 내역 확인과 설명만 보완한다.
@@ -55,6 +58,7 @@ python3 tools/experiment.py run --case 공개_UUID --agent harness --max-turns 3
 python3 tools/experiment.py run --case 공개_UUID --agent harness --max-turns 45 --no-meddb --no-structured-closing
 python3 tools/experiment.py run --case 공개_UUID --agent meddb_e2
 python3 tools/experiment.py run --case 공개_UUID --agent meddb_e2_plus
+python3 tools/experiment.py run --case 공개_UUID --agent harness --max-turns 45 --planner-effort low
 python3 tools/experiment.py analyze results/실험폴더/trace.jsonl
 python3 tools/compare.py results/기준실행 results/하네스실행
 python3 tools/package_submission.py
@@ -64,7 +68,7 @@ python3 tools/package_submission.py
 
 완료된 공개 샘플 실행은 세션 밖 개발용 `openai/gpt-6.1-sol`로 별도 검토할 수 있다. 이 명령도 개발 크레딧을 사용하며 `local_review.json`의 점수는 공식 점수와 다르다. 공개 비교 대본·모범 기록은 이 평가 도구만 읽고 진료 에이전트에는 전달하지 않는다.
 
-MedDB 비교 실행에는 `vendor/meddb`에 고정 커밋의 저장소가 필요하다. `meddb_e2`와 `meddb_e2_plus`는 원본의 최대 36턴 수집+마무리·서버 최대 50턴 정책을 유지하며 `--max-turns`로 덮어쓰지 않는다. 이 정책은 manifest에 명시된다. v0.4.x harness는 지정 상한에서 마무리 12턴을 예약한다(이전 8턴). v0.4.1부터 실제 마무리도 12턴으로 제한한다. 충분한 문진·진찰을 위한 턴과 설명 턴의 균형은 계속 측정한다.
+MedDB 비교 실행에는 `vendor/meddb`에 고정 커밋의 저장소가 필요하다. `meddb_e2`와 `meddb_e2_plus`는 원본의 최대 36턴 수집+마무리·서버 최대 50턴 정책을 유지하며 `--max-turns`로 덮어쓰지 않는다. 이 정책은 manifest에 명시된다. 현재 harness의 문진 추론은 기본 medium이며 `--planner-effort low`로 계산량 비교를 할 수 있다. 최종 판단·종료 설명은 medium을 유지한다. low의 전체 점수 향상은 확인되지 않았다. harness는 지정 상한에서 마무리 12턴을 예약한다(이전 8턴). v0.4.1부터 실제 마무리도 12턴으로 제한한다. 충분한 문진·진찰을 위한 턴과 설명 턴의 균형은 계속 측정한다.
 
 새 환경에서 MedDB 비교본과 ZIP을 복원할 때는 다음 순서로 고정 커밋을 준비한다. 이미 있는 checkout에는 `git clone`을 다시 실행하지 않는다.
 
