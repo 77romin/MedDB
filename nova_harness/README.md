@@ -12,7 +12,7 @@
 
 점수 정체의 코드·로그 근거와 다음 승인 범위는 [6차 심층 분석·계획](reports/analysis_plan_006.md)에 있다. 사용자 승인 후 [7차 개발·비교](reports/development_007.md)를 완료했다. v0.7.3의 [18회 반복 집계](reports/repeated_007.md)와 [26회 전체 결과](reports/benchmark_007.md)를 함께 확인한다. 작은 비공식 평균 차이를 공식 성능 향상으로 해석하지 않는다.
 
-버전별 실제 문진·진찰·설명·기록의 실패 경로와 다음 개발 우선순위는 [8차 로그 비교·개선안](reports/log_comparison_008.md)에 있다. 분석 보고이며 런타임과 제출 ZIP은 변경하지 않았다.
+버전별 실제 문진·진찰·설명·기록의 실패 경로와 다음 개발 우선순위는 [8차 로그 비교·개선안](reports/log_comparison_008.md)에 있다. 해당 회차는 분석만 수행했다. 후속 승인에 따른 단계별 구현·실험 진행은 [9차 개발 보고](reports/development_009.md)에 기록한다.
 
 ## 현재 구현 범위
 
@@ -26,7 +26,7 @@ PR 생성 후 다중 문장 설명·환자 질문 응답·교육 기록 분리�
 - `nova_agent/ontology.json`: 초진 정보 구조 시드. MedDB 임상 관계는 `clinical_graph.json`에 별도 보관하며 검수 전 초안이다.
 - `nova_agent/coverage.py`: 그래프 기반 미질문·미해결·상충·진찰 획득 구분, 제한된 동반 증상 연결. `--no-coverage`로 제거 비교한다. 의미 매핑의 임상 검증은 남아 있다.
 - `nova_agent/clinical.py`: MedDB의 주호소·감별 관계에서 다음 행동을 제안한다. `--no-meddb`로 제거 실험할 수 있다.
-- `nova_agent/closing.py`: 개인별 설명을 여러 완결 문장으로 나누고, 중간 환자 질문에 최대 2회 답변 생성, 이해 확인 후 한 번 오해 교정을 수행한다. 각 SAY는 30자 제한을 지킨다.
+- `nova_agent/closing.py`: 개인별 설명을 여러 완결 문장으로 나누고, 중간 환자 질문·구체적 두려움에 최대 3회 답변 생성, 이해 확인 후 한 번 오해 교정을 수행한다. 각 SAY는 30자 제한을 지킨다.
 - `nova_agent/meddb_overlay.py`: 원본 E2 문진·진단을 유지하는 별도 확장. 원본 파일을 수정하지 않고 복용 내역 확인과 설명만 보완한다.
 - `nova_agent/runtime.py`, `prompts.py`: 사실 갱신·다음 행동 선택·설명·최종 판단 흐름.
 - `nova_agent/closure.py`: 종료 직전 한 번만 중요한 누락 검토. 긴급 종료·시간/턴 부족·검토 실패 시 추가 질문을 강제하지 않는다. 현재 기본 비활성화이며 `--closure-audit`로 선택적 실험 가능.

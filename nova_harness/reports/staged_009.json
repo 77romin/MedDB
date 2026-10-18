@@ -1,0 +1,473 @@
+[
+  {
+    "label": "v0.7.3-control-009-C01-r1",
+    "case": "C01",
+    "status": "completed",
+    "score": 61,
+    "official_score": null,
+    "directory": "results/stage_control_v073_009/results/20261018_183146_809319_harness",
+    "version": "0.7.3",
+    "source_sha256": "104165614bf339819e84e0068b3187749742f1bff84e4476f27a808836689577",
+    "areas": {
+      "information_gathering": 17,
+      "diagnostic_reasoning": 12,
+      "tests_followup": 4,
+      "safety": 10,
+      "communication": 9,
+      "efficiency": 9
+    },
+    "review_prompt_sha256": "bd7516d97974fcb9c1bbf4105235779643a206266fcf949f4cb3a6257481135f",
+    "review_reference_sha256": {
+      "case.json": "0f38a63265017667fe91828ede0271a9c0f5575bc164d81a1f05540445586b71",
+      "model_record.json": "e8e1879cf11e11e6e55da44d65000e1c40ac0d611ebbc0fc1d9c3022efcbf91f"
+    },
+    "input_tokens": 159482,
+    "output_tokens": 33039,
+    "doctor_attempts": 30,
+    "errors": {
+      "PROVIDER_RESPONSE_INVALID": 3
+    },
+    "truncations": 1,
+    "collection_stop": "doctor_done",
+    "goal_updates": 0,
+    "goal_rejections": 0,
+    "questions_detected": 0,
+    "questions_without_sent_answer": 0,
+    "closing_turns": 11,
+    "history_empty_fields": [
+      "fh",
+      "sh"
+    ],
+    "note_bytes": 8545,
+    "collection_actions": {
+      "SAY": 16,
+      "EXAM": 4
+    }
+  },
+  {
+    "label": "v0.7.3-control-009-C03-r1",
+    "case": "C03",
+    "status": "completed",
+    "score": 69,
+    "official_score": null,
+    "directory": "results/stage_control_v073_009/results/20261018_183145_786873_harness",
+    "version": "0.7.3",
+    "source_sha256": "104165614bf339819e84e0068b3187749742f1bff84e4476f27a808836689577",
+    "areas": {
+      "information_gathering": 18,
+      "diagnostic_reasoning": 10,
+      "tests_followup": 6,
+      "safety": 12,
+      "communication": 8,
+      "efficiency": 15
+    },
+    "review_prompt_sha256": "bd7516d97974fcb9c1bbf4105235779643a206266fcf949f4cb3a6257481135f",
+    "review_reference_sha256": {
+      "case.json": "907dc541535dd939ec63fb19547f0d200e1f24264479729610c5d4bdf5343e07",
+      "model_record.json": "4d06e95ca1b81a4b9632e01b82b5ee6f72d2b875c02a01cb3342eabe81d53e55"
+    },
+    "input_tokens": 161468,
+    "output_tokens": 35034,
+    "doctor_attempts": 31,
+    "errors": {
+      "PROVIDER_RESPONSE_INVALID": 3,
+      "EXAM_NOT_SPECIFIC": 1
+    },
+    "truncations": 1,
+    "collection_stop": "doctor_done",
+    "goal_updates": 0,
+    "goal_rejections": 0,
+    "questions_detected": 0,
+    "questions_without_sent_answer": 0,
+    "closing_turns": 11,
+    "history_empty_fields": [
+      "sh"
+    ],
+    "note_bytes": 8083,
+    "collection_actions": {
+      "SAY": 16,
+      "EXAM": 4
+    }
+  },
+  {
+    "label": "v0.7.3-control-009-C10-r1",
+    "case": "C10",
+    "status": "completed",
+    "score": 78,
+    "official_score": null,
+    "directory": "results/stage_control_v073_009/results/20261018_183146_326351_harness",
+    "version": "0.7.3",
+    "source_sha256": "104165614bf339819e84e0068b3187749742f1bff84e4476f27a808836689577",
+    "areas": {
+      "information_gathering": 18,
+      "diagnostic_reasoning": 14,
+      "tests_followup": 8,
+      "safety": 12,
+      "communication": 11,
+      "efficiency": 15
+    },
+    "review_prompt_sha256": "bd7516d97974fcb9c1bbf4105235779643a206266fcf949f4cb3a6257481135f",
+    "review_reference_sha256": {
+      "case.json": "570a87bdf976a4c99052120aacee6a7af9777ca23226f41e97d211f404067311",
+      "model_record.json": "3111067fae15cf6a8d6be6b7a9d5d81bc19fcb6e9d4b4673be6d85285afaf9a0"
+    },
+    "input_tokens": 223340,
+    "output_tokens": 31546,
+    "doctor_attempts": 33,
+    "errors": {},
+    "truncations": 0,
+    "collection_stop": "doctor_done",
+    "goal_updates": 0,
+    "goal_rejections": 0,
+    "questions_detected": 0,
+    "questions_without_sent_answer": 0,
+    "closing_turns": 11,
+    "history_empty_fields": [
+      "pmh",
+      "fh",
+      "sh"
+    ],
+    "note_bytes": 9846,
+    "collection_actions": {
+      "SAY": 19,
+      "EXAM": 8
+    }
+  },
+  {
+    "label": "v0.8.0-goals-009-C01-r1",
+    "case": "C01",
+    "status": "completed",
+    "score": 70,
+    "official_score": null,
+    "directory": "results/stage_goals_v080_009/results/20261018_183341_896265_harness",
+    "version": "0.8.0",
+    "source_sha256": "4bec344b36beac1ff05f52c0969604d6280a7df04b223814247a43e3252349dc",
+    "areas": {
+      "information_gathering": 18,
+      "diagnostic_reasoning": 13,
+      "tests_followup": 5,
+      "safety": 11,
+      "communication": 10,
+      "efficiency": 13
+    },
+    "review_prompt_sha256": "bd7516d97974fcb9c1bbf4105235779643a206266fcf949f4cb3a6257481135f",
+    "review_reference_sha256": {
+      "case.json": "0f38a63265017667fe91828ede0271a9c0f5575bc164d81a1f05540445586b71",
+      "model_record.json": "e8e1879cf11e11e6e55da44d65000e1c40ac0d611ebbc0fc1d9c3022efcbf91f"
+    },
+    "input_tokens": 266726,
+    "output_tokens": 41176,
+    "doctor_attempts": 40,
+    "errors": {
+      "PROVIDER_RESPONSE_INVALID": 1
+    },
+    "truncations": 0,
+    "collection_stop": "turn_budget",
+    "goal_updates": 0,
+    "goal_rejections": 0,
+    "questions_detected": 0,
+    "questions_without_sent_answer": 0,
+    "closing_turns": 11,
+    "history_empty_fields": [
+      "fh",
+      "sh"
+    ],
+    "note_bytes": 12044,
+    "collection_actions": {
+      "SAY": 29,
+      "EXAM": 4
+    }
+  },
+  {
+    "label": "v0.8.0-goals-009-C03-r1",
+    "case": "C03",
+    "status": "completed",
+    "score": 68,
+    "official_score": null,
+    "directory": "results/stage_goals_v080_009/results/20261018_183342_926450_harness",
+    "version": "0.8.0",
+    "source_sha256": "4bec344b36beac1ff05f52c0969604d6280a7df04b223814247a43e3252349dc",
+    "areas": {
+      "information_gathering": 15,
+      "diagnostic_reasoning": 11,
+      "tests_followup": 7,
+      "safety": 11,
+      "communication": 10,
+      "efficiency": 14
+    },
+    "review_prompt_sha256": "bd7516d97974fcb9c1bbf4105235779643a206266fcf949f4cb3a6257481135f",
+    "review_reference_sha256": {
+      "case.json": "907dc541535dd939ec63fb19547f0d200e1f24264479729610c5d4bdf5343e07",
+      "model_record.json": "4d06e95ca1b81a4b9632e01b82b5ee6f72d2b875c02a01cb3342eabe81d53e55"
+    },
+    "input_tokens": 134994,
+    "output_tokens": 27559,
+    "doctor_attempts": 24,
+    "errors": {},
+    "truncations": 2,
+    "collection_stop": "doctor_done",
+    "goal_updates": 0,
+    "goal_rejections": 0,
+    "questions_detected": 0,
+    "questions_without_sent_answer": 0,
+    "closing_turns": 11,
+    "history_empty_fields": [
+      "sh"
+    ],
+    "note_bytes": 7330,
+    "collection_actions": {
+      "SAY": 11,
+      "EXAM": 4
+    }
+  },
+  {
+    "label": "v0.8.0-goals-009-C10-r1",
+    "case": "C10",
+    "status": "completed",
+    "score": 74,
+    "official_score": null,
+    "directory": "results/stage_goals_v080_009/results/20261018_183342_425093_harness",
+    "version": "0.8.0",
+    "source_sha256": "4bec344b36beac1ff05f52c0969604d6280a7df04b223814247a43e3252349dc",
+    "areas": {
+      "information_gathering": 17,
+      "diagnostic_reasoning": 13,
+      "tests_followup": 8,
+      "safety": 12,
+      "communication": 10,
+      "efficiency": 14
+    },
+    "review_prompt_sha256": "bd7516d97974fcb9c1bbf4105235779643a206266fcf949f4cb3a6257481135f",
+    "review_reference_sha256": {
+      "case.json": "570a87bdf976a4c99052120aacee6a7af9777ca23226f41e97d211f404067311",
+      "model_record.json": "3111067fae15cf6a8d6be6b7a9d5d81bc19fcb6e9d4b4673be6d85285afaf9a0"
+    },
+    "input_tokens": 237854,
+    "output_tokens": 33587,
+    "doctor_attempts": 34,
+    "errors": {},
+    "truncations": 0,
+    "collection_stop": "doctor_done",
+    "goal_updates": 0,
+    "goal_rejections": 0,
+    "questions_detected": 0,
+    "questions_without_sent_answer": 0,
+    "closing_turns": 11,
+    "history_empty_fields": [
+      "fh",
+      "sh"
+    ],
+    "note_bytes": 9383,
+    "collection_actions": {
+      "SAY": 19,
+      "EXAM": 8
+    }
+  },
+  {
+    "label": "v0.8.0.1-goals-009-C01-r1",
+    "case": "C01",
+    "status": "running",
+    "score": null,
+    "official_score": null,
+    "directory": "results/stage_goals_v0801_009/results/20261018_184518_639876_harness",
+    "version": "0.8.0.1",
+    "source_sha256": "e839fc2e3a6a8a4976f5cc14b686018a7a36dd0e5d75b4753edcebfd81f1e12c",
+    "areas": {},
+    "review_prompt_sha256": null,
+    "review_reference_sha256": null,
+    "input_tokens": 93673,
+    "output_tokens": 22174,
+    "doctor_attempts": 19,
+    "errors": {
+      "PROVIDER_RESPONSE_INVALID": 4
+    },
+    "truncations": 2,
+    "collection_stop": null,
+    "goal_updates": 7,
+    "goal_rejections": 2,
+    "questions_detected": 0,
+    "questions_without_sent_answer": 0,
+    "closing_turns": 0,
+    "history_empty_fields": [],
+    "note_bytes": null,
+    "collection_actions": {
+      "SAY": 9,
+      "EXAM": 3
+    }
+  },
+  {
+    "label": "v0.8.0.1-goals-009-C03-r1",
+    "case": "C03",
+    "status": "running",
+    "score": null,
+    "official_score": null,
+    "directory": "results/stage_goals_v0801_009/results/20261018_184519_668602_harness",
+    "version": "0.8.0.1",
+    "source_sha256": "e839fc2e3a6a8a4976f5cc14b686018a7a36dd0e5d75b4753edcebfd81f1e12c",
+    "areas": {},
+    "review_prompt_sha256": null,
+    "review_reference_sha256": null,
+    "input_tokens": 149812,
+    "output_tokens": 26015,
+    "doctor_attempts": 25,
+    "errors": {
+      "PROVIDER_RESPONSE_INVALID": 2
+    },
+    "truncations": 0,
+    "collection_stop": "reviewed_done",
+    "goal_updates": 18,
+    "goal_rejections": 0,
+    "questions_detected": 0,
+    "questions_without_sent_answer": 0,
+    "closing_turns": 0,
+    "history_empty_fields": [],
+    "note_bytes": null,
+    "collection_actions": {
+      "EXAM": 4,
+      "SAY": 15
+    }
+  },
+  {
+    "label": "v0.8.0.1-goals-009-C10-r1",
+    "case": "C10",
+    "status": "running",
+    "score": null,
+    "official_score": null,
+    "directory": "results/stage_goals_v0801_009/results/20261018_184519_168412_harness",
+    "version": "0.8.0.1",
+    "source_sha256": "e839fc2e3a6a8a4976f5cc14b686018a7a36dd0e5d75b4753edcebfd81f1e12c",
+    "areas": {},
+    "review_prompt_sha256": null,
+    "review_reference_sha256": null,
+    "input_tokens": 195598,
+    "output_tokens": 27052,
+    "doctor_attempts": 28,
+    "errors": {},
+    "truncations": 0,
+    "collection_stop": null,
+    "goal_updates": 5,
+    "goal_rejections": 0,
+    "questions_detected": 0,
+    "questions_without_sent_answer": 0,
+    "closing_turns": 0,
+    "history_empty_fields": [],
+    "note_bytes": null,
+    "collection_actions": {
+      "SAY": 19,
+      "EXAM": 8
+    }
+  },
+  {
+    "label": "v0.8.1-closing-009-C01-r1",
+    "case": "C01",
+    "status": "running",
+    "score": null,
+    "official_score": null,
+    "directory": "results/stage_closing_v081_009/results/20261018_184551_708445_harness",
+    "version": "0.8.1",
+    "source_sha256": "a34571553cf4093ff1aa95824dd7015493e4a2f3366783a5b7991a63d65d2bf5",
+    "areas": {},
+    "review_prompt_sha256": null,
+    "review_reference_sha256": null,
+    "input_tokens": 123051,
+    "output_tokens": 28289,
+    "doctor_attempts": 20,
+    "errors": {
+      "EXAM_NOT_SPECIFIC": 1
+    },
+    "truncations": 2,
+    "collection_stop": null,
+    "goal_updates": 9,
+    "goal_rejections": 4,
+    "questions_detected": 0,
+    "questions_without_sent_answer": 0,
+    "closing_turns": 0,
+    "history_empty_fields": [],
+    "note_bytes": null,
+    "collection_actions": {
+      "SAY": 11,
+      "EXAM": 5
+    }
+  },
+  {
+    "label": "v0.8.1-closing-009-C03-r1",
+    "case": "C03",
+    "status": "running",
+    "score": null,
+    "official_score": null,
+    "directory": "results/stage_closing_v081_009/results/20261018_184552_240213_harness",
+    "version": "0.8.1",
+    "source_sha256": "a34571553cf4093ff1aa95824dd7015493e4a2f3366783a5b7991a63d65d2bf5",
+    "areas": {},
+    "review_prompt_sha256": null,
+    "review_reference_sha256": null,
+    "input_tokens": 154726,
+    "output_tokens": 30050,
+    "doctor_attempts": 24,
+    "errors": {},
+    "truncations": 0,
+    "collection_stop": "reviewed_done",
+    "goal_updates": 14,
+    "goal_rejections": 0,
+    "questions_detected": 0,
+    "questions_without_sent_answer": 0,
+    "closing_turns": 3,
+    "history_empty_fields": [],
+    "note_bytes": null,
+    "collection_actions": {
+      "SAY": 14,
+      "EXAM": 4
+    }
+  },
+  {
+    "label": "v0.8.1-closing-009-C10-r1",
+    "case": "C10",
+    "status": "running",
+    "score": null,
+    "official_score": null,
+    "directory": "results/stage_closing_v081_009/results/20261018_184552_751211_harness",
+    "version": "0.8.1",
+    "source_sha256": "a34571553cf4093ff1aa95824dd7015493e4a2f3366783a5b7991a63d65d2bf5",
+    "areas": {},
+    "review_prompt_sha256": null,
+    "review_reference_sha256": null,
+    "input_tokens": 183050,
+    "output_tokens": 27320,
+    "doctor_attempts": 25,
+    "errors": {},
+    "truncations": 0,
+    "collection_stop": null,
+    "goal_updates": 19,
+    "goal_rejections": 1,
+    "questions_detected": 0,
+    "questions_without_sent_answer": 0,
+    "closing_turns": 0,
+    "history_empty_fields": [],
+    "note_bytes": null,
+    "collection_actions": {
+      "SAY": 15,
+      "EXAM": 8
+    }
+  },
+  {
+    "label": "v0.8.2-records-009-C01-r1",
+    "case": "C01",
+    "status": "not_started",
+    "score": null,
+    "official_score": null
+  },
+  {
+    "label": "v0.8.2-records-009-C03-r1",
+    "case": "C03",
+    "status": "not_started",
+    "score": null,
+    "official_score": null
+  },
+  {
+    "label": "v0.8.2-records-009-C10-r1",
+    "case": "C10",
+    "status": "not_started",
+    "score": null,
+    "official_score": null
+  }
+]
