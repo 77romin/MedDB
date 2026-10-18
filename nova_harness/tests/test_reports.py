@@ -84,5 +84,28 @@ class ReportTests(unittest.TestCase):
             self.assertEqual(data['patient_questions_without_sent_answer'],1)
             self.assertNotIn('clinical_accuracy',data)
 
+    def test_legacy_missing_instrumentation_is_not_reported_as_zero_questions(self):
+        from tools.stage_report import collect_plans
+        from nova_agent.telemetry import Trace
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d);run=root/'frozen/results/run';run.mkdir(parents=True)
+            manifest={'label':'legacy','case_id':'fixture','agent_version':'0.7.3','fingerprint':{}}
+            (run/'manifest.json').write_text(json.dumps(manifest))
+            Trace(run/'trace.jsonl').emit('closing_question',response='다음은요?')
+            plan=root/'plan.json';plan.write_text(json.dumps([{'source':str(root/'frozen'),'label':'legacy','case_id':'fixture'}]))
+            old=collect_plans([plan])[0]
+            self.assertIsNone(old['questions_detected'])
+            self.assertIsNone(old['goal_updates'])
+            manifest.update(agent_version='0.8.3',decision_review=True)
+            (run/'manifest.json').write_text(json.dumps(manifest));(run/'trace.jsonl').write_text('')
+            new=collect_plans([plan])[0]
+            self.assertEqual(new['questions_detected'],0)
+            self.assertEqual(new['goal_updates'],0)
+            manifest.update(agent_version='future',telemetry_features=['patient_question_tracking'])
+            (run/'manifest.json').write_text(json.dumps(manifest))
+            future=collect_plans([plan])[0]
+            self.assertEqual(future['questions_detected'],0)
+            self.assertIsNone(future['goal_updates'])
+
 
 if __name__ == '__main__': unittest.main()

@@ -95,6 +95,10 @@ def main():
                 'structured_closing': args.agent == 'harness' and not args.no_structured_closing,
                 'coverage':args.agent == 'harness' and not args.no_coverage,
                 'decision_review':args.agent == 'harness' and not args.no_decision_review,
+                'telemetry_features': ([name for name, enabled in (
+                    ('decision_goals', not args.no_decision_review),
+                    ('patient_question_tracking', not args.no_structured_closing)) if enabled]
+                    if args.agent == 'harness' else []),
                 'compact_context':args.agent == 'harness' and not args.full_context,
                 'guidelines':args.agent == 'harness' and args.guidelines,
                 'closing_turns':Config().closing_turns,
