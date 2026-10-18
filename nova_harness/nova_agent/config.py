@@ -15,6 +15,7 @@ class Config:
     step_tokens: int = 2048
     record_tokens: int = 4096
     reasoning_effort: str = 'medium'
+    planner_reasoning_effort: str = 'low'
     closure_audit: bool = False  # experimental; C01 did not improve with it enabled
     meddb: bool = True
     coverage: bool = True

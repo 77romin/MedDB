@@ -103,4 +103,4 @@ class Gateway:
     def chat(self, messages, final=False):
         return self.invoke('chat', messages, final=final, model=self.config.model,
                            max_tokens=self.config.record_tokens if final else self.config.step_tokens,
-                           reasoning_effort=self.config.reasoning_effort)
+                           reasoning_effort=self.config.reasoning_effort if final else self.config.planner_reasoning_effort)
