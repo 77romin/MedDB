@@ -13,11 +13,11 @@ from test_harness import ScriptClient
 
 
 class ClosingTests(unittest.TestCase):
-    def test_teach_back_does_not_assume_patient_is_at_home(self):
+    def test_teach_back_is_skipped_when_no_explanation_was_delivered(self):
         plan={'diagnosis':'평가 중','plan':{}}
         state=self.state();client=ScriptClient([plan,{},plan],['걱정돼요','알겠습니다'])
         close_consultation(Gateway(client),state,plan,8,Trace())
-        self.assertTrue(any('어떻게 하실지' in e.question for e in state.evidence))
+        self.assertFalse(any('어떻게 하실지' in e.question for e in state.evidence))
         self.assertFalse(any('집에서' in e.question for e in state.evidence))
 
     def state(self):
@@ -156,9 +156,30 @@ class ClosingTests(unittest.TestCase):
         state=self.state()
         client=ScriptClient([plan,plan],['걱정돼요','알겠습니다'])
         revised,left=close_consultation(Gateway(client),state,plan,2,Trace())
-        self.assertEqual(left,0)
-        self.assertEqual(len(state.evidence),2)
+        self.assertEqual(left,1)
+        self.assertEqual(len(state.evidence),1)
+        self.assertNotIn('앞으로 어떻게 하실지 말씀해 주세요.',[e.question for e in state.evidence])
         self.assertFalse(state.delivered_explanations())
+
+    def test_bundle_transport_failure_gets_one_compact_fallback(self):
+        from nova_sdk import NovaError
+        plan={'diagnosis':'졸피뎀 사용장애 의심','plan':{
+            'treatment':'갑자기 끊지 않고 의료진과 감량 계획',
+            'follow_up':'수일 내 처방의와 재평가',
+            'education':'추가 복용과 운전을 피할 계획'}}
+        fallback={'assessment':['약 사용 문제를 함께 평가해야 합니다.'],
+                  'plan':['추가 복용과 운전은 피하세요.','갑자기 끊지 말고 감량을 상의하세요.'],
+                  'follow_up':['수일 내 처방의와 다시 확인하세요.'],
+                  'safety_net':['호흡이 힘들면 즉시 도움받으세요.'],
+                  'concern':['안전하게 줄이는 방법을 찾겠습니다.']}
+        state=self.state()
+        client=ScriptClient([plan,NovaError('PROVIDER_UNAVAILABLE'),fallback,plan],
+                            ['약이 늘어 걱정돼요.']+['네']*10)
+        close_consultation(Gateway(client),state,plan,10,Trace())
+        actual=[e.question for e in state.delivered_explanations()]
+        self.assertIn(fallback['plan'][0],actual)
+        self.assertIn(fallback['safety_net'][0],actual)
+        self.assertIn('앞으로 어떻게 하실지 말씀해 주세요.',[e.question for e in state.evidence])
 
     def test_early_done_cannot_spend_all_unused_collection_turns_on_closing(self):
         from nova_agent.runtime import consult
@@ -211,12 +232,14 @@ class ClosingTests(unittest.TestCase):
 
     def test_final_answer_is_linked_only_after_successful_say(self):
         plan={'diagnosis':'평가 중','plan':{}}
-        revised={**plan,'clarification':['다음 진료에서 확인하겠습니다.'],'clarification_for':'e2'}
-        client=ScriptClient([plan,revised],['걱정돼요','다음에는 어떻게 하나요?','알겠습니다'])
+        messages={'plan':['다음 진료에서 확인하겠습니다.']}
+        revised={**plan,'clarification':['검사 결과를 함께 확인합니다.'],'clarification_for':'e3'}
+        client=ScriptClient([plan,messages,revised],
+                            ['걱정돼요','네','다음에는 어떻게 하나요?','알겠습니다'])
         state=self.state()
-        close_consultation(Gateway(client),state,plan,3,Trace())
-        self.assertEqual(state.patient_questions[0]['evidence_id'],'e2')
-        self.assertEqual(state.patient_questions[0]['answer_evidence_ids'],['e3'])
+        close_consultation(Gateway(client),state,plan,4,Trace())
+        self.assertEqual(state.patient_questions[0]['evidence_id'],'e3')
+        self.assertEqual(state.patient_questions[0]['answer_evidence_ids'],['e4'])
         self.assertEqual(state.patient_questions[0]['status'],'answer_sent_unverified')
 
     def test_plain_text_answer_is_regenerated_for_the_same_question_before_queue(self):

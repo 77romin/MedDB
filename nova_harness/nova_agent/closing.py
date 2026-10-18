@@ -32,6 +32,11 @@ latest_patient_question의 정확한 질문에 먼저 답하고, 다른 걱정�
 답할 근거가 부족하면 답할 수 있는 범위와 확인할 점을 구분합니다. 단순 공감은 질문에 대한 답을 대신하지 않습니다.
 존댓말의 완결 문장으로 JSON {"answer":["직접 답변","필요한 보완"]} 하나만 출력합니다. 최대 2문장, 문장마다 공백 포함 NFC 30자 이내. 질문문과 이미 전한 의뢰 안내만 반복하는 답은 피합니다.'''
 
+FALLBACK_BUNDLE_PROMPT = '''진료 마무리 설명 생성이 전송 장애로 실패했습니다. 제공된 최종 판단·계획과 환자 걱정만 사용해 실제 말할 핵심 문장을 다시 작성합니다.
+새 진단·약물·용량·검사·예약을 만들지 않습니다. 실행하지 않은 일을 했다고 말하지 않습니다.
+JSON 하나만 출력합니다: {"assessment":["잠정 판단과 한계"],"plan":["지금 할 안전 행동","이후 치료 방향"],"follow_up":["담당자와 시점"],"safety_net":["경고 증상과 대처"],"concern":["걱정에 대한 직접 답"]}
+근거가 없는 배열은 비웁니다. 각 문장은 질문이 아닌 완결된 존댓말이며 공백 포함 30자 이내입니다. 전체 최대 7문장, 1200자 이내입니다.'''
+
 TAGS = ('assessment', 'plan', 'follow_up', 'safety_net', 'concern')
 PRIORITY = ('safety_net', 'assessment', 'plan', 'concern', 'follow_up')
 
@@ -136,9 +141,10 @@ def close_consultation(gateway, state, proposed, remaining, trace, advisor=None)
         return {'patient': state.prompt_snapshot(), 'assessment': proposed,
                 'clinical_advisor': advisor.context(state) if advisor else None}
 
-    def chat(prompt, payload):
+    def chat(prompt, payload, max_tokens=None):
         result = content_of(gateway.chat([{'role': 'system', 'content': prompt},
-                                       {'role': 'user', 'content': json.dumps(payload, ensure_ascii=False)}], final=True))
+                                       {'role': 'user', 'content': json.dumps(payload, ensure_ascii=False)}],
+                                      final=True, max_tokens=max_tokens))
         if prompt.startswith(FINAL):
             from .records import normalize_assessment
             result = normalize_assessment(result)
@@ -226,9 +232,23 @@ def close_consultation(gateway, state, proposed, remaining, trace, advisor=None)
     if remaining > 2 and gateway.remaining() > 120:
         try:
             messages = chat(BUNDLE_PROMPT, {**context(), 'patient_concern': concern,
-                                           'available_statements': max(0, remaining-2)})
-        except (ValueError, TypeError, NovaError):
-            trace.emit('closing_generation_unavailable')
+                                           'available_statements': max(0, remaining-2)}, max_tokens=2400)
+        except (ValueError, TypeError, NovaError) as exc:
+            trace.emit('closing_generation_unavailable', code=getattr(exc, 'code', None))
+            # A new, smaller request can recover after an accepted request remains
+            # pending or the provider exhausts its same-id retries. It is bounded to
+            # one attempt and contains no answer key or inferred patient facts.
+            if gateway.remaining() > 120:
+                trace.emit('closing_generation_fallback_requested')
+                try:
+                    messages = chat(FALLBACK_BUNDLE_PROMPT,
+                                    {'assessment': proposed, 'patient_concern': concern,
+                                     'available_statements': max(0, remaining-2)},
+                                    max_tokens=1600)
+                    trace.emit('closing_generation_fallback_succeeded')
+                except (ValueError, TypeError, NovaError) as fallback_exc:
+                    trace.emit('closing_generation_fallback_unavailable',
+                               code=getattr(fallback_exc, 'code', None))
     parsed = {tag: statement_parts(messages.get(tag)) for tag in TAGS}
     invalid = {tag: messages.get(tag) for tag, (_, bad) in parsed.items() if bad}
     if invalid and remaining > 2 and gateway.remaining() > 120:
@@ -268,11 +288,14 @@ def close_consultation(gateway, state, proposed, remaining, trace, advisor=None)
     for tag,text in sorted(required):
         trace.emit('closing_required_delivery', tag=tag, content=text, sent=text in sent)
     answer_questions()
-    if remaining > 0:
+    has_explanation = bool(delivered.intersection(set(TAGS) | {'answer'}))
+    if has_explanation and remaining > 0:
         say('앞으로 어떻게 하실지 말씀해 주세요.', 'teach_back')
+    elif remaining > 0:
+        trace.emit('closing_teach_back_skipped', reason='no_explanation_delivered')
 
     # One final review can correct a misunderstanding; the correction must actually be sent.
-    if sent and not actions_stopped and gateway.remaining() > 120:
+    if has_explanation and not actions_stopped and gateway.remaining() > 120:
         try:
             from .records import make_record
             revised = chat(FINAL+'\n마지막 환자 답변이나 patient_questions에 아직 답하지 못한 중요한 질문/우려가 있으면 '
