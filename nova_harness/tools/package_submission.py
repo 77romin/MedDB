@@ -7,14 +7,14 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def build():
+def build(destination=None):
     paths = [ROOT/'run.py', ROOT/'nova_sdk.py', ROOT/'requirements.txt',
              *sorted((ROOT/'nova_agent').glob('*.py')), *sorted((ROOT/'nova_agent').glob('*.json')),
              *sorted((ROOT/'third_party/meddb').glob('*'))]
     assert len(paths) <= 5000
     assert sum(p.stat().st_size for p in paths) <= 500_000_000
-    dest = ROOT/'dist/submission.zip'
-    dest.parent.mkdir(exist_ok=True)
+    dest = Path(destination) if destination is not None else ROOT/'dist/submission.zip'
+    dest.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(dest, 'w', compression=zipfile.ZIP_DEFLATED) as z:
         for p in paths:
             if p.is_symlink():

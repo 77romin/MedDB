@@ -17,9 +17,10 @@ class PackageTest(unittest.TestCase):
     def test_isolated_submission_prepares_without_dev_files_or_credentials(self):
         spec = importlib.util.spec_from_file_location('package_submission', ROOT/'tools/package_submission.py')
         module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
-        with contextlib.redirect_stdout(io.StringIO()):
-            archive = module.build()
-        with zipfile.ZipFile(archive) as z, tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory() as packaging, contextlib.redirect_stdout(io.StringIO()):
+            archive = module.build(Path(packaging)/"verification.zip")
+            archive_bytes = archive.read_bytes()
+        with zipfile.ZipFile(io.BytesIO(archive_bytes)) as z, tempfile.TemporaryDirectory() as directory:
             names = z.namelist()
             self.assertTrue({'run.py', 'nova_sdk.py', 'requirements.txt'}.issubset(names))
             self.assertFalse(any(x.startswith(('vendor/', 'results/', 'tests/', 'tools/', '.env')) for x in names))
