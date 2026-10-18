@@ -6,10 +6,13 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+import threading
+import time
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from tools.experiment import load_local_env
+START_LOCK=threading.Lock()
 
 
 def run_job(job,environment):
@@ -30,11 +33,16 @@ def run_job(job,environment):
     print('Starting '+job['label'],flush=True)
     log=ROOT/'results'/('suite_'+job['label']+'.log')
     with log.open('w') as stream:
-        result=subprocess.run(args,cwd=source,env=environment,stdout=stream,stderr=subprocess.STDOUT)
+        # Old frozen experiment tools name folders by timestamp alone. Stagger
+        # process startup while retaining parallel consultation requests.
+        with START_LOCK:
+            process=subprocess.Popen(args,cwd=source,env=environment,stdout=stream,stderr=subprocess.STDOUT)
+            time.sleep(0.5)
+        code=process.wait()
     match=next((p.parent for p in (source/'results').glob('*/manifest.json')
                 if json.loads(p.read_text()).get('label')==job['label']),None)
-    print('Finished '+job['label']+' status '+str(result.returncode),flush=True)
-    return {'label':job['label'],'directory':str(match) if match else None,'returncode':result.returncode,'reused':False}
+    print('Finished '+job['label']+' status '+str(code),flush=True)
+    return {'label':job['label'],'directory':str(match) if match else None,'returncode':code,'reused':False}
 
 
 def main():
@@ -46,11 +54,12 @@ def main():
     if not environment.get('NOVA_DEV_KEY'):raise ValueError('NOVA_DEV_KEY missing')
     ledger=path.with_suffix('.ledger.json');records=json.loads(ledger.read_text()) if ledger.exists() else []
     for start in range(0,len(jobs),args.workers):
+        batch=[]
         with ThreadPoolExecutor(max_workers=args.workers) as pool:
             futures=[pool.submit(run_job,job,environment) for job in jobs[start:start+args.workers]]
             for future in as_completed(futures):
-                value=future.result();records.append(value);ledger.write_text(json.dumps(records,ensure_ascii=False,indent=2))
-        if any(r['returncode'] for r in records):raise SystemExit('Suite stopped after failed run; inspect logs.')
+                value=future.result();batch.append(value);records.append(value);ledger.write_text(json.dumps(records,ensure_ascii=False,indent=2))
+        if any(r['returncode'] for r in batch):raise SystemExit('Suite stopped after failed run; inspect logs.')
     print('Suite complete: '+str(len(jobs))+' planned jobs',flush=True)
 
 if __name__=='__main__':main()

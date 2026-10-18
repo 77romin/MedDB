@@ -96,7 +96,7 @@ def main():
     value['reference_scope'] = 'public reference only; not read by runtime agent'
     value['review_prompt_sha256'] = hashlib.sha256(PROMPT.encode('utf-8')).hexdigest()
     value['reference_sha256'] = reference_hashes
-    (directory/'local_review.json').write_text(json.dumps(value, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
+    existing.write_text(json.dumps(value, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
     print(json.dumps(value, ensure_ascii=False, indent=2))
 
 
