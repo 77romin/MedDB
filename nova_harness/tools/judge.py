@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import sys
 
@@ -52,9 +53,11 @@ def main():
     p.add_argument('run_directory')
     p.add_argument('--public-case', required=True, choices=['C01', 'C03', 'C10'])
     p.add_argument('--force', action='store_true', help='explicitly pay for another review rather than reuse the saved review')
+    p.add_argument('--review-tag', default='', help='separate blinded reviewer replicate; never overwrites primary review')
     args = p.parse_args()
     directory = Path(args.run_directory).resolve()
-    existing = directory/'local_review.json'
+    if args.review_tag and not re.fullmatch(r'[a-z0-9_]{1,32}',args.review_tag):p.error('invalid review tag')
+    existing = directory/('local_review_'+args.review_tag+'.json' if args.review_tag else 'local_review.json')
     if existing.exists() and not args.force:
         print(existing.read_text(encoding='utf-8'))
         return
@@ -81,7 +84,7 @@ def main():
         p.error('review input too large; inspect and select evidence rather than silently truncate')
     load_local_env(); key = os.environ.get('NOVA_DEV_KEY', '').strip()
     if not key: p.error('NOVA_DEV_KEY missing')
-    trace = Trace(directory/'judge_trace.jsonl', secrets=[key])
+    trace = Trace(directory/('judge_trace_'+args.review_tag+'.jsonl' if args.review_tag else 'judge_trace.jsonl'), secrets=[key])
     client = LoggedClient(api_base='https://nova.snubhai.org', token=key, sample=True, trace=trace)
     # No session is created: the model is used strictly for offline development review.
     config = Config(model='openai/gpt-6.1-sol', record_tokens=6000)
