@@ -59,5 +59,30 @@ class ReportTests(unittest.TestCase):
             self.assertIn('미실행', markdown)
             self.assertNotIn('0/100', markdown)
 
+    def test_stage_report_missing_run_stays_unscored(self):
+        from tools.stage_report import collect_plans, render
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)/'plan.json'
+            path.write_text(json.dumps([{'source':str(Path(d)/'frozen'),
+                                        'label':'unrun','case_id':'unpublished-fixture'}]))
+            records=collect_plans([path])
+            self.assertEqual(records[0]['status'],'not_started')
+            self.assertIsNone(records[0]['score'])
+            self.assertIsNone(records[0]['official_score'])
+            self.assertIn('미검토',render(records))
+
+    def test_scope_and_clinical_semantics_are_not_inferred_from_telemetry(self):
+        from nova_agent.analysis import analyze
+        from nova_agent.telemetry import Trace
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d)/'trace.jsonl';t=Trace(p)
+            t.emit('decision_goals_updated',accepted=[{'status':'resolved'}],rejected=[])
+            t.emit('patient_question_pending',evidence_id='e1')
+            t.emit('patient_question_final',evidence_id='e1',answer_evidence_ids=[])
+            data=analyze(p)
+            self.assertEqual(data['goal_updates_accepted'],1)
+            self.assertEqual(data['patient_questions_without_sent_answer'],1)
+            self.assertNotIn('clinical_accuracy',data)
+
 
 if __name__ == '__main__': unittest.main()

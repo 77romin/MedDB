@@ -20,7 +20,7 @@ def collect(directories):
                 row=json.loads(line)
                 if row['event']=='consult_start':version=row.get('version');break
         signature=hashlib.sha256(json.dumps(m['fingerprint'],sort_keys=True).encode()).hexdigest()
-        options={k:m.get(k) for k in ['max_turns','meddb','coverage','structured_closing','closing_turns','compact_context','guidelines','planner_reasoning_effort','final_reasoning_effort']}
+        options={k:m.get(k) for k in ['max_turns','meddb','coverage','decision_review','closure_audit','structured_closing','closing_turns','compact_context','guidelines','planner_reasoning_effort','final_reasoning_effort']}
         key=(CASES.get(m['case_id'],'unknown'),version,signature,json.dumps(options,sort_keys=True))
         groups[key].append({'directory':str(d),'manifest':m,'analysis':a,'review':review})
     return groups
@@ -59,7 +59,7 @@ def main():
         lines+=['- '+s['case']+' v'+str(s['version'])+': `'+s['source_sha256']+'`; '+json.dumps(s['options'],ensure_ascii=False)]
         lines+=['  - `'+d+'`' for d in s['directories']]
     Path(args.output).write_text('\n'.join(lines)+'\n')
-    dest=Path('results/suite_report_007.json');dest.parent.mkdir(exist_ok=True);dest.write_text(json.dumps(summaries,ensure_ascii=False,indent=2)+'\n')
+    dest=Path(args.output).with_suffix('.json');dest.parent.mkdir(exist_ok=True);dest.write_text(json.dumps(summaries,ensure_ascii=False,indent=2)+'\n')
     print(Path(args.output).resolve())
 
 if __name__=='__main__':main()
