@@ -23,6 +23,19 @@ class ClosingTests(unittest.TestCase):
     def state(self):
         return PatientState({'opening':'환자 시작 정보'}, {c['id']:c for c in prepare()['concepts']})
 
+    def test_proxy_failure_on_concern_question_recovers_before_explanation(self):
+        from nova_sdk import NovaError
+        plan={'diagnosis':'평가 중','plan':{}}
+        messages={'plan':['검사 후 계획을 정하겠습니다.']}
+        client=ScriptClient([plan,messages,plan],
+                            [NovaError('INVALID_API_RESPONSE',502),'걱정돼요','네','알겠습니다'])
+        state=self.state()
+        close_consultation(Gateway(client,sleeper=lambda _:None),state,plan,8,Trace())
+        say_ids=[rid for method,rid in client.requests if method=='say']
+        self.assertEqual(say_ids[0],say_ids[1])
+        self.assertEqual(50-client.turns,3)
+        self.assertTrue(any(e.question==messages['plan'][0] for e in state.delivered_explanations()))
+
     def test_complete_sentence_selection_does_not_truncate(self):
         self.assertEqual(short_statement('검사로 확인할게요. 결과를 확인하고 계획을 함께 정하겠습니다.'),'검사로 확인할게요.')
         self.assertIsNone(short_statement('가'*31))

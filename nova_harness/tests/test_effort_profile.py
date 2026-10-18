@@ -17,10 +17,10 @@ class EffortProfileTests(unittest.TestCase):
         return client.efforts
 
     def test_low_planning_preserves_medium_final_assessment(self):
-        self.assertEqual(self.capture(Config()),['low','medium'])
+        self.assertEqual(self.capture(Config(planner_reasoning_effort='low')),['low','medium'])
 
     def test_medium_planning_reproduces_previous_compute_profile(self):
-        self.assertEqual(self.capture(Config(planner_reasoning_effort='medium')),['medium','medium'])
+        self.assertEqual(self.capture(Config()),['medium','medium'])
 
 
 if __name__=='__main__':unittest.main()

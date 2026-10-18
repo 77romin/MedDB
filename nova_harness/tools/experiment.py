@@ -92,8 +92,8 @@ def main():
                 'structured_closing': args.agent == 'harness' and not args.no_structured_closing,
                 'coverage':args.agent == 'harness' and not args.no_coverage,
                 'closing_turns':Config().closing_turns,
-                'planner_reasoning_effort':args.planner_effort,
-                'final_reasoning_effort':Config().reasoning_effort,
+                'planner_reasoning_effort':args.planner_effort if args.agent == 'harness' else None,
+                'final_reasoning_effort':Config().reasoning_effort if args.agent == 'harness' else None,
                 'python': sys.version, 'started_kst': stamp,
                 'evaluation_mode': 'development_sample_no_official_score'}
     if args.agent in {'meddb_e2','meddb_e2_plus'}:
