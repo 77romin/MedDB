@@ -20,6 +20,13 @@ STOP = {'TURN_LIMIT_REACHED', 'SESSION_EXPIRED', 'SESSION_CLOSED', 'RUN_NOT_ACTI
 REJECTED = {'CONTENT_TOO_LONG', 'EMPTY_CONTENT', 'EXAM_NOT_SPECIFIC', 'EXAM_NOT_RECOGNIZED', 'ACTION_NOT_AVAILABLE'}
 
 
+def collection_phase_hint(remaining, reserve):
+    if remaining <= reserve + 5:
+        return ('수집 마무리 구간입니다. 같은 보조 영역을 세분해 반복하지 말고 '
+                '아직 진단·안전·치료를 바꿀 서로 다른 핵심 범위를 우선하세요.')
+    return None
+
+
 def prepare():
     # Deliberately never load sample scripts, answer keys, or data from previous encounters.
     knowledge = json.loads(Path(__file__).with_name('ontology.json').read_text(encoding='utf-8'))
@@ -52,9 +59,10 @@ def consult(client, knowledge, config=None, trace=None):
     feedback, stop_reason = [], 'turn_budget'
     closure_reviews, closure_missing = 0, []
     reserve = config.closing_turns if config.structured_closing else 0
+    planner_tokens = config.step_tokens
     while remaining > reserve and seconds_left(session) > config.time_margin:
         selected = None
-        retry_tokens = None
+        retry_tokens = planner_tokens
         for _ in range(3):
             clinical = advisor.context(state) if advisor else None
             concepts = list(knowledge['concepts'])
@@ -85,8 +93,9 @@ def consult(client, knowledge, config=None, trace=None):
             if closure_missing:
                 user['closure_review_missing'] = closure_missing
                 user['closure_review_instruction'] = '지적된 누락 중 아직 중요하고 미확인인 항목을 우선 확인합니다. 이미 답을 얻었거나 즉시 이송을 지연하면 반복하지 않습니다.'
-            if remaining <= 6:
-                user['phase_hint'] = '불필요한 질문을 줄이고 실제 SAY로 판단·계획·경고 증상을 설명한 뒤 마무리하세요.'
+            phase_hint = collection_phase_hint(remaining, reserve)
+            if phase_hint:
+                user['phase_hint'] = phase_hint
             try:
                 completion = gateway.chat([{'role': 'system', 'content': STEP},
                                            {'role': 'user', 'content': json.dumps(user, ensure_ascii=False,separators=(',',':'))}],
@@ -94,7 +103,8 @@ def consult(client, knowledge, config=None, trace=None):
                 choices = completion.get('choices')
                 if isinstance(choices, list) and choices and isinstance(choices[0], dict) and choices[0].get('finish_reason') == 'length':
                     trace.emit('output_truncated', stage='planner')
-                    retry_tokens = max(config.step_tokens, 3072)
+                    planner_tokens = max(config.step_tokens, 3072)
+                    retry_tokens = planner_tokens
                 result = content_of(completion)
                 accepted, rejected = state.accept_facts(result.get('facts', []))
                 trace.emit('facts_updated', accepted=accepted, rejected=rejected)

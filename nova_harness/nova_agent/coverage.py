@@ -2,6 +2,14 @@
 from .validation import action_key
 
 
+EXAM_RESULT_COVERS = {
+    'ex_growth_velocity': {
+        'source_target': 'meddb:ex_growth_chart',
+        'required_terms': ('성장속도', '중간부모키'),
+    },
+}
+
+
 class CoveragePlanner:
     def __init__(self, advisor, state):
         self.advisor = advisor
@@ -95,6 +103,12 @@ class CoveragePlanner:
         if action['type'] == 'EXAM' and attempted:
             return 'exam_result_obtained'
         if action['type'] == 'EXAM':
+            rule = EXAM_RESULT_COVERS.get(target.removeprefix('meddb:'))
+            if rule and any(e.action == 'EXAM' and e.target == rule['source_target']
+                            and all(term in e.response.replace(' ', '') for term in rule['required_terms'])
+                            for e in self.state.evidence):
+                return 'exam_result_semantically_covered'
+        if action['type'] == 'EXAM':
             sources = {e.id:e for e in self.state.evidence}
             if any(self.state.concepts.get(f['concept_id'],{}).get('exam_target') == target
                    and f['assertion'] in {'present','absent'} and f.get('evidence_id') in sources
@@ -114,7 +128,7 @@ class CoveragePlanner:
         secondary = self.secondary_complaint()
         return {'observations':observations,
                 'performed_exams':[{'target':a['target'],'status':self.status(a)} for a in actions
-                                   if a['type']=='EXAM' and self.status(a) in {'exam_result_obtained','exam_result_model_mapped'}],
+                                   if a['type']=='EXAM' and self.status(a) in {'exam_result_obtained','exam_result_model_mapped','exam_result_semantically_covered'}],
                 'secondary_complaint':secondary['id'] if secondary else None,
                 'next_unasked': [a for a in actions if self.status(a) == 'unasked'][:4],
                 'objective_next':[a for a in actions if a['type']=='EXAM' and self.status(a)=='unasked'][:2],
@@ -133,7 +147,7 @@ class CoveragePlanner:
         if str(proposal.get('type','')).upper() == 'EXAM':
             target = proposal.get('target') or self.target_for('EXAM',proposal.get('content',''))
             action = next((a for a in self.actions() if a['target']==target and a['type']=='EXAM'),None)
-            if action and self.status(action) in {'exam_result_obtained','exam_result_model_mapped'}:
+            if action and self.status(action) in {'exam_result_obtained','exam_result_model_mapped','exam_result_semantically_covered'}:
                 sources = {e.id:e for e in self.state.evidence}
                 related = [e for e in self.state.evidence if e.action=='EXAM' and e.target==target]
                 related += [sources[f['evidence_id']] for f in self.state.facts

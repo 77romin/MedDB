@@ -9,7 +9,7 @@ from nova_agent.analysis import analyze
 from nova_agent.config import Config as RuntimeConfig
 from nova_agent.protocol import Gateway, seconds_left
 from nova_agent.records import make_record
-from nova_agent.runtime import prepare, consult, content_of
+from nova_agent.runtime import prepare, consult, content_of, collection_phase_hint
 from nova_agent.state import PatientState
 from nova_agent.telemetry import Trace
 from nova_agent.validation import action_key, parse_object, validate_action, validate_record
@@ -59,6 +59,11 @@ class ScriptClient:
 class HarnessTests(unittest.TestCase):
     def state(self):
         return PatientState({'opening': '62세 여성', 'vital_signs': '맥박 76'}, {c['id']: c for c in prepare()['concepts']})
+
+    def test_collection_endgame_hint_is_reachable_before_closing_reserve(self):
+        self.assertIsNone(collection_phase_hint(18, 12))
+        self.assertIn('서로 다른 핵심 범위', collection_phase_hint(17, 12))
+        self.assertIn('서로 다른 핵심 범위', collection_phase_hint(13, 12))
 
     def test_nfc_and_boundary(self):
         self.assertEqual(validate_action({'type': 'SAY', 'content': '\u1100\u1161'*30})[1], '가'*30)

@@ -149,6 +149,16 @@ class CoverageTests(unittest.TestCase):
         a=next(a for a in c.actions() if a['target']=='meddb:ex_mental')
         self.assertEqual(c.target_for('EXAM',a['content']),a['target'])
 
+    def test_growth_chart_result_can_cover_duplicate_velocity_calculation(self):
+        _,s,c=self.setup_case('여섯 살 남자아이. 키가 작아요.')
+        chart=next(a for a in c.actions() if a['target']=='meddb:ex_growth_chart')
+        velocity=next(a for a in c.actions() if a['target']=='meddb:ex_growth_velocity')
+        s.add_response('EXAM',chart['content'],{'result':'성장속도 5cm/년, 중간부모키 178cm'},chart['target'])
+        self.assertEqual(c.status(velocity),'exam_result_semantically_covered')
+        self.assertNotIn(velocity,c.snapshot()['objective_next'])
+        with self.assertRaises(ValueError):
+            c.choose(velocity,30,12)
+
     def test_invalid_proposal_still_reaches_existing_validator(self):
         _,_,c=self.setup_case()
         self.assertEqual(c.choose([],45,12),([],None))

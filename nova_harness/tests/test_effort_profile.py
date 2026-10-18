@@ -22,7 +22,7 @@ class EffortProfileTests(unittest.TestCase):
     def test_medium_planning_reproduces_previous_compute_profile(self):
         self.assertEqual(self.capture(Config()),['medium','medium'])
 
-    def test_truncated_planner_retry_is_bounded_and_resets_next_turn(self):
+    def test_truncated_planner_retry_is_bounded_and_persists_for_session(self):
         import json
         from nova_agent.runtime import consult, prepare
         class Client(ScriptClient):
@@ -39,7 +39,7 @@ class EffortProfileTests(unittest.TestCase):
                 return super().chat(*args,**kw)
         c=Client()
         consult(c,prepare(),Config(meddb=False,decision_review=False,structured_closing=False))
-        self.assertEqual(c.limits,[2048,3072,2048,2048,4096])
+        self.assertEqual(c.limits,[2048,3072,3072,3072,4096])
         self.assertEqual(c.turns,48)
 
     def test_retry_still_respects_reserved_output_budget(self):
