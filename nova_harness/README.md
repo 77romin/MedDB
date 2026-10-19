@@ -24,6 +24,8 @@ E2 원본 복구 후 첫 단일 변경 실험은 [15차 개발 보고](reports/d
 
 해당 제출본의 공식 샘플 검증은 69.759점으로 원본 E2보다 낮았다. 전역 `P.education` 덮어쓰기가 안전·검사·소통을 함께 훼손한 유력 원인이라 제거했으며, 수정본은 다시 3증례를 검증하기 전까지 제출하지 않는다. 자세한 내용은 [19차 보고](reports/development_019.md)에 있다.
 
+반복 대화에서 초기 근거가 SOAP에서 누락되는 문제는 [20차 Evidence Ledger 구현 계획](reports/implementation_plan_020.md)으로 다룬다. 원본 E2 행동을 유지한 채 모든 성공 SAY/EXAM을 불변 원장에 기록하고, 제출 직전 각 근거의 반영 또는 제외 사유를 감사하는 별도 실험이다.
+
 ## 현재 구현 범위
 
 MedDB 적용 내용과 후보 비교는 [3차 보고서](reports/meddb_review_003.md), [MedDB 벤치마크](reports/meddb_benchmark_003.md)에 있다. 공식 67.132점과 개발용 자가평가를 구분한다.
