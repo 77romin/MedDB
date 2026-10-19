@@ -23,7 +23,7 @@ class E2TurnReallocationTests(unittest.TestCase):
         source = Path(hybrid_comm.__file__).read_text(encoding="utf-8")
         patched = patched_source(source)
         self.assertIn("불면 인지행동치료", patched)
-        self.assertIn('note["P"]["education"] = line', patched)
+        self.assertIn('note["P"]["education"] = (note["P"]["education"].rstrip()', patched)
         self.assertIn("24시간 안에 복용량과 상태", patched)
         original = hybrid_care.base_consult
         state = install()

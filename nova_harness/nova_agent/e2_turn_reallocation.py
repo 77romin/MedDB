@@ -14,17 +14,6 @@ ANSWER_NEW = '''    default = "검사 결과를 보고 자세히 알려 드릴�
     try:
 '''
 
-EDUCATION_OLD = '''    if said:
-        line = "환자에게 설명함: " + " / ".join(said)
-        note["P"]["education"] = (note["P"]["education"].rstrip() + "\\n" + line).strip()
-'''
-EDUCATION_NEW = '''    if said:
-        line = "환자에게 설명함: " + " / ".join(said)
-        # The model draft may describe intended education as already performed.
-        # Keep only sentences that were successfully sent to the patient.
-        note["P"]["education"] = line
-'''
-
 CLOSING_OLD = '''    if not concern or NO_QUESTION.search(_nfc(concern)):
         out = out[:-1]  # 걱정을 말하지 않았으면 답할 문장은 생략
 '''
@@ -38,10 +27,10 @@ CLOSING_NEW = '''    if comprehensive and any(word in str(diagnosis) for word in
 
 
 def patched_source(source: str) -> str:
-    for old in (ANSWER_OLD, EDUCATION_OLD, CLOSING_OLD):
+    for old in (ANSWER_OLD, CLOSING_OLD):
         if source.count(old) != 1:
             raise ValueError("unexpected upstream E2 communication contract")
-    return source.replace(ANSWER_OLD, ANSWER_NEW).replace(EDUCATION_OLD, EDUCATION_NEW).replace(CLOSING_OLD, CLOSING_NEW)
+    return source.replace(ANSWER_OLD, ANSWER_NEW).replace(CLOSING_OLD, CLOSING_NEW)
 
 
 def install():
