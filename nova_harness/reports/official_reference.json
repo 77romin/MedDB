@@ -91,6 +91,30 @@
         608,
         804
       ]
+    },
+    "e2_calibrated": {
+      "submission": "submission_E2_calibrated.zip",
+      "zip_sha256": "f029f2a29320c7c0cb0f370a9a9efa827a99008d51a2be33b8682e881bd5a524",
+      "scores": {
+        "total": 74.69,
+        "information": 12.33,
+        "reasoning": 15.0,
+        "tests_followup": 8.17,
+        "safety": 12.5,
+        "communication": 7.11,
+        "efficiency": 19.58
+      },
+      "turns": [
+        44,
+        41,
+        32
+      ],
+      "seconds": [
+        207,
+        190,
+        129
+      ],
+      "decision": "rejected_safety_and_communication_regression"
     }
   }
 }
