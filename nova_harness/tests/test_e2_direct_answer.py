@@ -34,6 +34,12 @@ class E2DirectAnswerTests(unittest.TestCase):
             restore(original)
         self.assertEqual(hybrid_comm.ANSWER_SYSTEM, answer)
 
+    def test_instruction_targets_observed_deferral_without_new_facts(self):
+        from nova_agent.e2_direct_answer import DIRECT_ANSWER_SUFFIX
+        self.assertIn("기록에 답이 있으면", DIRECT_ANSWER_SUFFIX)
+        self.assertIn("직접 답하고", DIRECT_ANSWER_SUFFIX)
+        self.assertIn("검사 후로 미루지", DIRECT_ANSWER_SUFFIX)
+
 
 if __name__ == "__main__":
     unittest.main()
