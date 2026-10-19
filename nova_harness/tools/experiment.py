@@ -50,7 +50,7 @@ def main():
     sub.add_parser('list')
     r = sub.add_parser('run')
     r.add_argument('--case', required=True, help='published sample UUID from list; no answer files loaded')
-    r.add_argument('--agent', choices=['baseline', 'harness', 'meddb_e2', 'meddb_e2_plus', 'meddb_e2_calibrated', 'meddb_e2_direct_answer'], default='harness')
+    r.add_argument('--agent', choices=['baseline', 'harness', 'meddb_e2', 'meddb_e2_plus', 'meddb_e2_calibrated', 'meddb_e2_direct_answer', 'meddb_e2_pending_question', 'meddb_e2_answer_compact', 'meddb_e2_med_reconciliation', 'meddb_e2_med_safety'], default='harness')
     r.add_argument('--max-turns', type=int, default=30)
     r.add_argument('--label', default='')
     r.add_argument('--no-meddb', action='store_true', help='ablation: disable imported clinical graph advice')
@@ -106,7 +106,7 @@ def main():
                 'final_reasoning_effort':Config().reasoning_effort if args.agent == 'harness' else None,
                 'python': sys.version, 'started_kst': stamp,
                 'evaluation_mode': 'development_sample_no_official_score'}
-    if args.agent in {'meddb_e2','meddb_e2_plus','meddb_e2_calibrated','meddb_e2_direct_answer'}:
+    if args.agent in {'meddb_e2','meddb_e2_plus','meddb_e2_calibrated','meddb_e2_direct_answer','meddb_e2_pending_question','meddb_e2_answer_compact','meddb_e2_med_reconciliation','meddb_e2_med_safety'}:
         repo = ROOT/'vendor/meddb'
         manifest['upstream_commit'] = subprocess.check_output(['git','-C',str(repo),'rev-parse','HEAD'],text=True).strip()
         manifest['turn_policy'] = 'Unmodified upstream E2: up to 36 collection turns plus closing; server limit 50. --max-turns does not override upstream policy.'
@@ -130,7 +130,7 @@ def main():
             module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
             module.MAX_TURNS = args.max_turns
             outcome = module.consult(client, module.prepare())
-        elif args.agent in {'meddb_e2','meddb_e2_plus','meddb_e2_calibrated','meddb_e2_direct_answer'}:
+        elif args.agent in {'meddb_e2','meddb_e2_plus','meddb_e2_calibrated','meddb_e2_direct_answer','meddb_e2_pending_question','meddb_e2_answer_compact','meddb_e2_med_reconciliation','meddb_e2_med_safety'}:
             sys.path.insert(0,str(ROOT/'vendor/meddb'))
             from examples.hybrid_care import prepare as meddb_prepare, consult as meddb_consult
             original = None
@@ -143,6 +143,18 @@ def main():
             elif args.agent == 'meddb_e2_direct_answer':
                 from nova_agent.e2_direct_answer import install
                 original=install()
+            elif args.agent == 'meddb_e2_pending_question':
+                from nova_agent.e2_pending_question import install
+                original=install()
+            elif args.agent == 'meddb_e2_answer_compact':
+                from nova_agent.e2_answer_compact import install
+                original=install()
+            elif args.agent == 'meddb_e2_med_reconciliation':
+                from nova_agent.e2_med_reconciliation import install
+                original=install()
+            elif args.agent == 'meddb_e2_med_safety':
+                from nova_agent.e2_med_safety import install
+                original=install()
             try:
                 outcome = meddb_consult(client, meddb_prepare(), knowledge_mode='clinical', reference_profile='reviewed')
             finally:
@@ -151,8 +163,16 @@ def main():
                         from nova_agent.meddb_overlay import restore
                     elif args.agent == 'meddb_e2_calibrated':
                         from nova_agent.e2_calibrated import restore
-                    else:
+                    elif args.agent == 'meddb_e2_direct_answer':
                         from nova_agent.e2_direct_answer import restore
+                    elif args.agent == 'meddb_e2_pending_question':
+                        from nova_agent.e2_pending_question import restore
+                    elif args.agent == 'meddb_e2_answer_compact':
+                        from nova_agent.e2_answer_compact import restore
+                    elif args.agent == 'meddb_e2_med_safety':
+                        from nova_agent.e2_med_safety import restore
+                    else:
+                        from nova_agent.e2_med_reconciliation import restore
                     restore(original)
         else:
             outcome = consult(client, prepare(), Config(max_turns=args.max_turns, closure_audit=args.closure_audit,
