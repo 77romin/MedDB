@@ -243,6 +243,20 @@ class ClosingTests(unittest.TestCase):
         self.assertIn(messages['concern'][0],[e.question for e in state.evidence])
         self.assertEqual(len([r for r in client.requests if r[0]=='chat']),3)
 
+    def test_missing_bundle_concern_gets_one_direct_fallback_answer(self):
+        plan={'diagnosis':'평가 중','plan':{}}
+        messages={'assessment':['원인을 더 확인해야 합니다.'],
+                  'plan':['검사 후 계획을 정하겠습니다.']}
+        answer={'answer':['불면 치료와 함께 줄일 수 있습니다.']}
+        client=ScriptClient([plan,messages,answer,plan],
+                            ['약 없이 못 잘까 봐요.','네','네','네','알겠습니다'])
+        state=self.state()
+        close_consultation(Gateway(client),state,plan,10,Trace())
+        self.assertEqual(len(state.patient_questions),1)
+        self.assertEqual(state.patient_questions[0]['attempts'],1)
+        self.assertEqual(state.patient_questions[0]['status'],'answer_sent_unverified')
+        self.assertIn(answer['answer'][0],[e.question for e in state.evidence])
+
     def test_repeated_fear_after_answer_does_not_start_an_answer_loop(self):
         plan={'diagnosis':'평가 중','plan':{}}
         messages={'assessment':['원인을 더 확인해야 합니다.'],

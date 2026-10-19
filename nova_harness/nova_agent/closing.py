@@ -141,6 +141,7 @@ def close_consultation(gateway, state, proposed, remaining, trace, advisor=None)
     actions_stopped = False
     delivered = set()
     questions = []
+    concern_evidence_id = None
     state.patient_questions = questions
 
     def context():
@@ -157,7 +158,7 @@ def close_consultation(gateway, state, proposed, remaining, trace, advisor=None)
         return result
 
     def say(text, tag):
-        nonlocal remaining, actions_stopped
+        nonlocal remaining, actions_stopped, concern_evidence_id
         if remaining <= 0 or gateway.remaining() <= 90:
             return None
         try:
@@ -179,6 +180,8 @@ def close_consultation(gateway, state, proposed, remaining, trace, advisor=None)
         delivered.add(tag)
         trace.emit('closing_say', tag=tag, content=text, response=reply)
         response = reply.get('content', '')
+        if tag == 'concern_question':
+            concern_evidence_id = state.evidence[-1].id
         # The opening concern is already an input to the bundle's concern field.
         # Do not spend a separate answer call on the same concern. Likewise, a
         # repeated fear after an answer is left for the remaining concern text or
@@ -280,6 +283,16 @@ def close_consultation(gateway, state, proposed, remaining, trace, advisor=None)
                     parsed[tag] = parts, []
         except (ValueError, TypeError, NovaError):
             trace.emit('closing_repair_unavailable')
+
+    # The opening concern normally receives the generated concern statement.
+    # If generation omitted that field, restore exactly one pending item so the
+    # concern is not silently lost. This does not duplicate a valid bundle answer.
+    if (is_patient_question(concern) and not parsed['concern'][0]
+            and concern_evidence_id is not None):
+        item = {'evidence_id': concern_evidence_id, 'question': concern,
+                'status': 'pending', 'answer_evidence_ids': [], 'attempts': 0}
+        questions.append(item)
+        trace.emit('patient_concern_fallback_pending', **item)
 
     # Give each purpose one turn, then spend spare turns on supporting statements.
     queue = statement_queue(messages, parsed)
