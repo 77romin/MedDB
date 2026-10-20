@@ -43,6 +43,8 @@ PR 생성 후 다중 문장 설명·환자 질문 응답·교육 기록 분리�
 - `nova_agent/closing.py`: 개인별 설명을 여러 완결 문장으로 나누고, 중간 환자 질문·구체적 두려움에 최대 3회 답변 생성, 이해 확인 후 한 번 오해 교정을 수행한다. 각 SAY는 30자 제한을 지킨다.
 - `nova_agent/meddb_overlay.py`: 원본 E2 문진·진단을 유지하는 별도 확장. 원본 파일을 수정하지 않고 복용 내역 확인과 설명만 보완한다.
 - `nova_agent/e2_evidence_ledger.py`, `e2_tracking_client.py`, `e2_soap_router.py`, `e2_soap_audit.py`: 원본 E2의 성공 SAY/EXAM을 불변 원장에 보존하고 SOAP 반영·제외 사유를 제출 직전에 감사한다. `e2_ledger_overlay.py`가 이 계층을 가역적으로 설치한다.
+- `nova_agent/e2_concept_compaction.py`: 원본 E2의 구조화 SOAP 뒤에 질문·원문 답을 중복 추가하는 단계를 제거하는 가역 실험 오버레이다. 원문 ledger 자체는 삭제하지 않는다.
+- `nova_agent/e2_value_questions.py`: 현재 관찰과 감별의 미확인 분기에 따라 다음 행동을 재정렬하고, 확인된 수면제 노출의 용량·최근 복용·병용 안전 공백을 후보에 추가하는 가역 실험 오버레이다.
 - `nova_agent/runtime.py`, `prompts.py`: 사실 갱신·다음 행동 선택·설명·최종 판단 흐름.
 - `nova_agent/closure.py`: 종료 직전 한 번만 중요한 누락 검토. 긴급 종료·시간/턴 부족·검토 실패 시 추가 질문을 강제하지 않는다. 현재 기본 비활성화이며 `--closure-audit`로 선택적 실험 가능.
 - `nova_agent/records.py`: S/O를 실제 응답으로 구성하고 P.education의 교육 계획과 실제 성공한 SAY를 출처 ID·턴으로 구분한다. 태그가 설명 내용의 임상 충분성을 증명하지는 않는다.
