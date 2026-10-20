@@ -45,6 +45,8 @@ PR 생성 후 다중 문장 설명·환자 질문 응답·교육 기록 분리�
 - `nova_agent/e2_evidence_ledger.py`, `e2_tracking_client.py`, `e2_soap_router.py`, `e2_soap_audit.py`: 원본 E2의 성공 SAY/EXAM을 불변 원장에 보존하고 SOAP 반영·제외 사유를 제출 직전에 감사한다. `e2_ledger_overlay.py`가 이 계층을 가역적으로 설치한다.
 - `nova_agent/e2_concept_compaction.py`: 원본 E2의 구조화 SOAP 뒤에 질문·원문 답을 중복 추가하는 단계를 제거하는 가역 실험 오버레이다. 원문 ledger 자체는 삭제하지 않는다.
 - `nova_agent/e2_value_questions.py`: 현재 관찰과 감별의 미확인 분기에 따라 다음 행동을 재정렬하고, 확인된 수면제 노출의 용량·최근 복용·병용 안전 공백을 후보에 추가하는 가역 실험 오버레이다.
+- `nova_agent/e2_convergence.py`: 실제 관찰에 따른 후보별 지지·반대·미확인 핵심근거, 점수 간격, 위험질환·상충·안전 공백과 기존 행동의 분리 효용을 결정론적으로 기록한다. 점수와 상대 비중을 진단확률로 해석하지 않는다.
+- `nova_agent/e2_convergence_shadow.py`: 원본 E2의 질문·진찰·SOAP·진단을 바꾸지 않고 수렴 궤적만 남기는 1단계 가역 오버레이다.
 - `nova_agent/runtime.py`, `prompts.py`: 사실 갱신·다음 행동 선택·설명·최종 판단 흐름.
 - `nova_agent/closure.py`: 종료 직전 한 번만 중요한 누락 검토. 긴급 종료·시간/턴 부족·검토 실패 시 추가 질문을 강제하지 않는다. 현재 기본 비활성화이며 `--closure-audit`로 선택적 실험 가능.
 - `nova_agent/records.py`: S/O를 실제 응답으로 구성하고 P.education의 교육 계획과 실제 성공한 SAY를 출처 ID·턴으로 구분한다. 태그가 설명 내용의 임상 충분성을 증명하지는 않는다.
@@ -103,6 +105,8 @@ python3 tools/package_meddb_plus.py
 
 ```sh
 python3 tools/judge.py results/완료된실험 --public-case C01
+python3 tools/replay_e2_convergence.py results/완료된_E2_ledger/trace.jsonl
+python3 tools/replay_e2_session.py results/완료된_E2_ledger/trace.jsonl
 ```
 
 ## 실험 결과
