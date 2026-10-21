@@ -29,6 +29,15 @@ safety에는 원문의 구체적인 경고 증상·대응과 빠뜨리면 위험
 follow_up의 시점·조건은 원문 그대로 보존하세요. 일반적인 '힘들면 진료'로 원문의 구체적 경고를 대체하지 마세요.
 전체 출력은 최대 9문장입니다. 계획이 실제 전달됐다고 미리 기록하지 마세요."""
 
+COVERAGE_SYSTEM="""당신은 이미 작성한 진료 계획과 환자 설명의 누락만 점검합니다. 새 의학 지식·진단·약·용량·검사·시점·위험 증상을 추가하지 마세요.
+source_plan은 계획 자료이고 실제 설명이 아닙니다. proposed_speech는 아직 보내지 않은 문장입니다.
+계획에 명시된 즉시 안전 행동·금지 행동·구체적 위험 증상과 대응·추적 조건 중 proposed_speech에서 빠진 중요한 내용을 확인하세요.
+'갑자기 심해지면 진료'를 원문 경고 전체의 전달로 인정하지 마세요. 부정·조건·응급 여부·시점을 보존하세요.
+아직 시작하지 않은 치료를 시작하라고 지시하거나 새로운 위험을 추론하지 마세요. 이미 같은 의미가 전달됐으면 반복하지 않습니다.
+가장 중요한 누락만 최대 2개의 추가 문장으로 표현하세요. 각 문장은 공백 포함 NFC 30자 이하로 완결하고 원문 조건과 대응을 함께 담습니다.
+JSON 하나: {"status":"consistent|needs_clarification|uncertain", "missing":[{"source_field":"education|disposition|follow_up|treatment", "source_quote":"source_plan 해당 필드의 정확한 원문 인용", "messages":["30자 이내 완결 문장"]}]}
+consistent/uncertain은 missing 빈 배열입니다. needs_clarification도 전체 최대 두 문장입니다. 실제로 말했거나 환자가 이해했다고 기록하지 마세요."""
+
 class CaptureClosing:
     def __init__(self,client,note):self.client=client;self.note=note;self.raw='' 
     def __getattr__(self,name):return getattr(self.client,name)
@@ -53,7 +62,7 @@ class CaptureClosing:
         return response
 
 
-def install(timeline):
+def install(timeline,check_coverage=True):
     global LAST_RUN
     from examples import hybrid_comm as C
     from examples import hybrid_agent as H
@@ -100,6 +109,22 @@ def install(timeline):
                 selected[key]=parts;available-=len(parts)
             else:events.append({'event':'closing_group_not_sent','field':key,'reason':'turn_budget'})
         result=[part for key in keys for part in selected.get(key,[])]
+        remaining=max(0,session.get('turns_remaining',50)-3-len(result))
+        if check_coverage and remaining and seconds_left(session)>=120:
+            try:
+                raw=client.chat([{'role':'system','content':COVERAGE_SYSTEM},
+                    {'role':'user','content':json.dumps({'source_plan':note.get('P',{}),'proposed_speech':result},ensure_ascii=False)}],
+                    max_tokens=2048,reasoning_effort='low')
+                payload=H.parse_json(raw['choices'][0]['message']['content'] or '')
+                extra=validate_addendum(payload,note)
+                extra=[part for part in extra if part not in result]
+                if len(extra)>remaining:raise ValueError('insufficient turns for complete addendum')
+                # Additional source-backed speech is still only a proposal here.
+                # TimelineClient records it as delivered only after SAY succeeds.
+                result.extend(extra)
+                events.append({'event':'safety_coverage_check','status':payload['status'],'additional_sentences':len(extra)})
+            except Exception as exc:
+                events.append({'event':'safety_coverage_check_failed','error':type(exc).__name__})
         events.append({'event':'closing_proposed','messages':list(result),
                        'unresolved_fields':[k for k in ('safety','follow_up') if not groups.get(k)]})
         return result

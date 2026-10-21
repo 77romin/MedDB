@@ -25,7 +25,7 @@ def main():
         def session(self):return {'deadline':'2099-01-01T00:00:00+00:00','turns_remaining':12}
     db=prepare();client=Saved()
     baseline=C._closing_sentences(client,db,final['note'],final['diagnosis'],'걱정돼요.',True)
-    original=e2_safety_delivery.install(SafetyTimeline())
+    original=e2_safety_delivery.install(SafetyTimeline(),check_coverage=False)
     try:improved=C._closing_sentences(client,db,final['note'],final['diagnosis'],'걱정돼요.',True)
     finally:e2_safety_delivery.restore(original)
     warning=json.loads(response['choices'][0]['message']['content'])['safety']

@@ -7,7 +7,7 @@ from nova_agent.safety_trace import SafetyTimeline
 from nova_agent import e2_safety_delivery as delivery
 
 class ClosingIntegrationTests(unittest.TestCase):
-    def run_closing(self,fields,repair=None):
+    def run_closing(self,fields,repair=None,coverage=False,coverage_response=None):
         responses=[]
         note={'P':{'education':'경련이 생기면 응급실로 가세요.'}}
         original_note=deepcopy(note)
@@ -15,6 +15,7 @@ class ClosingIntegrationTests(unittest.TestCase):
             responses.append(kw)
             content=fields if isinstance(fields,str) else json.dumps(fields,ensure_ascii=False)
             if messages[0]['content']==delivery.REPAIR_SYSTEM:content=json.dumps(repair)
+            if messages[0]['content']==delivery.COVERAGE_SYSTEM:content=json.dumps(coverage_response)
             return {'choices':[{'message':{'content':content}}]}
         defaults=['진단 설명','검사 설명','재진 설명','일반 안전 설명']
         def original(client,*args):
@@ -25,7 +26,7 @@ class ClosingIntegrationTests(unittest.TestCase):
         t=SafetyTimeline();client=SimpleNamespace(chat=chat,session=lambda:{'turns_remaining':12})
         with patch.dict('sys.modules',{'examples':SimpleNamespace(hybrid_comm=c,hybrid_agent=h),
                 'examples.consult_skeleton':SimpleNamespace(seconds_left=lambda s:999)}):
-            old=delivery.install(t)
+            old=delivery.install(t,check_coverage=coverage)
             try:out=c._closing_sentences(client,None,note,'dx','',True)
             finally:delivery.restore(old)
         self.assertEqual(note,original_note)
@@ -43,6 +44,14 @@ class ClosingIntegrationTests(unittest.TestCase):
         out,calls=self.run_closing('{"diagnosis":"의심돼요.","plan":"검사할게요.","follow_up":"다시 와 주세요.","safety":"경',payload)
         self.assertIn('의심돼요.',out);self.assertIn('경련이 생기면 응급실로 가세요.',out)
         self.assertEqual(len(calls),2)
+    def test_source_based_missing_warning_is_proposed_once_not_counted_as_delivered(self):
+        payload={'status':'needs_clarification','missing':[{'source_field':'education','source_quote':'경련이 생기면 응급실로 가세요.','messages':['경련이 생기면 응급실로 가세요.']}]}
+        fields={'diagnosis':'의심돼요.','plan':'검사할게요.','follow_up':'다시 와 주세요.','safety':'불편하면 진료받으세요.'}
+        out,calls=self.run_closing(fields,coverage=True,coverage_response=payload)
+        self.assertIn('경련이 생기면 응급실로 가세요.',out)
+        self.assertEqual(len(calls),2)
+        self.assertEqual(calls[-1]['max_tokens'],2048)
+
     def test_unverifiable_repair_is_rejected(self):
         out,calls=self.run_closing({}, {'status':'needs_clarification','missing':[{'source_field':'education','source_quote':'없는 문장','messages':['새로운 처방입니다.']}]})
         self.assertNotIn('새로운 처방입니다.',out)
