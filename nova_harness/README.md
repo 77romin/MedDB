@@ -2,6 +2,8 @@
 
 예선 고정 Doctor `openai/gpt-6-luna`를 사용하는 표준 라이브러리 기반 개발 하네스다. 설계 자료는 [자료 목차](nova_reference/README.md), 상세 계획은 [구현계획](nova_reference/08_implementation_plan.md)에 있다.
 
+R1 실험은 별도 NumPy 의존성을 사용하는 지침 벡터 RAG다. 공식 지침을 청킹하고 코퍼스 학습 LSA 임베딩을 SQLite에 적재해 E2 최종 기록 생성에 근거를 제공한다. 사전학습 신경망 임베딩은 아니며 공식 성능은 미측정이다. [33차 개발 보고](reports/development_033.md)에서 범위·복원·한계를 확인한다.
+
 기존 프로젝트의 점수 정체를 해결하기 위해 새로 개발하는 독립 프로젝트다. MedDB 저장소의 `codex/nova-harness-rebuild` 브랜치에서 `nova_harness/`에 보관하며, 아래 명령은 이 디렉터리 안에서 실행한다. [의사결정 기록](DECISIONS.md)에 사용자 의도·고민·실험의 채택 이유를 대화마다 갱신한다. 공식 목표는 **≥78 → ≥85 → ≥90점**이다. 사용자의 변경 요청으로 목표 달성 전 [PR #5](https://github.com/SSAFY16-S11-NOVA2026/MedDB/pull/5)를 열어 개발을 이어간다. [저장소 전달 기록](docs/REPOSITORY_HANDOFF.md)에서 커밋 구분과 복원 방법을 확인할 수 있다.
 
 실제 개발 API 실행·원인 분석·수정 이력은 [개발 1차 보고서](reports/development_001.md)에 정리했다. 현재는 실험용 초기 버전이다.
