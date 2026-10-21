@@ -1,0 +1,75 @@
+{
+  "scope": "3 public development API sessions; no official score or validated clinical correctness",
+  "sessions": [
+    {
+      "completed": true,
+      "max_server_turn": 45,
+      "elapsed_seconds": 371.875,
+      "doctor_successful_request_ids": 22,
+      "doctor_attempted_request_ids": 22,
+      "errors": {
+        "EXAM_NOT_SPECIFIC": 2
+      },
+      "truncated_completions": 0,
+      "diagnosis": "수면제 의존(진정수면제 사용장애)",
+      "case": "C01",
+      "run": "20261021_231144_087554_meddb_e2_rag_graph",
+      "query_attempts": 1,
+      "selector_attempts": 2,
+      "generation_calls": 2,
+      "source_context_requests": 1,
+      "final_graph_audit": {
+        "has_soap": true,
+        "has_diagnosis": true,
+        "selected_count": 0,
+        "unverified_citation_ids": []
+      }
+    },
+    {
+      "completed": true,
+      "max_server_turn": 33,
+      "elapsed_seconds": 231.73,
+      "doctor_successful_request_ids": 15,
+      "doctor_attempted_request_ids": 16,
+      "errors": {
+        "PROVIDER_RESPONSE_INVALID": 1
+      },
+      "truncated_completions": 1,
+      "diagnosis": "체질성 성장지연",
+      "case": "C03",
+      "run": "20261021_231143_009459_meddb_e2_rag_graph",
+      "query_attempts": 1,
+      "selector_attempts": 1,
+      "generation_calls": 1,
+      "source_context_requests": 0,
+      "final_graph_audit": {
+        "has_soap": true,
+        "has_diagnosis": true,
+        "selected_count": 0,
+        "unverified_citation_ids": []
+      }
+    },
+    {
+      "completed": true,
+      "max_server_turn": 45,
+      "elapsed_seconds": 311.08,
+      "doctor_successful_request_ids": 29,
+      "doctor_attempted_request_ids": 29,
+      "errors": {},
+      "truncated_completions": 0,
+      "diagnosis": "갑상샘항진증(그레이브스병)",
+      "case": "C10",
+      "run": "20261021_231143_191528_meddb_e2_rag_graph",
+      "query_attempts": 1,
+      "selector_attempts": 1,
+      "generation_calls": 1,
+      "source_context_requests": 1,
+      "final_graph_audit": {
+        "has_soap": true,
+        "has_diagnosis": true,
+        "selected_count": 1,
+        "unverified_citation_ids": []
+      }
+    }
+  ]
+}
