@@ -1,0 +1,28 @@
+[
+  {
+    "case": "C03",
+    "recovered_source_backed_sentences": 2,
+    "lengths": [
+      19,
+      27
+    ],
+    "validation": {
+      "rejected_groups": 0,
+      "accepted_sentences": 2
+    },
+    "scope": "saved real model response, no new patient delivery or official score"
+  },
+  {
+    "case": "C10",
+    "recovered_source_backed_sentences": 2,
+    "lengths": [
+      28,
+      17
+    ],
+    "validation": {
+      "rejected_groups": 1,
+      "accepted_sentences": 2
+    },
+    "scope": "saved real model response, no new patient delivery or official score"
+  }
+]

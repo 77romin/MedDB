@@ -7,7 +7,7 @@ from nova_agent.safety_trace import SafetyTimeline
 from nova_agent import e2_safety_delivery as delivery
 
 class ClosingIntegrationTests(unittest.TestCase):
-    def run_closing(self,fields,repair=None,coverage=False,coverage_response=None):
+    def run_closing(self,fields,repair=None,coverage=False,coverage_response=None,defaults_override=None):
         responses=[]
         note={'P':{'education':'경련이 생기면 응급실로 가세요.'}}
         original_note=deepcopy(note)
@@ -17,7 +17,7 @@ class ClosingIntegrationTests(unittest.TestCase):
             if messages[0]['content']==delivery.REPAIR_SYSTEM:content=json.dumps(repair)
             if messages[0]['content']==delivery.COVERAGE_SYSTEM:content=json.dumps(coverage_response)
             return {'choices':[{'message':{'content':content}}]}
-        defaults=['진단 설명','검사 설명','재진 설명','일반 안전 설명']
+        defaults=defaults_override or ['진단 설명','검사 설명','재진 설명','일반 안전 설명']
         def original(client,*args):
             client.chat([{'role':'system','content':'외래 진료를 마무리하며'}],max_tokens=1536)
             return defaults
@@ -51,6 +51,14 @@ class ClosingIntegrationTests(unittest.TestCase):
         self.assertIn('경련이 생기면 응급실로 가세요.',out)
         self.assertEqual(len(calls),2)
         self.assertEqual(calls[-1]['max_tokens'],2048)
+
+    def test_foreign_generated_field_and_foreign_default_both_revert_to_korean(self):
+        foreign='早めに血液検査と心電図を受けてください。'
+        fields={'diagnosis':'의심돼요.','plan':foreign,'follow_up':'다시 와 주세요.','safety':'불편하면 진료받으세요.'}
+        out,calls=self.run_closing(fields,defaults_override=['의심돼요.',foreign,'다시 와 주세요.','불편하면 진료받으세요.'])
+        self.assertNotIn(foreign,out)
+        self.assertIn('필요한 검사 후 치료를 정할게요.',out)
+        self.assertEqual(len(calls),1)
 
     def test_unverifiable_repair_is_rejected(self):
         out,calls=self.run_closing({}, {'status':'needs_clarification','missing':[{'source_field':'education','source_quote':'없는 문장','messages':['새로운 처방입니다.']}]})
@@ -89,3 +97,12 @@ class ClosingBudgetTests(unittest.TestCase):
         self.assertEqual(caught.exception.code,'LOCAL_CLOSING_RESPONSE_INVALID')
         self.assertEqual(len(calls),1)
         self.assertEqual(calls[0]['reasoning_effort'],'low')
+
+class OtherPlanCompletionTests(unittest.TestCase):
+    def test_preserves_medical_conditions_but_does_not_claim_unspoken_instruction(self):
+        t=SafetyTimeline();note={'S':{'hpi':'actual'},'P':{'education':'계획','treatment':'졸릴 때 운전하지 않도록 안내함. 현재 5mg 복용은 미확인.','follow_up':'흉통이 생기면 즉시 진료받도록 교육함.'}}
+        fixed=delivery.reconcile_education(note,t)
+        self.assertEqual(fixed['S'],note['S'])
+        self.assertEqual(fixed['P']['treatment'],'졸릴 때 운전하지 않도록 안내할 계획임. 현재 5mg 복용은 미확인.')
+        self.assertEqual(fixed['P']['follow_up'],'흉통이 생기면 즉시 진료받도록 교육할 계획임.')
+        self.assertNotIn('운전하지 않도록 안내함',fixed['P']['education'].split('실제 전달 확인(성공 SAY):')[1])

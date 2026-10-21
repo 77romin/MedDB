@@ -8,7 +8,7 @@ from copy import deepcopy
 import json
 import re
 
-from .safety_delivery import complete_fields,complete_sentences,validate_addendum
+from .safety_delivery import complete_fields,complete_sentences,validate_addendum,patient_korean
 
 LAST_RUN=None
 
@@ -80,6 +80,11 @@ def install(timeline,check_coverage=True):
         if len(defaults)!=len(keys):
             events.append({'event':'closing_recovery_skipped','reason':'unexpected_default_contract'})
             return defaults
+        safe_defaults={'diagnosis':'증상 원인을 확인할 검사가 필요해요.','plan':'필요한 검사 후 치료를 정할게요.',
+                       'follow_up':'검사 결과를 확인할 재진을 잡을게요.',
+                       'safety':'갑자기 더 힘들어지면 바로 진료받으세요.',
+                       'concern':'걱정하신 부분도 함께 확인해 볼게요.'}
+        defaults=[text if patient_korean(text) else safe_defaults[key] for key,text in zip(keys,defaults)]
         fields=complete_fields(capture.raw)
         groups={key:complete_sentences(fields.get(key,'')) for key in keys}
         for key in keys:
@@ -93,9 +98,10 @@ def install(timeline,check_coverage=True):
                     {'role':'user','content':json.dumps({'target':target,'source_plan':note.get('P',{})},ensure_ascii=False)}],
                     max_tokens=1536,reasoning_effort='low')
                 payload=H.parse_json(raw['choices'][0]['message']['content'] or '')
-                parts=validate_addendum(payload,note)
+                validation={}
+                parts=validate_addendum(payload,note,audit=validation)
                 if parts:groups[target]=parts
-                events.append({'event':'closing_repair','field':target,'status':payload.get('status'),'sentences':len(parts)})
+                events.append({'event':'closing_repair','field':target,'status':payload.get('status'),'sentences':len(parts),'validation':validation})
             except Exception as exc:
                 events.append({'event':'closing_repair_failed','field':target,'error':type(exc).__name__})
         # Reserve existing question/answer/teach-back turns; never silently cut a
@@ -116,13 +122,14 @@ def install(timeline,check_coverage=True):
                     {'role':'user','content':json.dumps({'source_plan':note.get('P',{}),'proposed_speech':result},ensure_ascii=False)}],
                     max_tokens=2048,reasoning_effort='low')
                 payload=H.parse_json(raw['choices'][0]['message']['content'] or '')
-                extra=validate_addendum(payload,note)
+                validation={}
+                extra=validate_addendum(payload,note,audit=validation)
                 extra=[part for part in extra if part not in result]
                 if len(extra)>remaining:raise ValueError('insufficient turns for complete addendum')
                 # Additional source-backed speech is still only a proposal here.
                 # TimelineClient records it as delivered only after SAY succeeds.
                 result.extend(extra)
-                events.append({'event':'safety_coverage_check','status':payload['status'],'additional_sentences':len(extra)})
+                events.append({'event':'safety_coverage_check','status':payload['status'],'additional_sentences':len(extra),'validation':validation})
             except Exception as exc:
                 events.append({'event':'safety_coverage_check_failed','error':type(exc).__name__})
         events.append({'event':'closing_proposed','messages':list(result),
@@ -166,7 +173,15 @@ def reconcile_education(note,timeline):
                   '설명했다':'설명할 계획이다','안내했다':'안내할 계획이다','교육했다':'교육할 계획이다',
                   '설명했고':'설명할 계획이며','안내했고':'안내할 계획이며','교육했고':'교육할 계획이며',
                   '설명함':'설명할 계획임','안내함':'안내할 계획임','교육함':'교육할 계획임'}
-    for old,new in replacements.items():source=source.replace(old,new)
+    def as_plan(text):
+        for old,new in replacements.items():text=text.replace(old,new)
+        return text
+    source=as_plan(source)
+    # Education completion claims also occur inside treatment/follow_up. Change
+    # only these teaching verbs; leave medical actions, conditions, numbers and
+    # all S/O/A facts intact. Actual delivery is enumerated below.
+    for field,value in note.get('P',{}).items():
+        if field!='education' and isinstance(value,str):note['P'][field]=as_plan(value)
     actual=[s for s in timeline.speech if s['record_count']>0 and '?' not in s['content']]
     lines=['교육 계획(실제 수행은 아래 성공 발화에 한함):',source,
            '실제 전달 확인(성공 SAY):']+[s['content'] for s in actual]

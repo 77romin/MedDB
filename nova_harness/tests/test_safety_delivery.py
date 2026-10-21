@@ -22,3 +22,22 @@ class DeliveryTests(unittest.TestCase):
         with self.assertRaises(ValueError):validate_addendum(base,note)
         base['missing'][0]['source_quote']='없는 근거'
         with self.assertRaises(ValueError):validate_addendum(base,note)
+
+class GroundedSpanTests(unittest.TestCase):
+    def test_separate_complete_source_sentences_keep_exact_offsets(self):
+        from nova_agent.safety_delivery import source_spans
+        source='2~4주 내 재진. 4~6개월마다 성장 확인. 이상 시 의뢰.'
+        self.assertEqual(len(source_spans('2~4주 내 재진. 이상 시 의뢰.',source)),2)
+        with self.assertRaises(ValueError):source_spans('4주 내 재진. 이상 시 의뢰.',source)
+    def test_long_enumeration_preserves_every_condition_and_same_action(self):
+        from nova_agent.safety_delivery import split_condition_list
+        text='고열·의식변화·흉통·숨참·실신 땐 즉시 응급실로 가세요.'
+        parts=split_condition_list(text)
+        self.assertEqual(len(parts),2)
+        for term in ('고열','의식변화','흉통','숨참','실신'):self.assertTrue(any(term in p for p in parts))
+        self.assertTrue(all(len(p)<=30 and p.endswith('즉시 응급실로 가세요.') for p in parts))
+
+class PatientLanguageTests(unittest.TestCase):
+    def test_japanese_model_output_is_not_eligible_for_patient_speech(self):
+        self.assertEqual(complete_sentences('早めに血液検査と心電図を受けてください。'),[])
+        self.assertEqual(complete_sentences('CBT-I를 함께 고려할 수 있어요.'),['CBT-I를 함께 고려할 수 있어요.'])
