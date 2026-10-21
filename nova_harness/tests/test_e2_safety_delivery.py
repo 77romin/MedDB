@@ -66,3 +66,17 @@ class EducationReconciliationTests(unittest.TestCase):
         self.assertIn('전문의와 상의하세요.',actual)
         self.assertNotIn('운전하지 마세요.',actual)
         self.assertNotIn('잘못된 수행 주장',fixed['P']['education'])
+
+class ClosingBudgetTests(unittest.TestCase):
+    def test_empty_provider_response_escapes_upstream_repeat_loop(self):
+        from nova_sdk import NovaError
+        calls=[]
+        def failed(messages,**kwargs):
+            calls.append(kwargs)
+            raise NovaError('PROVIDER_RESPONSE_INVALID',503)
+        capture=delivery.CaptureClosing(SimpleNamespace(chat=failed),{'P':{}})
+        with self.assertRaises(NovaError) as caught:
+            capture.chat([{'role':'system','content':'외래 진료를 마무리하며'}],max_tokens=1536)
+        self.assertEqual(caught.exception.code,'LOCAL_CLOSING_RESPONSE_INVALID')
+        self.assertEqual(len(calls),1)
+        self.assertEqual(calls[0]['reasoning_effort'],'low')

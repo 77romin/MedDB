@@ -38,7 +38,16 @@ class CaptureClosing:
             messages=deepcopy(messages)
             messages[0]['content']+='\n'+CLOSING_CONTEXT
             messages.append({'role':'user','content':json.dumps({'source_plan':self.note.get('P',{})},ensure_ascii=False)})
-        response=self.client.chat(messages,**kwargs)
+        if is_closing:kwargs['reasoning_effort']='low'
+        try:response=self.client.chat(messages,**kwargs)
+        except Exception as exc:
+            from nova_sdk import NovaError
+            if is_closing and isinstance(exc,NovaError) and exc.code=='PROVIDER_RESPONSE_INVALID':
+                # Upstream retries this error up to eight times. A fresh identical
+                # request can consume the same reasoning budget and fail again.
+                # Return to the existing fallback + our one bounded repair instead.
+                raise NovaError('LOCAL_CLOSING_RESPONSE_INVALID',getattr(exc,'status',None)) from exc
+            raise
         if is_closing:
             self.raw=response['choices'][0]['message'].get('content') or ''
         return response
