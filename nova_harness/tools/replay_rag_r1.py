@@ -24,10 +24,13 @@ class RagReplay(ReplayClient):
         return deepcopy(row['response'])
 
 
-def replay(trace):
+def replay(trace, retrieval='r1'):
     session, calls = _load(trace)
     client = RagReplay(session, calls)
-    store = VectorStore(ROOT/'dist/rag/index.sqlite', ROOT/'vendor/guidelines/guidelines')
+    store_class = VectorStore
+    if retrieval == 'r2':
+        from nova_agent.rag_retrieval import VectorStore as store_class
+    store = store_class(ROOT/'dist/rag/index.sqlite', ROOT/'vendor/guidelines/guidelines')
     old = e2_rag.install(store)
     try:
         consult(client, prepare(), knowledge_mode='clinical', reference_profile='reviewed')
@@ -35,6 +38,7 @@ def replay(trace):
         e2_rag.restore(old)
         store.close()
     return {'trace_name': Path(trace).parent.name, 'remaining': client.remaining,
+            'retrieval': retrieval,
             'record_context_calls': (e2_rag.LAST_RUN or {}).get('injected_record_calls', 0),
             'retrieved': len((e2_rag.LAST_RUN or {}).get('retrieved', [])),
             'meaning': 'integration only; saved model responses cannot measure RAG benefit'}
@@ -43,5 +47,6 @@ def replay(trace):
 if __name__ == '__main__':
     p = argparse.ArgumentParser()
     p.add_argument('traces', nargs='+')
+    p.add_argument('--retrieval', choices=('r1','r2'), default='r1')
     args = p.parse_args()
-    print(json.dumps([replay(t) for t in args.traces], ensure_ascii=False, indent=2))
+    print(json.dumps([replay(t, args.retrieval) for t in args.traces], ensure_ascii=False, indent=2))
