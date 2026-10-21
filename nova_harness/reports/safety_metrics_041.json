@@ -1,0 +1,674 @@
+{
+  "scope": "public development API diagnostics, not official scores or clinical correctness",
+  "caveats": [
+    "Each live session has different patient/doctor interaction; not a paired causal score comparison.",
+    "Model-review checklist items differ per session; do not rank versions by raw category counts.",
+    "Echoed actual speech proves provenance, not full safety coverage or clinical correctness.",
+    "Intermediate versions are included to expose failures, not pooled with final S1.",
+    "Registry: three full validations plus targeted C10 budget regression. A final post-DIAGNOSE-note recommendation-verb cleanup is tested by source reconstruction and note replay; not a new API submission."
+  ],
+  "final_runtime_hashes": {
+    "nova_agent/safety_trace.py": "f6f12fd1430b88f4383f557a021b90d625c22436a7bb22379a31209a3701fec2",
+    "nova_agent/safety_delivery.py": "0aa75943db570fcac18fb028261db194a7d2aca25a4ea1853e34aab4645c39a3",
+    "nova_agent/e2_safety_delivery.py": "62d3f371bcb06c517c3534452b95f1ac1abc56a20c40a30b387c8b804902cc16"
+  },
+  "validated_s1_sessions_completed": 4,
+  "sessions": [
+    {
+      "run": "20261022_072602_455709_safety_session_R3b",
+      "case": "C01",
+      "version": "R3b",
+      "e2_source_matches_current": false,
+      "timeline_source_matches_current": false,
+      "completed": true,
+      "max_server_turn": 45,
+      "elapsed_seconds": 332.156,
+      "doctor_attempted_request_ids": 21,
+      "doctor_successful_request_ids": 21,
+      "errors": {
+        "EXAM_NOT_SPECIFIC": 1
+      },
+      "truncated_completions": 0,
+      "record_count": 2,
+      "successful_explanation_count": 6,
+      "explicit_actual_speech_section": false,
+      "all_actual_explanations_listed": null,
+      "final_reconciliation_changes_only_education": false,
+      "model_review": {
+        "delivery": {
+          "missing": 7,
+          "covered": 2,
+          "partial": 1
+        },
+        "final_consistency": {
+          "preserved": 6,
+          "changed": 2,
+          "omitted": 2
+        },
+        "unspoken_completed_claims": 2
+      }
+    },
+    {
+      "run": "20261022_072602_730520_safety_session_R3a",
+      "case": "C01",
+      "version": "R3a",
+      "e2_source_matches_current": false,
+      "timeline_source_matches_current": false,
+      "completed": true,
+      "max_server_turn": 44,
+      "elapsed_seconds": 321.308,
+      "doctor_attempted_request_ids": 21,
+      "doctor_successful_request_ids": 21,
+      "errors": {
+        "INVALID_API_RESPONSE": 1
+      },
+      "truncated_completions": 0,
+      "record_count": 2,
+      "successful_explanation_count": 6,
+      "explicit_actual_speech_section": false,
+      "all_actual_explanations_listed": null,
+      "final_reconciliation_changes_only_education": false,
+      "model_review": {
+        "delivery": {
+          "missing": 5,
+          "partial": 5
+        },
+        "final_consistency": {
+          "preserved": 5,
+          "changed": 5
+        },
+        "unspoken_completed_claims": 3
+      }
+    },
+    {
+      "run": "20261022_073012_455488_safety_session_R3a_safety",
+      "case": "C10",
+      "version": "S1_intermediate",
+      "e2_source_matches_current": false,
+      "timeline_source_matches_current": false,
+      "completed": true,
+      "max_server_turn": 44,
+      "elapsed_seconds": 330.782,
+      "doctor_attempted_request_ids": 30,
+      "doctor_successful_request_ids": 30,
+      "errors": {},
+      "truncated_completions": 0,
+      "record_count": 2,
+      "successful_explanation_count": 6,
+      "explicit_actual_speech_section": false,
+      "all_actual_explanations_listed": null,
+      "final_reconciliation_changes_only_education": false
+    },
+    {
+      "run": "20261022_073206_067446_safety_session_R3a_safety",
+      "case": "C01",
+      "version": "S1_intermediate",
+      "e2_source_matches_current": false,
+      "timeline_source_matches_current": false,
+      "completed": true,
+      "max_server_turn": 47,
+      "elapsed_seconds": 398.368,
+      "doctor_attempted_request_ids": 23,
+      "doctor_successful_request_ids": 23,
+      "errors": {},
+      "truncated_completions": 0,
+      "record_count": 2,
+      "successful_explanation_count": 8,
+      "explicit_actual_speech_section": false,
+      "all_actual_explanations_listed": null,
+      "final_reconciliation_changes_only_education": false
+    },
+    {
+      "run": "20261022_073456_122278_safety_session_R3a_safety",
+      "case": "C03",
+      "version": "S1_intermediate",
+      "e2_source_matches_current": false,
+      "timeline_source_matches_current": false,
+      "completed": true,
+      "max_server_turn": 34,
+      "elapsed_seconds": 577.558,
+      "doctor_attempted_request_ids": 21,
+      "doctor_successful_request_ids": 13,
+      "errors": {
+        "PROVIDER_RESPONSE_INVALID": 8
+      },
+      "truncated_completions": 0,
+      "record_count": 1,
+      "successful_explanation_count": 7,
+      "explicit_actual_speech_section": true,
+      "all_actual_explanations_listed": true,
+      "final_reconciliation_changes_only_education": false
+    },
+    {
+      "run": "20261022_073501_001947_safety_session_R3a_safety",
+      "case": "C01",
+      "version": "S1_intermediate",
+      "e2_source_matches_current": false,
+      "timeline_source_matches_current": false,
+      "completed": true,
+      "max_server_turn": 46,
+      "elapsed_seconds": 816.073,
+      "doctor_attempted_request_ids": 29,
+      "doctor_successful_request_ids": 21,
+      "errors": {
+        "EXAM_NOT_SPECIFIC": 1,
+        "PROVIDER_RESPONSE_INVALID": 8
+      },
+      "truncated_completions": 0,
+      "record_count": 2,
+      "successful_explanation_count": 7,
+      "explicit_actual_speech_section": true,
+      "all_actual_explanations_listed": true,
+      "final_reconciliation_changes_only_education": false
+    },
+    {
+      "run": "20261022_073618_383575_safety_session_R3a_safety",
+      "case": "C10",
+      "version": "S1_intermediate",
+      "e2_source_matches_current": false,
+      "timeline_source_matches_current": false,
+      "completed": true,
+      "max_server_turn": 44,
+      "elapsed_seconds": 696.797,
+      "doctor_attempted_request_ids": 36,
+      "doctor_successful_request_ids": 28,
+      "errors": {
+        "PROVIDER_RESPONSE_INVALID": 8
+      },
+      "truncated_completions": 0,
+      "record_count": 1,
+      "successful_explanation_count": 6,
+      "explicit_actual_speech_section": true,
+      "all_actual_explanations_listed": true,
+      "final_reconciliation_changes_only_education": false
+    },
+    {
+      "run": "20261022_074332_594266_safety_session_R3a_safety",
+      "case": "C03",
+      "version": "S1_intermediate",
+      "e2_source_matches_current": false,
+      "timeline_source_matches_current": false,
+      "completed": true,
+      "max_server_turn": 33,
+      "elapsed_seconds": 211.483,
+      "doctor_attempted_request_ids": 12,
+      "doctor_successful_request_ids": 12,
+      "errors": {},
+      "truncated_completions": 0,
+      "record_count": 1,
+      "successful_explanation_count": 6,
+      "explicit_actual_speech_section": true,
+      "all_actual_explanations_listed": true,
+      "final_reconciliation_changes_only_education": false,
+      "model_review": {
+        "delivery": {
+          "missing": 5,
+          "partial": 4,
+          "covered": 1
+        },
+        "final_consistency": {
+          "preserved": 6,
+          "changed": 4
+        },
+        "unspoken_completed_claims": 1
+      },
+      "delivery_event_counts": {
+        "closing_field_preserved": 5,
+        "closing_proposed": 1
+      },
+      "unresolved_fields": [
+        []
+      ]
+    },
+    {
+      "run": "20261022_074333_604714_safety_session_R3a_safety",
+      "case": "C10",
+      "version": "S1_intermediate",
+      "e2_source_matches_current": false,
+      "timeline_source_matches_current": false,
+      "completed": true,
+      "max_server_turn": 47,
+      "elapsed_seconds": 312.137,
+      "doctor_attempted_request_ids": 29,
+      "doctor_successful_request_ids": 29,
+      "errors": {},
+      "truncated_completions": 0,
+      "record_count": 1,
+      "successful_explanation_count": 8,
+      "explicit_actual_speech_section": true,
+      "all_actual_explanations_listed": true,
+      "final_reconciliation_changes_only_education": false,
+      "delivery_event_counts": {
+        "closing_field_preserved": 4,
+        "closing_repair": 1,
+        "closing_proposed": 1
+      },
+      "unresolved_fields": [
+        [
+          "safety"
+        ]
+      ]
+    },
+    {
+      "run": "20261022_074334_461367_safety_session_R3a_safety",
+      "case": "C01",
+      "version": "S1_intermediate",
+      "e2_source_matches_current": false,
+      "timeline_source_matches_current": false,
+      "completed": true,
+      "max_server_turn": 50,
+      "elapsed_seconds": 315.634,
+      "doctor_attempted_request_ids": 18,
+      "doctor_successful_request_ids": 18,
+      "errors": {},
+      "truncated_completions": 0,
+      "record_count": 1,
+      "successful_explanation_count": 12,
+      "explicit_actual_speech_section": true,
+      "all_actual_explanations_listed": true,
+      "final_reconciliation_changes_only_education": false,
+      "delivery_event_counts": {
+        "closing_field_preserved": 5,
+        "closing_proposed": 1
+      },
+      "unresolved_fields": [
+        []
+      ]
+    },
+    {
+      "run": "20261022_074945_763373_safety_session_R3a_safety",
+      "case": "C01",
+      "version": "S1_intermediate",
+      "e2_source_matches_current": false,
+      "timeline_source_matches_current": false,
+      "completed": true,
+      "max_server_turn": 49,
+      "elapsed_seconds": 325.651,
+      "doctor_attempted_request_ids": 21,
+      "doctor_successful_request_ids": 21,
+      "errors": {},
+      "truncated_completions": 0,
+      "record_count": 1,
+      "successful_explanation_count": 13,
+      "explicit_actual_speech_section": true,
+      "all_actual_explanations_listed": true,
+      "final_reconciliation_changes_only_education": false,
+      "model_review": {
+        "delivery": {
+          "partial": 8,
+          "covered": 2
+        },
+        "final_consistency": {
+          "changed": 2,
+          "preserved": 8
+        },
+        "unspoken_completed_claims": 2
+      },
+      "delivery_event_counts": {
+        "closing_field_preserved": 5,
+        "safety_coverage_check": 1,
+        "closing_proposed": 1
+      },
+      "unresolved_fields": [
+        []
+      ]
+    },
+    {
+      "run": "20261022_074946_432462_safety_session_R3a_safety",
+      "case": "C10",
+      "version": "S1_intermediate",
+      "e2_source_matches_current": false,
+      "timeline_source_matches_current": false,
+      "completed": true,
+      "max_server_turn": 44,
+      "elapsed_seconds": 333.715,
+      "doctor_attempted_request_ids": 29,
+      "doctor_successful_request_ids": 29,
+      "errors": {},
+      "truncated_completions": 0,
+      "record_count": 1,
+      "successful_explanation_count": 7,
+      "explicit_actual_speech_section": true,
+      "all_actual_explanations_listed": true,
+      "final_reconciliation_changes_only_education": false,
+      "delivery_event_counts": {
+        "closing_field_preserved": 4,
+        "closing_repair": 1,
+        "safety_coverage_check_failed": 1,
+        "closing_proposed": 1
+      },
+      "unresolved_fields": [
+        [
+          "safety"
+        ]
+      ]
+    },
+    {
+      "run": "20261022_074946_553076_safety_session_R3a_safety",
+      "case": "C03",
+      "version": "S1_intermediate",
+      "e2_source_matches_current": false,
+      "timeline_source_matches_current": false,
+      "completed": true,
+      "max_server_turn": 36,
+      "elapsed_seconds": 235.896,
+      "doctor_attempted_request_ids": 14,
+      "doctor_successful_request_ids": 14,
+      "errors": {},
+      "truncated_completions": 0,
+      "record_count": 1,
+      "successful_explanation_count": 9,
+      "explicit_actual_speech_section": true,
+      "all_actual_explanations_listed": true,
+      "final_reconciliation_changes_only_education": false,
+      "model_review": {
+        "delivery": {
+          "partial": 7,
+          "missing": 3
+        },
+        "final_consistency": {
+          "preserved": 7,
+          "changed": 3
+        },
+        "unspoken_completed_claims": 0
+      },
+      "delivery_event_counts": {
+        "closing_field_preserved": 4,
+        "closing_repair": 1,
+        "safety_coverage_check_failed": 1,
+        "closing_proposed": 1
+      },
+      "unresolved_fields": [
+        [
+          "follow_up"
+        ]
+      ]
+    },
+    {
+      "run": "20261022_080013_414935_safety_session_R3a_safety",
+      "case": "C10",
+      "version": "S1_intermediate",
+      "e2_source_matches_current": false,
+      "timeline_source_matches_current": true,
+      "completed": true,
+      "max_server_turn": 47,
+      "elapsed_seconds": 328.241,
+      "doctor_attempted_request_ids": 30,
+      "doctor_successful_request_ids": 30,
+      "errors": {},
+      "truncated_completions": 0,
+      "record_count": 1,
+      "successful_explanation_count": 9,
+      "explicit_actual_speech_section": true,
+      "all_actual_explanations_listed": true,
+      "final_reconciliation_changes_only_education": false,
+      "model_review": {
+        "delivery": {
+          "covered": 3,
+          "missing": 7
+        },
+        "final_consistency": {
+          "preserved": 8,
+          "changed": 2
+        },
+        "unspoken_completed_claims": 0
+      },
+      "delivery_event_counts": {
+        "closing_field_preserved": 4,
+        "closing_repair": 1,
+        "safety_coverage_check": 1,
+        "closing_proposed": 1
+      },
+      "unresolved_fields": [
+        [
+          "follow_up"
+        ]
+      ]
+    },
+    {
+      "run": "20261022_080013_466229_safety_session_R3a_safety",
+      "case": "C03",
+      "version": "S1_intermediate",
+      "e2_source_matches_current": false,
+      "timeline_source_matches_current": true,
+      "completed": true,
+      "max_server_turn": 37,
+      "elapsed_seconds": 258.433,
+      "doctor_attempted_request_ids": 17,
+      "doctor_successful_request_ids": 17,
+      "errors": {},
+      "truncated_completions": 0,
+      "record_count": 1,
+      "successful_explanation_count": 9,
+      "explicit_actual_speech_section": true,
+      "all_actual_explanations_listed": true,
+      "final_reconciliation_changes_only_education": false,
+      "model_review": {
+        "delivery": {
+          "missing": 4,
+          "partial": 3,
+          "covered": 3
+        },
+        "final_consistency": {
+          "preserved": 10
+        },
+        "unspoken_completed_claims": 0
+      },
+      "delivery_event_counts": {
+        "closing_field_preserved": 3,
+        "closing_repair_failed": 1,
+        "safety_coverage_check": 1,
+        "closing_proposed": 1
+      },
+      "unresolved_fields": [
+        [
+          "safety",
+          "follow_up"
+        ]
+      ]
+    },
+    {
+      "run": "20261022_080014_034882_safety_session_R3a_safety",
+      "case": "C01",
+      "version": "S1_intermediate",
+      "e2_source_matches_current": false,
+      "timeline_source_matches_current": true,
+      "completed": true,
+      "max_server_turn": 50,
+      "elapsed_seconds": 316.969,
+      "doctor_attempted_request_ids": 22,
+      "doctor_successful_request_ids": 22,
+      "errors": {
+        "EXAM_NOT_SPECIFIC": 2
+      },
+      "truncated_completions": 0,
+      "record_count": 1,
+      "successful_explanation_count": 11,
+      "explicit_actual_speech_section": true,
+      "all_actual_explanations_listed": true,
+      "final_reconciliation_changes_only_education": false,
+      "model_review": {
+        "delivery": {
+          "covered": 6,
+          "partial": 4
+        },
+        "final_consistency": {
+          "preserved": 9,
+          "changed": 1
+        },
+        "unspoken_completed_claims": 0
+      },
+      "delivery_event_counts": {
+        "closing_field_preserved": 4,
+        "closing_repair": 1,
+        "safety_coverage_check": 1,
+        "closing_proposed": 1
+      },
+      "unresolved_fields": [
+        []
+      ]
+    },
+    {
+      "run": "20261022_081024_824030_safety_session_R3a_safety",
+      "case": "C01",
+      "version": "S1_live_validation_recorded_source",
+      "e2_source_matches_current": false,
+      "timeline_source_matches_current": true,
+      "completed": true,
+      "max_server_turn": 49,
+      "elapsed_seconds": 349.706,
+      "doctor_attempted_request_ids": 21,
+      "doctor_successful_request_ids": 21,
+      "errors": {},
+      "truncated_completions": 0,
+      "record_count": 2,
+      "successful_explanation_count": 10,
+      "explicit_actual_speech_section": true,
+      "all_actual_explanations_listed": true,
+      "final_reconciliation_changes_only_education": false,
+      "model_review": {
+        "delivery": {
+          "partial": 2,
+          "covered": 4,
+          "missing": 4
+        },
+        "final_consistency": {
+          "changed": 5,
+          "preserved": 5
+        },
+        "unspoken_completed_claims": 0
+      },
+      "delivery_event_counts": {
+        "closing_field_preserved": 5,
+        "safety_coverage_check_failed": 1,
+        "closing_proposed": 1
+      },
+      "unresolved_fields": [
+        []
+      ]
+    },
+    {
+      "run": "20261022_081025_511508_safety_session_R3a_safety",
+      "case": "C10",
+      "version": "S1_live_validation_recorded_source",
+      "e2_source_matches_current": false,
+      "timeline_source_matches_current": true,
+      "completed": true,
+      "max_server_turn": 45,
+      "elapsed_seconds": 304.013,
+      "doctor_attempted_request_ids": 30,
+      "doctor_successful_request_ids": 30,
+      "errors": {},
+      "truncated_completions": 0,
+      "record_count": 1,
+      "successful_explanation_count": 6,
+      "explicit_actual_speech_section": true,
+      "all_actual_explanations_listed": true,
+      "final_reconciliation_changes_only_education": false,
+      "model_review": {
+        "delivery": {
+          "missing": 8,
+          "covered": 1,
+          "partial": 1
+        },
+        "final_consistency": {
+          "preserved": 5,
+          "changed": 5
+        },
+        "unspoken_completed_claims": 0
+      },
+      "delivery_event_counts": {
+        "closing_field_preserved": 4,
+        "closing_repair": 1,
+        "safety_coverage_check_failed": 1,
+        "closing_proposed": 1
+      },
+      "unresolved_fields": [
+        [
+          "safety"
+        ]
+      ]
+    },
+    {
+      "run": "20261022_081026_065409_safety_session_R3a_safety",
+      "case": "C03",
+      "version": "S1_live_validation_recorded_source",
+      "e2_source_matches_current": false,
+      "timeline_source_matches_current": true,
+      "completed": true,
+      "max_server_turn": 36,
+      "elapsed_seconds": 209.1,
+      "doctor_attempted_request_ids": 14,
+      "doctor_successful_request_ids": 14,
+      "errors": {},
+      "truncated_completions": 0,
+      "record_count": 1,
+      "successful_explanation_count": 9,
+      "explicit_actual_speech_section": true,
+      "all_actual_explanations_listed": true,
+      "final_reconciliation_changes_only_education": false,
+      "model_review": {
+        "delivery": {
+          "partial": 5,
+          "missing": 2,
+          "covered": 3
+        },
+        "final_consistency": {
+          "preserved": 10
+        },
+        "unspoken_completed_claims": 0
+      },
+      "delivery_event_counts": {
+        "closing_repair": 1,
+        "safety_coverage_check": 1,
+        "closing_proposed": 1
+      },
+      "unresolved_fields": [
+        [
+          "follow_up"
+        ]
+      ]
+    },
+    {
+      "run": "20261022_082006_598639_safety_session_R3a_safety",
+      "case": "C10",
+      "version": "S1_live_validation_recorded_source",
+      "e2_source_matches_current": false,
+      "timeline_source_matches_current": true,
+      "completed": true,
+      "max_server_turn": 47,
+      "elapsed_seconds": 354.777,
+      "doctor_attempted_request_ids": 32,
+      "doctor_successful_request_ids": 32,
+      "errors": {},
+      "truncated_completions": 0,
+      "record_count": 1,
+      "successful_explanation_count": 8,
+      "explicit_actual_speech_section": true,
+      "all_actual_explanations_listed": true,
+      "final_reconciliation_changes_only_education": false,
+      "model_review": {
+        "delivery": {
+          "partial": 4,
+          "missing": 6
+        },
+        "final_consistency": {
+          "preserved": 4,
+          "changed": 6
+        },
+        "unspoken_completed_claims": 1
+      },
+      "delivery_event_counts": {
+        "closing_field_preserved": 3,
+        "closing_repair": 1,
+        "safety_coverage_check": 1,
+        "closing_proposed": 1
+      },
+      "unresolved_fields": [
+        [
+          "safety"
+        ]
+      ]
+    }
+  ]
+}
