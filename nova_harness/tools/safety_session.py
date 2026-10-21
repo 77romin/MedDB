@@ -1,0 +1,52 @@
+"""One real public sample with unmodified R3a/R3b plus passive safety timeline."""
+import argparse
+from datetime import datetime,timezone,timedelta
+import importlib
+import json
+import os
+from pathlib import Path
+import sys
+ROOT=Path(__file__).resolve().parents[1]
+sys.path[:0]=[str(ROOT),str(ROOT/'tools'),str(ROOT/'vendor/meddb')]
+from experiment import load_local_env,fingerprint
+from nova_agent.protocol import LoggedClient,Gateway
+from nova_agent.telemetry import Trace
+from nova_agent.safety_trace import SafetyTimeline,TimelineClient,install,restore
+from nova_agent.rag_retrieval import VectorStore
+from nova_agent.analysis import write_report
+from examples.hybrid_care import consult,prepare
+
+
+def main():
+    p=argparse.ArgumentParser();p.add_argument('--case',required=True);p.add_argument('--mode',choices=['R3a','R3b','R3a_safety'],required=True);args=p.parse_args()
+    load_local_env();key=os.environ.get('NOVA_DEV_KEY','').strip()
+    if not key:raise SystemExit('Key missing; configure locally')
+    if os.environ.get('NOVA_API_BASE','https://nova.snubhai.org').rstrip('/')!='https://nova.snubhai.org':raise SystemExit('Official origin required')
+    stamp=datetime.now(timezone(timedelta(hours=9))).strftime('%Y%m%d_%H%M%S_%f')
+    out=ROOT/'results'/f'{stamp}_safety_session_{args.mode}';out.mkdir(mode=0o700)
+    manifest={'scope':'public development sample; no official score','mode':args.mode,'case':args.case,'fingerprint':fingerprint()}
+    (out/'manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
+    trace=Trace(out/'trace.jsonl',secrets=[key]);raw=LoggedClient(api_base='https://nova.snubhai.org',token=key,sample=True,trace=trace)
+    trace.emit('experiment_start',manifest=manifest)
+    Gateway(raw,trace=trace).invoke('create_sample',args.case)
+    timeline=SafetyTimeline(trace);client=TimelineClient(raw,timeline)
+    store=VectorStore(ROOT/'dist/rag/index.sqlite',ROOT/'vendor/guidelines/guidelines')
+    module=importlib.import_module('nova_agent.e2_rag_query' if args.mode=='R3b' else 'nova_agent.e2_rag_selection')
+    old_rag=module.install(store);old_safety=None
+    if args.mode=='R3a_safety':
+        from nova_agent import e2_safety_delivery
+        old_safety=e2_safety_delivery.install(timeline)
+        client=e2_safety_delivery.wrap(client,timeline)
+    old_record=install(timeline)
+    print('Experiment directory:',out,flush=True)
+    try:
+        outcome=consult(client,prepare(),knowledge_mode='clinical',reference_profile='reviewed')
+        trace.emit('experiment_complete',outcome=outcome)
+    finally:
+        restore(old_record)
+        if old_safety is not None:e2_safety_delivery.restore(old_safety)
+        module.restore(old_rag);store.close()
+        (out/'timeline.json').write_text(json.dumps(timeline.snapshot(),ensure_ascii=False,indent=2),encoding='utf-8')
+    print(json.dumps(write_report(out/'trace.jsonl'),ensure_ascii=False,indent=2))
+
+if __name__=='__main__':main()
