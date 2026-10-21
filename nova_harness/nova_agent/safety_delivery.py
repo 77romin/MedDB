@@ -76,8 +76,9 @@ def split_condition_list(text,limit=30):
     return groups
 
 
-def validate_addendum(payload,note,allowed_fields=('disposition','education','follow_up','treatment'),audit=None):
+def validate_addendum(payload,note,allowed_fields=('disposition','education','follow_up','treatment'),audit=None,max_sentences=2):
     """Structural/provenance validation, NOT proof of clinical entailment."""
+    if not isinstance(max_sentences,int) or not 1<=max_sentences<=4:raise ValueError('invalid speech budget')
     if not isinstance(payload,dict) or payload.get('status') not in ('consistent','needs_clarification','uncertain'):
         raise ValueError('invalid audit status')
     missing=payload.get('missing',[])
@@ -100,7 +101,7 @@ def validate_addendum(payload,note,allowed_fields=('disposition','education','fo
                 expanded=complete_sentences(text) or split_condition_list(text)
                 if not expanded:raise ValueError('invalid speech length')
                 group.extend(expanded)
-            if len(messages)+len(group)>2:raise ValueError('complete group exceeds speech budget')
+            if len(messages)+len(group)>max_sentences:raise ValueError('complete group exceeds speech budget')
             messages.extend(group)
         except (ValueError,AttributeError,TypeError):
             rejected+=1

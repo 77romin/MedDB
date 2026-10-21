@@ -123,7 +123,7 @@ def install(timeline,check_coverage=True):
                     max_tokens=2048,reasoning_effort='low')
                 payload=H.parse_json(raw['choices'][0]['message']['content'] or '')
                 validation={}
-                extra=validate_addendum(payload,note,audit=validation)
+                extra=validate_addendum(payload,note,audit=validation,max_sentences=min(4,remaining))
                 extra=[part for part in extra if part not in result]
                 if len(extra)>remaining:raise ValueError('insufficient turns for complete addendum')
                 # Additional source-backed speech is still only a proposal here.

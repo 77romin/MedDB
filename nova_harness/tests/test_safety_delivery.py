@@ -41,3 +41,16 @@ class PatientLanguageTests(unittest.TestCase):
     def test_japanese_model_output_is_not_eligible_for_patient_speech(self):
         self.assertEqual(complete_sentences('早めに血液検査と心電図を受けてください。'),[])
         self.assertEqual(complete_sentences('CBT-I를 함께 고려할 수 있어요.'),['CBT-I를 함께 고려할 수 있어요.'])
+
+class AvailableTurnBudgetTests(unittest.TestCase):
+    def test_two_source_sentences_can_expand_to_three_complete_messages(self):
+        text='두근거림 악화, 흉통, 호흡곤란, 실신, 고열 또는 의식 변화가 생기면 즉시 응급 진료를 받도록 함.'
+        payload={'status':'needs_clarification','missing':[{'source_field':'follow_up','source_quote':text,
+          'messages':['두근거림 악화·흉통·숨참·실신 시 즉시 응급진료 받으세요.','고열·의식 변화 시 즉시 응급진료 받으세요.']}]}
+        note={'P':{'follow_up':text}}
+        with self.assertRaises(ValueError):validate_addendum(payload,note)
+        out=validate_addendum(payload,note,max_sentences=4)
+        self.assertEqual(len(out),3)
+        self.assertTrue(all(len(s)<=30 for s in out))
+        for term in ('두근거림 악화','흉통','숨참','실신','고열','의식 변화'):
+            self.assertTrue(any(term in s for s in out))
