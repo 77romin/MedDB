@@ -35,7 +35,8 @@ class SafetyTimeline:
 class TimelineClient:
     def __init__(self, client, timeline):self.client=client;self.timeline=timeline
     def __getattr__(self, name):return getattr(self.client, name)
-    def say(self, content, **kwargs):
+    def say(self, content, *, request_id=None, **kwargs):
+        if request_id is not None:kwargs['request_id']=request_id
         try:reply=self.client.say(content, **kwargs)
         except Exception as exc:
             self.timeline.failures.append({'action':'SAY','content':content,'error':getattr(exc,'code',type(exc).__name__)})
@@ -43,7 +44,8 @@ class TimelineClient:
         self.timeline.speech.append({'index':len(self.timeline.speech),'content':content,
                                      'reply':deepcopy(reply),'record_count':len(self.timeline.records)})
         return reply
-    def diagnose(self, *, note, diagnosis, **kwargs):
+    def diagnose(self, *, note, diagnosis, request_id=None, **kwargs):
+        if request_id is not None:kwargs['request_id']=request_id
         self.timeline.final={'note':deepcopy(note),'diagnosis':diagnosis}
         if self.timeline.trace:self.timeline.trace.emit('safety_triplet',timeline=self.timeline.snapshot())
         return self.client.diagnose(note=note,diagnosis=diagnosis,**kwargs)

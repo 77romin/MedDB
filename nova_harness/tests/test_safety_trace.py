@@ -22,3 +22,14 @@ class SafetyTraceTests(unittest.TestCase):
         self.assertEqual(result['note']['P']['education'],'final')
     def test_observation_fingerprint_retains_polarity(self):
         self.assertNotEqual(digest({'answer':'없음'}),digest({'answer':'있음'}))
+
+class RetryIdentityTests(unittest.TestCase):
+    def test_wrapper_exposes_and_forwards_stable_request_id(self):
+        import inspect
+        seen=[]
+        def say(content,*,request_id=None):seen.append(request_id);return {'content':'reply','turn':1}
+        client=TimelineClient(SimpleNamespace(say=say),SafetyTimeline())
+        self.assertIn('request_id',inspect.signature(client.say).parameters)
+        client.say('hello',request_id='stable')
+        client.say('hello',request_id='stable')
+        self.assertEqual(seen,['stable','stable'])
