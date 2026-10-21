@@ -50,7 +50,7 @@ def main():
     sub.add_parser('list')
     r = sub.add_parser('run')
     r.add_argument('--case', required=True, help='published sample UUID from list; no answer files loaded')
-    r.add_argument('--agent', choices=['baseline', 'harness', 'meddb_e2', 'meddb_e2_plus', 'meddb_e2_calibrated', 'meddb_e2_direct_answer', 'meddb_e2_pending_question', 'meddb_e2_answer_compact', 'meddb_e2_med_reconciliation', 'meddb_e2_med_safety', 'meddb_e2_turn_reallocation', 'meddb_e2_ledger', 'meddb_e2_concept_compact', 'meddb_e2_value_questions', 'meddb_e2_convergence_shadow'], default='harness')
+    r.add_argument('--agent', choices=['baseline', 'harness', 'meddb_e2', 'meddb_e2_plus', 'meddb_e2_calibrated', 'meddb_e2_direct_answer', 'meddb_e2_pending_question', 'meddb_e2_answer_compact', 'meddb_e2_med_reconciliation', 'meddb_e2_med_safety', 'meddb_e2_turn_reallocation', 'meddb_e2_ledger', 'meddb_e2_concept_compact', 'meddb_e2_value_questions', 'meddb_e2_convergence_shadow', 'meddb_e2_rag_selection'], default='harness')
     r.add_argument('--max-turns', type=int, default=30)
     r.add_argument('--label', default='')
     r.add_argument('--no-meddb', action='store_true', help='ablation: disable imported clinical graph advice')
@@ -106,7 +106,7 @@ def main():
                 'final_reasoning_effort':Config().reasoning_effort if args.agent == 'harness' else None,
                 'python': sys.version, 'started_kst': stamp,
                 'evaluation_mode': 'development_sample_no_official_score'}
-    if args.agent in {'meddb_e2','meddb_e2_plus','meddb_e2_calibrated','meddb_e2_direct_answer','meddb_e2_pending_question','meddb_e2_answer_compact','meddb_e2_med_reconciliation','meddb_e2_med_safety','meddb_e2_turn_reallocation','meddb_e2_ledger','meddb_e2_concept_compact','meddb_e2_value_questions','meddb_e2_convergence_shadow'}:
+    if args.agent in {'meddb_e2','meddb_e2_plus','meddb_e2_calibrated','meddb_e2_direct_answer','meddb_e2_pending_question','meddb_e2_answer_compact','meddb_e2_med_reconciliation','meddb_e2_med_safety','meddb_e2_turn_reallocation','meddb_e2_ledger','meddb_e2_concept_compact','meddb_e2_value_questions','meddb_e2_convergence_shadow','meddb_e2_rag_selection'}:
         repo = ROOT/'vendor/meddb'
         manifest['upstream_commit'] = subprocess.check_output(['git','-C',str(repo),'rev-parse','HEAD'],text=True).strip()
         manifest['turn_policy'] = 'Unmodified upstream E2: up to 36 collection turns plus closing; server limit 50. --max-turns does not override upstream policy.'
@@ -130,7 +130,7 @@ def main():
             module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
             module.MAX_TURNS = args.max_turns
             outcome = module.consult(client, module.prepare())
-        elif args.agent in {'meddb_e2','meddb_e2_plus','meddb_e2_calibrated','meddb_e2_direct_answer','meddb_e2_pending_question','meddb_e2_answer_compact','meddb_e2_med_reconciliation','meddb_e2_med_safety','meddb_e2_turn_reallocation','meddb_e2_ledger','meddb_e2_concept_compact','meddb_e2_value_questions','meddb_e2_convergence_shadow'}:
+        elif args.agent in {'meddb_e2','meddb_e2_plus','meddb_e2_calibrated','meddb_e2_direct_answer','meddb_e2_pending_question','meddb_e2_answer_compact','meddb_e2_med_reconciliation','meddb_e2_med_safety','meddb_e2_turn_reallocation','meddb_e2_ledger','meddb_e2_concept_compact','meddb_e2_value_questions','meddb_e2_convergence_shadow','meddb_e2_rag_selection'}:
             sys.path.insert(0,str(ROOT/'vendor/meddb'))
             from examples.hybrid_care import prepare as meddb_prepare, consult as meddb_consult
             original = None
@@ -170,11 +170,20 @@ def main():
             elif args.agent == 'meddb_e2_convergence_shadow':
                 from nova_agent.e2_convergence_shadow import install
                 original=install()
+            elif args.agent == 'meddb_e2_rag_selection':
+                from nova_agent.e2_rag_selection import install
+                from nova_agent.rag_retrieval import VectorStore
+                rag_store = VectorStore(ROOT/'dist/rag/index.sqlite', ROOT/'vendor/guidelines/guidelines')
+                original = install(rag_store)
             try:
                 outcome = meddb_consult(client, meddb_prepare(), knowledge_mode='clinical', reference_profile='reviewed')
                 if args.agent == 'meddb_e2_ledger':
                     from nova_agent import e2_ledger_overlay
                     trace.emit('e2_ledger_audit', result=e2_ledger_overlay.LAST_RUN)
+                elif args.agent == 'meddb_e2_rag_selection':
+                    from nova_agent import e2_rag_selection, e2_rag
+                    trace.emit('rag_selection', result=e2_rag_selection.LAST_RUN)
+                    trace.emit('rag_record_context', result=e2_rag.LAST_RUN)
                 elif args.agent == 'meddb_e2_convergence_shadow':
                     from nova_agent import e2_convergence_shadow
                     trace.emit('e2_convergence_shadow', result=e2_convergence_shadow.LAST_RUN)
@@ -200,6 +209,9 @@ def main():
                         from nova_agent.e2_concept_compaction import restore
                     elif args.agent == 'meddb_e2_value_questions':
                         from nova_agent.e2_value_questions import restore
+                    elif args.agent == 'meddb_e2_rag_selection':
+                        from nova_agent.e2_rag_selection import restore
+                        rag_store.close()
                     elif args.agent == 'meddb_e2_convergence_shadow':
                         from nova_agent.e2_convergence_shadow import restore
                     else:
