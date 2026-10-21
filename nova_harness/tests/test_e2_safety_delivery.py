@@ -106,3 +106,11 @@ class OtherPlanCompletionTests(unittest.TestCase):
         self.assertEqual(fixed['P']['treatment'],'졸릴 때 운전하지 않도록 안내할 계획임. 현재 5mg 복용은 미확인.')
         self.assertEqual(fixed['P']['follow_up'],'흉통이 생기면 즉시 진료받도록 교육할 계획임.')
         self.assertNotIn('운전하지 않도록 안내함',fixed['P']['education'].split('실제 전달 확인(성공 SAY):')[1])
+
+class RecommendationCompletionTests(unittest.TestCase):
+    def test_unspoken_recommendation_is_a_plan_not_performed_counsel(self):
+        note={'P':{'education':'체중, 맥박, 증상 변화를 기록하도록 권고함.'}}
+        result=delivery.reconcile_education(note,SafetyTimeline())
+        self.assertIn('권고할 계획임.',result['P']['education'])
+        self.assertNotIn('권고함.',result['P']['education'])
+        self.assertNotIn('체중',result['P']['education'].split('실제 전달 확인(성공 SAY):')[1])

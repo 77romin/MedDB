@@ -29,7 +29,7 @@ def main():
         performed=after['P']['education'].split('실제 전달 확인(성공 SAY):',1)[1]
         assert all(text in performed for text in actual)
         plans=' '.join(v for k,v in after['P'].items() if k!='education')+' '+after['P']['education'].split('실제 전달 확인(성공 SAY):',1)[0]
-        assert not re.search(r'(?:설명|안내|교육)(?:했다|함|하였음|했고)',plans)
+        assert not re.search(r'(?:설명|안내|교육|권고)(?:했다|함|하였음|했고)',plans)
         rows.append({'run':p.parent.name,'unchanged_S_O_A':True,'unchanged_non_education_numeric_tokens':True,
                      'actual_speech_echoed':True,'input_note_not_mutated':True,
                      'changed_other_P_fields':[k for k in source['P'] if k!='education' and source['P'][k]!=after['P'][k]]})
