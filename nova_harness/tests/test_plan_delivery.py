@@ -74,13 +74,19 @@ class ClosingIntegrationTests(unittest.TestCase):
             def say(self,text,**kw):return {'reply':'네'}
             def diagnose(self,*,note,diagnosis,**kw):self.final=note;return {}
         raw=Raw();timeline=SafetyTimeline();timeline.records.append({'note':note})
+        from nova_agent import e2_observation_state
+        from examples import hybrid_care
+        observation=e2_observation_state.install([])
         original=plan_delivery.install(timeline)
+        self.assertIs(C._closing_sentences,hybrid_care.base_consult.__globals__['_closing_sentences'])
         try:
             client=plan_delivery.Client(TimelineClient(raw,timeline),timeline)
-            messages=C._closing_sentences(client,None,note,'진단','',True)
+            messages=hybrid_care.base_consult.__globals__['_closing_sentences'](client,None,note,'진단','',True)
             self.assertEqual(messages,row['messages']);self.assertEqual(raw.calls,1)
             client.say(messages[0]);client.diagnose(note=note,diagnosis='진단')
             performed=raw.final['P']['education'].split('실제 전달 기록',1)[1]
             self.assertIn(messages[0],performed);self.assertNotIn('설명함',performed)
             self.assertIn('1/1',performed)
-        finally:plan_delivery.restore(original)
+        finally:
+            plan_delivery.restore(original)
+            e2_observation_state.restore(observation)

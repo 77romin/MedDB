@@ -86,9 +86,12 @@ class PlanDelivery:
 
 
 def install(timeline):
-    from examples import hybrid_comm as C, hybrid_agent as H
+    from examples import hybrid_comm as C, hybrid_agent as H, hybrid_care
     from examples.consult_skeleton import seconds_left
     previous=C._closing_sentences
+    selected=hybrid_care.base_consult.__globals__
+    previous_selected=selected.get('_closing_sentences')
+    if not callable(previous_selected):raise ValueError('unsupported selected consult closing boundary')
     delivery=PlanDelivery();timeline.plan_delivery=delivery
 
     def closing(client,db,note,diagnosis,concern,comprehensive=False):
@@ -119,12 +122,15 @@ def install(timeline):
             if complete_message(text) and len(result)<budget:result.append(text)
         return result
     C._closing_sentences=closing
-    return previous
+    selected['_closing_sentences']=closing
+    return previous,selected,previous_selected
 
 
 def restore(previous):
     from examples import hybrid_comm as C
-    C._closing_sentences=previous
+    original,selected,original_selected=previous
+    C._closing_sentences=original
+    selected['_closing_sentences']=original_selected
 
 
 class Client:
