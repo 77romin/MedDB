@@ -29,7 +29,8 @@ class SafetyTimeline:
 
     def snapshot(self):
         return deepcopy({'records': self.records, 'successful_speech': self.speech,
-                         'failed_actions': self.failures, 'final': self.final})
+                         'failed_actions': self.failures, 'final': self.final,
+                         'obligations': self.obligations.audit(self.speech) if hasattr(self, 'obligations') else None})
 
 
 class TimelineClient:
@@ -42,7 +43,7 @@ class TimelineClient:
             self.timeline.failures.append({'action':'SAY','content':content,'error':getattr(exc,'code',type(exc).__name__)})
             raise
         self.timeline.speech.append({'index':len(self.timeline.speech),'content':content,
-                                     'reply':deepcopy(reply),'record_count':len(self.timeline.records)})
+                                     'reply':deepcopy(reply),'request_id':request_id,'record_count':len(self.timeline.records)})
         return reply
     def diagnose(self, *, note, diagnosis, request_id=None, **kwargs):
         if request_id is not None:kwargs['request_id']=request_id
