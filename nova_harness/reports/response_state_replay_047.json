@@ -1,0 +1,33 @@
+{
+  "scope": "saved successful replies, canonical-question subset; not scores or counterfactual sessions",
+  "runtime_sha256": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee",
+  "runs": [
+    {
+      "run": "20261022_223130_073411_safety_session_R3a_obligations_fixed",
+      "source_sha256": "23e9b914a94230352b8ca2275ef6e1d37c207103b61f7d1b9ad5f64ec4eaa4a9",
+      "successful_speech": 44,
+      "canonical_question_matches": 22,
+      "response_states": {
+        "received": 22
+      }
+    },
+    {
+      "run": "20261022_220012_025223_safety_session_R3a_obligations_fixed",
+      "source_sha256": "a23e21b2234af0ffe80ce44f07a792dba1cd97f014ff4b6bf1e47dff244b9831",
+      "successful_speech": 36,
+      "canonical_question_matches": 15,
+      "response_states": {
+        "received": 15
+      }
+    },
+    {
+      "run": "20261022_220012_025209_safety_session_R3a_obligations_fixed",
+      "source_sha256": "6628b77d419b4da29de339d05342c4a1f533cae47aab7f6b0f9ea6c6bf9e0b80",
+      "successful_speech": 38,
+      "canonical_question_matches": 20,
+      "response_states": {
+        "received": 20
+      }
+    }
+  ]
+}
