@@ -1,0 +1,84 @@
+{
+  "planning_probes": [
+    {
+      "run": "20261022_091217_obligation_planning_probe",
+      "accepted": 1,
+      "validated": true,
+      "sent_to_patient": false,
+      "source_matches_current": true
+    }
+  ],
+  "scope": "development API, not official score; unextracted obligations remain unknown",
+  "runs": [
+    {
+      "run": "20261022_090415_344301_safety_session_R3a_obligations",
+      "completed": false,
+      "http_error_codes": [
+        "API_UNAVAILABLE",
+        "API_UNAVAILABLE",
+        "API_UNAVAILABLE",
+        "API_UNAVAILABLE",
+        "API_UNAVAILABLE",
+        "API_UNAVAILABLE"
+      ],
+      "source_matches_current": false
+    },
+    {
+      "run": "20261022_090525_696166_safety_session_R3a_obligations",
+      "completed": true,
+      "http_error_codes": [],
+      "source_matches_current": false,
+      "record_versions": 2,
+      "obligations_by_version": [
+        0,
+        0
+      ],
+      "delivered_by_version": [
+        0,
+        0
+      ],
+      "unresolved_current": 0,
+      "coverage_verified": false,
+      "events": [
+        {
+          "event": "planning_failed",
+          "reason": null,
+          "error": "ValueError"
+        }
+      ],
+      "deterministic_performed_section": true,
+      "elapsed_seconds": 311.418,
+      "max_server_turn": 49,
+      "doctor_successful_request_ids": 29,
+      "doctor_attempted_request_ids": 29,
+      "truncated_completions": 0
+    },
+    {
+      "run": "20261022_090806_610820_safety_session_R3a_obligations",
+      "completed": true,
+      "http_error_codes": [],
+      "source_matches_current": false,
+      "record_versions": 1,
+      "obligations_by_version": [
+        3
+      ],
+      "delivered_by_version": [
+        3
+      ],
+      "unresolved_current": 0,
+      "coverage_verified": false,
+      "events": [],
+      "deterministic_performed_section": true,
+      "elapsed_seconds": 332.035,
+      "max_server_turn": 49,
+      "doctor_successful_request_ids": 28,
+      "doctor_attempted_request_ids": 28,
+      "truncated_completions": 0
+    }
+  ],
+  "runtime_sha256": {
+    "nova_agent/safety_obligations.py": "1bd263c5862625c175774251434b888a3ed37c6c7b1764637dbf039e80f8346c",
+    "nova_agent/e2_safety_obligations.py": "082e97e4ceb15349650be403ac5fe03bd65391a73a121da8dec817dc69d56f9a",
+    "nova_agent/safety_trace.py": "435665f934ed753060ff48762bac7d8d527087c9501b9940794ae9ac0cdeec6f"
+  }
+}
