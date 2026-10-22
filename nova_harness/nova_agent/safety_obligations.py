@@ -125,7 +125,8 @@ class ObligationLedger:
         if not actual:
             lines.append('확인된 전달 없음.')
         audit = self.audit(speech)
-        lines.append('현재 계획의 미확인 전달 항목 수: ' + str(len(audit['unresolved_ids'])))
+        lines.append('추출된 의무 중 미확인 전달 항목 수: ' + str(len(audit['unresolved_ids'])))
+        lines.append('추출 누락과 임상 적절성은 미검증이며, 0건도 전체 안내 완료를 뜻하지 않음.')
         if audit['plan_changed_after_speech']:
             lines.append('설명 이후 계획 변경 있음: 변경 내용의 재설명 여부 별도 확인 필요.')
         plan['education'] = plan.get('education', '') + '\n' + '\n'.join(lines)
