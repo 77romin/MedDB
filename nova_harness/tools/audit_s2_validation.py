@@ -36,7 +36,9 @@ def main():
             response=next((x for x in trace[i+1:] if x['event']=='http_response'),None)
             try:
                 payload=parse_json(response['response']['choices'][0]['message']['content'] or '')
-                note={'P':json.loads(messages[-1]['content'])['source_plan']}
+                input_data=json.loads(messages[-1]['content'])
+                if 'source_plan' not in input_data:continue
+                note={'P':input_data['source_plan']}
                 for item in payload['obligations']:
                     raw_rows+=1;candidate=ObligationLedger();candidate.update(note)
                     try:candidate.register({'obligations':[item]});valid_rows+=1
@@ -44,7 +46,9 @@ def main():
             except Exception as exc:errors['parse_or_shape_'+type(exc).__name__]+=1
         delivery_events=json.loads((out/'safety_delivery.json').read_text())['events']
         unresolved=[e.get('unresolved_fields',[]) for e in delivery_events if e['event']=='closing_proposed']
-        report={'s1_unresolved_closing_fields':unresolved[-1] if unresolved else None,
+        report={'obligation_events':[{k:v for k,v in e.items() if k not in ('row','messages','source_quote','content')} for e in o['events']],
+                'historical_rejected_items':len(o.get('rejected_items',[])),
+                's1_unresolved_closing_fields':unresolved[-1] if unresolved else None,
                 's1_repair_failures':sum(e['event']=='closing_repair_failed' for e in delivery_events),
                 's1_rejected_addendum_groups':sum(e.get('validation',{}).get('rejected_groups',0) for e in delivery_events),
                 'case_label':row['case_label'],'run':out.name,
@@ -59,11 +63,11 @@ def main():
                 'exact_duplicate_post_record_messages':sum(n-1 for n in seen.values() if n>1),
                 'coverage_verified':False}
         reports.append(report)
-    result={'scope':'frozen final S2 development API audit, not official scoring/clinical completeness',
+    result={'scope':'frozen '+manifest['mode']+' development API audit, not official scoring/clinical completeness',
             'runtime_unchanged_during_batch':summary['runtime_unchanged_during_batch'],
             'current_runtime_matches_frozen':fingerprint()==manifest['fingerprint'],'runs':reports}
     if (batch/'review_summary.json').exists():result['model_review']=json.loads((batch/'review_summary.json').read_text())
-    (ROOT/'reports/validation_043.json').write_text(json.dumps(result,indent=2)+'\n')
+    (Path(sys.argv[2]) if len(sys.argv)>2 else ROOT/'reports/validation_043.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(result,indent=2))
 
 if __name__=='__main__':main()
