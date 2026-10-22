@@ -14,6 +14,8 @@ from nova_agent.rag_retrieval import VectorStore
 from nova_agent import plan_delivery,safety_trace
 
 class Replay(StrictClient):
+    def say(self,content,**kwargs):return super().say(content)
+    def diagnose(self,*,note,diagnosis,**kwargs):return super().diagnose(note,diagnosis)
     def chat(self,messages,max_tokens,**kwargs):
         row=self._pop('chat')
         if messages!=row['messages'] or max_tokens!=row['max_tokens']:

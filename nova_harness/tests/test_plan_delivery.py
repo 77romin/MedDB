@@ -13,6 +13,27 @@ class PlanDeliveryTests(unittest.TestCase):
         self.d=PlanDelivery();self.d.compile(self.note,{'obligations':[self.row]},1)
     def speech(self,text=None,count=1,index=0):
         return {'index':index,'record_count':count,'content':text or self.row['messages'][0]}
+    def test_inventory_survives_missing_or_invalid_rendering(self):
+        self.d.inventory(self.note,{'obligations':[self.row]},1)
+        identity=self.d.groups[0]['id']
+        self.d.apply_renderings({'renderings':[{'item_id':identity,'messages':['더 힘들면 진료받으세요.']}]})
+        self.assertEqual(len(self.d.groups),1)
+        self.assertEqual(self.d.groups[0]['render_state'],'rejected')
+        self.assertEqual(self.d.schedule(8),[])
+        self.assertEqual(self.d.audit(self.note,[])['groups'][0]['state'],'unresolved')
+    def test_render_cannot_change_fixed_action(self):
+        self.d.inventory(self.note,{'obligations':[self.row]},1)
+        identity=self.d.groups[0]['id']
+        self.d.apply_renderings({'renderings':[{'item_id':identity,'action':'다음에 방문','messages':self.row['messages']}]})
+        self.assertEqual(self.d.groups[0]['action'],self.row['action'])
+        self.assertEqual(self.d.groups[0]['render_state'],'validated')
+    def test_missing_render_does_not_make_empty_group_complete(self):
+        self.d.inventory(self.note,{'obligations':[self.row]},1)
+        self.d.apply_renderings({})
+        self.assertEqual(self.d.audit(self.note,[])['groups'][0]['state'],'unresolved')
+    def test_inventory_rejects_invented_anchor(self):
+        self.row['condition']='실신하면'
+        self.assertEqual(self.d.inventory(self.note,{'obligations':[self.row]},1),[])
     def test_specific_warning_not_generic_substitute(self):
         a=self.d.audit(self.note,[self.speech('더 힘들면 진료받으세요.')])
         self.assertEqual(a['groups'][0]['state'],'unresolved')
@@ -70,7 +91,8 @@ class ClosingIntegrationTests(unittest.TestCase):
             def chat(self,*a,**kw):
                 import json
                 self.calls+=1
-                return {'choices':[{'message':{'content':json.dumps({'obligations':[row]},ensure_ascii=False)}}]}
+                payload={'obligations':[row]} if self.calls==1 else {'renderings':[{'item_id':timeline.plan_delivery.groups[0]['id'],'messages':row['messages']}]}
+                return {'choices':[{'message':{'content':json.dumps(payload,ensure_ascii=False)}}]}
             def say(self,text,**kw):return {'reply':'네'}
             def diagnose(self,*,note,diagnosis,**kw):self.final=note;return {}
         raw=Raw();timeline=SafetyTimeline();timeline.records.append({'note':note})
@@ -82,7 +104,7 @@ class ClosingIntegrationTests(unittest.TestCase):
         try:
             client=plan_delivery.Client(TimelineClient(raw,timeline),timeline)
             messages=hybrid_care.base_consult.__globals__['_closing_sentences'](client,None,note,'진단','',True)
-            self.assertEqual(messages,row['messages']);self.assertEqual(raw.calls,1)
+            self.assertEqual(messages,row['messages']);self.assertEqual(raw.calls,2)
             client.say(messages[0]);client.diagnose(note=note,diagnosis='진단')
             performed=raw.final['P']['education'].split('실제 전달 기록',1)[1]
             self.assertIn(messages[0],performed);self.assertNotIn('설명함',performed)
