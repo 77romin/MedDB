@@ -18,7 +18,7 @@ from examples.hybrid_care import consult,prepare
 
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--case',required=True);p.add_argument('--mode',choices=['R3a','R3b','R3a_safety'],required=True);args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--case',required=True);p.add_argument('--mode',choices=['R3a','R3b','R3a_safety','R3a_obligations'],required=True);args=p.parse_args()
     load_local_env();key=os.environ.get('NOVA_DEV_KEY','').strip()
     if not key:raise SystemExit('Key missing; configure locally')
     if os.environ.get('NOVA_API_BASE','https://nova.snubhai.org').rstrip('/')!='https://nova.snubhai.org':raise SystemExit('Official origin required')
@@ -33,10 +33,16 @@ def main():
     store=VectorStore(ROOT/'dist/rag/index.sqlite',ROOT/'vendor/guidelines/guidelines')
     module=importlib.import_module('nova_agent.e2_rag_query' if args.mode=='R3b' else 'nova_agent.e2_rag_selection')
     old_rag=module.install(store);old_safety=None
-    if args.mode=='R3a_safety':
+    if args.mode in ('R3a_safety','R3a_obligations'):
         from nova_agent import e2_safety_delivery
         old_safety=e2_safety_delivery.install(timeline)
         client=e2_safety_delivery.wrap(client,timeline)
+    old_obligations=None
+    if args.mode=='R3a_obligations':
+        from nova_agent import e2_safety_obligations
+        old_obligations=e2_safety_obligations.install(timeline)
+        # Skip S1's regex-based final record rewrite for the structured candidate.
+        client=e2_safety_obligations.wrap(TimelineClient(raw,timeline),timeline)
     old_record=install(timeline)
     print('Experiment directory:',out,flush=True)
     try:
@@ -44,6 +50,8 @@ def main():
         trace.emit('experiment_complete',outcome=outcome)
     finally:
         restore(old_record)
+        if old_obligations is not None:
+            e2_safety_obligations.restore(old_obligations)
         if old_safety is not None:
             (out/'safety_delivery.json').write_text(json.dumps(e2_safety_delivery.LAST_RUN,ensure_ascii=False,indent=2),encoding='utf-8')
             e2_safety_delivery.restore(old_safety)
