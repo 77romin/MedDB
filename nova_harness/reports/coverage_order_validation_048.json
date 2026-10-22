@@ -1,0 +1,315 @@
+{
+  "scope": "public development sessions; no official score or validated clinical completeness",
+  "caveats": [
+    "Separate model/patient sessions, not fixed-observation causal pairs.",
+    "Received is a heuristic response status, not verified clinical completeness.",
+    "Reorder event counts are selection evaluations, not gained information or saved turns.",
+    "Safety answer timing and explanation count do not establish safety correctness or score.",
+    "Different exposed candidates may follow different patient observations."
+  ],
+  "sessions": [
+    {
+      "run": "20261023_005558_684026_safety_session_R3a_coverage_order",
+      "case": "C01",
+      "mode": "R3a_coverage_order",
+      "runtime_sha256": {
+        "nova_agent/coverage_order.py": "8b8b4f5afd5b03dac6be08c0bd068d7255235107bd0f2e8082ff0a4046ef2d3d",
+        "nova_agent/response_state.py": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee"
+      },
+      "runtime_matches_current": true,
+      "fingerprint_unchanged": true,
+      "completed": true,
+      "max_server_turn": 37,
+      "elapsed_seconds": 302.938,
+      "doctor_attempted_request_ids": 15,
+      "doctor_successful_request_ids": 15,
+      "errors": {},
+      "truncated_completions": 0,
+      "event_counts": {
+        "response_observed": 32,
+        "coverage_order": 27,
+        "answered_filtered": 11,
+        "observed_conflict": 10
+      },
+      "order_changed_evaluations": 11,
+      "distinct_target_responses": 22,
+      "received_target_count": 22,
+      "target_state_counts": {
+        "received": 22
+      },
+      "received_domains": {
+        "hpi": 12,
+        "treatment_safety": 5,
+        "pmh": 1,
+        "sh": 1,
+        "background": 2,
+        "fh": 1
+      },
+      "safety_response_turns": {
+        "allergy": 8,
+        "med_duration": 6,
+        "med_name": 4,
+        "med_schedule": 5,
+        "meds": 7
+      },
+      "last_evaluated_unanswered_say_targets": [],
+      "initial_safety_candidate_targets": [
+        "allergy",
+        "meds"
+      ],
+      "literal_question_repeats": 0,
+      "successful_exam_count": 5,
+      "first_successful_exam_turn": 13,
+      "successful_post_record_speech": 8,
+      "first_record_observed_speech": 24
+    },
+    {
+      "run": "20261023_005601_682774_safety_session_R3a_response_state",
+      "case": "C01",
+      "mode": "R3a_response_state",
+      "runtime_sha256": {
+        "nova_agent/coverage_order.py": "8b8b4f5afd5b03dac6be08c0bd068d7255235107bd0f2e8082ff0a4046ef2d3d",
+        "nova_agent/response_state.py": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee"
+      },
+      "runtime_matches_current": true,
+      "fingerprint_unchanged": true,
+      "completed": true,
+      "max_server_turn": 45,
+      "elapsed_seconds": 357.091,
+      "doctor_attempted_request_ids": 21,
+      "doctor_successful_request_ids": 21,
+      "errors": {
+        "EXAM_NOT_SPECIFIC": 2
+      },
+      "truncated_completions": 0,
+      "event_counts": {
+        "response_observed": 37,
+        "answered_filtered": 16,
+        "observed_conflict": 16
+      },
+      "order_changed_evaluations": 0,
+      "distinct_target_responses": 22,
+      "received_target_count": 22,
+      "target_state_counts": {
+        "received": 22
+      },
+      "received_domains": {
+        "hpi": 12,
+        "treatment_safety": 5,
+        "pmh": 1,
+        "sh": 1,
+        "background": 2,
+        "fh": 1
+      },
+      "safety_response_turns": {
+        "allergy": 21,
+        "med_duration": 8,
+        "med_name": 6,
+        "med_schedule": 7,
+        "meds": 20
+      },
+      "last_evaluated_unanswered_say_targets": null,
+      "initial_safety_candidate_targets": null,
+      "literal_question_repeats": 0,
+      "successful_exam_count": 6,
+      "first_successful_exam_turn": 23,
+      "successful_post_record_speech": 8,
+      "first_record_observed_speech": 29
+    },
+    {
+      "run": "20261023_005604_342366_safety_session_R3a_coverage_order",
+      "case": "C03",
+      "mode": "R3a_coverage_order",
+      "runtime_sha256": {
+        "nova_agent/coverage_order.py": "8b8b4f5afd5b03dac6be08c0bd068d7255235107bd0f2e8082ff0a4046ef2d3d",
+        "nova_agent/response_state.py": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee"
+      },
+      "runtime_matches_current": true,
+      "fingerprint_unchanged": true,
+      "completed": true,
+      "max_server_turn": 33,
+      "elapsed_seconds": 182.37,
+      "doctor_attempted_request_ids": 12,
+      "doctor_successful_request_ids": 12,
+      "errors": {},
+      "truncated_completions": 0,
+      "event_counts": {
+        "response_observed": 28,
+        "coverage_order": 22
+      },
+      "order_changed_evaluations": 7,
+      "distinct_target_responses": 17,
+      "received_target_count": 17,
+      "target_state_counts": {
+        "received": 17
+      },
+      "received_domains": {
+        "fh": 3,
+        "hpi": 11,
+        "pmh": 1,
+        "treatment_safety": 2
+      },
+      "safety_response_turns": {
+        "allergy": 3,
+        "meds": 2
+      },
+      "last_evaluated_unanswered_say_targets": [],
+      "initial_safety_candidate_targets": [
+        "allergy",
+        "meds"
+      ],
+      "literal_question_repeats": 0,
+      "successful_exam_count": 5,
+      "first_successful_exam_turn": 10,
+      "successful_post_record_speech": 8,
+      "first_record_observed_speech": 20
+    },
+    {
+      "run": "20261023_005607_090991_safety_session_R3a_response_state",
+      "case": "C03",
+      "mode": "R3a_response_state",
+      "runtime_sha256": {
+        "nova_agent/coverage_order.py": "8b8b4f5afd5b03dac6be08c0bd068d7255235107bd0f2e8082ff0a4046ef2d3d",
+        "nova_agent/response_state.py": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee"
+      },
+      "runtime_matches_current": true,
+      "fingerprint_unchanged": true,
+      "completed": true,
+      "max_server_turn": 33,
+      "elapsed_seconds": 217.383,
+      "doctor_attempted_request_ids": 13,
+      "doctor_successful_request_ids": 13,
+      "errors": {},
+      "truncated_completions": 0,
+      "event_counts": {
+        "response_observed": 28
+      },
+      "order_changed_evaluations": 0,
+      "distinct_target_responses": 17,
+      "received_target_count": 17,
+      "target_state_counts": {
+        "received": 17
+      },
+      "received_domains": {
+        "hpi": 11,
+        "pmh": 1,
+        "fh": 3,
+        "treatment_safety": 2
+      },
+      "safety_response_turns": {
+        "allergy": 17,
+        "meds": 16
+      },
+      "last_evaluated_unanswered_say_targets": null,
+      "initial_safety_candidate_targets": null,
+      "literal_question_repeats": 0,
+      "successful_exam_count": 5,
+      "first_successful_exam_turn": 19,
+      "successful_post_record_speech": 8,
+      "first_record_observed_speech": 20
+    },
+    {
+      "run": "20261023_005755_412671_safety_session_R3a_coverage_order",
+      "case": "C10",
+      "mode": "R3a_coverage_order",
+      "runtime_sha256": {
+        "nova_agent/coverage_order.py": "8b8b4f5afd5b03dac6be08c0bd068d7255235107bd0f2e8082ff0a4046ef2d3d",
+        "nova_agent/response_state.py": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee"
+      },
+      "runtime_matches_current": true,
+      "fingerprint_unchanged": true,
+      "completed": true,
+      "max_server_turn": 44,
+      "elapsed_seconds": 352.435,
+      "doctor_attempted_request_ids": 27,
+      "doctor_successful_request_ids": 27,
+      "errors": {},
+      "truncated_completions": 0,
+      "event_counts": {
+        "response_observed": 34,
+        "coverage_order": 26
+      },
+      "order_changed_evaluations": 11,
+      "distinct_target_responses": 20,
+      "received_target_count": 20,
+      "target_state_counts": {
+        "received": 20
+      },
+      "received_domains": {
+        "hpi": 11,
+        "treatment_safety": 5,
+        "pmh": 1,
+        "background": 2,
+        "fh": 1
+      },
+      "safety_response_turns": {
+        "allergy": 6,
+        "breastfeeding": 8,
+        "meds": 5,
+        "pregnancy": 7,
+        "supplements": 4
+      },
+      "last_evaluated_unanswered_say_targets": [],
+      "initial_safety_candidate_targets": [
+        "allergy",
+        "breastfeeding",
+        "meds",
+        "pregnancy",
+        "supplements"
+      ],
+      "literal_question_repeats": 0,
+      "successful_exam_count": 10,
+      "first_successful_exam_turn": 11,
+      "successful_post_record_speech": 8,
+      "first_record_observed_speech": 26
+    },
+    {
+      "run": "20261023_005758_003996_safety_session_R3a_response_state",
+      "case": "C10",
+      "mode": "R3a_response_state",
+      "runtime_sha256": {
+        "nova_agent/coverage_order.py": "8b8b4f5afd5b03dac6be08c0bd068d7255235107bd0f2e8082ff0a4046ef2d3d",
+        "nova_agent/response_state.py": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee"
+      },
+      "runtime_matches_current": true,
+      "fingerprint_unchanged": true,
+      "completed": true,
+      "max_server_turn": 43,
+      "elapsed_seconds": 333.847,
+      "doctor_attempted_request_ids": 27,
+      "doctor_successful_request_ids": 27,
+      "errors": {},
+      "truncated_completions": 0,
+      "event_counts": {
+        "response_observed": 33
+      },
+      "order_changed_evaluations": 0,
+      "distinct_target_responses": 21,
+      "received_target_count": 21,
+      "target_state_counts": {
+        "received": 21
+      },
+      "received_domains": {
+        "hpi": 12,
+        "treatment_safety": 5,
+        "pmh": 1,
+        "background": 2,
+        "fh": 1
+      },
+      "safety_response_turns": {
+        "allergy": 16,
+        "breastfeeding": 19,
+        "meds": 15,
+        "pregnancy": 18,
+        "supplements": 13
+      },
+      "last_evaluated_unanswered_say_targets": null,
+      "initial_safety_candidate_targets": null,
+      "literal_question_repeats": 0,
+      "successful_exam_count": 10,
+      "first_successful_exam_turn": 20,
+      "successful_post_record_speech": 8,
+      "first_record_observed_speech": 25
+    }
+  ]
+}

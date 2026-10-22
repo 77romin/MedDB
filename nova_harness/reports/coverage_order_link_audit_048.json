@@ -1,0 +1,15 @@
+{
+  "scope": "manual trace audit of C10 target-count discrepancy; no clinical score",
+  "target": "chronic_cough",
+  "candidate_target_linked": false,
+  "candidate_successful_question_and_answer_present": true,
+  "successful_speech_references": [
+    {
+      "speech_index": 21,
+      "turn": 28,
+      "question_and_response_present": true
+    }
+  ],
+  "timeline_sha256": "4f8e6c2f8a2a79721b47d50ed5e7230ed0f939838b0bfbe404f5bd245009ab3d",
+  "conclusion": "Target-link count undercounts an actually asked free-worded question; do not label this discrepancy a missing question."
+}
