@@ -1,6 +1,7 @@
 """Conservative source-linked delivery state, independent of model completion claims."""
 from copy import deepcopy
 import hashlib
+import json
 import re
 import unicodedata
 
@@ -11,10 +12,34 @@ def canonical(text):
     return re.sub(r'\s+', ' ', unicodedata.normalize('NFC', text)).strip()
 
 
+def parse_obligations(text):
+    """Recover only fully closed objects from the expected top-level array."""
+    clean=text.strip().removeprefix('```json').removesuffix('```').strip()
+    try:
+        payload=json.loads(clean)
+        if not isinstance(payload,dict) or not isinstance(payload.get('obligations'),list):raise ValueError('invalid obligations')
+        return payload,False
+    except json.JSONDecodeError:
+        prefix=re.match(r'^\s*\{\s*"obligations"\s*:\s*\[',clean)
+        if not prefix:raise ValueError('missing obligation array')
+        decoder=json.JSONDecoder();pos=prefix.end();rows=[]
+        for _ in range(12):
+            while pos<len(clean) and clean[pos].isspace():pos+=1
+            try:item,end=decoder.raw_decode(clean,pos)
+            except json.JSONDecodeError:break
+            if not isinstance(item,dict):break
+            rows.append(item);pos=end
+            while pos<len(clean) and clean[pos].isspace():pos+=1
+            if pos>=len(clean) or clean[pos]!=',':break
+            pos+=1
+        if not rows:raise ValueError('no complete obligations')
+        return {'obligations':rows},True
+
+
 def has_prohibition(text):
     # Korean prohibitions inflect: 하지 않도록 -> 하지 마세요, 피하도록 -> 피해 주세요.
     # '말씀' alone is not a prohibition.
-    return bool(re.search(r'지\s*(?:않|말|마(?:세|십|셔))|금지|피하|피해', text))
+    return bool(re.search(r'않|지\s*(?:말|마(?:세|십|셔))|금지|피하(?:도|세|십|게|고|는|라|여|겠|면|기)|피해(?=\s*(?:주|요|야)|[.!]|$)', text))
 
 
 def complete_message(text):

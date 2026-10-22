@@ -96,9 +96,9 @@ class ClosingBudgetTests(unittest.TestCase):
 class KoreanProhibitionTests(unittest.TestCase):
     def test_polite_prohibition_preserves_negative_meaning(self):
         from nova_agent.safety_obligations import has_prohibition
-        for phrase in ('하지 마세요.','끊지 마십시오.','늘리지 말아 주세요.','피해 주세요.','피하도록 한다.'):
+        for phrase in ('하지 마세요.','끊지 마십시오.','늘리지 말아 주세요.','피해 주세요.','피하도록 한다.','증량 않음'):
             self.assertTrue(has_prohibition(phrase),phrase)
-        for phrase in ('말씀해 주세요.','약을 드세요.','끊어 주세요.'):
+        for phrase in ('말씀해 주세요.','약을 드세요.','끊어 주세요.','피해를 말씀해 주세요.','피하주사를 설명해 주세요.'):
             self.assertFalse(has_prohibition(phrase),phrase)
     def test_positive_rewrite_still_rejected_but_correct_negative_inflection_accepted(self):
         note={'P':{'education':'다른 약을 복용하지 않도록 한다.'}}
@@ -107,3 +107,15 @@ class KoreanProhibitionTests(unittest.TestCase):
         with self.assertRaises(ValueError):ledger.register({'obligations':[dict(row,messages=['다른 약을 복용해 주세요.'])]})
         with self.assertRaises(ValueError):ledger.register({'obligations':[dict(row,messages=['다른 약을 복용하고 말씀해 주세요.'])]})
         self.assertEqual(len(ledger.register({'obligations':[dict(row,messages=['다른 약을 복용하지 마세요.'])]})),1)
+
+class PartialJsonTests(unittest.TestCase):
+    def test_recovers_closed_object_and_never_an_unfinished_warning(self):
+        from nova_agent.safety_obligations import parse_obligations
+        row={'source_quote':'문장 안의 "obligations": [ 도 원문이다.','messages':['안내할게요.']}
+        text='{"obligations":['+json.dumps(row,ensure_ascii=False)+',{"source_quote":"잘린 경고'
+        result,recovered=parse_obligations(text)
+        self.assertTrue(recovered);self.assertEqual(result['obligations'],[row])
+    def test_wrong_wrapper_or_first_unfinished_object_is_never_repaired(self):
+        from nova_agent.safety_obligations import parse_obligations
+        for text in ('{"notes":"obligations", "other":[{}','{"obligations":[{"source_quote":"끝나지 않음'):
+            with self.assertRaises(ValueError):parse_obligations(text)
