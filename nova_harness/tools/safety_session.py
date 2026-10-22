@@ -18,7 +18,7 @@ from examples.hybrid_care import consult,prepare
 
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--case',required=True);p.add_argument('--mode',choices=['R3a','R3b','R3a_safety','R3a_obligations','R3a_obligations_fixed','R3a_response_state','R3a_coverage_order','R3a_question_link','R3a_observation_state'],required=True);args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--case',required=True);p.add_argument('--mode',choices=['R3a','R3b','R3a_safety','R3a_obligations','R3a_obligations_fixed','R3a_response_state','R3a_coverage_order','R3a_question_link','R3a_observation_state','R3a_plan_delivery'],required=True);args=p.parse_args()
     load_local_env();key=os.environ.get('NOVA_DEV_KEY','').strip()
     if not key:raise SystemExit('Key missing; configure locally')
     if os.environ.get('NOVA_API_BASE','https://nova.snubhai.org').rstrip('/')!='https://nova.snubhai.org':raise SystemExit('Official origin required')
@@ -34,15 +34,15 @@ def main():
     module=importlib.import_module('nova_agent.e2_rag_query' if args.mode=='R3b' else 'nova_agent.e2_rag_selection')
     old_rag=module.install(store);old_safety=None
     old_response=None;response_events=[]
-    if args.mode in ('R3a_response_state','R3a_coverage_order','R3a_question_link','R3a_observation_state'):
+    if args.mode in ('R3a_response_state','R3a_coverage_order','R3a_question_link','R3a_observation_state','R3a_plan_delivery'):
         from nova_agent import response_state
         old_response=response_state.install(response_events)
     old_order=None
-    if args.mode in ('R3a_coverage_order','R3a_question_link','R3a_observation_state'):
+    if args.mode in ('R3a_coverage_order','R3a_question_link','R3a_observation_state','R3a_plan_delivery'):
         from nova_agent import coverage_order
         old_order=coverage_order.install(response_events)
     old_unified=None;observation_ledgers=[]
-    if args.mode=='R3a_observation_state':
+    if args.mode in ('R3a_observation_state','R3a_plan_delivery'):
         from nova_agent import e2_observation_state
         old_unified=e2_observation_state.install(response_events,observation_ledgers)
     old_link=None
@@ -63,6 +63,11 @@ def main():
             old_questions=answered_questions.install(timeline.obligations.events)
         # Skip S1's regex-based final record rewrite for the structured candidate.
         client=e2_safety_obligations.wrap(TimelineClient(raw,timeline),timeline)
+    old_plan=None
+    if args.mode=='R3a_plan_delivery':
+        from nova_agent import plan_delivery
+        old_plan=plan_delivery.install(timeline)
+        client=plan_delivery.Client(client,timeline)
     old_record=install(timeline)
     print('Experiment directory:',out,flush=True)
     try:
@@ -70,6 +75,12 @@ def main():
         trace.emit('experiment_complete',outcome=outcome)
     finally:
         restore(old_record)
+        if old_plan is not None:
+            final_note=timeline.final['note'] if timeline.final else {}
+            # Audit against the pre-render plan; final is explicitly attributed.
+            source=timeline.records[-1]['note'] if timeline.records else final_note
+            (out/'plan_delivery.json').write_text(json.dumps(timeline.plan_delivery.audit(source,timeline.speech),ensure_ascii=False,indent=2),encoding='utf-8')
+            plan_delivery.restore(old_plan)
         if old_unified is not None:
             e2_observation_state.restore(old_unified)
             (out/'observation_ledgers.json').write_text(json.dumps([l.snapshot() for l in observation_ledgers],ensure_ascii=False,indent=2),encoding='utf-8')
