@@ -1,0 +1,168 @@
+{
+  "scope": "frozen R3a_obligations_fixed development API audit, not official scoring/clinical completeness",
+  "runtime_unchanged_during_batch": true,
+  "current_runtime_matches_frozen": true,
+  "runs": [
+    {
+      "obligation_events": [
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "obligation_validation",
+          "accepted": 0,
+          "rejected": 4
+        },
+        {
+          "event": "obligation_repair",
+          "attempts": 1,
+          "accepted_new": 0,
+          "still_rejected": 0,
+          "not_repaired": 4
+        }
+      ],
+      "historical_rejected_items": 4,
+      "s1_unresolved_closing_fields": [],
+      "s1_repair_failures": 0,
+      "s1_rejected_addendum_groups": 0,
+      "case_label": "C01",
+      "run": "20261022_220739_784410_safety_session_R3a_obligations_fixed",
+      "runtime_matches_frozen": true,
+      "completed": true,
+      "elapsed_seconds": 473.375,
+      "max_server_turn": 50,
+      "doctor_attempted_request_ids": 26,
+      "doctor_successful_request_ids": 26,
+      "errors": {},
+      "truncated_completions": 0,
+      "deterministic_final_plan_and_performed_render_matches": true,
+      "raw_generated_obligations": 4,
+      "individually_valid_rows": 0,
+      "rejection_reasons": {
+        "lost negation": 4
+      },
+      "registered_obligations_by_version": [
+        0,
+        0,
+        0
+      ],
+      "sent_obligations_by_version": [
+        0,
+        0,
+        0
+      ],
+      "consecutive_same_question_same_nonempty_reply_distinct_request": 0,
+      "exact_duplicate_all_messages": 0,
+      "exact_duplicate_post_record_messages": 0,
+      "coverage_verified": false
+    }
+  ],
+  "audit_capture_stage": "after question exception fix, before Korean prohibition normalization",
+  "model_review": {
+    "scope": "source-checked development model opinion; counts are not scores/comparable across cases",
+    "reviews": [
+      {
+        "case_label": "C01",
+        "validated": true,
+        "attempts": 1,
+        "checked_obligations": 10,
+        "delivery": {
+          "partial": 4,
+          "covered": 5,
+          "missing": 1
+        },
+        "final_consistency": {
+          "preserved": 9,
+          "changed": 1
+        },
+        "unspoken_completed_claims": 0,
+        "repetition_groups": 0
+      }
+    ]
+  }
+}

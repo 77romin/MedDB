@@ -1,0 +1,148 @@
+{
+  "scope": "frozen R3a_obligations_fixed development API audit, not official scoring/clinical completeness",
+  "runtime_unchanged_during_batch": true,
+  "current_runtime_matches_frozen": true,
+  "runs": [
+    {
+      "obligation_events": [
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "generated"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "planning_failed",
+          "error": "ValueError"
+        }
+      ],
+      "historical_rejected_items": 0,
+      "s1_unresolved_closing_fields": [
+        "follow_up"
+      ],
+      "s1_repair_failures": 0,
+      "s1_rejected_addendum_groups": 0,
+      "case_label": "C01",
+      "run": "20261022_221845_870292_safety_session_R3a_obligations_fixed",
+      "runtime_matches_frozen": true,
+      "completed": true,
+      "elapsed_seconds": 519.127,
+      "max_server_turn": 49,
+      "doctor_attempted_request_ids": 24,
+      "doctor_successful_request_ids": 24,
+      "errors": {
+        "INVALID_API_RESPONSE": 1,
+        "EXAM_NOT_SPECIFIC": 1
+      },
+      "truncated_completions": 1,
+      "deterministic_final_plan_and_performed_render_matches": true,
+      "raw_generated_obligations": 0,
+      "individually_valid_rows": 0,
+      "rejection_reasons": {
+        "parse_or_shape_KeyError": 1
+      },
+      "registered_obligations_by_version": [
+        0,
+        0,
+        0
+      ],
+      "sent_obligations_by_version": [
+        0,
+        0,
+        0
+      ],
+      "consecutive_same_question_same_nonempty_reply_distinct_request": 0,
+      "exact_duplicate_all_messages": 0,
+      "exact_duplicate_post_record_messages": 0,
+      "coverage_verified": false
+    }
+  ],
+  "audit_capture_stage": "Korean prohibition fix, before truncated-array recovery",
+  "model_review": {
+    "scope": "source-checked development model opinion; counts are not scores/comparable across cases",
+    "reviews": [
+      {
+        "case_label": "C01",
+        "validated": true,
+        "attempts": 1,
+        "checked_obligations": 10,
+        "delivery": {
+          "covered": 7,
+          "missing": 2,
+          "partial": 1
+        },
+        "final_consistency": {
+          "preserved": 10
+        },
+        "unspoken_completed_claims": 0,
+        "repetition_groups": 0
+      }
+    ]
+  }
+}

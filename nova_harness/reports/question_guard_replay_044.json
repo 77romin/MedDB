@@ -1,0 +1,17 @@
+{
+  "scope": "saved selected SAY replay only, not new action selection or a live session",
+  "runs": [
+    {
+      "case": "C01",
+      "blocked_observed_candidates": 1
+    },
+    {
+      "case": "C03",
+      "blocked_observed_candidates": 0
+    },
+    {
+      "case": "C10",
+      "blocked_observed_candidates": 0
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "scope": "frozen R3a_obligations_fixed development API audit, not official scoring/clinical completeness",
+  "runtime_unchanged_during_batch": true,
+  "current_runtime_matches_frozen": true,
+  "runs": [
+    {
+      "obligation_events": [
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "answered_question_filtered",
+          "stage": "required"
+        },
+        {
+          "event": "obligation_validation",
+          "accepted": 1,
+          "rejected": 1
+        },
+        {
+          "event": "obligation_repair",
+          "attempts": 1,
+          "accepted_new": 0,
+          "still_rejected": 0,
+          "not_repaired": 1
+        },
+        {
+          "event": "base_group_not_scheduled",
+          "reason": "turn_budget"
+        }
+      ],
+      "historical_rejected_items": 1,
+      "s1_unresolved_closing_fields": [],
+      "s1_repair_failures": 0,
+      "s1_rejected_addendum_groups": 0,
+      "case_label": "C01",
+      "run": "20261022_223130_073411_safety_session_R3a_obligations_fixed",
+      "runtime_matches_frozen": true,
+      "completed": true,
+      "elapsed_seconds": 411.491,
+      "max_server_turn": 49,
+      "doctor_attempted_request_ids": 24,
+      "doctor_successful_request_ids": 24,
+      "errors": {},
+      "truncated_completions": 0,
+      "deterministic_final_plan_and_performed_render_matches": true,
+      "raw_generated_obligations": 2,
+      "individually_valid_rows": 1,
+      "rejection_reasons": {
+        "incomplete message": 1
+      },
+      "registered_obligations_by_version": [
+        1,
+        1,
+        1
+      ],
+      "sent_obligations_by_version": [
+        1,
+        0,
+        0
+      ],
+      "consecutive_same_question_same_nonempty_reply_distinct_request": 0,
+      "exact_duplicate_all_messages": 0,
+      "exact_duplicate_post_record_messages": 0,
+      "coverage_verified": false
+    }
+  ],
+  "model_review": {
+    "scope": "source-checked development model opinion; counts are not scores/comparable across cases",
+    "reviews": [
+      {
+        "case_label": "C01",
+        "validated": true,
+        "attempts": 1,
+        "checked_obligations": 10,
+        "delivery": {
+          "covered": 5,
+          "missing": 3,
+          "partial": 2
+        },
+        "final_consistency": {
+          "preserved": 10
+        },
+        "unspoken_completed_claims": 0,
+        "repetition_groups": 1
+      }
+    ]
+  }
+}
