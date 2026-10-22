@@ -87,10 +87,11 @@ def install(events,ledgers=None):
     class UnifiedCoverage(original_coverage):
         def sync_observation(self,kb,target):
             if target not in kb.observations.state.concepts:return
-            view,conflicts=kb.observations.view()
-            if view.get(target) not in ('+','-') or target in conflicts:
-                row=getattr(self,'response_slots',{}).get(target)
-                if row and row['status']=='received':row['status']='partial'
+            status=kb.observations.answer_status.get(target,{}).get('status','unknown')
+            row=getattr(self,'response_slots',{}).get(target)
+            if not row or row['status']=='declined':return
+            if status=='complete':row['status']='received'
+            elif row['status']=='received':row['status']='partial'
 
     class RecordClient:
         def __init__(self,client,ledger):self.client=client;self.ledger=ledger

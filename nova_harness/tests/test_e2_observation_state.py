@@ -93,6 +93,26 @@ class UnifiedSessionTests(unittest.TestCase):
         data=self.run_session('네, 설사가 있어요.',[],target='diarrhea',extractor_error=True)
         self.assertNotIn('diarrhea',data['view']['present']);self.assertIn('diarrhea',data['view']['unknown'])
         self.assertIn('네, 설사가 있어요.',data['submitted']['note']['S']['hpi'])
+    def test_completed_family_history_does_not_trigger_current_symptom_requestion(self):
+        from types import SimpleNamespace
+        db=MedDB.open();events=[];r=response_state.install(events);o=coverage_order.install(events)
+        u=e2_observation_state.install(events)
+        try:
+            care=coverage.CareCoverage(db,'short_stature',8,'M')
+            kb=H.Tracker(db,'short_stature',8,'M','',{},'clinical','reviewed')
+            t='family_late_puberty';question=db.findings[t]['ask'];answer='아버지가 늦었어요.'
+            e=kb.observations.state.add_response('SAY',question,{'content':answer,'turn':2},t)
+            kb.observations.targets[t]=e.id
+            kb.observations.accept({'facts':[{'concept_id':t,'evidence_id':e.id,'quote':answer,
+                                      'assertion':'present','subject':'family','temporality':'past','scope':'full'}],
+                                   'answer_contract':{'subject':'family','temporality':'past','status':'complete','quote':answer}},e,[t])
+            care.observe(t,question,answer,2);care.sync_observation(kb,t)
+            care.attempts[t]=1;kb.asked.add(t)
+            self.assertEqual(care.response_slots[t]['status'],'received')
+            self.assertEqual(kb.observations.view()[0][t],'?')
+            self.assertFalse(any(a.get('target')==t and a.get('_response_clarification') for a in care.needed(kb)))
+        finally:e2_observation_state.restore(u);coverage_order.restore(o);response_state.restore(r)
+
     def test_source_contract_change_fails_closed(self):
         with self.assertRaises(ValueError):e2_observation_state.patched_source('different source')
 

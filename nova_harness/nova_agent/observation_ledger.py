@@ -19,7 +19,13 @@ SYSTEM='''환자의 실제 답변을 구조화된 관찰로 분해합니다. 진
 "네/아니요"만의 답은 질문 대상·주어·시점·의미가 명확할 때만 해석합니다.
 각 quote는 실제 response의 연속 원문으로 주어·시점·부정 범위를 충분히 포함해야 합니다.
 확실하지 않으면 assertion=uncertain, subject/temporality=unknown, scope=partial로 남기세요.
-JSON만 출력: {"facts":[{"concept_id":"후보 id","evidence_id":"현재 evidence id",
+질문에 답을 받았는지와 환자 본인의 현재 증상 여부는 별개입니다.
+예: 부모님 과거력 질문에 부모님에 대한 명확한 답이면 family/past 관찰로 답변 완료이나
+환자 현재 소견을 채우지 않습니다. 질문의 대상/시점/범위를 답변과 비교해 answer_contract를 적습니다.
+quote는 답변 원문이며 status=complete는 질문한 내용에 충분히 답한 경우에만 씁니다.
+JSON만 출력: {"answer_contract":{"subject":"patient|family|other|unknown",
+"temporality":"current|past|conditional|unknown","status":"complete|partial|unknown",
+"quote":"응답 원문"},"facts":[{"concept_id":"후보 id","evidence_id":"현재 evidence id",
 "quote":"응답 원문","assertion":"present|absent|uncertain|unknown",
 "subject":"patient|family|other|unknown","temporality":"current|past|conditional|unknown",
 "scope":"full|partial","qualifiers":[{"name":"frequency|duration|condition|severity|time","quote":"동일 quote에 있는 원문"}],
@@ -38,6 +44,7 @@ class ObservationLedger:
         self.events=[]
         self.targets={}
         self.failures=[]
+        self.answer_status={}
 
     def candidates(self,response,target=None):
         matched=self.db.match_findings(response)
@@ -70,20 +77,37 @@ class ObservationLedger:
             if replaces and (not isinstance(correction,str) or not correction.strip() or correction not in evidence.response
                    or any(i not in existing or any(existing[i].get(k)!=p.get(k) for k in ('concept_id','subject','temporality')) for i in replaces)):
                 rejected.append('unsupported_correction');continue
-            # A frequency/conditional assertion describes a qualified proposition.
-            # Keep it for records, but do not collapse it into the unqualified
-            # binary KB view. This is deliberately conservative in this stage.
+            # Preserve question-relative completeness, separately from eligibility
+            # for an unqualified patient-current binary projection.
             row=deepcopy(p)
-            if any(q['name'] in ('frequency','condition') for q in qualifiers):
-                row['scope']='partial'
+            projectable=row['scope']=='full' and not any(q['name'] in ('frequency','condition') for q in qualifiers)
             accepted,errors=self.state.accept_facts([row]);rejected.extend(errors)
             for f in accepted:
-                f.update(scope=row['scope'],qualifiers=deepcopy(qualifiers),replaces=list(replaces),
+                f.update(scope=row['scope'],binary_projectable=projectable,qualifiers=deepcopy(qualifiers),replaces=list(replaces),
                          correction_quote=correction)
                 valid.append(f)
+        self._answer_contract(payload.get('answer_contract'),evidence,valid)
         self.events.append({'event':'observation_validated','evidence_id':evidence.id,
                             'accepted':len(valid),'rejected':len(rejected)})
         return valid,rejected
+
+    def _answer_contract(self,contract,evidence,valid):
+        if not evidence.target:return
+        status='unknown';subject='unknown';temporality='unknown'
+        if (isinstance(contract,dict) and contract.get('status') in ('complete','partial','unknown')
+            and contract.get('subject') in ('patient','family','other','unknown')
+            and contract.get('temporality') in ('current','past','conditional','unknown')
+            and isinstance(contract.get('quote'),str) and contract['quote'].strip()
+            and contract['quote'] in evidence.response):
+            subject=contract['subject'];temporality=contract['temporality'];status=contract['status']
+            supported=any(f['concept_id']==evidence.target and f['scope']=='full'
+                          and f['subject']==subject and f['temporality']==temporality
+                          and f['assertion'] in ('present','absent') for f in valid)
+            if status=='complete' and (not supported or subject=='unknown' or temporality=='unknown'):
+                status='partial'
+        self.answer_status[evidence.target]={'status':status,'subject':subject,
+                    'temporality':temporality,'evidence_id':evidence.id}
+        self.events.append({'event':'answer_contract','evidence_id':evidence.id,'status':status})
 
     def observe(self,client,question,response,target,turn,deadline=None):
         evidence=self.state.add_response('SAY',question,{'content':response,'turn':turn},target or '')
@@ -112,7 +136,7 @@ class ObservationLedger:
         replaced={i for f in self.state.facts for i in f.get('replaces',[])}
         active=defaultdict(list)
         for f in self.state.facts:
-            if f['id'] not in replaced and f['subject']=='patient' and f['temporality']=='current' and f['scope']=='full':
+            if f['id'] not in replaced and f['subject']=='patient' and f['temporality']=='current' and f.get('binary_projectable',False):
                 active[f['concept_id']].append(f)
         result={};conflicts=set()
         for fid,rows in active.items():
@@ -129,4 +153,5 @@ class ObservationLedger:
         # family/past observations here explicitly do not fill current state.
         view,conflicts=self.view()
         return {'evidence':[vars(e) for e in self.state.evidence],'facts':deepcopy(self.state.facts),
-                'current_patient_view':view,'conflicts':sorted(conflicts),'failures':list(self.failures)}
+                'current_patient_view':view,'answer_status':deepcopy(self.answer_status),
+                'conflicts':sorted(conflicts),'failures':list(self.failures)}

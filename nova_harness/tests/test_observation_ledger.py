@@ -76,6 +76,27 @@ class LedgerTests(unittest.TestCase):
         valid,rejected=self.accept(e,[self.fact(e,quote=123),self.fact(e)])
         self.assertEqual(len(valid),1);self.assertTrue(rejected)
 
+    def test_family_answer_completion_is_distinct_from_current_patient(self):
+        e=self.evidence('어머니는 두근거림이 있어요.','palpitations')
+        payload={'facts':[self.fact(e,'palpitations',subject='family')],
+                 'answer_contract':{'subject':'family','temporality':'current','status':'complete','quote':e.response}}
+        self.ledger.accept(payload,e,['palpitations'])
+        self.assertEqual(self.ledger.answer_status['palpitations']['status'],'complete')
+        self.assertEqual(self.ledger.view()[0]['palpitations'],'?')
+
+    def test_past_answer_completion_does_not_assert_current_symptom(self):
+        e=self.evidence('예전에는 설사가 있었어요.')
+        self.ledger.accept({'facts':[self.fact(e,time='past')],
+                            'answer_contract':{'subject':'patient','temporality':'past','status':'complete','quote':e.response}},e,['diarrhea'])
+        self.assertEqual(self.ledger.answer_status['diarrhea']['status'],'complete')
+        self.assertEqual(self.ledger.view()[0]['diarrhea'],'?')
+
+    def test_other_concept_cannot_complete_target_contract(self):
+        e=self.evidence('설사는 없어요.','abdominal_pain')
+        self.ledger.accept({'facts':[self.fact(e,assertion='absent')],
+                            'answer_contract':{'subject':'patient','temporality':'current','status':'complete','quote':e.response}},e,['diarrhea','abdominal_pain'])
+        self.assertNotEqual(self.ledger.answer_status['abdominal_pain']['status'],'complete')
+
     def test_once_per_observation_batch(self):
         class Client:
             calls=0

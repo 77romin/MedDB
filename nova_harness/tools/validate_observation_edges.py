@@ -54,6 +54,7 @@ def main():
              'cases':results}
     (out/'results.json').write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding='utf-8')
     aggregate={'scope':payload['scope'],'run':out.name,'fingerprint_unchanged':payload['fingerprint_unchanged'],
+               'source_sha256':{n:start[n] for n in ('nova_agent/observation_ledger.py','nova_agent/state.py')},
                'cases':[{'id':r['id'],'expected':r['expected'],'actual':r['actual'],
                          'matches_author_criterion':r['matches_author_criterion'],'accepted_facts':len(r['snapshot']['facts']),
                          'interpretation_failures':len(r['snapshot']['failures'])} for r in results]}
