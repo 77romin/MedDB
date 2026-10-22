@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """제출 ZIP을 만든다.
 
-    python tools/make_submission.py --starter <시작 패키지 run.py> [--agent hybrid|hybrid_comm|meddb] [--out ...]
+    python tools/make_submission.py --starter <시작 패키지 run.py> [--agent hybrid|hybrid_comm|meddb|b1] [--out ...]
 
 --agent hybrid (기본): LLM이 진료를 이끌고 KB가 매 턴 힌트를 준다 (examples/hybrid_agent.py)
 --agent hybrid_comm  : hybrid + 의사소통 층(인사·공감·마무리 설명·걱정 확인) (examples/hybrid_comm.py)
                        실험1, 샘플 검증 70.84 (1014_YE_v1)
+--agent b1           : 기본 에이전트 문진(모델이 매 턴 다음 질문) + 온톨로지 읽기·기록 + 마무리 설명 (examples/agent_b1.py)
+                       리더보드 70.02 (submission_B1i_report_fix, 10/22) — 자세한 내용 docs/agent_b1.md
 --agent meddb        : KB가 진료를 정하고, KB 밖 주호소는 시작 패키지 기본 에이전트로 넘긴다
 구성: run.py, requirements.txt, nova_sdk.py, meddb/ (코드와 data), examples/. 테스트·도구·화면 파일은 넣지 않는다.
 """
@@ -76,8 +78,9 @@ def build_run_py(starter_run: str, agent: str = "hybrid", knowledge_mode='clinic
     text = text.replace("def consult(client, model):", "def baseline_consult(client, model):", 1)
     text = re.sub(r"\nif __name__ == '__main__':\n    run_agent\(prepare, consult\)\n?\Z", "\n", text)
     assert "def baseline_consult(" in text and "run_agent(prepare, consult)" not in text, "시작 패키지 run.py 형식이 다름"
-    module = {"hybrid": "hybrid_agent", "hybrid_comm": "hybrid_comm", "hybrid_care": "hybrid_care", "meddb": "consult_skeleton"}[agent]
-    options = f", knowledge_mode={knowledge_mode!r}, reference_profile={reference_profile!r}" if agent in ('hybrid', 'hybrid_comm', 'hybrid_care') else ''
+    module = {"hybrid": "hybrid_agent", "hybrid_comm": "hybrid_comm", "hybrid_care": "hybrid_care", "meddb": "consult_skeleton",
+              "b1": "agent_b1"}[agent]
+    options = f", knowledge_mode={knowledge_mode!r}, reference_profile={reference_profile!r}" if agent in ('hybrid', 'hybrid_comm', 'hybrid_care', 'b1') else ''
     return text.rstrip() + "\n" + RUN_TAIL.replace("{module}", module).replace('{options}', options)
 
 
@@ -85,7 +88,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--starter", required=True, help="시작 패키지의 run.py")
     ap.add_argument("--sdk", help="시작 패키지의 nova_sdk.py (생략하면 run.py와 같은 폴더)")
-    ap.add_argument("--agent", choices=["hybrid", "hybrid_comm", "hybrid_care", "meddb"], default="hybrid")
+    ap.add_argument("--agent", choices=["hybrid", "hybrid_comm", "hybrid_care", "meddb", "b1"], default="hybrid")
     ap.add_argument('--knowledge-mode', choices=['clinical', 'ontology', 'integrated'], default='clinical')
     ap.add_argument('--reference-profile', choices=['reviewed', 'pilot', 'research'], default='reviewed')
     ap.add_argument("--out")
@@ -104,6 +107,9 @@ def main() -> None:
         files["examples/hybrid_comm.py"] = (ROOT / "examples" / "hybrid_comm.py").read_text(encoding="utf-8")
     if args.agent == 'hybrid_care':
         files['examples/hybrid_care.py'] = (ROOT / 'examples/hybrid_care.py').read_text(encoding='utf-8')
+    if args.agent == 'b1':  # agent_b1 → agent_r1(마무리 설명) · reader_g(온톨로지 읽기 보강) · hybrid_agent(기록)
+        for name in ('agent_b1.py', 'agent_r1.py', 'reader_g.py'):
+            files[f'examples/{name}'] = (ROOT / 'examples' / name).read_text(encoding='utf-8')
     with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as zf:
         for name, text in files.items():
             zf.writestr(name, text)

@@ -1,0 +1,1364 @@
+{
+ "exams": {
+  "ex_general": {
+   "id": "ex_general",
+   "ko": "전반적 외관 시진",
+   "action": "전반적 외관을 시진하겠습니다."
+  },
+  "ex_cn_e8": {
+   "id": "ex_cn_e8",
+   "ko": "뇌신경 검사",
+   "action": "뇌신경 검사를 하겠습니다."
+  },
+  "ex_fundus_e8": {
+   "id": "ex_fundus_e8",
+   "ko": "안저 검사",
+   "action": "안저 검사를 하겠습니다."
+  },
+  "ex_cerebellar_e8": {
+   "id": "ex_cerebellar_e8",
+   "ko": "소뇌 협조운동 검사",
+   "action": "소뇌 협조운동 검사를 하겠습니다."
+  },
+  "ex_sensory": {
+   "id": "ex_sensory",
+   "ko": "감각 검사",
+   "action": "팔다리 감각 검사를 하겠습니다."
+  },
+  "ex_romberg": {
+   "id": "ex_romberg",
+   "ko": "롬베르크 검사",
+   "action": "롬베르크 검사를 하겠습니다."
+  },
+  "ex_hearing": {
+   "id": "ex_hearing",
+   "ko": "청력 선별 검사",
+   "action": "청력 선별 검사를 하겠습니다."
+  },
+  "ex_eom": {
+   "id": "ex_eom",
+   "ko": "외안근 운동",
+   "action": "외안근 운동을 확인하겠습니다."
+  },
+  "ex_nasal": {
+   "id": "ex_nasal",
+   "ko": "비강 시진",
+   "action": "코 안을 살펴보겠습니다."
+  },
+  "ex_chest_inspect": {
+   "id": "ex_chest_inspect",
+   "ko": "흉곽 시진",
+   "action": "흉곽을 시진하겠습니다."
+  },
+  "ex_chest_percuss": {
+   "id": "ex_chest_percuss",
+   "ko": "흉부 타진",
+   "action": "흉부 타진을 하겠습니다."
+  },
+  "ex_clubbing": {
+   "id": "ex_clubbing",
+   "ko": "곤봉지 확인",
+   "action": "손가락 곤봉지를 확인하겠습니다."
+  },
+  "ex_abd_inspect": {
+   "id": "ex_abd_inspect",
+   "ko": "복부 시진",
+   "action": "복부를 시진하겠습니다."
+  },
+  "ex_rebound": {
+   "id": "ex_rebound",
+   "ko": "반발압통 검사",
+   "action": "반발압통을 확인하겠습니다."
+  },
+  "ex_mcburney": {
+   "id": "ex_mcburney",
+   "ko": "맥버니점 압통",
+   "action": "맥버니점 압통을 확인하겠습니다."
+  },
+  "ex_suprapubic": {
+   "id": "ex_suprapubic",
+   "ko": "치골상부 촉진",
+   "action": "치골상부를 촉진하겠습니다."
+  },
+  "ex_skin_turgor": {
+   "id": "ex_skin_turgor",
+   "ko": "피부 긴장도 확인",
+   "action": "피부 긴장도를 확인하겠습니다."
+  },
+  "ex_tongue": {
+   "id": "ex_tongue",
+   "ko": "혀 시진",
+   "action": "혀를 살펴보겠습니다."
+  },
+  "ex_nail": {
+   "id": "ex_nail",
+   "ko": "손톱 시진",
+   "action": "손톱을 살펴보겠습니다."
+  },
+  "ex_pronator": {
+   "id": "ex_pronator",
+   "ko": "회내근 표류 검사",
+   "action": "회내근 표류 검사를 하겠습니다."
+  },
+  "ex_babinski": {
+   "id": "ex_babinski",
+   "ko": "바빈스키 징후",
+   "action": "바빈스키 징후를 확인하겠습니다."
+  },
+  "ex_dysarthria": {
+   "id": "ex_dysarthria",
+   "ko": "구음장애 확인",
+   "action": "발음과 구음을 확인하겠습니다."
+  },
+  "ex_skin_bleed": {
+   "id": "ex_skin_bleed",
+   "ko": "피부 출혈반 시진",
+   "action": "피부의 멍과 출혈반을 살펴보겠습니다."
+  }
+ },
+ "complaints": {
+  "headache": {
+   "items": [
+    {
+     "kind": "f",
+     "id": "diplopia"
+    },
+    {
+     "kind": "f",
+     "id": "speech_disturbance"
+    },
+    {
+     "kind": "q",
+     "id": "pr_hd_wake",
+     "text": "두통 때문에 자다가 깬 적 있나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_hd_valsalva",
+     "text": "기침할 때 두통이 심해지나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_hd_aura",
+     "text": "두통 전에 눈앞이 번쩍이나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_hd_severity",
+     "text": "가장 아플 때 10점 중 몇 점인가요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_hd_jaw",
+     "text": "음식을 씹을 때 턱이 아픈가요?",
+     "field": "ros",
+     "age_min": 50
+    },
+    {
+     "kind": "q",
+     "id": "pr_hd_menses",
+     "text": "생리 때 두통이 심해지나요?",
+     "field": "hpi",
+     "sex": "F",
+     "age_min": 12,
+     "age_max": 55
+    },
+    {
+     "kind": "q",
+     "id": "pr_hd_ocp",
+     "text": "피임약을 드시나요?",
+     "field": "pmh",
+     "sex": "F",
+     "age_min": 15,
+     "age_max": 50
+    },
+    {
+     "kind": "q",
+     "id": "pr_hd_caffeine",
+     "text": "커피는 하루에 몇 잔 드세요?",
+     "field": "sh"
+    },
+    {
+     "kind": "q",
+     "id": "pr_hd_stress",
+     "text": "요즘 스트레스가 많으신가요?",
+     "field": "sh"
+    }
+   ],
+   "exams": [
+    {
+     "id": "ex_fundus_e8"
+    },
+    {
+     "id": "ex_cn_e8"
+    },
+    {
+     "id": "ex_pupil"
+    },
+    {
+     "id": "ex_temporal_artery",
+     "age_min": 50
+    },
+    {
+     "id": "ex_cerebellar_e8"
+    },
+    {
+     "id": "ex_sensory"
+    }
+   ],
+   "family": true,
+   "safety": "갑자기 심한 두통이나 마비가 오면 응급실에 오세요."
+  },
+  "dizziness": {
+   "items": [
+    {
+     "kind": "f",
+     "id": "diplopia"
+    },
+    {
+     "kind": "q",
+     "id": "pr_dz_hearing",
+     "text": "한쪽 귀가 잘 안 들리나요?",
+     "field": "ros"
+    },
+    {
+     "kind": "q",
+     "id": "pr_dz_rest",
+     "text": "가만히 있을 때도 어지러우신가요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_dz_headache",
+     "text": "머리도 아프신가요?",
+     "field": "ros"
+    },
+    {
+     "kind": "q",
+     "id": "pr_dz_numb",
+     "text": "팔다리 감각이 둔해졌나요?",
+     "field": "ros"
+    },
+    {
+     "kind": "f",
+     "id": "recurrent_similar"
+    },
+    {
+     "kind": "q",
+     "id": "pr_dz_cold",
+     "text": "어지럽기 전에 감기를 앓으셨나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_dz_fall",
+     "text": "어지러워서 넘어진 적 있나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_dz_alone",
+     "text": "혼자 사시나요?",
+     "field": "sh",
+     "age_min": 60
+    }
+   ],
+   "exams": [
+    {
+     "id": "ex_dix_hallpike"
+    },
+    {
+     "id": "ex_cn_e8"
+    },
+    {
+     "id": "ex_cerebellar_e8"
+    },
+    {
+     "id": "ex_romberg"
+    },
+    {
+     "id": "ex_hearing"
+    },
+    {
+     "id": "ex_orthostatic_bp"
+    }
+   ],
+   "family": false,
+   "safety": "말이 어눌하거나 마비가 오면 바로 응급실에 오세요."
+  },
+  "chest_pain": {
+   "items": [
+    {
+     "kind": "q",
+     "id": "pr_cp_minutes",
+     "text": "한 번 아프면 몇 분 정도 가나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_cp_rest",
+     "text": "가만히 있어도 아픈가요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_cp_breath",
+     "text": "숨을 들이쉴 때 더 아픈가요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_cp_meal",
+     "text": "식사 후에 더 아파지나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_cp_heart_hx",
+     "text": "심장병 진단을 받은 적 있나요?",
+     "field": "pmh"
+    },
+    {
+     "kind": "q",
+     "id": "pr_cp_htn",
+     "text": "고혈압 진단을 받은 적 있나요?",
+     "field": "pmh"
+    },
+    {
+     "kind": "q",
+     "id": "pr_cp_dm",
+     "text": "당뇨 진단을 받은 적 있나요?",
+     "field": "pmh"
+    },
+    {
+     "kind": "q",
+     "id": "pr_cp_lipid",
+     "text": "콜레스테롤이 높다고 들었나요?",
+     "field": "pmh"
+    },
+    {
+     "kind": "q",
+     "id": "pr_cp_fh",
+     "text": "가족 중 심장병을 앓은 분이 있나요?",
+     "field": "fh"
+    }
+   ],
+   "exams": [
+    {
+     "id": "ex_general"
+    },
+    {
+     "id": "ex_bp_both_arms"
+    },
+    {
+     "id": "ex_pulse"
+    },
+    {
+     "id": "ex_chest_wall_palp"
+    },
+    {
+     "id": "ex_jvp"
+    },
+    {
+     "id": "ex_leg_inspect"
+    }
+   ],
+   "family": false,
+   "safety": "가슴 통증이 20분 넘게 가면 바로 119를 부르세요."
+  },
+  "dyspnea": {
+   "items": [
+    {
+     "kind": "q",
+     "id": "pr_dy_rest",
+     "text": "가만히 있어도 숨이 차나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_dy_pnd",
+     "text": "자다가 숨이 차서 깬 적 있나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_dy_walk",
+     "text": "얼마나 걸으면 숨이 차나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_dy_chest",
+     "text": "가슴이 아프신가요?",
+     "field": "ros"
+    },
+    {
+     "kind": "f",
+     "id": "sputum"
+    },
+    {
+     "kind": "q",
+     "id": "pr_dy_heart_hx",
+     "text": "심장병 진단을 받은 적 있나요?",
+     "field": "pmh"
+    },
+    {
+     "kind": "q",
+     "id": "pr_dy_lung_hx",
+     "text": "폐 질환 진단을 받은 적 있나요?",
+     "field": "pmh"
+    },
+    {
+     "kind": "q",
+     "id": "pr_dy_weight",
+     "text": "최근 체중이 갑자기 늘었나요?",
+     "field": "ros"
+    }
+   ],
+   "exams": [
+    {
+     "id": "ex_general"
+    },
+    {
+     "id": "ex_chest_inspect"
+    },
+    {
+     "id": "ex_jvp"
+    },
+    {
+     "id": "ex_leg_inspect"
+    },
+    {
+     "id": "ex_chest_percuss"
+    },
+    {
+     "id": "ex_conjunctiva"
+    }
+   ],
+   "family": true,
+   "safety": "숨이 더 차거나 입술이 파래지면 바로 응급실에 오세요."
+  },
+  "cough": {
+   "items": [
+    {
+     "kind": "f",
+     "id": "night_sweats"
+    },
+    {
+     "kind": "f",
+     "id": "tb_contact"
+    },
+    {
+     "kind": "q",
+     "id": "pr_co_bp_med",
+     "text": "혈압약을 드시나요?",
+     "field": "pmh"
+    },
+    {
+     "kind": "f",
+     "id": "wheeze_sx"
+    },
+    {
+     "kind": "q",
+     "id": "pr_co_pnd",
+     "text": "목 뒤로 콧물이 넘어가나요?",
+     "field": "ros"
+    },
+    {
+     "kind": "q",
+     "id": "pr_co_reflux",
+     "text": "신물이 목으로 넘어오나요?",
+     "field": "ros"
+    },
+    {
+     "kind": "q",
+     "id": "pr_co_tb_hx",
+     "text": "결핵을 앓은 적이 있나요?",
+     "field": "pmh"
+    },
+    {
+     "kind": "q",
+     "id": "pr_co_night",
+     "text": "밤에 기침이 더 심한가요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_co_tried",
+     "text": "기침약을 드셔 보셨나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_co_job",
+     "text": "어떤 일을 하세요?",
+     "field": "sh"
+    }
+   ],
+   "exams": [
+    {
+     "id": "ex_nasal"
+    },
+    {
+     "id": "ex_chest_percuss"
+    },
+    {
+     "id": "ex_neck_nodes"
+    },
+    {
+     "id": "ex_clubbing"
+    },
+    {
+     "id": "ex_heart_ausc"
+    }
+   ],
+   "family": true,
+   "safety": "피를 토하거나 숨이 많이 차면 바로 응급실에 오세요."
+  },
+  "fever": {
+   "items": [
+    {
+     "kind": "q",
+     "id": "pr_fe_max",
+     "text": "열은 최고 몇 도까지 올랐나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_fe_chill",
+     "text": "몸이 덜덜 떨리는 오한이 있었나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_fe_headache",
+     "text": "머리가 아프신가요?",
+     "field": "ros"
+    },
+    {
+     "kind": "f",
+     "id": "rash"
+    },
+    {
+     "kind": "f",
+     "id": "abdominal_pain"
+    },
+    {
+     "kind": "q",
+     "id": "pr_fe_contact",
+     "text": "주변에 아픈 사람이 있나요?",
+     "field": "sh"
+    },
+    {
+     "kind": "q",
+     "id": "pr_fe_travel",
+     "text": "최근 해외여행을 다녀오셨나요?",
+     "field": "sh"
+    },
+    {
+     "kind": "q",
+     "id": "pr_fe_antipyretic",
+     "text": "해열제를 드셨나요?",
+     "field": "hpi"
+    }
+   ],
+   "exams": [
+    {
+     "id": "ex_general"
+    },
+    {
+     "id": "ex_neck_nodes"
+    },
+    {
+     "id": "ex_ear"
+    },
+    {
+     "id": "ex_heart_ausc"
+    },
+    {
+     "id": "ex_abd_palp"
+    },
+    {
+     "id": "ex_cva"
+    }
+   ],
+   "family": false,
+   "safety": "열이 안 떨어지거나 목이 뻣뻣하면 응급실에 오세요."
+  },
+  "abdominal_pain": {
+   "items": [
+    {
+     "kind": "q",
+     "id": "pr_ab_move",
+     "text": "통증 위치가 옮겨갔나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_ab_severity",
+     "text": "통증이 10점 중 몇 점인가요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_ab_meal",
+     "text": "식사하면 더 아파지나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "f",
+     "id": "anorexia"
+    },
+    {
+     "kind": "q",
+     "id": "pr_ab_last_stool",
+     "text": "마지막 대변은 언제 보셨나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "f",
+     "id": "dysuria"
+    },
+    {
+     "kind": "f",
+     "id": "nsaid_use"
+    },
+    {
+     "kind": "q",
+     "id": "pr_ab_surgery",
+     "text": "배 수술을 받은 적 있나요?",
+     "field": "pmh"
+    },
+    {
+     "kind": "q",
+     "id": "pr_ab_discharge",
+     "text": "질 분비물이 늘었나요?",
+     "field": "ros",
+     "sex": "F",
+     "age_min": 12,
+     "age_max": 55
+    }
+   ],
+   "exams": [
+    {
+     "id": "ex_general"
+    },
+    {
+     "id": "ex_abd_inspect"
+    },
+    {
+     "id": "ex_abd_ausc"
+    },
+    {
+     "id": "ex_rebound"
+    },
+    {
+     "id": "ex_murphy"
+    },
+    {
+     "id": "ex_mcburney"
+    },
+    {
+     "id": "ex_cva"
+    }
+   ],
+   "family": false,
+   "safety": "배가 더 아프거나 열·구토가 심하면 바로 오세요."
+  },
+  "vomiting_diarrhea": {
+   "items": [
+    {
+     "kind": "q",
+     "id": "pr_vd_watery",
+     "text": "변이 물처럼 나오나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_vd_urine",
+     "text": "소변은 평소만큼 보시나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_vd_orthostatic",
+     "text": "일어설 때 어지러우신가요?",
+     "field": "ros"
+    },
+    {
+     "kind": "q",
+     "id": "pr_vd_others",
+     "text": "같이 먹은 사람도 아픈가요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_vd_antibiotic",
+     "text": "최근 항생제를 드셨나요?",
+     "field": "pmh"
+    },
+    {
+     "kind": "q",
+     "id": "pr_vd_travel",
+     "text": "최근 해외여행을 다녀오셨나요?",
+     "field": "sh"
+    }
+   ],
+   "exams": [
+    {
+     "id": "ex_general"
+    },
+    {
+     "id": "ex_skin_turgor"
+    },
+    {
+     "id": "ex_abd_inspect"
+    },
+    {
+     "id": "ex_abd_ausc"
+    },
+    {
+     "id": "ex_orthostatic_bp"
+    }
+   ],
+   "family": false,
+   "safety": "물도 못 마시거나 피를 토하면 바로 응급실에 오세요."
+  },
+  "urinary": {
+   "items": [
+    {
+     "kind": "f",
+     "id": "pregnancy_possible",
+     "sex": "F",
+     "age_min": 12,
+     "age_max": 55
+    },
+    {
+     "kind": "q",
+     "id": "pr_ur_discharge",
+     "text": "질 분비물이 늘었나요?",
+     "field": "ros",
+     "sex": "F",
+     "age_min": 12,
+     "age_max": 55
+    },
+    {
+     "kind": "q",
+     "id": "pr_ur_sex",
+     "text": "최근 성관계가 있었나요?",
+     "field": "sh",
+     "age_min": 15,
+     "age_max": 60
+    },
+    {
+     "kind": "q",
+     "id": "pr_ur_stone",
+     "text": "요로결석을 앓은 적 있나요?",
+     "field": "pmh"
+    },
+    {
+     "kind": "q",
+     "id": "pr_ur_prior",
+     "text": "전에 방광염을 앓은 적 있나요?",
+     "field": "pmh"
+    },
+    {
+     "kind": "f",
+     "id": "nausea_vomiting"
+    },
+    {
+     "kind": "f",
+     "id": "poor_oral_intake"
+    },
+    {
+     "kind": "q",
+     "id": "pr_ur_stream",
+     "text": "소변 줄기가 약해졌나요?",
+     "field": "ros",
+     "sex": "M",
+     "age_min": 50
+    }
+   ],
+   "exams": [
+    {
+     "id": "ex_general"
+    },
+    {
+     "id": "ex_suprapubic"
+    },
+    {
+     "id": "ex_mouth"
+    },
+    {
+     "id": "ex_skin_turgor"
+    }
+   ],
+   "family": false,
+   "safety": "열이 계속 나거나 옆구리가 심해지면 바로 오세요."
+  },
+  "back_pain": {
+   "items": [
+    {
+     "kind": "f",
+     "id": "weight_loss"
+    },
+    {
+     "kind": "q",
+     "id": "pr_bp_cancer",
+     "text": "암을 앓은 적이 있나요?",
+     "field": "pmh"
+    },
+    {
+     "kind": "f",
+     "id": "steroid_use"
+    },
+    {
+     "kind": "q",
+     "id": "pr_bp_morning",
+     "text": "아침에 허리가 뻣뻣한가요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_bp_severity",
+     "text": "통증이 10점 중 몇 점인가요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_bp_job",
+     "text": "무거운 것을 드는 일을 하세요?",
+     "field": "sh"
+    }
+   ],
+   "exams": [
+    {
+     "id": "ex_paraspinal_palp"
+    },
+    {
+     "id": "ex_motor"
+    },
+    {
+     "id": "ex_reflex"
+    },
+    {
+     "id": "ex_sensory"
+    },
+    {
+     "id": "ex_gait"
+    },
+    {
+     "id": "ex_cva"
+    }
+   ],
+   "family": false,
+   "safety": "다리 힘이 빠지거나 대소변이 어려우면 바로 오세요."
+  },
+  "sore_throat": {
+   "items": [
+    {
+     "kind": "q",
+     "id": "pr_st_contact",
+     "text": "주변에 아픈 사람이 있나요?",
+     "field": "sh"
+    },
+    {
+     "kind": "q",
+     "id": "pr_st_tired",
+     "text": "몸이 많이 피곤하신가요?",
+     "field": "ros"
+    },
+    {
+     "kind": "f",
+     "id": "rash"
+    },
+    {
+     "kind": "q",
+     "id": "pr_st_ear",
+     "text": "귀도 아프신가요?",
+     "field": "ros"
+    },
+    {
+     "kind": "q",
+     "id": "pr_st_prior",
+     "text": "편도염을 자주 앓으셨나요?",
+     "field": "pmh"
+    },
+    {
+     "kind": "q",
+     "id": "pr_st_tried",
+     "text": "약을 드셔 보셨나요?",
+     "field": "hpi"
+    }
+   ],
+   "exams": [
+    {
+     "id": "ex_mouth"
+    },
+    {
+     "id": "ex_ear"
+    },
+    {
+     "id": "ex_lung_ausc"
+    },
+    {
+     "id": "ex_liver_spleen"
+    }
+   ],
+   "family": false,
+   "safety": "침을 못 삼키거나 숨쉬기 힘들면 바로 응급실에 오세요."
+  },
+  "palpitations": {
+   "items": [
+    {
+     "kind": "q",
+     "id": "pr_pa_chest",
+     "text": "가슴이 아프신가요?",
+     "field": "ros"
+    },
+    {
+     "kind": "f",
+     "id": "focal_weakness"
+    },
+    {
+     "kind": "f",
+     "id": "new_drug"
+    },
+    {
+     "kind": "q",
+     "id": "pr_pa_heart_hx",
+     "text": "심장병 진단을 받은 적 있나요?",
+     "field": "pmh"
+    },
+    {
+     "kind": "f",
+     "id": "orthopnea"
+    },
+    {
+     "kind": "f",
+     "id": "heat_intolerance"
+    },
+    {
+     "kind": "f",
+     "id": "hand_tremor"
+    },
+    {
+     "kind": "q",
+     "id": "pr_pa_stroke_hx",
+     "text": "뇌졸중을 앓은 적 있나요?",
+     "field": "pmh"
+    },
+    {
+     "kind": "f",
+     "id": "snoring_apnea"
+    },
+    {
+     "kind": "f",
+     "id": "weight_loss"
+    }
+   ],
+   "exams": [
+    {
+     "id": "ex_jvp"
+    },
+    {
+     "id": "ex_thyroid"
+    },
+    {
+     "id": "ex_lung_ausc"
+    },
+    {
+     "id": "ex_leg_inspect"
+    },
+    {
+     "id": "ex_tremor"
+    },
+    {
+     "id": "ex_face"
+    }
+   ],
+   "family": true,
+   "safety": "가슴 통증·실신·마비가 오면 바로 119를 부르세요."
+  },
+  "syncope": {
+   "items": [
+    {
+     "kind": "q",
+     "id": "pr_sy_chest",
+     "text": "쓰러지기 전 가슴이 아팠나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_sy_standing",
+     "text": "서 있다가 쓰러지셨나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_sy_witness",
+     "text": "쓰러질 때 본 사람이 있나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_sy_injury",
+     "text": "쓰러지면서 다치셨나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "f",
+     "id": "recurrent_similar"
+    },
+    {
+     "kind": "q",
+     "id": "pr_sy_fh",
+     "text": "가족 중 돌연사한 분이 있나요?",
+     "field": "fh"
+    },
+    {
+     "kind": "q",
+     "id": "pr_sy_bp_med",
+     "text": "혈압약을 드시나요?",
+     "field": "pmh"
+    },
+    {
+     "kind": "q",
+     "id": "pr_sy_water",
+     "text": "최근 물을 적게 드셨나요?",
+     "field": "hpi"
+    }
+   ],
+   "exams": [
+    {
+     "id": "ex_general"
+    },
+    {
+     "id": "ex_pulse"
+    },
+    {
+     "id": "ex_cn_e8"
+    },
+    {
+     "id": "ex_motor"
+    },
+    {
+     "id": "ex_tongue"
+    },
+    {
+     "id": "ex_leg_inspect"
+    }
+   ],
+   "family": false,
+   "safety": "다시 쓰러지거나 가슴이 아프면 바로 응급실에 오세요."
+  },
+  "weakness": {
+   "items": [
+    {
+     "kind": "q",
+     "id": "pr_wk_last_normal",
+     "text": "마지막으로 괜찮았던 때가 언제인가요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_wk_vision",
+     "text": "갑자기 눈이 안 보인 적 있나요?",
+     "field": "ros"
+    },
+    {
+     "kind": "f",
+     "id": "dysphagia"
+    },
+    {
+     "kind": "q",
+     "id": "pr_wk_headache",
+     "text": "머리가 아프신가요?",
+     "field": "ros"
+    },
+    {
+     "kind": "q",
+     "id": "pr_wk_prior",
+     "text": "전에도 잠깐 이런 적이 있었나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_wk_af",
+     "text": "부정맥 진단을 받은 적 있나요?",
+     "field": "pmh"
+    },
+    {
+     "kind": "q",
+     "id": "pr_wk_htn",
+     "text": "고혈압 진단을 받은 적 있나요?",
+     "field": "pmh"
+    },
+    {
+     "kind": "q",
+     "id": "pr_wk_dm",
+     "text": "당뇨 진단을 받은 적 있나요?",
+     "field": "pmh"
+    },
+    {
+     "kind": "q",
+     "id": "pr_wk_anticoag",
+     "text": "피를 묽게 하는 약을 드시나요?",
+     "field": "pmh"
+    }
+   ],
+   "exams": [
+    {
+     "id": "ex_cn_e8"
+    },
+    {
+     "id": "ex_dysarthria"
+    },
+    {
+     "id": "ex_pronator"
+    },
+    {
+     "id": "ex_sensory"
+    },
+    {
+     "id": "ex_babinski"
+    },
+    {
+     "id": "ex_cerebellar_e8"
+    },
+    {
+     "id": "ex_gait"
+    }
+   ],
+   "family": true,
+   "safety": "마비가 심해지거나 말이 어눌하면 119를 부르세요."
+  },
+  "altered_mental": {
+   "items": [
+    {
+     "kind": "q",
+     "id": "pr_am_baseline",
+     "text": "평소에는 어떤 상태셨나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "f",
+     "id": "new_drug"
+    },
+    {
+     "kind": "f",
+     "id": "hypnotic_use"
+    },
+    {
+     "kind": "q",
+     "id": "pr_am_liver",
+     "text": "간 질환을 앓고 계신가요?",
+     "field": "pmh"
+    },
+    {
+     "kind": "q",
+     "id": "pr_am_kidney",
+     "text": "콩팥 질환을 앓고 계신가요?",
+     "field": "pmh"
+    },
+    {
+     "kind": "f",
+     "id": "cough"
+    },
+    {
+     "kind": "f",
+     "id": "dysuria"
+    }
+   ],
+   "exams": [
+    {
+     "id": "ex_pupil"
+    },
+    {
+     "id": "ex_asterixis"
+    },
+    {
+     "id": "ex_cn_e8"
+    },
+    {
+     "id": "ex_reflex"
+    },
+    {
+     "id": "ex_babinski"
+    },
+    {
+     "id": "ex_conjunctiva"
+    }
+   ],
+   "family": true,
+   "safety": "더 처지거나 경련하면 바로 119를 부르세요."
+  },
+  "rash": {
+   "items": [
+    {
+     "kind": "q",
+     "id": "pr_rs_start",
+     "text": "발진이 어디서 시작해 퍼졌나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_rs_pain",
+     "text": "발진 부위가 아프신가요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_rs_mouth",
+     "text": "입안이 헐었나요?",
+     "field": "ros"
+    },
+    {
+     "kind": "q",
+     "id": "pr_rs_blister",
+     "text": "물집이 생겼나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_rs_contact",
+     "text": "주변에 비슷한 사람이 있나요?",
+     "field": "sh"
+    },
+    {
+     "kind": "q",
+     "id": "pr_rs_product",
+     "text": "최근 새로 쓴 화장품이 있나요?",
+     "field": "hpi"
+    },
+    {
+     "kind": "q",
+     "id": "pr_rs_joint",
+     "text": "관절이 아프신가요?",
+     "field": "ros"
+    }
+   ],
+   "exams": [
+    {
+     "id": "ex_general"
+    },
+    {
+     "id": "ex_mouth"
+    },
+    {
+     "id": "ex_eye_inspect"
+    },
+    {
+     "id": "ex_neck_nodes"
+    },
+    {
+     "id": "ex_skin_bleed"
+    }
+   ],
+   "family": false,
+   "safety": "입술이 붓거나 숨이 차면 바로 응급실에 오세요."
+  },
+  "default": {
+   "items": [
+    {
+     "kind": "q",
+     "id": "pr_df_weight",
+     "text": "최근 체중이 변했나요?",
+     "field": "ros"
+    },
+    {
+     "kind": "q",
+     "id": "pr_df_appetite",
+     "text": "입맛은 어떠세요?",
+     "field": "ros"
+    },
+    {
+     "kind": "q",
+     "id": "pr_df_fever",
+     "text": "열이 나셨나요?",
+     "field": "ros"
+    },
+    {
+     "kind": "f",
+     "id": "dyspnea"
+    },
+    {
+     "kind": "f",
+     "id": "menstrual_change",
+     "sex": "F",
+     "age_min": 12,
+     "age_max": 55
+    },
+    {
+     "kind": "q",
+     "id": "pr_df_orthostatic",
+     "text": "일어설 때 어지러우신가요?",
+     "field": "ros"
+    },
+    {
+     "kind": "f",
+     "id": "bloody_stool"
+    },
+    {
+     "kind": "q",
+     "id": "pr_df_bruise",
+     "text": "몸에 멍이 잘 드나요?",
+     "field": "ros"
+    },
+    {
+     "kind": "f",
+     "id": "depressed_mood"
+    },
+    {
+     "kind": "q",
+     "id": "pr_df_sleep",
+     "text": "잠은 잘 주무시나요?",
+     "field": "ros"
+    },
+    {
+     "kind": "f",
+     "id": "cold_intolerance"
+    },
+    {
+     "kind": "f",
+     "id": "nsaid_use"
+    }
+   ],
+   "exams": [
+    {
+     "id": "ex_general"
+    },
+    {
+     "id": "ex_conjunctiva"
+    },
+    {
+     "id": "ex_tongue"
+    },
+    {
+     "id": "ex_thyroid"
+    },
+    {
+     "id": "ex_heart_ausc"
+    },
+    {
+     "id": "ex_lung_ausc"
+    },
+    {
+     "id": "ex_abd_palp"
+    },
+    {
+     "id": "ex_neck_nodes"
+    },
+    {
+     "id": "ex_leg_inspect"
+    }
+   ],
+   "family": true,
+   "safety": "숨이 차거나 의식이 흐려지면 바로 응급실에 오세요."
+  }
+ }
+}
