@@ -15,7 +15,34 @@ messages에는 condition/action의 정확한 문자열을 유지하면서 쉬운
 critical은 원문에 명시된 즉시 위험 대응/금지 행동입니다. 추출 목록이 전체 계획의 완전성을 보장한다고 주장하지 마세요.'''
 
 
-def install(timeline):
+def repair(client, note, ledger, rejected):
+    from examples import hybrid_agent as H
+    pending=[r for r in rejected if isinstance(r['row'],dict) and r['row'].get('source_field') in note.get('P',{})
+             and isinstance(r['row'].get('source_quote'),str) and r['row']['source_quote'].strip()
+             and r['row']['source_quote'] in note['P'][r['row']['source_field']]]
+    if not pending:return ledger.versions[-1]['obligations']
+    try:
+        response=client.chat([{'role':'system','content':SYSTEM+
+            '\n이번에는 아래 실패 항목만 고칩니다. index를 repair_index로 돌려주세요. source_field/source_quote/condition/action/timing/priority/applicability를 바꾸지 말고 messages만 다시 작성하세요. 지킬 수 없으면 제외하세요.'},
+            {'role':'user','content':json.dumps({'failed_items':pending},ensure_ascii=False)}],max_tokens=2048,reasoning_effort='low')
+        payload=H.parse_json(response['choices'][0]['message']['content'] or '')
+        lookup={r['index']:r['row'] for r in pending};safe=[]
+        for item in payload.get('obligations',[])[:12]:
+            if not isinstance(item,dict) or item.get('repair_index') not in lookup:continue
+            source=lookup[item['repair_index']]
+            if any(item.get(k,'')!=source.get(k,'') for k in ('source_field','source_quote','condition','action','timing','priority','applicability')):continue
+            safe.append(item)
+        before=len(ledger.versions[-1]['obligations'])
+        rows,failed=ledger.register_partial({'obligations':safe})
+        ledger.events.append({'event':'obligation_repair','attempts':1,'accepted_new':len(rows)-before,'still_rejected':len(failed),
+                              'not_repaired':len(pending)-len(safe)})
+        return rows
+    except Exception as exc:
+        ledger.events.append({'event':'obligation_repair_failed','error':type(exc).__name__})
+        return ledger.versions[-1]['obligations']
+
+
+def install(timeline, repair_invalid=False):
     from examples import hybrid_comm as C
     from examples import hybrid_agent as H
     from examples.consult_skeleton import seconds_left
@@ -43,7 +70,14 @@ def install(timeline):
             response = client.chat([{'role': 'system', 'content': SYSTEM},
                                     {'role': 'user', 'content': json.dumps({'source_plan': note.get('P', {})}, ensure_ascii=False)}],
                                    max_tokens=2048, reasoning_effort='low')
-            rows = ledger.register(H.parse_json(response['choices'][0]['message']['content'] or ''))
+            payload = H.parse_json(response['choices'][0]['message']['content'] or '')
+            if repair_invalid:
+                rows, rejected = ledger.register_partial(payload)
+                ledger.events.append({'event':'obligation_validation','accepted':len(rows),'rejected':len(rejected)})
+                if rejected and seconds_left(client.session()) >= 120:
+                    rows = repair(client, note, ledger, rejected)
+            else:
+                rows = ledger.register(payload)
         except Exception as exc:
             ledger.events.append({'event': 'planning_failed', 'error': type(exc).__name__})
             return base
@@ -58,11 +92,21 @@ def install(timeline):
                 budget -= len(group)
             else:
                 ledger.events.append({'event': 'group_not_scheduled', 'id': row['id'], 'reason': 'turn_budget'})
-        remainder = [m for m in base if m not in result]
-        if len(remainder) <= budget:
-            result.extend(remainder)
-        elif remainder:
-            ledger.events.append({'event': 'base_group_not_scheduled', 'reason': 'turn_budget'})
+        base_groups=[base]
+        if repair_invalid:
+            from . import e2_safety_delivery
+            proposals=[e for e in (e2_safety_delivery.LAST_RUN or {}).get('events',[]) if e['event']=='closing_proposed']
+            if proposals and proposals[-1].get('messages')==base:
+                candidate=proposals[-1].get('groups',[])
+                if [m for group in candidate for m in group]==base:base_groups=candidate
+        for original_group in base_groups:
+            if all(m in result for m in original_group):continue
+            # Do not clip a group even when a subset overlaps earlier speech.
+            group=original_group if repair_invalid else [m for m in original_group if m not in result]
+            if len(group)<=budget:
+                result.extend(group);budget-=len(group)
+            elif group:
+                ledger.events.append({'event':'base_group_not_scheduled','reason':'turn_budget'})
         return result
 
     H.write_record, C._closing_sentences = record, closing

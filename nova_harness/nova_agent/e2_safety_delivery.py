@@ -115,6 +115,7 @@ def install(timeline,check_coverage=True):
                 selected[key]=parts;available-=len(parts)
             else:events.append({'event':'closing_group_not_sent','field':key,'reason':'turn_budget'})
         result=[part for key in keys for part in selected.get(key,[])]
+        extra=[]
         remaining=max(0,session.get('turns_remaining',50)-3-len(result))
         if check_coverage and remaining and seconds_left(session)>=120:
             try:
@@ -133,6 +134,7 @@ def install(timeline,check_coverage=True):
             except Exception as exc:
                 events.append({'event':'safety_coverage_check_failed','error':type(exc).__name__})
         events.append({'event':'closing_proposed','messages':list(result),
+                       'groups':[list(selected[k]) for k in keys if k in selected]+([list(extra)] if extra else []),
                        'unresolved_fields':[k for k in ('safety','follow_up') if not groups.get(k)]})
         return result
 

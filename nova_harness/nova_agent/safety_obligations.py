@@ -22,6 +22,7 @@ class ObligationLedger:
     def __init__(self):
         self.versions = []
         self.events = []
+        self.rejections = []
 
     def update(self, note, observation_hash=None, record_count=None):
         plan = {k: v.split('환자에게 설명함:', 1)[0].strip()
@@ -93,6 +94,28 @@ class ObligationLedger:
         version['extraction_complete'] = False  # A model subset is never a completeness proof.
         return accepted
 
+    def register_partial(self, payload):
+        """Accept complete independent rows; never relax one row's constraints."""
+        if not isinstance(payload, dict) or not isinstance(payload.get('obligations'), list) or len(payload['obligations']) > 12:
+            raise ValueError('invalid obligations')
+        if not self.versions:
+            raise ValueError('missing plan')
+        version = self.versions[-1]
+        accepted = deepcopy(version['obligations'])
+        rejected = []
+        for index, row in enumerate(payload['obligations']):
+            try:
+                valid = self.register({'obligations': [row]})
+                for item in valid:
+                    if not any(old['id'] == item['id'] for old in accepted):
+                        accepted.append(item)
+            except (ValueError, TypeError, KeyError) as exc:
+                rejected.append({'index': index, 'row': deepcopy(row), 'reason': str(exc)})
+            finally:
+                version['obligations'] = accepted
+        self.rejections.extend(deepcopy(rejected))
+        return accepted, rejected
+
     def audit(self, speech):
         for version in self.versions:
             for row in version['obligations']:
@@ -109,7 +132,7 @@ class ObligationLedger:
                          'unverified_plan_fields': list(current['plan']) if current else [],
                          'understanding': 'not_inferred_from_delivery',
                          'plan_changed_after_speech': bool(current and current['version'] > 1 and speech),
-                         'events': self.events})
+                         'rejected_items': self.rejections, 'events': self.events})
 
     def render(self, note, speech):
         out = deepcopy(note)
