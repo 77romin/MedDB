@@ -22,7 +22,8 @@ def install(events):
             if not hasattr(self,'_answered_exact'):self._answered_exact={}
             self._answered_exact[question_key(question)]={'answer':answer,'turn':turn}
     def duplicate(self,kb,text,target):
-        if target in kb.conflicts:return False
+        # Conflicts justify a distinct clarification, not replaying an answered
+        # identical question. Keep the original observation unresolved.
         return question_key(text) in getattr(self,'_answered_exact',{})
     def candidates(self,kb):
         result=[]

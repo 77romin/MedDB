@@ -56,7 +56,8 @@ class QuestionTests(unittest.TestCase):
         self.assertTrue(self.coverage.allow_action(self.kb,'SAY','무엇인가요?',None))
         self.coverage.observe(None,'증상이 있나요?','있어요.',2)
         self.kb.conflicts.add('symptom')
-        self.assertTrue(self.coverage.allow_action(self.kb,'SAY','증상이 있나요?','symptom'))
+        self.assertFalse(self.coverage.allow_action(self.kb,'SAY','증상이 있나요?','symptom'))
+        self.assertTrue(self.coverage.allow_action(self.kb,'SAY','앞서 답변의 다른 점을 설명해 주세요.',None))
     def test_required_candidates_also_filter_answered_exact_questions(self):
         from meddb.coverage import CareCoverage
         # Patch the saved original needed method through a fresh install.
@@ -68,3 +69,26 @@ class QuestionTests(unittest.TestCase):
                 self.assertEqual(self.coverage.needed(self.kb),[])
             finally:Q.restore(previous)
         self.previous=Q.install(self.events)
+
+class ClosingBudgetTests(unittest.TestCase):
+    def test_valid_obligation_and_diagnosis_survive_without_clipping_plan_group(self):
+        from examples import hybrid_comm as C,hybrid_agent as H
+        from nova_agent import e2_safety_obligations as S3,e2_safety_delivery as S1
+        from nova_agent.safety_trace import SafetyTimeline
+        from datetime import datetime,timezone,timedelta
+        note={'P':{'education':'흉통 시 즉시 응급실 방문. 상태를 알려 주세요.'}}
+        row={'source_field':'education','source_quote':note['P']['education'],'condition':'흉통 시',
+             'action':'즉시 응급실 방문','priority':'critical','applicability':'conditional',
+             'messages':['흉통 시 즉시 응급실 방문이 필요해요.','상태를 알려 주세요.']}
+        base=['원인을 확인할게요.','검사 계획이에요.','추가 검사도 설명할게요.']
+        class Fake:
+            def session(self):return {'turns_remaining':7,'deadline':(datetime.now(timezone.utc)+timedelta(minutes=20)).isoformat()}
+            def chat(self,*a,**kw):return {'choices':[{'message':{'content':json.dumps({'obligations':[row]},ensure_ascii=False)}}]}
+        timeline=SafetyTimeline()
+        with patch.object(C,'_closing_sentences',return_value=base),patch.object(H,'write_record'),patch.object(S1,'LAST_RUN',{'events':[{'event':'closing_proposed','messages':base,'groups':[[base[0]],base[1:]]}]}):
+            original=S3.install(timeline,repair_invalid=True)
+            try:
+                actual=C._closing_sentences(Fake(),None,note,'가설','',True)
+                self.assertEqual(actual,row['messages']+[base[0]])
+                self.assertEqual(len(timeline.obligations.audit([])['unresolved_ids']),1)
+            finally:S3.restore(original)

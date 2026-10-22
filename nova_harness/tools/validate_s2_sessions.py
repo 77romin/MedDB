@@ -15,13 +15,14 @@ SOURCES={'C01':'20261022_081024_824030_safety_session_R3a_safety',
          'C10':'20261022_082006_598639_safety_session_R3a_safety'}
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--mode',choices=['R3a_obligations','R3a_obligations_fixed'],default='R3a_obligations');args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--mode',choices=['R3a_obligations','R3a_obligations_fixed'],default='R3a_obligations');parser.add_argument('--case-label',choices=list(SOURCES));args=parser.parse_args()
     tag='_s3_full_validation' if args.mode=='R3a_obligations_fixed' else '_s2_full_validation'
     out=ROOT/'results'/(datetime.now().strftime('%Y%m%d_%H%M%S')+tag)
     out.mkdir(mode=0o700)
     frozen=fingerprint()
     cases={label:json.loads((ROOT/'results'/source/'manifest.json').read_text())['case'] for label,source in SOURCES.items()}
-    manifest={'scope':'three public development sessions; no official scoring/submission',
+    if args.case_label:cases={args.case_label:cases[args.case_label]}
+    manifest={'scope':'public development sessions; no official scoring/submission',
               'mode':args.mode,'cases':cases,'fingerprint':frozen}
     (out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     print('Validation batch:',out,flush=True)
