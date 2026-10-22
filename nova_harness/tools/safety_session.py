@@ -69,6 +69,9 @@ def main():
             e2_safety_delivery.restore(old_safety)
         module.restore(old_rag);store.close()
         (out/'timeline.json').write_text(json.dumps(timeline.snapshot(),ensure_ascii=False,indent=2),encoding='utf-8')
+    manifest['end_fingerprint']=fingerprint()
+    manifest['fingerprint_unchanged']=manifest['end_fingerprint']==manifest['fingerprint']
+    (out/'manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
     print(json.dumps(write_report(out/'trace.jsonl'),ensure_ascii=False,indent=2))
 
 if __name__=='__main__':main()

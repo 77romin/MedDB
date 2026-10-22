@@ -6,14 +6,14 @@ transcript/coverage records. This overlay changes only bounded question handling
 import re
 import unicodedata
 
-AMBIGUOUS = re.compile(r'모르겠|잘\s*모르|기억(?:이|나지|하지|이\s*잘).*않|기억.*안\s*나|무슨\s*(?:뜻|말)|못\s*들|다시\s*(?:말|질문)|대답.*어려')
+AMBIGUOUS = re.compile(r'모르겠|몰라|모릅|잘\s*모르|기억(?:이|나지|하지|이\s*잘).*않|기억.*안\s*나|무슨\s*(?:뜻|말)|못\s*들|다시\s*(?:말|질문)|대답.*어려')
 DECLINED = re.compile(r'말하.*싫|답하.*싫|대답.*싫|말씀.*어려|답변.*거부|비밀')
 # Only explicit numeric-unit questions get completeness checks; qualitative
 # histories remain received, never asserted medically normal/negative.
 QUANTITATIVE = {
-    'sleep_hours': (r'(?:\d+(?:\.\d+)?|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열)\s*시간|전혀.*못|한숨.*못', '실제 수면 시간을 대략 알려주시겠어요?'),
-    'sleep_latency': (r'(?:\d+(?:\.\d+)?|한|두|세|네)\s*(?:분|시간)|바로|금방|즉시', '잠들기까지 대략 몇 분 걸리나요?'),
-    'sleep_frequency': (r'(?:\d+|한|두|세|네|다섯|여섯|일곱)\s*(?:일|번)|매일|날마다|매번', '일주일에 대략 며칠인가요?'),
+    'sleep_hours': (r'(?:\d+(?:\.\d+)?|[일이삼사오육칠팔구십백]+|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열|서너|대여섯|반)\s*시간|전혀.*못|한숨.*못', '실제 수면 시간을 대략 알려주시겠어요?'),
+    'sleep_latency': (r'(?:\d+(?:\.\d+)?|[일이삼사오육칠팔구십백]+|한|두|세|네|다섯|여섯|서너|대여섯|반)\s*(?:분|시간)|바로|금방|즉시', '잠들기까지 대략 몇 분 걸리나요?'),
+    'sleep_frequency': (r'(?:\d+|[일이삼사오육칠팔구십]+|한|두|세|네|다섯|여섯|일곱|서너)\s*(?:일|번)|매일|날마다|매번', '일주일에 대략 며칠인가요?'),
 }
 
 

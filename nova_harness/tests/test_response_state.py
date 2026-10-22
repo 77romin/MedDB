@@ -55,8 +55,14 @@ class ResponseStateTests(unittest.TestCase):
         self.care.observe('sleep_hours','몇 시간 주무세요?','잘 모르겠어요',2)
         choices=self.care.needed(self.kb)
         self.assertEqual([a['priority'] for a in choices],sorted(a['priority'] for a in choices))
+    def test_korean_numbers_in_actual_response_are_not_missing(self):
+        for target,text in [('sleep_latency','약 먹고 삼십 분쯤 걸려요.'),('sleep_hours','서너 시간쯤 자요'),('sleep_hours','반 시간'),('sleep_frequency','주 삼 일')]:
+            self.assertEqual(classify(target,text),'received')
+        for text in ('몰라요','모릅니다','기억이 안 나요'):
+            self.assertEqual(classify('meds',text),'ambiguous')
+
     def test_classification_is_not_fact_extraction(self):
-        self.assertEqual(classify('sleep_hours','몇 시간인지는 몰라요'),'partial')
+        self.assertEqual(classify('sleep_hours','몇 시간인지는 몰라요'),'ambiguous')
         self.assertEqual(classify('sleep_hours','전혀 못 자요'),'received')
         self.assertEqual(classify('meds','없어요'),'received')
         self.assertEqual(classify('sleep_hours',''),'ambiguous')
