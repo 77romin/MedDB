@@ -11,6 +11,8 @@ from .state import PatientState
 
 SYSTEM='''환자의 실제 답변을 구조화된 관찰로 분해합니다. 진단·치료·다음 질문을 생성하지 않습니다.
 후보 개념은 질문 target과 원문 용어 매칭에서 얻은 후보일 뿐이며, 존재를 의미하지 않습니다.
+patient_context의 진료 대상과 답변하는 보호자를 구분하세요. 진료 대상 아이는 patient이며
+그 아이의 부모 증상은 family입니다. 주어가 불명확하면 unknown으로 남깁니다.
 원문에 없는 관찰을 만들지 마세요. 다른 증상에 대한 부정으로 질문 증상을 부정하지 마세요.
 가족/타인의 증상과 환자 본인을 구분하고 과거·현재·조건부를 분리하세요.
 예/아니요 접두만으로 판단하지 말고 정정·부분 부정·빈도·기간을 보존하세요.
@@ -88,7 +90,7 @@ class ObservationLedger:
                 valid.append(f)
         self._answer_contract(payload.get('answer_contract'),evidence,valid)
         self.events.append({'event':'observation_validated','evidence_id':evidence.id,
-                            'accepted':len(valid),'rejected':len(rejected)})
+                            'accepted':len(valid),'rejected':len(rejected),'rejection_reasons':list(rejected)})
         return valid,rejected
 
     def _answer_contract(self,contract,evidence,valid):
@@ -120,7 +122,7 @@ class ObservationLedger:
             if deadline:
                 from examples.consult_skeleton import seconds_left
                 if seconds_left({'deadline':deadline})<120:raise ValueError('protect_record_deadline')
-            source={'evidence_id':evidence.id,'question':question,'response':response,'target':target,
+            source={'patient_context':self.state.initial,'evidence_id':evidence.id,'question':question,'response':response,'target':target,
                     'candidates':[{'id':i,'name':self.db.findings[i]['ko'],'question':self.db.findings[i]['ask']} for i in allowed],
                     'prior_facts':[f for f in self.state.facts if f['concept_id'] in allowed][-16:]}
             result=client.chat([{'role':'system','content':SYSTEM},{'role':'user','content':json.dumps(source,ensure_ascii=False)}],
@@ -132,11 +134,11 @@ class ObservationLedger:
             self.events.append({'event':'observation_failed','evidence_id':evidence.id,'reason':type(exc).__name__})
         return evidence
 
-    def view(self):
+    def _reduce(self,eligible):
         replaced={i for f in self.state.facts for i in f.get('replaces',[])}
         active=defaultdict(list)
         for f in self.state.facts:
-            if f['id'] not in replaced and f['subject']=='patient' and f['temporality']=='current' and f.get('binary_projectable',False):
+            if f['id'] not in replaced and f.get('binary_projectable',False) and eligible(f):
                 active[f['concept_id']].append(f)
         result={};conflicts=set()
         for fid,rows in active.items():
@@ -148,10 +150,25 @@ class ObservationLedger:
             if target in self.state.concepts:result.setdefault(target,'?')
         return result,conflicts
 
+    def current_view(self):
+        return self._reduce(lambda f:f['subject']=='patient' and f['temporality']=='current')
+
+    def view(self):
+        # A family-history concept is ABOUT relatives, not the patient's current
+        # symptom. Existing ontology SOAP metadata defines those feature scopes.
+        def eligible(f):
+            row=self.db.findings[f['concept_id']]
+            if row['kind']=='history' and row.get('soap')=='S.가족력':
+                return f['subject']=='family' and f['temporality'] in ('past','current')
+            if row['kind']=='history' and row.get('soap') in ('S.과거력','S.알레르기'):
+                return f['subject']=='patient' and f['temporality'] in ('past','current')
+            return f['subject']=='patient' and f['temporality']=='current'
+        return self._reduce(eligible)
+
     def snapshot(self):
         # Do not use PatientState.snapshot's broader generic "covered" count:
         # family/past observations here explicitly do not fill current state.
         view,conflicts=self.view()
         return {'evidence':[vars(e) for e in self.state.evidence],'facts':deepcopy(self.state.facts),
-                'current_patient_view':view,'answer_status':deepcopy(self.answer_status),
+                'current_patient_view':self.current_view()[0],'kb_feature_view':view,'answer_status':deepcopy(self.answer_status),
                 'conflicts':sorted(conflicts),'failures':list(self.failures)}

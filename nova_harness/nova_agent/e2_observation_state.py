@@ -53,6 +53,10 @@ def install(events,ledgers=None):
         def __init__(self,db,*args,**kwargs):
             self.observations=ObservationLedger(db)
             self.observation_deadline=None
+            self.observations.state.initial={
+                'opening':kwargs.get('opening',args[3] if len(args)>3 else ''),
+                'patient_age':kwargs.get('age',args[1] if len(args)>1 else None),
+                'patient_sex':kwargs.get('sex',args[2] if len(args)>2 else None)}
             super().__init__(db,*args,**kwargs)
             # Existing raw history-slot handling stays upstream. This stage
             # unifies clinical finding assertions, not every numeric/history slot.
@@ -77,10 +81,13 @@ def install(events,ledgers=None):
                 else:self.unknown.add(fid)
                 self.turns.setdefault(fid,turn)
                 if fid in conflicts:self.conflict_turns[fid]=turn
+            current=self.observations.current_view()[0]
             events.append({'event':'unified_observation_applied','turn':turn,
-                           'patient_current_present':len([v for v in view.values() if v=='+']),
-                           'patient_current_absent':len([v for v in view.values() if v=='-']),
-                           'patient_current_unknown':len([v for v in view.values() if v=='?']),
+                           'kb_feature_present':sum(v=='+' for v in view.values()),
+                           'kb_feature_absent':sum(v=='-' for v in view.values()),
+                           'patient_current_present':len([v for v in current.values() if v=='+']),
+                           'patient_current_absent':len([v for v in current.values() if v=='-']),
+                           'patient_current_unknown':len([v for v in current.values() if v=='?']),
                            'conflicts':len(conflicts),'facts':len(self.observations.state.facts),
                            'interpretation_failures':len(self.observations.failures)})
 

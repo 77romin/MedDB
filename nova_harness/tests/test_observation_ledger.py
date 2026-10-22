@@ -97,6 +97,17 @@ class LedgerTests(unittest.TestCase):
                             'answer_contract':{'subject':'patient','temporality':'current','status':'complete','quote':e.response}},e,['diarrhea','abdominal_pain'])
         self.assertNotEqual(self.ledger.answer_status['abdominal_pain']['status'],'complete')
 
+    def test_ontology_history_scope_is_retained_without_current_symptom_leak(self):
+        for fid,subject,text in [('family_late_puberty','family','아버지가 늦었어요.'),
+                                 ('birth_abnormal','patient','미숙아였어요.')]:
+            e=self.evidence(text,target=fid)
+            self.ledger.accept({'facts':[self.fact(e,fid,subject=subject,time='past')]},e,[fid])
+            self.assertEqual(self.ledger.view()[0][fid],'+')
+            self.assertEqual(self.ledger.current_view()[0][fid],'?')
+        e=self.evidence('어머니는 두근거림이 있어요.',target='palpitations')
+        self.accept(e,[self.fact(e,'palpitations',subject='family')])
+        self.assertEqual(self.ledger.view()[0]['palpitations'],'?')
+
     def test_once_per_observation_batch(self):
         class Client:
             calls=0

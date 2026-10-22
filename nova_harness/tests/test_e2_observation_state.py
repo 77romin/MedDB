@@ -109,7 +109,8 @@ class UnifiedSessionTests(unittest.TestCase):
             care.observe(t,question,answer,2);care.sync_observation(kb,t)
             care.attempts[t]=1;kb.asked.add(t)
             self.assertEqual(care.response_slots[t]['status'],'received')
-            self.assertEqual(kb.observations.view()[0][t],'?')
+            self.assertEqual(kb.observations.current_view()[0][t],'?')
+            self.assertEqual(kb.observations.view()[0][t],'+')
             self.assertFalse(any(a.get('target')==t and a.get('_response_clarification') for a in care.needed(kb)))
         finally:e2_observation_state.restore(u);coverage_order.restore(o);response_state.restore(r)
 
