@@ -44,16 +44,19 @@ def main():
     def run(case):
         id,question,answer,target,expected=case
         ledger=ObservationLedger(MedDB.open())
+        ledger.state.initial={'opening':'30세 여성 환자가 본인의 증상으로 진료받습니다.',
+                              'patient_age':30,'patient_sex':'F'}
         ledger.observe(client,question,answer,target,1)
         fid=target or 'palpitations';view,conflicts=ledger.view();actual=view.get(fid,'?')
         return {'id':id,'expected':expected,'actual':actual,'matches_author_criterion':actual==expected,
-                'snapshot':ledger.snapshot(),'events':ledger.events,'synthetic_source':{'question':question,'response':answer,'target':target}}
+                'snapshot':ledger.snapshot(),'events':ledger.events,'synthetic_source':{'question':question,'response':answer,'target':target,'patient_context':ledger.state.initial}}
     with ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(run,CASES))
     payload={'scope':'live Doctor on fixed author-defined synthetic observations; no patient/official score',
              'fingerprint':start,'end_fingerprint':fingerprint(),'fingerprint_unchanged':start==fingerprint(),
              'cases':results}
     (out/'results.json').write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding='utf-8')
     aggregate={'scope':payload['scope'],'run':out.name,'fingerprint_unchanged':payload['fingerprint_unchanged'],
+               'patient_context':'explicit adult self-patient context, same for every case; not expected findings',
                'source_sha256':{n:start[n] for n in ('nova_agent/observation_ledger.py','nova_agent/state.py')},
                'cases':[{'id':r['id'],'expected':r['expected'],'actual':r['actual'],
                          'matches_author_criterion':r['matches_author_criterion'],'accepted_facts':len(r['snapshot']['facts']),

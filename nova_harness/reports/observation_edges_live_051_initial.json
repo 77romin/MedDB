@@ -1,0 +1,91 @@
+{
+  "scope": "live Doctor on fixed author-defined synthetic observations; no patient/official score",
+  "run": "20261023_014609_839249_observation_edges",
+  "fingerprint_unchanged": true,
+  "cases": [
+    {
+      "id": "E01",
+      "expected": "?",
+      "actual": "?",
+      "matches_author_criterion": true,
+      "accepted_facts": 0,
+      "interpretation_failures": 0
+    },
+    {
+      "id": "E02",
+      "expected": "-",
+      "actual": "-",
+      "matches_author_criterion": true,
+      "accepted_facts": 2,
+      "interpretation_failures": 0
+    },
+    {
+      "id": "E03",
+      "expected": "?",
+      "actual": "+",
+      "matches_author_criterion": false,
+      "accepted_facts": 1,
+      "interpretation_failures": 0
+    },
+    {
+      "id": "E04",
+      "expected": "+",
+      "actual": "+",
+      "matches_author_criterion": true,
+      "accepted_facts": 1,
+      "interpretation_failures": 0
+    },
+    {
+      "id": "E05",
+      "expected": "?",
+      "actual": "?",
+      "matches_author_criterion": true,
+      "accepted_facts": 1,
+      "interpretation_failures": 0
+    },
+    {
+      "id": "V01",
+      "expected": "?",
+      "actual": "?",
+      "matches_author_criterion": true,
+      "accepted_facts": 2,
+      "interpretation_failures": 0
+    },
+    {
+      "id": "V02",
+      "expected": "-",
+      "actual": "-",
+      "matches_author_criterion": true,
+      "accepted_facts": 2,
+      "interpretation_failures": 0
+    },
+    {
+      "id": "V03",
+      "expected": "?",
+      "actual": "?",
+      "matches_author_criterion": true,
+      "accepted_facts": 1,
+      "interpretation_failures": 0
+    },
+    {
+      "id": "V04",
+      "expected": "+",
+      "actual": "+",
+      "matches_author_criterion": true,
+      "accepted_facts": 1,
+      "interpretation_failures": 0
+    },
+    {
+      "id": "V05",
+      "expected": "-",
+      "actual": "-",
+      "matches_author_criterion": true,
+      "accepted_facts": 2,
+      "interpretation_failures": 0
+    }
+  ],
+  "source_sha256": {
+    "nova_agent/observation_ledger.py": "9d3fc0bfc9fde0b9c30f2763b6790fe5f56409ef8e9b4f32c07dc6ee605ffb82",
+    "nova_agent/state.py": "fe6700c3d9b16554983ac7ef608546397079289752baa9174057b40cff29a4ef"
+  }
+}

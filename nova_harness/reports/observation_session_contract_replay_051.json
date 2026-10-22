@@ -1,0 +1,21 @@
+{
+  "scope": "strict saved full-session replay; not new patient/model or official scoring runs",
+  "sessions": [
+    {
+      "run": "20261023_020008_610383_safety_session_R3a_observation_state",
+      "source_sha256": "ea45b00d5cdb65160c3611376c40528cfec33d9fb15118667dc4bb226ad97820",
+      "all_model_inputs_actions_and_final_note_match": true,
+      "remaining": 0,
+      "observed_sources": 31,
+      "validated_facts": 7
+    },
+    {
+      "run": "20261023_020015_456373_safety_session_R3a_observation_state",
+      "source_sha256": "044c3e91ad829243458181b9e3da9ed11bf9aae97bac288fd4ddbd57e9e5f589",
+      "all_model_inputs_actions_and_final_note_match": true,
+      "remaining": 0,
+      "observed_sources": 36,
+      "validated_facts": 17
+    }
+  ]
+}

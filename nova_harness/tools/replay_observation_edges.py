@@ -31,7 +31,8 @@ def replay(path):
                 if messages!=body['messages'] or kwargs['max_tokens']!=body['max_tokens']:
                     raise AssertionError('model input differs')
                 return response
-        ledger=ObservationLedger(MedDB.open());ledger.observe(Replay(),*key,1)
+        ledger=ObservationLedger(MedDB.open());ledger.state.initial=src.get('patient_context',{})
+        ledger.observe(Replay(),*key,1)
         # observe catches extraction errors by design; explicitly inspect replay
         # matching rather than accidentally accepting an input-drift exception.
         if ledger.failures:raise AssertionError('replay failed')

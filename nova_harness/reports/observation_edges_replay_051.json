@@ -1,0 +1,157 @@
+{
+  "scope": "saved actual model responses through current validator, not new clinical sessions",
+  "runs": [
+    {
+      "run": "20261023_014609_839249_observation_edges",
+      "same_saved_model_inputs": true,
+      "cases": [
+        {
+          "id": "E01",
+          "expected": "?",
+          "original_actual": "?",
+          "replayed_actual": "?",
+          "matches_author_criterion": true
+        },
+        {
+          "id": "E02",
+          "expected": "-",
+          "original_actual": "-",
+          "replayed_actual": "-",
+          "matches_author_criterion": true
+        },
+        {
+          "id": "E03",
+          "expected": "?",
+          "original_actual": "+",
+          "replayed_actual": "?",
+          "matches_author_criterion": true
+        },
+        {
+          "id": "E04",
+          "expected": "+",
+          "original_actual": "+",
+          "replayed_actual": "+",
+          "matches_author_criterion": true
+        },
+        {
+          "id": "E05",
+          "expected": "?",
+          "original_actual": "?",
+          "replayed_actual": "?",
+          "matches_author_criterion": true
+        },
+        {
+          "id": "V01",
+          "expected": "?",
+          "original_actual": "?",
+          "replayed_actual": "?",
+          "matches_author_criterion": true
+        },
+        {
+          "id": "V02",
+          "expected": "-",
+          "original_actual": "-",
+          "replayed_actual": "-",
+          "matches_author_criterion": true
+        },
+        {
+          "id": "V03",
+          "expected": "?",
+          "original_actual": "?",
+          "replayed_actual": "?",
+          "matches_author_criterion": true
+        },
+        {
+          "id": "V04",
+          "expected": "+",
+          "original_actual": "+",
+          "replayed_actual": "+",
+          "matches_author_criterion": true
+        },
+        {
+          "id": "V05",
+          "expected": "-",
+          "original_actual": "-",
+          "replayed_actual": "-",
+          "matches_author_criterion": true
+        }
+      ]
+    },
+    {
+      "run": "20261023_014805_197596_observation_edges",
+      "same_saved_model_inputs": true,
+      "cases": [
+        {
+          "id": "E01",
+          "expected": "?",
+          "original_actual": "?",
+          "replayed_actual": "?",
+          "matches_author_criterion": true
+        },
+        {
+          "id": "E02",
+          "expected": "-",
+          "original_actual": "-",
+          "replayed_actual": "-",
+          "matches_author_criterion": true
+        },
+        {
+          "id": "E03",
+          "expected": "?",
+          "original_actual": "?",
+          "replayed_actual": "?",
+          "matches_author_criterion": true
+        },
+        {
+          "id": "E04",
+          "expected": "+",
+          "original_actual": "+",
+          "replayed_actual": "+",
+          "matches_author_criterion": true
+        },
+        {
+          "id": "E05",
+          "expected": "?",
+          "original_actual": "?",
+          "replayed_actual": "?",
+          "matches_author_criterion": true
+        },
+        {
+          "id": "V01",
+          "expected": "?",
+          "original_actual": "?",
+          "replayed_actual": "?",
+          "matches_author_criterion": true
+        },
+        {
+          "id": "V02",
+          "expected": "-",
+          "original_actual": "-",
+          "replayed_actual": "-",
+          "matches_author_criterion": true
+        },
+        {
+          "id": "V03",
+          "expected": "?",
+          "original_actual": "?",
+          "replayed_actual": "?",
+          "matches_author_criterion": true
+        },
+        {
+          "id": "V04",
+          "expected": "+",
+          "original_actual": "+",
+          "replayed_actual": "+",
+          "matches_author_criterion": true
+        },
+        {
+          "id": "V05",
+          "expected": "-",
+          "original_actual": "-",
+          "replayed_actual": "-",
+          "matches_author_criterion": true
+        }
+      ]
+    }
+  ]
+}
