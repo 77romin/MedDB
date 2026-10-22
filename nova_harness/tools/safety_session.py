@@ -18,7 +18,7 @@ from examples.hybrid_care import consult,prepare
 
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--case',required=True);p.add_argument('--mode',choices=['R3a','R3b','R3a_safety','R3a_obligations','R3a_obligations_fixed','R3a_response_state','R3a_coverage_order'],required=True);args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--case',required=True);p.add_argument('--mode',choices=['R3a','R3b','R3a_safety','R3a_obligations','R3a_obligations_fixed','R3a_response_state','R3a_coverage_order','R3a_question_link'],required=True);args=p.parse_args()
     load_local_env();key=os.environ.get('NOVA_DEV_KEY','').strip()
     if not key:raise SystemExit('Key missing; configure locally')
     if os.environ.get('NOVA_API_BASE','https://nova.snubhai.org').rstrip('/')!='https://nova.snubhai.org':raise SystemExit('Official origin required')
@@ -34,13 +34,17 @@ def main():
     module=importlib.import_module('nova_agent.e2_rag_query' if args.mode=='R3b' else 'nova_agent.e2_rag_selection')
     old_rag=module.install(store);old_safety=None
     old_response=None;response_events=[]
-    if args.mode in ('R3a_response_state','R3a_coverage_order'):
+    if args.mode in ('R3a_response_state','R3a_coverage_order','R3a_question_link'):
         from nova_agent import response_state
         old_response=response_state.install(response_events)
     old_order=None
-    if args.mode=='R3a_coverage_order':
+    if args.mode in ('R3a_coverage_order','R3a_question_link'):
         from nova_agent import coverage_order
         old_order=coverage_order.install(response_events)
+    old_link=None
+    if args.mode=='R3a_question_link':
+        from nova_agent import e2_question_link
+        old_link=e2_question_link.install(response_events)
     if args.mode in ('R3a_safety','R3a_obligations','R3a_obligations_fixed'):
         from nova_agent import e2_safety_delivery
         old_safety=e2_safety_delivery.install(timeline)
@@ -62,6 +66,7 @@ def main():
         trace.emit('experiment_complete',outcome=outcome)
     finally:
         restore(old_record)
+        if old_link is not None:e2_question_link.restore(old_link)
         if old_order is not None:coverage_order.restore(old_order)
         if old_response is not None:
             response_state.restore(old_response)
