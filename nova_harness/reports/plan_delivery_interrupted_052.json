@@ -1,0 +1,32 @@
+{
+  "scope": "interrupted integration attempts, not validation successes",
+  "sessions": [
+    {
+      "run": "20261023_070203_934704_safety_session_R3a_plan_delivery",
+      "case": "C10",
+      "max_observed_server_turn": 31,
+      "completed": false,
+      "stop_reason": "operator SIGINT after selected dynamic consult closing hook mismatch found",
+      "end_fingerprint_available": false,
+      "plan_source_sha256": "1113073eca5f5d5ef3da23e6d4e1ce9213f42523552177d4a33ba815d8ce0199"
+    },
+    {
+      "run": "20261023_070203_977388_safety_session_R3a_plan_delivery",
+      "case": "C01",
+      "max_observed_server_turn": 32,
+      "completed": false,
+      "stop_reason": "operator SIGINT after selected dynamic consult closing hook mismatch found",
+      "end_fingerprint_available": false,
+      "plan_source_sha256": "1113073eca5f5d5ef3da23e6d4e1ce9213f42523552177d4a33ba815d8ce0199"
+    },
+    {
+      "run": "20261023_070208_327905_safety_session_R3a_plan_delivery",
+      "case": "C03",
+      "max_observed_server_turn": 31,
+      "completed": false,
+      "stop_reason": "operator SIGINT after selected dynamic consult closing hook mismatch found",
+      "end_fingerprint_available": false,
+      "plan_source_sha256": "1113073eca5f5d5ef3da23e6d4e1ce9213f42523552177d4a33ba815d8ce0199"
+    }
+  ]
+}

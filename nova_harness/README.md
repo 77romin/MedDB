@@ -1,5 +1,7 @@
 # NOVA Doctor Agent
 
+최신 [52차 계획 전달 실험](reports/development_052.md)은 **미채택**이다. 계획 원장·발화·SOAP 실제 수행 연결을 구현했으나 C01/C03의 발화 전부 거절과 C10의50턴 사용을 확인했다. 318테스트/전체 API·재생 일치를 공식 점수나 안전 완전성으로 해석하지 않는다. 별도 `R3a_plan_delivery` 모드만 추가했고 기본/제출 경로에는 적용하지 않았다.
+
 최신 관찰 구조 실험은 [51차 보고](reports/development_051.md)에 있다. 환자 답변을 한 번 해석해 질문 완료·현재 소견·병력 소견·기록 입력을 공유한다. 303테스트와 최종3증례 API/저장 재생을 검증했으나 추가 호출 비용·부분응답 및 안전계획 발화 문제가 남아 공식 점수 개선/제출 권장은 미확정이다.
 
 예선 고정 Doctor `openai/gpt-6-luna`를 사용하는 표준 라이브러리 기반 개발 하네스다. 설계 자료는 [자료 목차](nova_reference/README.md), 상세 계획은 [구현계획](nova_reference/08_implementation_plan.md)에 있다.
