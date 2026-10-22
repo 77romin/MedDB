@@ -1,0 +1,73 @@
+{
+  "scope": "saved actual target-less successful speech, not new clinical sessions or score",
+  "runtime_sha256": "2d425bd63d38e341ba6ec60c61c632e19d77ca714816b9db0507e5393e18eeb9",
+  "sessions": [
+    {
+      "run": "20261023_005558_684026_safety_session_R3a_coverage_order",
+      "timeline_sha256": "79b47f1fe51c9106c4ccf411868d7a963e8026351c7bc047c84a90b7e587ee58",
+      "targetless_successful_speech": 10,
+      "resolution_counts": {
+        "not_single_question": 7,
+        "compound": 1,
+        "unmapped": 2
+      },
+      "proposed_links_not_counterfactual_results": []
+    },
+    {
+      "run": "20261023_005601_682774_safety_session_R3a_response_state",
+      "timeline_sha256": "1719739d322e35fdf98b7d9274ff7637565c6239c0b41e48e2f13f0ab99a720c",
+      "targetless_successful_speech": 15,
+      "resolution_counts": {
+        "not_single_question": 7,
+        "unmapped": 5,
+        "compound": 3
+      },
+      "proposed_links_not_counterfactual_results": []
+    },
+    {
+      "run": "20261023_005604_342366_safety_session_R3a_coverage_order",
+      "timeline_sha256": "4593b7d052fa841984ba213fc143ec79d61ee08028b72f524602eb660e73d73d",
+      "targetless_successful_speech": 11,
+      "resolution_counts": {
+        "not_single_question": 7,
+        "unmapped": 3,
+        "compound": 1
+      },
+      "proposed_links_not_counterfactual_results": []
+    },
+    {
+      "run": "20261023_005607_090991_safety_session_R3a_response_state",
+      "timeline_sha256": "df5cc68801fdea181c702ae5ab41d5ab19b89f944a6a7ef4c3663a16f402c095",
+      "targetless_successful_speech": 11,
+      "resolution_counts": {
+        "not_single_question": 7,
+        "unmapped": 3,
+        "compound": 1
+      },
+      "proposed_links_not_counterfactual_results": []
+    },
+    {
+      "run": "20261023_005755_412671_safety_session_R3a_coverage_order",
+      "timeline_sha256": "4f8e6c2f8a2a79721b47d50ed5e7230ed0f939838b0bfbe404f5bd245009ab3d",
+      "targetless_successful_speech": 14,
+      "resolution_counts": {
+        "not_single_question": 7,
+        "historical_scope": 1,
+        "unmapped": 3,
+        "compound": 3
+      },
+      "proposed_links_not_counterfactual_results": []
+    },
+    {
+      "run": "20261023_005758_003996_safety_session_R3a_response_state",
+      "timeline_sha256": "eac4c7671733fc5312dbc97d25105bc33001724d482cda28f56cf2a9bd21744e",
+      "targetless_successful_speech": 12,
+      "resolution_counts": {
+        "not_single_question": 7,
+        "unmapped": 3,
+        "compound": 2
+      },
+      "proposed_links_not_counterfactual_results": []
+    }
+  ]
+}

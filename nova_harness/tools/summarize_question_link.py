@@ -35,7 +35,8 @@ def summarize(path):
             'link_events':dict(Counter(r['event'] for r in e if r['event'].startswith('question_link'))),
             'abstention_reasons':dict(Counter(r['reason'] for r in e if r['event']=='question_link_abstained')),
             'observed_link_targets':dict(Counter(r['target'] for r in linked)),
-            'observed_link_has_successful_speech':True,
+            'observed_link_count':len(linked),
+            'observed_link_has_successful_speech':True if linked else None,
             'target_response_count':len({r['target'] for r in e if r['event']=='response_observed' and r.get('target')}),
             'literal_question_repeats':sum(n-1 for n in question_counts.values() if n>1)}
 
