@@ -92,3 +92,18 @@ class ClosingBudgetTests(unittest.TestCase):
                 self.assertEqual(actual,row['messages']+[base[0]])
                 self.assertEqual(len(timeline.obligations.audit([])['unresolved_ids']),1)
             finally:S3.restore(original)
+
+class KoreanProhibitionTests(unittest.TestCase):
+    def test_polite_prohibition_preserves_negative_meaning(self):
+        from nova_agent.safety_obligations import has_prohibition
+        for phrase in ('하지 마세요.','끊지 마십시오.','늘리지 말아 주세요.','피해 주세요.','피하도록 한다.'):
+            self.assertTrue(has_prohibition(phrase),phrase)
+        for phrase in ('말씀해 주세요.','약을 드세요.','끊어 주세요.'):
+            self.assertFalse(has_prohibition(phrase),phrase)
+    def test_positive_rewrite_still_rejected_but_correct_negative_inflection_accepted(self):
+        note={'P':{'education':'다른 약을 복용하지 않도록 한다.'}}
+        row={'source_field':'education','source_quote':note['P']['education'],'condition':'','action':'다른 약을 복용','priority':'critical','applicability':'current'}
+        ledger=ObligationLedger();ledger.update(note)
+        with self.assertRaises(ValueError):ledger.register({'obligations':[dict(row,messages=['다른 약을 복용해 주세요.'])]})
+        with self.assertRaises(ValueError):ledger.register({'obligations':[dict(row,messages=['다른 약을 복용하고 말씀해 주세요.'])]})
+        self.assertEqual(len(ledger.register({'obligations':[dict(row,messages=['다른 약을 복용하지 마세요.'])]})),1)

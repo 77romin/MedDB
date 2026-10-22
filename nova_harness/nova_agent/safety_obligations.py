@@ -11,6 +11,12 @@ def canonical(text):
     return re.sub(r'\s+', ' ', unicodedata.normalize('NFC', text)).strip()
 
 
+def has_prohibition(text):
+    # Korean prohibitions inflect: 하지 않도록 -> 하지 마세요, 피하도록 -> 피해 주세요.
+    # '말씀' alone is not a prohibition.
+    return bool(re.search(r'지\s*(?:않|말|마(?:세|십|셔))|금지|피하|피해', text))
+
+
 def complete_message(text):
     return (isinstance(text, str) and 0 < len(text) <= 30 and '?' not in text
             and bool(re.search(r'(세요|어요|아요|니다|게요|돼요|해요)[.!。]?$', text))
@@ -67,9 +73,9 @@ class ObligationLedger:
             joined = canonical(' '.join(messages))
             if canonical(action) not in joined or (condition and canonical(condition) not in joined):
                 raise ValueError('lost condition/action')
-            if re.search(r'않|말|금지|피하|중단하지', quote) and not re.search(r'않|말|금지|피하|중단하지', joined):
+            if has_prohibition(quote) and not has_prohibition(joined):
                 raise ValueError('lost negation')
-            for marker in ('즉시', '응급', '하지'):
+            for marker in ('즉시', '응급'):
                 if marker in quote and marker not in joined:
                     raise ValueError('lost source qualifier')
             if set(re.findall(r'\d+(?:\.\d+)?', joined)) - set(re.findall(r'\d+(?:\.\d+)?', quote)):
@@ -86,7 +92,7 @@ class ObligationLedger:
                 continue
             accepted.append({'id': identity, 'source_field': field, 'source_quote': quote,
                              'condition': condition, 'action': action, 'timing': timing,
-                             'negation_source': quote if re.search(r'않|말|금지|피하', quote) else '',
+                             'negation_source': quote if has_prohibition(quote) else '',
                              'priority': priority,
                              'applicability': applicability, 'messages': list(messages),
                              'state': 'generated', 'delivery_events': []})
