@@ -18,7 +18,7 @@ from examples.hybrid_care import consult,prepare
 
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--case',required=True);p.add_argument('--mode',choices=['R3a','R3b','R3a_safety','R3a_obligations','R3a_obligations_fixed'],required=True);args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--case',required=True);p.add_argument('--mode',choices=['R3a','R3b','R3a_safety','R3a_obligations','R3a_obligations_fixed','R3a_response_state'],required=True);args=p.parse_args()
     load_local_env();key=os.environ.get('NOVA_DEV_KEY','').strip()
     if not key:raise SystemExit('Key missing; configure locally')
     if os.environ.get('NOVA_API_BASE','https://nova.snubhai.org').rstrip('/')!='https://nova.snubhai.org':raise SystemExit('Official origin required')
@@ -33,6 +33,10 @@ def main():
     store=VectorStore(ROOT/'dist/rag/index.sqlite',ROOT/'vendor/guidelines/guidelines')
     module=importlib.import_module('nova_agent.e2_rag_query' if args.mode=='R3b' else 'nova_agent.e2_rag_selection')
     old_rag=module.install(store);old_safety=None
+    old_response=None;response_events=[]
+    if args.mode=='R3a_response_state':
+        from nova_agent import response_state
+        old_response=response_state.install(response_events)
     if args.mode in ('R3a_safety','R3a_obligations','R3a_obligations_fixed'):
         from nova_agent import e2_safety_delivery
         old_safety=e2_safety_delivery.install(timeline)
@@ -54,6 +58,9 @@ def main():
         trace.emit('experiment_complete',outcome=outcome)
     finally:
         restore(old_record)
+        if old_response is not None:
+            response_state.restore(old_response)
+            (out/'response_state.json').write_text(json.dumps(response_events,ensure_ascii=False,indent=2),encoding='utf-8')
         if old_questions is not None:answered_questions.restore(old_questions)
         if old_obligations is not None:
             e2_safety_obligations.restore(old_obligations)
