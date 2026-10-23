@@ -956,3 +956,10 @@
 - Preserve previous README; create Korean technical case study with five PNG/SVG figures, 15 sample-score rows, separate leaderboard/development comparisons, ontology statistics and complete historical report index. Existing team assets/B1 contributions are credited separately.
 - Final B1O1 sample77.498 remains below original E2sample77.714 by0.216. Leaderboard78/85/90, clinical safety, statistical significance and reader-only causal effect are not demonstrated. Development completion does not mean target achievement.
 - Freeze the existing B1O1 runtime/package. Publish documentation to the same branch/PR5 without merge. Details: reports/documentation_060.md.
+
+
+## 2026-10-23 사용자 PR 병합 승인 (D105)
+
+- 사용자가 PR5 병합을 명시적으로 승인했다. 이전의 사용자 요청 없는 병합 금지 및 D104의 병합 보류는 이 승인으로 대체한다.
+- PR5는 main 대상, OPEN·비초안·MERGEABLE·CLEAN이며 등록된 상태 검사는 없다. CI 통과로 표현하지 않는다. 승인 기록을 같은 브랜치에 커밋·푸시하고 head를 고정하여 일반 merge commit으로 병합한다. force/main 직접 push·공식 제출·런타임 변경은 하지 않는다.
+- 개발 종료·B1O1 동결·점수 해석의 한계는 유지한다. 병합 완료 여부는 GitHub 응답으로 별도 확인한다.
