@@ -1,0 +1,17 @@
+{
+  "scope": "isolated ZIP replay of saved development sessions; no network or official score",
+  "sessions": [
+    {
+      "run": "20261023_105701_321118_safety_session_R3a_model_questions",
+      "extracted_zip_model_inputs_actions_and_final_note_match": true
+    },
+    {
+      "run": "20261023_105702_626881_safety_session_R3a_model_questions",
+      "extracted_zip_model_inputs_actions_and_final_note_match": true
+    },
+    {
+      "run": "20261023_105702_886052_safety_session_R3a_model_questions",
+      "extracted_zip_model_inputs_actions_and_final_note_match": true
+    }
+  ]
+}
