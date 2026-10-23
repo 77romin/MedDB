@@ -75,8 +75,9 @@ class ClinicalSafety(unittest.TestCase):
         from test_meddb import ScriptedLLM
         from examples.hybrid_agent import consult
 
-        class Rejected(RuntimeError):
-            code = 'EXAM_NOT_RECOGNIZED'
+        from examples.consult_skeleton import NovaError
+        class Rejected(NovaError):
+            pass
 
         class RejectClient(ScriptedLLM):
             def exam(self, content):
