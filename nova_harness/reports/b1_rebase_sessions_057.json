@@ -1,0 +1,150 @@
+{
+  "scope": "independent same-window public API sessions; no official scores or clinical completeness claim",
+  "sessions": [
+    {
+      "run": "20261023_033640_990306_main_B1",
+      "mode": "B1",
+      "case": "C10",
+      "fingerprint_unchanged": true,
+      "completed": true,
+      "max_server_turn": 41,
+      "elapsed_seconds": 271.158,
+      "doctor_attempted_request_ids": 34,
+      "prompt_tokens": 41859,
+      "completion_tokens": 9513,
+      "errors": {
+        "EXAM_NOT_SPECIFIC": 1
+      },
+      "truncated_completions": 0,
+      "observation_states": {},
+      "linked_observation_rows": 0,
+      "record_count": 1,
+      "successful_speech": 32,
+      "interpretation_additional_model_calls": null,
+      "source_sha256": "1a94aaa4038356d1b2c3b9845881ea81f8683244bca8bf8ff6191329246b6aef"
+    },
+    {
+      "run": "20261023_033640_991848_main_B1",
+      "mode": "B1",
+      "case": "C03",
+      "fingerprint_unchanged": true,
+      "completed": true,
+      "max_server_turn": 40,
+      "elapsed_seconds": 336.574,
+      "doctor_attempted_request_ids": 39,
+      "prompt_tokens": 46193,
+      "completion_tokens": 12420,
+      "errors": {
+        "EXAM_NOT_SPECIFIC": 2,
+        "PROVIDER_RESPONSE_INVALID": 1
+      },
+      "truncated_completions": 0,
+      "observation_states": {},
+      "linked_observation_rows": 0,
+      "record_count": 1,
+      "successful_speech": 34,
+      "interpretation_additional_model_calls": null,
+      "source_sha256": "1a94aaa4038356d1b2c3b9845881ea81f8683244bca8bf8ff6191329246b6aef"
+    },
+    {
+      "run": "20261023_033641_455548_main_B1",
+      "mode": "B1",
+      "case": "C01",
+      "fingerprint_unchanged": true,
+      "completed": true,
+      "max_server_turn": 40,
+      "elapsed_seconds": 330.834,
+      "doctor_attempted_request_ids": 38,
+      "prompt_tokens": 39390,
+      "completion_tokens": 11929,
+      "errors": {
+        "EXAM_NOT_SPECIFIC": 1
+      },
+      "truncated_completions": 0,
+      "observation_states": {},
+      "linked_observation_rows": 0,
+      "record_count": 1,
+      "successful_speech": 36,
+      "interpretation_additional_model_calls": null,
+      "source_sha256": "1a94aaa4038356d1b2c3b9845881ea81f8683244bca8bf8ff6191329246b6aef"
+    },
+    {
+      "run": "20261023_033646_445612_main_B1O1",
+      "mode": "B1O1",
+      "case": "C01",
+      "fingerprint_unchanged": true,
+      "completed": true,
+      "max_server_turn": 41,
+      "elapsed_seconds": 371.561,
+      "doctor_attempted_request_ids": 40,
+      "prompt_tokens": 41518,
+      "completion_tokens": 11792,
+      "errors": {
+        "PROVIDER_RESPONSE_INVALID": 1
+      },
+      "truncated_completions": 0,
+      "observation_states": {
+        "raw_only": 17,
+        "explicit": 8,
+        "scoped_or_uncertain": 4
+      },
+      "linked_observation_rows": 8,
+      "record_count": 1,
+      "successful_speech": 41,
+      "interpretation_additional_model_calls": 0,
+      "source_sha256": "1a94aaa4038356d1b2c3b9845881ea81f8683244bca8bf8ff6191329246b6aef"
+    },
+    {
+      "run": "20261023_033646_996694_main_B1O1",
+      "mode": "B1O1",
+      "case": "C10",
+      "fingerprint_unchanged": true,
+      "completed": true,
+      "max_server_turn": 41,
+      "elapsed_seconds": 296.323,
+      "doctor_attempted_request_ids": 35,
+      "prompt_tokens": 42887,
+      "completion_tokens": 11482,
+      "errors": {
+        "EXAM_NOT_SPECIFIC": 1
+      },
+      "truncated_completions": 0,
+      "observation_states": {
+        "explicit": 5,
+        "raw_only": 14,
+        "scoped_or_uncertain": 1
+      },
+      "linked_observation_rows": 5,
+      "record_count": 1,
+      "successful_speech": 32,
+      "interpretation_additional_model_calls": 0,
+      "source_sha256": "1a94aaa4038356d1b2c3b9845881ea81f8683244bca8bf8ff6191329246b6aef"
+    },
+    {
+      "run": "20261023_033647_017461_main_B1O1",
+      "mode": "B1O1",
+      "case": "C03",
+      "fingerprint_unchanged": true,
+      "completed": true,
+      "max_server_turn": 39,
+      "elapsed_seconds": 305.717,
+      "doctor_attempted_request_ids": 34,
+      "prompt_tokens": 42520,
+      "completion_tokens": 13313,
+      "errors": {
+        "EXAM_NOT_SPECIFIC": 2
+      },
+      "truncated_completions": 0,
+      "observation_states": {
+        "raw_only": 14,
+        "explicit": 2,
+        "scoped_or_uncertain": 4
+      },
+      "linked_observation_rows": 2,
+      "record_count": 1,
+      "successful_speech": 30,
+      "interpretation_additional_model_calls": 0,
+      "source_sha256": "1a94aaa4038356d1b2c3b9845881ea81f8683244bca8bf8ff6191329246b6aef"
+    }
+  ]
+}
