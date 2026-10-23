@@ -13,6 +13,9 @@ import json,sys
 from pathlib import Path
 import run
 from nova_sdk import NovaError
+class ReplayMismatch(BaseException):pass
+def require(condition, message):
+    if not condition:raise ReplayMismatch(message)
 rows=[json.loads(l) for l in Path(sys.argv[1]).read_text().splitlines()]
 responses={r.get('request_id'):r['response'] for r in rows if r['event']=='http_response'}
 errors={r.get('request_id'):r for r in rows if r['event']=='http_error'}
@@ -25,26 +28,32 @@ for r in rows:
     if r['path']=='/v1/chat/completions' or r['path'].endswith('/actions'):
         calls.append((b,responses.get(b.get('request_id')),errors.get(b.get('request_id'))))
 class Client:
+    submitted=False
     def session(self):return deepcopy(session)
     def pop(self,kind):
-        assert calls,'unexpected extra request'
+        require(bool(calls),'unexpected extra request')
         b,response,error=calls.pop(0)
-        assert (b.get('action')or'CHAT').lower()==kind,'action order differs'
+        require((b.get('action')or'CHAT').lower()==kind,'action order differs')
         return b,response,error
-    def chat(self,messages,max_tokens,**kwargs):
-        b,r,e=self.pop('chat');assert b['messages']==messages and b['max_tokens']==max_tokens,'model input differs'
+    def result(self,r,e):
         if e and r is None:raise NovaError(e['code'],e.get('status'))
         return deepcopy(r)
+    def chat(self,messages,max_tokens,**kwargs):
+        b,r,e=self.pop('chat');require(b['messages']==messages and b['max_tokens']==max_tokens,'model input differs')
+        return self.result(r,e)
     def say(self,content,**kwargs):
-        b,r,e=self.pop('say');assert b['content']==content,'SAY differs';return deepcopy(r)
+        b,r,e=self.pop('say');require(b['content']==content,'SAY differs');return self.result(r,e)
     def exam(self,content,**kwargs):
-        b,r,e=self.pop('exam');assert b['content']==content,'EXAM differs';return deepcopy(r)
+        b,r,e=self.pop('exam');require(b['content']==content,'EXAM differs');return self.result(r,e)
     def diagnose(self,note,diagnosis,**kwargs):
-        b,r,e=self.pop('diagnose');assert b['note']==note and b['diagnosis']==diagnosis,'final SOAP differs';return deepcopy(r)
+        b,r,e=self.pop('diagnose');require(b['note']==note and b['diagnosis']==diagnosis,'final SOAP differs')
+        self.submitted=True;return self.result(r,e)
 db=run.prepare()
-try:run.consult(Client(),db)
-finally:db.rag_store.close()
-assert not calls,'unused requests'
+c=Client()
+try:run.consult(c,db)
+finally:
+    if hasattr(db,'rag_store'):db.rag_store.close()
+require(not calls and c.submitted,'unused requests or missing final submission')
 print('ARTIFACT_REPLAY_OK')
 '''
 

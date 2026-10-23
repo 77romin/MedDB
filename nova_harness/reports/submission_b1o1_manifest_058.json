@@ -1,0 +1,16 @@
+{
+  "zip": "submission_B1O1_observation.zip",
+  "bytes": 16017348,
+  "files": 54,
+  "sha256": "cb5155eeb5cb46de49417b5b983c7dc6b7a3a60b95696132e2ecf87d1f0a10db",
+  "base_main": "05f9ed09ae49c0ecbf79e9af091a74fad1a658a1",
+  "runtime_commit": "734d0d6",
+  "scope": "User-requested B1O1 comparison artifact; no official score or upload",
+  "runtime_sha256": {
+    "examples/agent_b1.py": "d748c86e0cab1235608c32cabfdf6f3bd44033503eedf58331a87912f713f348",
+    "examples/agent_b1_observed.py": "0d9d1fa8c6e13b347f9345bc93cf64936c5f932db936905589a648ecc77ce0d6",
+    "examples/reader_b1_observed.py": "1a94aaa4038356d1b2c3b9845881ea81f8683244bca8bf8ff6191329246b6aef",
+    "examples/reader_g.py": "eecc613770a76166fbfdfdab171727da6983a94c37d7894bd848734b222f2862",
+    "examples/agent_r1.py": "89a27cd484415660fc56e186470da7ba6e7dbd2c5c3a032ce2009326a2795a1e"
+  }
+}
