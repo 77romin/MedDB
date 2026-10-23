@@ -60,11 +60,17 @@ def select(client,kb,care,required,acts,user,transcript,left,events):
     ledger=getattr(kb,'observations',None)
     rows=getattr(care,'response_slots',{}) if care else {}
     available={**kb.db.slots,**kb.db.findings,**getattr(care,'extra',{})} if care else {**kb.db.slots,**kb.db.findings}
-    payload={'context':user,'full_transcript':list(transcript),'remaining_intake_turns':left,
-             'observations':ledger.snapshot() if ledger else None,
-             'answer_status':rows,
-             'menu':[{'menu_id':i+1,'action':a['type'],'content':a['text'],'target':a.get('target'),'why':a.get('why','')} for i,a in enumerate(menu)],
-             'concept_ids':list(available)}
+    snapshot=ledger.snapshot() if ledger else {}
+    # Raw sources stay in the ledger/final writer. Do not transmit every source
+    # again beside the complete transcript and the already duplicated user text.
+    compact_facts=[{k:f[k] for k in ('concept_id','assertion','subject','temporality','scope','qualifiers','evidence_id') if k in f}
+                   for f in snapshot.get('facts',[])]
+    state=getattr(ledger,'state',None)
+    payload={'patient_context':getattr(state,'initial',{}),'vitals':kb.vitals,
+             'full_transcript':list(transcript),'remaining_intake_turns':left,
+             'observations':{'facts':compact_facts,'kb_feature_view':snapshot.get('kb_feature_view',{})},
+             'answer_status':{t:r.get('status') for t,r in rows.items()},
+             'menu':[{'menu_id':i+1,'action':a['type'],'content':a['text'],'target':a.get('target'),'why':a.get('why','')} for i,a in enumerate(menu)]}
     rejection=''
     for attempt in range(2):
         try:
@@ -78,7 +84,7 @@ def select(client,kb,care,required,acts,user,transcript,left,events):
         elif got.get('action')=='SAY':
             text=unicodedata.normalize('NFC',str(got.get('content',''))).strip()
             target=got.get('target') or None
-            if target is not None and target not in available:
+            if target is not None and (not isinstance(target,str) or target not in available):
                 rejection='\n직전 target이 제공 ID에 없습니다. 메뉴를 고르세요.'
                 events.append({'event':'question_policy_rejected','reason':'unknown_target'});continue
             # A model-proposed ID is not evidence that its free wording asks that exact slot.

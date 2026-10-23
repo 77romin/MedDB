@@ -13,7 +13,7 @@ from nova_sdk import NovaError,empty_record
 class PolicyTests(unittest.TestCase):
     def setUp(self):
         self.db=MedDB.open();self.events=[]
-        self.kb=SimpleNamespace(db=self.db,observations=SimpleNamespace(snapshot=lambda:{'facts':[{'quote':'실제 원문'}]}))
+        self.kb=SimpleNamespace(db=self.db,vitals={},observations=SimpleNamespace(snapshot=lambda:{'evidence':[{'response':'복제하면 안 되는 원문'}],'facts':[{'concept_id':'fever','quote':'실제 원문','assertion':'absent'}]}))
         self.care=SimpleNamespace(extra={},response_slots={},allow_action=lambda k,kind,text,target:target!='allergy')
         self.menu=[{'type':'SAY','text':'언제부터 불편하셨나요?','target':'onset','priority':1},
                    {'type':'SAY','text':'증상은 어떻게 변했나요?','target':'course','priority':1}]
@@ -26,7 +26,9 @@ class PolicyTests(unittest.TestCase):
         (step,chosen,req),chat=self.choose(['{"menu_id":2,"reason":"경과 확인"}'])
         self.assertEqual(chosen['target'],'course')
         payload=json.loads(chat.call_args.args[2]);self.assertEqual(payload['full_transcript'][-1],'환자: 실제 원문')
-        self.assertEqual(payload['observations']['facts'][0]['quote'],'실제 원문')
+        self.assertEqual(payload['observations']['facts'][0]['concept_id'],'fever')
+        self.assertNotIn('quote',payload['observations']['facts'][0]);self.assertNotIn('context',payload)
+        self.assertNotIn('evidence',payload['observations']);self.assertNotIn('concept_ids',payload)
     def test_protected_risk_never_calls_model(self):
         risk=dict(self.menu[0],priority=0)
         (_,chosen,_),chat=self.choose([],required=[risk,*self.menu]);self.assertEqual(chosen,risk);chat.assert_not_called()
@@ -47,6 +49,9 @@ class PolicyTests(unittest.TestCase):
         (_,chosen,_),_=self.choose([NovaError('PROVIDER_ERROR')]);self.assertEqual(chosen,self.menu[0])
     def test_untrusted_malformed_output_falls_back(self):
         (_,chosen,_),_=self.choose(['[]','{"menu_id":true}']);self.assertEqual(chosen,self.menu[0])
+    def test_nonstr_target_is_rejected_not_runtime_error(self):
+        (_,chosen,_),_=self.choose(['{"action":"SAY","content":"왜요?","target":["invented"]}','{"menu_id":2}'])
+        self.assertEqual(chosen['target'],'course')
     def test_question_format_and_compound(self):
         for text in ('모두 말씀해 주세요?','열 또는 기침이 있나요?','왜요?\n어디요?','가'*31+'?','진단은 확정입니다.'):
             self.assertFalse(P.fits_question(text))
