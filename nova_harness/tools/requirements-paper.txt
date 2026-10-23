@@ -1,0 +1,3 @@
+# Documentation figures only
+matplotlib==3.11.2
+networkx==3.7

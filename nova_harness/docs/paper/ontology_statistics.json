@@ -1,0 +1,22 @@
+{
+  "runtime": {
+    "complaints": 19,
+    "diseases": 135,
+    "findings": 291,
+    "exams": 56,
+    "slots": 19
+  },
+  "disease_finding_relations": {
+    "key": 384,
+    "support": 507,
+    "against": 135,
+    "rule_out": 51
+  },
+  "reference_release": {
+    "version": "meddb-2026.10.13.1",
+    "concepts": 32585,
+    "assertions": 114092,
+    "sources": 3345
+  },
+  "attribution": "Existing team MedDB assets reused and extended; counts do not imply new author contribution or clinical validation."
+}
