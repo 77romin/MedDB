@@ -1,0 +1,29 @@
+{
+  "scope": "initial frozen d643ccf policy replay, including recorded model errors; not final policy validation",
+  "sessions": [
+    {
+      "run": "20261023_104606_173644_safety_session_R3a_model_questions",
+      "source_sha256": "2566033a2d39dfaa868c10b01f1ac888213bbe6d0d30eb1fa6ec414278e8a85f",
+      "all_model_inputs_actions_and_final_note_match": true,
+      "remaining": 0,
+      "observed_sources": 31,
+      "validated_facts": 9
+    },
+    {
+      "run": "20261023_104608_603990_safety_session_R3a_model_questions",
+      "source_sha256": "ddafc4b513952ffdb5668713f2121c9f06029ba7086f4b66cf09e3c53f0c77e1",
+      "all_model_inputs_actions_and_final_note_match": true,
+      "remaining": 0,
+      "observed_sources": 35,
+      "validated_facts": 15
+    },
+    {
+      "run": "20261023_104608_754535_safety_session_R3a_model_questions",
+      "source_sha256": "5fe5673f5f147a15752fbb887a6a3984569c9fb6d48081271b4caea71cc3b76e",
+      "all_model_inputs_actions_and_final_note_match": true,
+      "remaining": 0,
+      "observed_sources": 43,
+      "validated_facts": 16
+    }
+  ]
+}

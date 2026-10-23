@@ -8,6 +8,7 @@ import sys
 ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT),str(ROOT/'tools'),str(ROOT/'vendor/meddb')]
 from replay_e2_session import _load,consult,prepare
+from nova_sdk import NovaError
 from replay_response_session import StrictClient
 from nova_agent import response_state,coverage_order,e2_observation_state,e2_rag_selection,model_question_policy
 from nova_agent.rag_retrieval import VectorStore
@@ -17,11 +18,23 @@ class Replay(StrictClient):
         row=self._pop('chat')
         if messages!=row['messages'] or max_tokens!=row['max_tokens']:
             raise AssertionError('saved model input differs')
-        self.seen.append(('chat',max_tokens));return deepcopy(row['response'])
+        self.seen.append(('chat',max_tokens))
+        if row.get('error'):raise NovaError(row['error']['code'],row['error'].get('status'))
+        return deepcopy(row['response'])
 
 
 def replay(path):
     m=json.loads((path.parent/'manifest.json').read_text());session,calls=_load(path)
+    rows=[json.loads(line) for line in path.read_text().splitlines()]
+    errors={row.get('request_id'):row for row in rows if row.get('event')=='http_error'}
+    requests=[row for row in rows if row.get('event')=='http_request' and
+              (row.get('path')=='/v1/chat/completions' or row.get('path','').endswith('/actions'))]
+    if len(requests)!=len(calls):raise AssertionError('request loader mismatch')
+    for request,call in zip(requests,calls):
+        request_id=(request.get('body') or {}).get('request_id')
+        if call.get('response') is None and request_id in errors:
+            if call['kind']!='chat':raise AssertionError('action-error replay not supported')
+            call['error']=errors[request_id]
     client=Replay(session,calls);events=[];ledgers=[]
     store=VectorStore(ROOT/'dist/rag/index.sqlite',ROOT/'vendor/guidelines/guidelines')
     r=e2_rag_selection.install(store);s=response_state.install(events);o=coverage_order.install(events)
@@ -33,7 +46,10 @@ def replay(path):
         if u is not None:e2_observation_state.restore(u)
         coverage_order.restore(o);response_state.restore(s);e2_rag_selection.restore(r);store.close()
     if client.remaining:raise AssertionError('saved model replies unused')
-    if any(l.failures for l in ledgers):raise AssertionError('strict replay contains extraction failure/input drift')
+    stored_path=path.parent/'observation_ledgers.json'
+    stored=json.loads(stored_path.read_text()) if stored_path.exists() else []
+    if [l.failures for l in ledgers]!=[l.get('failures',[]) for l in stored]:
+        raise AssertionError('extraction failure sequence differs from saved run')
     return {'run':path.parent.name,'source_sha256':hashlib.sha256(path.read_bytes()).hexdigest(),
             'all_model_inputs_actions_and_final_note_match':True,'remaining':0,
             'observed_sources':sum(len(l.state.evidence) for l in ledgers),

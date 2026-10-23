@@ -1,0 +1,29 @@
+{
+  "scope": "saved observation control inputs/actions/final notes replay; not new API sessions",
+  "sessions": [
+    {
+      "run": "20261023_104602_640272_safety_session_R3a_observation_state",
+      "source_sha256": "ef7ea03bb9c11abb4d779cdd06e431eb517b0ffa88a0a9a65c1cc6b85c329436",
+      "all_model_inputs_actions_and_final_note_match": true,
+      "remaining": 0,
+      "observed_sources": 41,
+      "validated_facts": 19
+    },
+    {
+      "run": "20261023_104600_845819_safety_session_R3a_observation_state",
+      "source_sha256": "895e6cc7f57bc4e9de3e2ff301da0dfb361f2a8d7211f7bf4f6891cea9dcd20c",
+      "all_model_inputs_actions_and_final_note_match": true,
+      "remaining": 0,
+      "observed_sources": 28,
+      "validated_facts": 8
+    },
+    {
+      "run": "20261023_104602_298906_safety_session_R3a_observation_state",
+      "source_sha256": "d8324f4af0b4c9d061a48e600e5afa35a48dfbe2954754815b9c01004cdaf161",
+      "all_model_inputs_actions_and_final_note_match": true,
+      "remaining": 0,
+      "observed_sources": 35,
+      "validated_facts": 15
+    }
+  ]
+}
