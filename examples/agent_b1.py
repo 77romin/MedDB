@@ -87,12 +87,12 @@ def _hint(v) -> str:
     return ""
 
 
-def _run(v: R.Visit, client, db):
+def _run(v: R.Visit, client, db, reader=G):
     try:
         v.complaint = pick_complaint(client, db, v.opening)
     except Exception:  # noqa: BLE001
         v.complaint = None
-    G.install(db)
+    reader.install(db)
     kb = H.Tracker(db, v.complaint, v.age, v.sex, v.opening, v.vitals, "clinical", "reviewed")
     kb.note_seen(v.opening, 0)
     transcript: list[str] = []
@@ -124,8 +124,11 @@ def _run(v: R.Visit, client, db):
                 fails += 1
                 continue
             transcript += [f"의사: {content}", f"환자: {a}"]
-            kb.note_seen(a, v.turn)
-            G.read_qa(kb, db, content, a, v.turn)
+            if hasattr(reader, "observe"):
+                reader.observe(kb, db, content, a, v.turn)
+            else:
+                kb.note_seen(a, v.turn)
+                reader.read_qa(kb, db, content, a, v.turn)
             if re.search(R.CONCERN_Q[:6], content) or re.search(r"걱정", content):
                 v.concern = v.concern or a
         else:
@@ -187,11 +190,11 @@ def _run(v: R.Visit, client, db):
     v.submit(note, dx)
 
 
-def consult(client, db, fallback=None, **_):
+def consult(client, db, fallback=None, reader=G, **_):
     v = R.Visit(client, db)
     v.submitted = False
     try:
-        _run(v, client, db)
+        _run(v, client, db, reader)
     except Exception:  # noqa: BLE001 — 어떤 오류에서도 반드시 제출
         if not v.submitted:
             try:
