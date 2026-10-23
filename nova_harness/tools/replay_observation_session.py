@@ -9,7 +9,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT),str(ROOT/'tools'),str(ROOT/'vendor/meddb')]
 from replay_e2_session import _load,consult,prepare
 from replay_response_session import StrictClient
-from nova_agent import response_state,coverage_order,e2_observation_state,e2_rag_selection
+from nova_agent import response_state,coverage_order,e2_observation_state,e2_rag_selection,model_question_policy
 from nova_agent.rag_retrieval import VectorStore
 
 class Replay(StrictClient):
@@ -25,9 +25,11 @@ def replay(path):
     client=Replay(session,calls);events=[];ledgers=[]
     store=VectorStore(ROOT/'dist/rag/index.sqlite',ROOT/'vendor/guidelines/guidelines')
     r=e2_rag_selection.install(store);s=response_state.install(events);o=coverage_order.install(events)
-    u=e2_observation_state.install(events,ledgers) if m['mode']=='R3a_observation_state' else None
+    u=e2_observation_state.install(events,ledgers) if m['mode'] in ('R3a_observation_state','R3a_model_questions') else None
+    q=model_question_policy.install(events) if m['mode']=='R3a_model_questions' else None
     try:consult(client,prepare(),knowledge_mode='clinical',reference_profile='reviewed')
     finally:
+        if q is not None:model_question_policy.restore(q)
         if u is not None:e2_observation_state.restore(u)
         coverage_order.restore(o);response_state.restore(s);e2_rag_selection.restore(r);store.close()
     if client.remaining:raise AssertionError('saved model replies unused')
