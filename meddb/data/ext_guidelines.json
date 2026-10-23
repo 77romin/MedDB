@@ -1,5 +1,5 @@
 {
-  "meta": {"source": "N.O.V.A. 2026 진료지침 코퍼스 catalog.csv", "note": "서지 정보만 담음. 제목 일치로 고른 것이라 본문 적합성은 확인되지 않음. 문서를 쓸 때 라이선스와 출처를 함께 표시할 것.", "catalog_documents": 15904, "documents_linked": 460, "diseases_with_documents": 134, "complaints_with_documents": 19},
+  "meta": {"source": "N.O.V.A. 2026 진료지침 코퍼스 catalog.csv", "note": "서지 정보만 담음. 제목 일치로 고른 것이라 본문 적합성은 확인되지 않음. 문서를 쓸 때 라이선스와 출처를 함께 표시할 것.", "catalog_documents": 15904, "documents_linked": 460, "diseases_with_documents": 135, "complaints_with_documents": 19},
   "complaints": {
     "chest_pain": [
       {"file": "KR_HealthInfo/health_kdca_5337.md", "title": "흉통", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
@@ -791,6 +791,13 @@
     ],
     "turner_syndrome": [
       {"file": "US_StatPearls/statpearls_article-30694.md", "title": "Turner Syndrome", "org": "StatPearls Publishing", "year": "2026", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
+    ],
+    "medication_overuse_headache": [
+      {"file": "KR_HealthInfo/health_kdca_6557.md", "title": "편두통", "org": "질병관리청", "year": "2026", "lang": "ko", "type": "기타 (일반인용)", "license": "공공누리 제4유형"},
+      {"file": "US_NCBI-Bookshelf/bookshelf_NBK544082.md", "title": "Migraine", "org": "Johns Hopkins University", "year": "2019", "lang": "en", "type": "진료지침", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-22614.md", "title": "Migraine Headache", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-25145.md", "title": "Migraine With Aura", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"},
+      {"file": "US_StatPearls/statpearls_article-22615.md", "title": "Muscle Contraction Tension Headache", "org": "StatPearls Publishing", "year": "2024", "lang": "en", "type": "질환 개요(교과서)", "license": "CC BY-NC-ND"}
     ]
   }
 }

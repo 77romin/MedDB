@@ -22,9 +22,9 @@ diseases: appendicitis, cholecystitis, biliary_colic, cholangitis, pancreatitis,
 #headache|두통
 alias: 머리가 아; 두통; 머리 아; 머리가 깨질; 머리가 지끈; 머리가 띵
 slots: onset, location, pain_character, course
-ask: nausea_vomiting, photophobia, fever
+ask: nausea_vomiting, photophobia, fever, chronic_daily_headache, analgesic_overuse
 exams: ex_neck_flex, ex_motor
-diseases: tension_headache, migraine, cluster_headache, sah, meningitis, ich, subdural_hematoma, brain_tumor, temporal_arteritis, acute_glaucoma, sinusitis
+diseases: tension_headache, migraine, medication_overuse_headache, cluster_headache, sah, meningitis, ich, subdural_hematoma, brain_tumor, temporal_arteritis, acute_glaucoma, sinusitis
 
 #fever|발열
 alias: 열이 나; 열이 있; 발열; 고열; 오한; 몸살; 열나

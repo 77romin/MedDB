@@ -1,0 +1,54 @@
+# 묶음 질문 나누기 (E13)
+# 가상 환자는 두 가지를 한 번에 물으면 "한 번에 하나씩 물어봐 주세요"라고 답할 때가 있다(공식 환자 규칙 4번).
+# 소견·슬롯의 기본 질문 중 'A거나 B', 'A이나 B' 꼴인 50개에 대해, 그 답을 받았을 때 바로 이어 물을 한 가지씩의 질문을 둔다.
+# 형식: <소견·슬롯 id> | <첫 질문> | <둘째 질문>   (각 30자 이내, 물음표 하나)
+fever | 열이 났나요? | 몸이 떨리는 오한이 있었나요?
+cv_risk | 고혈압이 있으세요? | 당뇨가 있으세요?
+immobilization | 최근 수술을 받으셨나요? | 최근 장거리 여행을 하셨나요?
+trauma_fall | 최근 넘어진 적이 있나요? | 최근 다친 적이 있나요?
+pressure_chest_pain | 가슴을 누르는 느낌인가요? | 가슴이 조이는 느낌인가요?
+radiation_arm_jaw | 통증이 팔로 퍼지나요? | 통증이 턱으로 퍼지나요?
+unilateral_leg_swelling | 한쪽 다리만 붓나요? | 한쪽 다리만 아픈가요?
+anxiety_trigger | 심한 불안을 느끼셨나요? | 심한 공포를 느끼셨나요?
+paresthesia | 손발이 저리나요? | 손발이 떨리나요?
+purulent_sputum | 가래가 누런가요? | 가래가 녹색인가요?
+nocturnal_cough | 밤에 기침이 심한가요? | 새벽에 기침이 심한가요?
+asthma_history | 천식이 있나요? | 알레르기 질환이 있나요?
+rhinorrhea | 콧물이 나나요? | 코가 막히나요?
+hearing_loss_tinnitus | 귀가 먹먹한가요? | 귀에서 소리가 나나요?
+nausea_vomiting | 메스꺼우셨나요? | 토하셨나요?
+bloody_stool | 변에 피가 섞여 나오나요? | 변이 검은색인가요?
+heartburn | 신물이 올라오나요? | 속이 쓰린가요?
+jaundice_sx | 눈이 노랗게 됐나요? | 피부가 노랗게 됐나요?
+dysuria | 소변볼 때 아픈가요? | 소변볼 때 따가운가요?
+frequency_urgency | 소변이 자주 마렵나요? | 소변이 급하게 마렵나요?
+vaginal_discharge | 질 분비물이 늘었나요? | 질 분비물에서 냄새가 나나요?
+vulvar_itching | 외음부가 가려운가요? | 외음부가 따가운가요?
+photophobia | 빛에 예민해지나요? | 소리에 예민해지나요?
+neck_stiffness_sx | 목이 뻣뻣한가요? | 목을 숙이기 힘든가요?
+altered_mental | 멍한 적이 있나요? | 헷갈린 적이 있나요?
+speech_disturbance | 말이 어눌해졌나요? | 말이 잘 안 나오나요?
+vision_halos | 눈이 침침한가요? | 불빛 주위에 달무리가 보이나요?
+diabetes_medication | 당뇨약을 드시나요? | 인슐린을 쓰시나요?
+leg_numbness_weak | 다리가 저린가요? | 다리에 힘이 빠지나요?
+night_rest_pain | 가만히 쉴 때도 아픈가요? | 밤에도 아픈가요?
+osteoporosis_steroid | 골다공증이 있나요? | 스테로이드를 드신 적 있나요?
+lymph_node_swelling | 목에 멍울이 만져지나요? | 겨드랑이에 멍울이 있나요?
+facial_weakness | 얼굴 한쪽이 처졌나요? | 얼굴 한쪽이 마비됐나요?
+fatigable_weakness | 저녁에 더 힘이 빠지나요? | 피곤할 때 더 힘이 빠지나요?
+stimulant_use | 카페인 음료를 드셨나요? | 각성제를 드셨나요?
+strain_worse | 기침할 때 더 아픈가요? | 힘줄 때 더 아픈가요?
+joint_pain | 관절이 아픈가요? | 관절이 붓나요?
+angioedema | 입술이 부었나요? | 혀가 부었나요?
+contact_exposure | 새 화장품을 쓰셨나요? | 금속에 닿은 적 있나요?
+vasovagal_prodrome | 쓰러지기 전 메스꺼웠나요? | 쓰러지기 전 땀이 났나요?
+standing_trigger | 오래 서 있다가 그랬나요? | 놀란 뒤에 그랬나요?
+tongue_bite_incontinence | 혀를 깨물었나요? | 소변을 지렸나요?
+withdrawal_sx | 약을 안 먹으면 불안한가요? | 약을 안 먹으면 손이 떨리나요?
+daytime_sedation | 낮에 졸리신가요? | 낮에 멍하신가요?
+depressed_mood | 기분이 우울하신가요? | 의욕이 없으신가요?
+menstrual_change | 생리 양이 변했나요? | 생리 주기가 변했나요?
+cushing_features | 얼굴이 둥글어졌나요? | 배만 나왔나요?
+birth_abnormal | 일찍 태어났나요? | 작게 태어났나요?
+developmental_delay | 말이 늦게 트였나요? | 걷기가 늦었나요?
+allergy | 약 알레르기가 있나요? | 음식 알레르기가 있나요?

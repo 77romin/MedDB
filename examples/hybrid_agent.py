@@ -320,6 +320,15 @@ def consult(client, db: MedDB, fallback=None, knowledge_mode=None, reference_pro
     return client.diagnose(note=note, diagnosis=diagnosis)
 
 
+def _specific(model_dx: str, kb_ko: str) -> str:
+    """B1g: 모델 진단명이 KB 이름을 포함하면서 더 구체적이면 모델 이름을 쓴다 (철결핍빈혈 vs 빈혈)."""
+    m = re.sub(r"\s*(의심|가능성|추정|r/o|\(.*?\))\s*$", "", (model_dx or "").strip())
+    n = lambda t: re.sub(r"[\s\.,!?~()\[\]\"'·\-]", "", t.lower())
+    if m and n(kb_ko) and n(kb_ko) in n(m) and len(n(m)) > len(n(kb_ko)) and len(m) <= 40:
+        return m
+    return kb_ko
+
+
 def write_record(client, db: MedDB, kb: Tracker, opening, vitals, transcript, contextual_plan=False):
     """KB 초안(확인된 사실만) → LLM이 대화와 맞춰 다듬음. LLM이 실패하면 KB 초안을 그대로 낸다."""
     draft, draft_dx, ranking = None, "", ""
@@ -369,7 +378,7 @@ def write_record(client, db: MedDB, kb: Tracker, opening, vitals, transcript, co
                     if contextual_plan:
                         evidence = note['A']['evidence'].strip()
                         if evidence.startswith('#1. ' + diagnosis):
-                            note['A']['evidence'] = evidence.replace('#1. ' + diagnosis, '#1. ' + chosen['ko'], 1)
+                            note['A']['evidence'] = evidence.replace('#1. ' + diagnosis, '#1. ' + _specific(diagnosis, chosen['ko']), 1)
                         else:
                             note['A']['evidence'] = consistent['A']['evidence']
                         note['A']['differential'] = note['A']['differential'] or consistent['A']['differential']
@@ -378,7 +387,7 @@ def write_record(client, db: MedDB, kb: Tracker, opening, vitals, transcript, co
                     else:
                         note['A'] = consistent['A']
                         note['P'] = consistent['P']
-                    diagnosis = chosen["ko"]
+                    diagnosis = _specific(diagnosis, chosen["ko"])
                 elif not note["A"]["evidence"].strip().startswith("#1. " + diagnosis):
                     # No KB plan exists for this diagnosis: never reuse another disease's plan.
                     note["A"] = {"evidence": "#1. " + diagnosis, "differential": ""}

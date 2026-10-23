@@ -371,3 +371,5 @@ disproportion|신체 비율 불균형|sign|성장|ex_body_prop|
 dysmorphic|안면 기형 소견|sign|성장|ex_dysmorph|
 purple_striae|자주색 선조·중심성 비만|sign|내분비|ex_striae|
 hepatosplenomegaly|간·비장 종대|sign|소화기|ex_liver_spleen|
+analgesic_overuse|진통제 과다 복용|history|신경|진통제를 한 달에 보름 넘게 드시나요?|진통제를 매일;진통제를 거의 매일;약을 매일|soap=S.약물
+chronic_daily_headache|만성 매일 두통|symptom|신경|한 달에 보름 넘게 머리가 아프세요?|거의 매일 아;매일 아파;매일 머리
