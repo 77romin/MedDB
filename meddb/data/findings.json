@@ -287,5 +287,7 @@
   {"id": "disproportion", "ko": "신체 비율 불균형", "kind": "sign", "sys": "성장", "exam": "ex_body_prop"},
   {"id": "dysmorphic", "ko": "안면 기형 소견", "kind": "sign", "sys": "성장", "exam": "ex_dysmorph"},
   {"id": "purple_striae", "ko": "자주색 선조·중심성 비만", "kind": "sign", "sys": "내분비", "exam": "ex_striae"},
-  {"id": "hepatosplenomegaly", "ko": "간·비장 종대", "kind": "sign", "sys": "소화기", "exam": "ex_liver_spleen"}
+  {"id": "hepatosplenomegaly", "ko": "간·비장 종대", "kind": "sign", "sys": "소화기", "exam": "ex_liver_spleen"},
+  {"id": "analgesic_overuse", "ko": "진통제 과다 복용", "kind": "history", "sys": "신경", "ask": "진통제를 한 달에 보름 넘게 드시나요?", "alias": ["진통제를 매일", "진통제를 거의 매일", "약을 매일"], "soap": "S.약물"},
+  {"id": "chronic_daily_headache", "ko": "만성 매일 두통", "kind": "symptom", "sys": "신경", "ask": "한 달에 보름 넘게 머리가 아프세요?", "alias": ["거의 매일 아", "매일 아파", "매일 머리"]}
 ]
