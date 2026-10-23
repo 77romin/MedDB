@@ -948,3 +948,11 @@
 - 사용자 캡처의13:44 KST 샘플 결과는77.498, 정보12.37/진단14.44/검사8.61/안전15/소통8.06/효율19.02다. C01/C10/C03은41/41/40턴·266/292/258초다. 문맥상 B1O1 결과이며 캡처에는 파일명/해시가 없다.
 - Q1 대비12.210점 상승, 동결 R3a 대비1.208 상승이다. 원본 E2 샘플77.714보다는0.216 낮다. 샘플78까지0.502이나 리더보드 목표 달성·전체 최고점·단일 관찰 모듈의 인과 효과로 표현하지 않는다. 팀원70.02 리더보드와 혼합하지 않는다.
 - B1O1 ZIP/소스를 유망 비교 기준으로 동결한다. 기본 B1/PR 병합은 유지하며 원본 B1 동시점 반복 대조와 정보/소통의 실제 누락 감사가 다음 우선순위다. 추가 모델 호출·새 기능 누적을 우선하지 않는다. 상세59차 보고. 이번에는 문서만 변경한다.
+
+
+## 2026-10-23 Development completion and paper README (D104)
+
+- User ends development and requests a paper-style README covering concept, architecture, ontology, all experimental phases, results and final critical appraisal. This supersedes D103 follow-up development priorities. No new runtime/API/ZIP/official submission/merge is performed.
+- Preserve previous README; create Korean technical case study with five PNG/SVG figures, 15 sample-score rows, separate leaderboard/development comparisons, ontology statistics and complete historical report index. Existing team assets/B1 contributions are credited separately.
+- Final B1O1 sample77.498 remains below original E2sample77.714 by0.216. Leaderboard78/85/90, clinical safety, statistical significance and reader-only causal effect are not demonstrated. Development completion does not mean target achievement.
+- Freeze the existing B1O1 runtime/package. Publish documentation to the same branch/PR5 without merge. Details: reports/documentation_060.md.

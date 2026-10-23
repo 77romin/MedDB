@@ -2,6 +2,8 @@
 
 ## 대화의 연속성
 
+- D104: 사용자가 개발 종료와 논문 형식 README 편찬을 요청했다. 최종 후보 B1O1은 동결하며 추가 개선/API/제출/병합을 자동 진행하지 않는다. README·reports/documentation_060.md를 읽고 기존 실험·미채택 후보·팀원 기여·목표 미달을 구분한다.
+
 - 최신 D101: 사용자 승인으로 origin/main05f9ed0을 작업 브랜치에 병합했다(18c9af2). 신규 개발은 실제 저장소 루트 examples/agent_b1_observed.py/reader_b1_observed.py이며 로컬 checkout은 vendor/meddb-publish다. 기본 B1은 선택적 reader 연결만 추가해 유지한다. vendor/meddb는 과거 비교용이다. main143테스트(4skip)·기존331테스트·B1/후보6개 API·엄격 재생 완료. 추가 추출 호출0이나 공식 점수 향상은 미확정이며 단순 예/아니요 실제 분기0을 숨기지 않는다. reports/development_057.md를 읽는다. 미래 팀원 변경의 무충돌까지 보장하지 않는다.
 
 - 최신 D098: PR6 병합 후 별도 R3a_model_questions를 구현했다.331테스트·API9세션(기준3/초기3/수정3)·소스별 엄격 재생 완료. 초기 토큰 한도 실패를 중복 입력 제거로 보완했고 최종3세션은 오류0이나 호출/지연 증가·C01 마무리 절단1건으로 미채택이다. 기본/제출 경로에 연결하지 않는다. 상세 reports/development_054.md.
