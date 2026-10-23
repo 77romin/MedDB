@@ -1,0 +1,501 @@
+{
+  "scope": "same-window independent public development sessions; no official scores",
+  "caveats": [
+    "Different model/patient responses; not fixed-observation causal pairs.",
+    "Selection events are evaluations, not necessarily executed or clinically valuable actions.",
+    "Fact counts and literal repetitions do not measure clinical coverage or semantic repetitions.",
+    "Source provenance and replay fidelity do not establish clinical correctness or safety completeness."
+  ],
+  "sessions": [
+    {
+      "run": "20261023_104600_845819_safety_session_R3a_observation_state",
+      "case": "C03",
+      "mode": "R3a_observation_state",
+      "completed": true,
+      "max_server_turn": 32,
+      "elapsed_seconds": 218.647,
+      "doctor_attempted_request_ids": 18,
+      "doctor_successful_request_ids": 18,
+      "prompt_tokens": 27714,
+      "completion_tokens": 5101,
+      "errors": {},
+      "truncated_completions": 0,
+      "runtime_sha256": {
+        "nova_agent/observation_ledger.py": "1f433f085ae03fa8b4e8e57b86ce290c5a738e8af0c41660489a07134d215dd8",
+        "nova_agent/e2_observation_state.py": "11606a8f2e090962f0d7ef09087929c9280c856983ad4a7e8daaf772b0e14263",
+        "nova_agent/state.py": "fe6700c3d9b16554983ac7ef608546397079289752baa9174057b40cff29a4ef",
+        "nova_agent/coverage_order.py": "8b8b4f5afd5b03dac6be08c0bd068d7255235107bd0f2e8082ff0a4046ef2d3d",
+        "nova_agent/response_state.py": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee"
+      },
+      "runtime_matches_current": true,
+      "fingerprint_unchanged": true,
+      "extraction_requests": 8,
+      "extraction_evidence_ids_unique": 8,
+      "observation_events": {
+        "observation_validated": 8,
+        "observation_raw_only": 20,
+        "answer_contract": 7
+      },
+      "accepted_facts": 8,
+      "fact_subjects": {
+        "patient": 7,
+        "family": 1
+      },
+      "fact_temporality": {
+        "current": 3,
+        "past": 5
+      },
+      "fact_scope": {
+        "full": 8
+      },
+      "binary_projectable_facts": 8,
+      "answer_status_counts": {
+        "complete": 6,
+        "partial": 1
+      },
+      "validation_rejection_reasons": {},
+      "qualified_facts": 2,
+      "rejected_fact_rows": 0,
+      "source_quotes_verified": 8,
+      "record_requests": 1,
+      "record_requests_with_same_ledger": 1,
+      "last_kb_feature_counts": {
+        "?": 2,
+        "-": 4,
+        "+": 1
+      },
+      "last_patient_current_counts": {
+        "?": 5,
+        "-": 2
+      },
+      "unresolved_conflicts": 0,
+      "target_responses": 17,
+      "clarification_observed": 0,
+      "literal_question_repeats": 0,
+      "successful_post_record_speech": 8,
+      "policy": {
+        "selection_evaluations": {},
+        "different_from_first_required_evaluations": 0,
+        "rejected_proposals": {},
+        "clinical_information_gain_measured": false,
+        "source_sha256": "d31f4f3aa38ef1b4de443f1889510aca742dd18ac52c09d7249a284d479fd173",
+        "source_matches_current": false,
+        "received_slots": 27
+      }
+    },
+    {
+      "run": "20261023_104602_298906_safety_session_R3a_observation_state",
+      "case": "C10",
+      "mode": "R3a_observation_state",
+      "completed": true,
+      "max_server_turn": 43,
+      "elapsed_seconds": 320.82,
+      "doctor_attempted_request_ids": 40,
+      "doctor_successful_request_ids": 40,
+      "prompt_tokens": 44987,
+      "completion_tokens": 9407,
+      "errors": {},
+      "truncated_completions": 0,
+      "runtime_sha256": {
+        "nova_agent/observation_ledger.py": "1f433f085ae03fa8b4e8e57b86ce290c5a738e8af0c41660489a07134d215dd8",
+        "nova_agent/e2_observation_state.py": "11606a8f2e090962f0d7ef09087929c9280c856983ad4a7e8daaf772b0e14263",
+        "nova_agent/state.py": "fe6700c3d9b16554983ac7ef608546397079289752baa9174057b40cff29a4ef",
+        "nova_agent/coverage_order.py": "8b8b4f5afd5b03dac6be08c0bd068d7255235107bd0f2e8082ff0a4046ef2d3d",
+        "nova_agent/response_state.py": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee"
+      },
+      "runtime_matches_current": true,
+      "fingerprint_unchanged": true,
+      "extraction_requests": 17,
+      "extraction_evidence_ids_unique": 17,
+      "observation_events": {
+        "observation_validated": 17,
+        "observation_raw_only": 18,
+        "answer_contract": 15
+      },
+      "accepted_facts": 15,
+      "fact_subjects": {
+        "patient": 15
+      },
+      "fact_temporality": {
+        "current": 14,
+        "past": 1
+      },
+      "fact_scope": {
+        "full": 12,
+        "partial": 3
+      },
+      "binary_projectable_facts": 9,
+      "answer_status_counts": {
+        "complete": 9,
+        "partial": 4
+      },
+      "validation_rejection_reasons": {
+        "absence needs explicit negative response; positive answer cannot deny another symptom": 2
+      },
+      "qualified_facts": 8,
+      "rejected_fact_rows": 2,
+      "source_quotes_verified": 15,
+      "record_requests": 1,
+      "record_requests_with_same_ledger": 1,
+      "last_kb_feature_counts": {
+        "+": 4,
+        "-": 3,
+        "?": 5
+      },
+      "last_patient_current_counts": {
+        "+": 4,
+        "-": 3,
+        "?": 5
+      },
+      "unresolved_conflicts": 0,
+      "target_responses": 21,
+      "clarification_observed": 2,
+      "literal_question_repeats": 0,
+      "successful_post_record_speech": 8,
+      "policy": {
+        "selection_evaluations": {},
+        "different_from_first_required_evaluations": 0,
+        "rejected_proposals": {},
+        "clinical_information_gain_measured": false,
+        "source_sha256": "d31f4f3aa38ef1b4de443f1889510aca742dd18ac52c09d7249a284d479fd173",
+        "source_matches_current": false,
+        "received_slots": 34
+      }
+    },
+    {
+      "run": "20261023_104602_640272_safety_session_R3a_observation_state",
+      "case": "C01",
+      "mode": "R3a_observation_state",
+      "completed": true,
+      "max_server_turn": 45,
+      "elapsed_seconds": 334.53,
+      "doctor_attempted_request_ids": 35,
+      "doctor_successful_request_ids": 35,
+      "prompt_tokens": 50320,
+      "completion_tokens": 11219,
+      "errors": {},
+      "truncated_completions": 0,
+      "runtime_sha256": {
+        "nova_agent/observation_ledger.py": "1f433f085ae03fa8b4e8e57b86ce290c5a738e8af0c41660489a07134d215dd8",
+        "nova_agent/e2_observation_state.py": "11606a8f2e090962f0d7ef09087929c9280c856983ad4a7e8daaf772b0e14263",
+        "nova_agent/state.py": "fe6700c3d9b16554983ac7ef608546397079289752baa9174057b40cff29a4ef",
+        "nova_agent/coverage_order.py": "8b8b4f5afd5b03dac6be08c0bd068d7255235107bd0f2e8082ff0a4046ef2d3d",
+        "nova_agent/response_state.py": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee"
+      },
+      "runtime_matches_current": true,
+      "fingerprint_unchanged": true,
+      "extraction_requests": 20,
+      "extraction_evidence_ids_unique": 20,
+      "observation_events": {
+        "observation_validated": 20,
+        "observation_raw_only": 21,
+        "answer_contract": 16
+      },
+      "accepted_facts": 19,
+      "fact_subjects": {
+        "patient": 18,
+        "family": 1
+      },
+      "fact_temporality": {
+        "current": 14,
+        "unknown": 1,
+        "conditional": 3,
+        "past": 1
+      },
+      "fact_scope": {
+        "full": 10,
+        "partial": 9
+      },
+      "binary_projectable_facts": 9,
+      "answer_status_counts": {
+        "partial": 9,
+        "complete": 4
+      },
+      "validation_rejection_reasons": {
+        "absence needs explicit negative response; positive answer cannot deny another symptom": 1
+      },
+      "qualified_facts": 7,
+      "rejected_fact_rows": 1,
+      "source_quotes_verified": 19,
+      "record_requests": 1,
+      "record_requests_with_same_ledger": 1,
+      "last_kb_feature_counts": {
+        "+": 3,
+        "-": 1,
+        "?": 5
+      },
+      "last_patient_current_counts": {
+        "+": 3,
+        "-": 1,
+        "?": 5
+      },
+      "unresolved_conflicts": 0,
+      "target_responses": 21,
+      "clarification_observed": 3,
+      "literal_question_repeats": 0,
+      "successful_post_record_speech": 8,
+      "policy": {
+        "selection_evaluations": {},
+        "different_from_first_required_evaluations": 0,
+        "rejected_proposals": {},
+        "clinical_information_gain_measured": false,
+        "source_sha256": "d31f4f3aa38ef1b4de443f1889510aca742dd18ac52c09d7249a284d479fd173",
+        "source_matches_current": false,
+        "received_slots": 39
+      }
+    },
+    {
+      "run": "20261023_105701_321118_safety_session_R3a_model_questions",
+      "case": "C03",
+      "mode": "R3a_model_questions",
+      "completed": true,
+      "max_server_turn": 41,
+      "elapsed_seconds": 633.984,
+      "doctor_attempted_request_ids": 65,
+      "doctor_successful_request_ids": 65,
+      "prompt_tokens": 161962,
+      "completion_tokens": 24348,
+      "errors": {},
+      "truncated_completions": 0,
+      "runtime_sha256": {
+        "nova_agent/observation_ledger.py": "1f433f085ae03fa8b4e8e57b86ce290c5a738e8af0c41660489a07134d215dd8",
+        "nova_agent/e2_observation_state.py": "11606a8f2e090962f0d7ef09087929c9280c856983ad4a7e8daaf772b0e14263",
+        "nova_agent/state.py": "fe6700c3d9b16554983ac7ef608546397079289752baa9174057b40cff29a4ef",
+        "nova_agent/coverage_order.py": "8b8b4f5afd5b03dac6be08c0bd068d7255235107bd0f2e8082ff0a4046ef2d3d",
+        "nova_agent/response_state.py": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee"
+      },
+      "runtime_matches_current": true,
+      "fingerprint_unchanged": true,
+      "extraction_requests": 11,
+      "extraction_evidence_ids_unique": 11,
+      "observation_events": {
+        "observation_validated": 11,
+        "observation_raw_only": 26,
+        "answer_contract": 9
+      },
+      "accepted_facts": 11,
+      "fact_subjects": {
+        "patient": 8,
+        "family": 3
+      },
+      "fact_temporality": {
+        "current": 4,
+        "past": 7
+      },
+      "fact_scope": {
+        "full": 9,
+        "partial": 2
+      },
+      "binary_projectable_facts": 9,
+      "answer_status_counts": {
+        "complete": 6,
+        "partial": 2
+      },
+      "validation_rejection_reasons": {},
+      "qualified_facts": 3,
+      "rejected_fact_rows": 0,
+      "source_quotes_verified": 11,
+      "record_requests": 1,
+      "record_requests_with_same_ledger": 1,
+      "last_kb_feature_counts": {
+        "?": 3,
+        "-": 5,
+        "+": 1
+      },
+      "last_patient_current_counts": {
+        "?": 6,
+        "-": 3
+      },
+      "unresolved_conflicts": 0,
+      "target_responses": 19,
+      "clarification_observed": 1,
+      "literal_question_repeats": 0,
+      "successful_post_record_speech": 8,
+      "policy": {
+        "selection_evaluations": {
+          "model_menu": 21,
+          "model_new": 6,
+          "fallback": 4
+        },
+        "different_from_first_required_evaluations": 25,
+        "rejected_proposals": {
+          "unverified_target_wording": 3,
+          "invalid_or_answered": 14
+        },
+        "clinical_information_gain_measured": false,
+        "source_sha256": "b233c672e8f8888efcf66bec7b1f521fed29998973aca558c246c7e034395c4e",
+        "source_matches_current": true,
+        "received_slots": 36
+      }
+    },
+    {
+      "run": "20261023_105702_626881_safety_session_R3a_model_questions",
+      "case": "C10",
+      "mode": "R3a_model_questions",
+      "completed": true,
+      "max_server_turn": 45,
+      "elapsed_seconds": 556.249,
+      "doctor_attempted_request_ids": 78,
+      "doctor_successful_request_ids": 78,
+      "prompt_tokens": 173876,
+      "completion_tokens": 19634,
+      "errors": {},
+      "truncated_completions": 0,
+      "runtime_sha256": {
+        "nova_agent/observation_ledger.py": "1f433f085ae03fa8b4e8e57b86ce290c5a738e8af0c41660489a07134d215dd8",
+        "nova_agent/e2_observation_state.py": "11606a8f2e090962f0d7ef09087929c9280c856983ad4a7e8daaf772b0e14263",
+        "nova_agent/state.py": "fe6700c3d9b16554983ac7ef608546397079289752baa9174057b40cff29a4ef",
+        "nova_agent/coverage_order.py": "8b8b4f5afd5b03dac6be08c0bd068d7255235107bd0f2e8082ff0a4046ef2d3d",
+        "nova_agent/response_state.py": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee"
+      },
+      "runtime_matches_current": true,
+      "fingerprint_unchanged": true,
+      "extraction_requests": 16,
+      "extraction_evidence_ids_unique": 16,
+      "observation_events": {
+        "observation_validated": 16,
+        "observation_raw_only": 23,
+        "answer_contract": 13
+      },
+      "accepted_facts": 15,
+      "fact_subjects": {
+        "patient": 15
+      },
+      "fact_temporality": {
+        "current": 13,
+        "past": 2
+      },
+      "fact_scope": {
+        "full": 12,
+        "partial": 3
+      },
+      "binary_projectable_facts": 8,
+      "answer_status_counts": {
+        "complete": 10,
+        "partial": 2
+      },
+      "validation_rejection_reasons": {},
+      "qualified_facts": 8,
+      "rejected_fact_rows": 0,
+      "source_quotes_verified": 15,
+      "record_requests": 1,
+      "record_requests_with_same_ledger": 1,
+      "last_kb_feature_counts": {
+        "+": 4,
+        "-": 2,
+        "?": 6
+      },
+      "last_patient_current_counts": {
+        "+": 4,
+        "-": 2,
+        "?": 6
+      },
+      "unresolved_conflicts": 0,
+      "target_responses": 21,
+      "clarification_observed": 1,
+      "literal_question_repeats": 0,
+      "successful_post_record_speech": 8,
+      "policy": {
+        "selection_evaluations": {
+          "protected": 2,
+          "model_menu": 25,
+          "model_new": 5,
+          "fallback": 1
+        },
+        "different_from_first_required_evaluations": 24,
+        "rejected_proposals": {
+          "invalid_or_answered": 13,
+          "unverified_target_wording": 1
+        },
+        "clinical_information_gain_measured": false,
+        "source_sha256": "b233c672e8f8888efcf66bec7b1f521fed29998973aca558c246c7e034395c4e",
+        "source_matches_current": true,
+        "received_slots": 38
+      }
+    },
+    {
+      "run": "20261023_105702_886052_safety_session_R3a_model_questions",
+      "case": "C01",
+      "mode": "R3a_model_questions",
+      "completed": true,
+      "max_server_turn": 44,
+      "elapsed_seconds": 582.619,
+      "doctor_attempted_request_ids": 63,
+      "doctor_successful_request_ids": 63,
+      "prompt_tokens": 161322,
+      "completion_tokens": 24994,
+      "errors": {},
+      "truncated_completions": 1,
+      "runtime_sha256": {
+        "nova_agent/observation_ledger.py": "1f433f085ae03fa8b4e8e57b86ce290c5a738e8af0c41660489a07134d215dd8",
+        "nova_agent/e2_observation_state.py": "11606a8f2e090962f0d7ef09087929c9280c856983ad4a7e8daaf772b0e14263",
+        "nova_agent/state.py": "fe6700c3d9b16554983ac7ef608546397079289752baa9174057b40cff29a4ef",
+        "nova_agent/coverage_order.py": "8b8b4f5afd5b03dac6be08c0bd068d7255235107bd0f2e8082ff0a4046ef2d3d",
+        "nova_agent/response_state.py": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee"
+      },
+      "runtime_matches_current": true,
+      "fingerprint_unchanged": true,
+      "extraction_requests": 14,
+      "extraction_evidence_ids_unique": 14,
+      "observation_events": {
+        "observation_validated": 14,
+        "observation_raw_only": 29,
+        "answer_contract": 10
+      },
+      "accepted_facts": 13,
+      "fact_subjects": {
+        "patient": 13
+      },
+      "fact_temporality": {
+        "conditional": 3,
+        "current": 7,
+        "unknown": 1,
+        "past": 2
+      },
+      "fact_scope": {
+        "full": 10,
+        "partial": 3
+      },
+      "binary_projectable_facts": 6,
+      "answer_status_counts": {
+        "partial": 5,
+        "complete": 5
+      },
+      "validation_rejection_reasons": {},
+      "qualified_facts": 6,
+      "rejected_fact_rows": 0,
+      "source_quotes_verified": 13,
+      "record_requests": 1,
+      "record_requests_with_same_ledger": 1,
+      "last_kb_feature_counts": {
+        "+": 2,
+        "?": 5
+      },
+      "last_patient_current_counts": {
+        "+": 2,
+        "?": 5
+      },
+      "unresolved_conflicts": 0,
+      "target_responses": 18,
+      "clarification_observed": 0,
+      "literal_question_repeats": 0,
+      "successful_post_record_speech": 7,
+      "policy": {
+        "selection_evaluations": {
+          "model_menu": 19,
+          "model_new": 15,
+          "fallback": 1
+        },
+        "different_from_first_required_evaluations": 33,
+        "rejected_proposals": {
+          "unverified_target_wording": 1,
+          "invalid_or_answered": 8
+        },
+        "clinical_information_gain_measured": false,
+        "source_sha256": "b233c672e8f8888efcf66bec7b1f521fed29998973aca558c246c7e034395c4e",
+        "source_matches_current": true,
+        "received_slots": 39
+      }
+    }
+  ]
+}

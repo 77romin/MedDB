@@ -1,0 +1,173 @@
+{
+  "scope": "public development sessions; no official score or validated clinical accuracy",
+  "caveats": [
+    "Independent patient/model responses, not identical observation pairs or causal effect estimates.",
+    "C03 live source predates Korean quantity fix; complete strict replay with final source is reported separately.",
+    "Received means a non-explicitly-ambiguous response, not verified completeness or a medical fact.",
+    "No inference of safety score from error-free completion.",
+    "Filter/conflict counts count repeated candidate evaluations, not saved turns or independent conflicts."
+  ],
+  "current_runtime_sha256": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee",
+  "sessions": [
+    {
+      "run": "20261023_001814_238498_safety_session_R3a_response_state",
+      "case": "C03",
+      "mode": "R3a_response_state",
+      "runtime_sha256": "0ff35f01122d8cd21b589702d9f15e4bb5ef25dd1c781613451b32837f1eb9fa",
+      "runtime_matches_current": false,
+      "end_fingerprint_unchanged": null,
+      "completed": true,
+      "max_server_turn": 33,
+      "elapsed_seconds": 233.299,
+      "doctor_successful_request_ids": 12,
+      "doctor_attempted_request_ids": 12,
+      "errors": {},
+      "truncated_completions": 0,
+      "response_events": {
+        "response_observed": 28
+      },
+      "target_response_states": {
+        "received": 17
+      },
+      "distinct_conflict_targets": [],
+      "distinct_filtered_targets": [],
+      "literal_question_repeats": 0
+    },
+    {
+      "run": "20261023_001817_422022_safety_session_R3a",
+      "case": "C03",
+      "mode": "R3a",
+      "runtime_sha256": "0ff35f01122d8cd21b589702d9f15e4bb5ef25dd1c781613451b32837f1eb9fa",
+      "runtime_matches_current": false,
+      "end_fingerprint_unchanged": null,
+      "completed": true,
+      "max_server_turn": 33,
+      "elapsed_seconds": 238.533,
+      "doctor_successful_request_ids": 12,
+      "doctor_attempted_request_ids": 12,
+      "errors": {},
+      "truncated_completions": 0,
+      "response_events": {},
+      "target_response_states": {},
+      "distinct_conflict_targets": [],
+      "distinct_filtered_targets": [],
+      "literal_question_repeats": 0
+    },
+    {
+      "run": "20261023_002314_586520_safety_session_R3a_response_state",
+      "case": "C01",
+      "mode": "R3a_response_state",
+      "runtime_sha256": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee",
+      "runtime_matches_current": true,
+      "end_fingerprint_unchanged": true,
+      "completed": true,
+      "max_server_turn": 45,
+      "elapsed_seconds": 542.077,
+      "doctor_successful_request_ids": 23,
+      "doctor_attempted_request_ids": 23,
+      "errors": {
+        "EXAM_NOT_SPECIFIC": 1
+      },
+      "truncated_completions": 0,
+      "response_events": {
+        "response_observed": 37,
+        "answered_filtered": 16,
+        "observed_conflict": 16
+      },
+      "target_response_states": {
+        "received": 22
+      },
+      "distinct_conflict_targets": [
+        "depressed_mood"
+      ],
+      "distinct_filtered_targets": [
+        "depressed_mood"
+      ],
+      "literal_question_repeats": 0
+    },
+    {
+      "run": "20261023_002318_192872_safety_session_R3a",
+      "case": "C01",
+      "mode": "R3a",
+      "runtime_sha256": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee",
+      "runtime_matches_current": true,
+      "end_fingerprint_unchanged": true,
+      "completed": true,
+      "max_server_turn": 45,
+      "elapsed_seconds": 569.649,
+      "doctor_successful_request_ids": 21,
+      "doctor_attempted_request_ids": 21,
+      "errors": {},
+      "truncated_completions": 0,
+      "response_events": {},
+      "target_response_states": {},
+      "distinct_conflict_targets": [],
+      "distinct_filtered_targets": [],
+      "literal_question_repeats": 1
+    },
+    {
+      "run": "20261023_002455_428558_safety_session_R3a_response_state",
+      "case": "C10",
+      "mode": "R3a_response_state",
+      "runtime_sha256": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee",
+      "runtime_matches_current": true,
+      "end_fingerprint_unchanged": true,
+      "completed": true,
+      "max_server_turn": 41,
+      "elapsed_seconds": 381.804,
+      "doctor_successful_request_ids": 25,
+      "doctor_attempted_request_ids": 25,
+      "errors": {},
+      "truncated_completions": 0,
+      "response_events": {
+        "response_observed": 32
+      },
+      "target_response_states": {
+        "received": 20
+      },
+      "distinct_conflict_targets": [],
+      "distinct_filtered_targets": [],
+      "literal_question_repeats": 0
+    },
+    {
+      "run": "20261023_002456_230620_safety_session_R3a",
+      "case": "C10",
+      "mode": "R3a",
+      "runtime_sha256": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee",
+      "runtime_matches_current": true,
+      "end_fingerprint_unchanged": true,
+      "completed": true,
+      "max_server_turn": 44,
+      "elapsed_seconds": 456.386,
+      "doctor_successful_request_ids": 30,
+      "doctor_attempted_request_ids": 30,
+      "errors": {},
+      "truncated_completions": 0,
+      "response_events": {},
+      "target_response_states": {},
+      "distinct_conflict_targets": [],
+      "distinct_filtered_targets": [],
+      "literal_question_repeats": 0
+    }
+  ],
+  "comparisons": [
+    {
+      "case": "C01",
+      "same_pre_record_speech_sequence": false,
+      "baseline_pre_record_speech_count": 31,
+      "candidate_pre_record_speech_count": 29
+    },
+    {
+      "case": "C03",
+      "same_pre_record_speech_sequence": false,
+      "baseline_pre_record_speech_count": 20,
+      "candidate_pre_record_speech_count": 20
+    },
+    {
+      "case": "C10",
+      "same_pre_record_speech_sequence": false,
+      "baseline_pre_record_speech_count": 25,
+      "candidate_pre_record_speech_count": 24
+    }
+  ]
+}

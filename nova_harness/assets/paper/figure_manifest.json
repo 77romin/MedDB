@@ -1,0 +1,21 @@
+{
+  "scope": "Static academic figures; graph edges from actual runtime files, not patient answer scripts",
+  "source_sha256": {
+    "nova_harness/docs/paper/sample_scores.json": "402f10a31109f34c3cba7384d8b76599b310cc95ccf591ffc352e21f2fe7d8b4",
+    "meddb/data/complaints.json": "590e94a9badddf7472b8fdebf2324b46c85494ecb1f3c08e8346eb37a19f9d51",
+    "meddb/data/diseases.json": "c49f99466a8e38a322415ac4b290d1e60711e22666553312a71d0aa1986ffdd8",
+    "data/releases/meddb-2026.10.13.1.json.gz": "b8fa2cc8d88a3997fb5a4af3ba967ac2e71f5b5e4444e2c07660e17b7629476e"
+  },
+  "artifacts": [
+    "fig01_architecture_evolution.png",
+    "fig01_architecture_evolution.svg",
+    "fig02_ontology_construction.png",
+    "fig02_ontology_construction.svg",
+    "fig03_runtime_ontology_graph.png",
+    "fig03_runtime_ontology_graph.svg",
+    "fig04_sample_results.png",
+    "fig04_sample_results.svg",
+    "fig05_development_cost.png",
+    "fig05_development_cost.svg"
+  ]
+}

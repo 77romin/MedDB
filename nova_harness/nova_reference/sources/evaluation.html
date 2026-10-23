@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>진행 및 평가 · N.O.V.A. 2026</title>
+  <meta name="description" content="N.O.V.A. 2026 대화형 의료 진단 AI 에이전트 대회 참가자 플랫폼. 개발 가이드, 코드·모델 제출, 평가 결과를 확인하세요.">
+  <meta name="theme-color" content="#0b1733"><meta property="og:image" content="/static/nova/og-image.6b6fbead3b45.png">
+  <link rel="icon" type="image/svg+xml" href="/static/nova/icon.963eaf78eaf7.svg">
+  <link rel="preload" href="/static/nova/fonts/PretendardVariable.302ec55f5b43.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/static/nova/platform.85f537f348d6.css">
+  <script defer src="/static/nova/platform.28db6ac31cc1.js"></script>
+  
+</head>
+<body>
+<a class="skip-link" href="#main">본문 바로가기</a>
+<svg xmlns="http://www.w3.org/2000/svg" class="icon-definitions" aria-hidden="true"><defs>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+<symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M10 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-5"/></symbol>
+<symbol id="i-code" viewBox="0 0 24 24"><path d="m7 7-5 5 5 5m10-10 5 5-5 5M14 4l-4 16"/></symbol>
+<symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2m1-15a3 3 0 0 1 0 6m2 3a5 5 0 0 1 3 4v2"/></symbol>
+<symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V3m-5 5 5-5 5 5M4 15v6h16v-6"/></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 10 5-10 5L2 8l10-5ZM2 12l10 5 10-5M2 16l10 5 10-5"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M13 2H5v20h14V8l-6-6Zm0 0v6h6M8 12h8m-8 4h6"/></symbol>
+<symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="8" r="5"/><path d="m12 12 9 9m-3-3 3-3m-6 0 3-3"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 2 8 3v7c0 5-8 10-8 10S4 17 4 12V5l8-3Z"/><path d="m8 11 3 3 5-5"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></symbol>
+<symbol id="i-logout" viewBox="0 0 24 24"><path d="M15 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4M10 8l-4 4 4 4M6 12h10"/></symbol>
+</defs></svg>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="N.O.V.A. 2026 홈"><svg width="31" height="31" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 1 24.5 14 39 20 24.5 25 20 39 15 25 1 20 15 14Z" fill="currentColor"/><circle cx="20" cy="20" r="4.2" fill="white"/></svg><span>N.O.V.A.<span class="brand-year">2026</span></span></a>
+    <nav class="desktop-nav" aria-label="플랫폼 메뉴">
+      <a href="/evaluation/" aria-current="page">진행 및 평가</a><a href="/rules/">참가 규칙</a><a href="/docs/">개발 가이드</a><a href="/leaderboard/">리더보드</a><a href="/qna/">Q&amp;A</a><a href="/status/">서비스 상태</a>
+      <a class="nav-account" href="/login/">참가자 로그인</a>
+    </nav>
+    <details class="mobile-navigation">
+      <summary aria-label="메뉴 열기"><span></span><span></span><span></span></summary>
+      <nav aria-label="모바일 메뉴">
+        <a href="/evaluation/" aria-current="page">진행 및 평가</a><a href="/rules/">참가 규칙</a><a href="/docs/">개발 가이드</a><a href="/leaderboard/">리더보드</a><a href="/qna/">Q&amp;A</a><a href="/status/">서비스 상태</a>
+        <a class="nav-account" href="/login/">참가자 로그인<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<header class="page-header">
+  <div class="container">
+    <span class="page-kicker">N.O.V.A. 2026 · 참가자 플랫폼</span>
+    <div class="page-title">
+      <h1>진행 및 평가</h1>
+      <p></p>
+    </div>
+  </div>
+</header>
+<div class="container content-layout single">
+  <div class="main-content">
+<section class="content-section" id="process">
+  <h2>진행 방식</h2>
+  <p>참가자는 환자의 시작 정보와 활력징후를 바탕으로 문진, 진찰, 검사를 수행하는 Doctor Agent를 개발합니다. 환자의 전체 정보는 공개되지 않으며, 허용된 인터페이스를 통해 필요한 정보를 획득합니다.</p>
+  <div class="action-list">
+    <div><code>SAY</code><div><strong>대화 (문진 · 설명)</strong><p>환자에게 질문해 병력과 증상 등 진단 단서를 수집하고, 필요한 설명을 전달합니다.</p></div></div>
+    <div><code>EXAM</code><div><strong>신체진찰</strong><p>진찰 동작 하나를 문장으로 요청하고 소견을 확인합니다.</p></div></div>
+    <div><code>TEST</code><div><strong>검사</strong><p>혈액·영상 검사 하나를 문장으로 요청하고 결과를 확인합니다. 예선에서는 사용하지 않습니다.</p></div></div>
+    <div><code>DIAGNOSE</code><div><strong>초진 기록 · 최종 진단</strong><p>수집한 정보를 종합해 S·O·A·P 칸으로 나눈 초진 기록과 주진단 1개를 제출합니다.</p></div></div>
+  </div>
+  <p>한 증례당 최대 50턴의 상호작용을 허용합니다. 문진·진찰 선택은 필요에 따라 반복할 수 있습니다. 행동별 입력 규칙은 <a href="/rules/#interaction">참가 규칙</a>에 있습니다.</p>
+</section>
+<section class="content-section" id="criteria">
+  <h2>평가 기준</h2>
+  <p>예선 공식 평가는 대회 서버가 <code>gpt-6.1-sol</code>을 이용해 증례마다 100점 만점으로 자동 채점합니다. 예선 최종 평가는 GPT(<code>gpt-6.1-sol</code>)·Claude·Gemini 세 모델이 각각 채점한 점수의 평균을 사용합니다. 점수는 아래 여섯 영역으로 이루어집니다.</p>
+  <div class="table-wrap"><table class="data-table">
+    <thead><tr><th scope="col">영역</th><th scope="col" class="numeric">배점</th><th scope="col">보는 것</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">정보수집</th><td class="numeric">25</td><td>필요한 문진·진찰을 실제로 했고 기록했는가</td></tr>
+      <tr><th scope="row">진단추론</th><td class="numeric">15</td><td>주진단이 정확하고 근거와 감별진단이 타당한가. 주진단은 5점 척도로 판정합니다(Sequential Diagnosis with Language Models, Nori et al., Microsoft AI, 2025)</td></tr>
+      <tr><th scope="row">검사·추적</th><td class="numeric">10</td><td>필요한 검사와 추적 계획을 세웠는가</td></tr>
+      <tr><th scope="row">안전</th><td class="numeric">15</td><td>처치 결정이 적절하고 환자에게 해롭지 않은가</td></tr>
+      <tr><th scope="row">의사소통</th><td class="numeric">15</td><td>환자와 잘 소통하고 필요한 설명을 했는가</td></tr>
+      <tr><th scope="row">효율</th><td class="numeric">20</td><td>불필요한 진료 행동과 모델 사용 비용을 줄였는가</td></tr>
+    </tbody>
+  </table></div>
+  <ul class="bullet-list">
+    <li>채점은 서버에 기록된 대화·진찰·검사 로그와 제출한 초진 기록·최종 진단을 근거로 합니다. 질문하지 않은 내용을 기록에 적어도 수행한 것으로 인정되지 않습니다.</li>
+    <li>초진 기록의 판단 근거와 향후 계획, 환자와 나눈 대화도 평가에 반영됩니다.</li>
+    <li>미제출, 시간 초과 등 무효 증례는 0점입니다.</li>
+    <li>영역 안의 세부 채점 항목, 증례별 평가 기준과 채점 프롬프트는 공개하지 않습니다. 리더보드에는 팀별 총점만 표시하고, 영역별 점수는 우리 팀 제출 화면에서 볼 수 있습니다.</li>
+  </ul>
+</section>
+<section class="content-section" id="stages">
+  <h2>예선과 본선</h2>
+  <div class="table-wrap"><table class="data-table">
+    <thead><tr><th>구분</th><th>예선</th><th>본선</th></tr></thead>
+    <tbody>
+      <tr><th>Doctor 모델</th><td>고정 LLM <code>openai/gpt-6-luna</code> (2026-10-13부터)</td><td>참가자가 선택·학습한 모델</td></tr>
+      <tr><th>평가</th><td>자동 채점(<code>gpt-6.1-sol</code>) · 최종 평가는 GPT(<code>gpt-6.1-sol</code>)·Claude·Gemini 세 모델 평균</td><td>자동 채점 + 최종 5팀 의사 평가</td></tr>
+      <tr><th>순위</th><td>예선 최종 평가 결과와 검증 자료 확인 후 본선 진출팀 확정</td><td>자동 채점과 의사 평가를 합산해 수상팀 확정</td></tr>
+    </tbody>
+  </table></div>
+  <ul class="bullet-list">
+    <li>공식 평가는 팀·단계별 하루 3회까지이며, 리더보드는 공식 평가의 총점을 보여 줍니다. 예선 종료 시점의 리더보드는 최종 순위가 아닙니다.</li>
+    <li>단계별 최종 평가에는 팀이 선택한 제출 하나를 사용합니다.</li>
+    <li>본선 최종 5팀은 의료진이 초진 기록을 추가로 평가합니다. 자동 채점과 의사 평가의 합산 방식은 확정 후 본선 진출팀에 안내합니다.</li>
+  </ul>
+</section>
+<section class="content-section" id="development">
+  <h2>개발 및 제출</h2>
+  <p>개발 단계에서는 공개된 샘플 증례로 에이전트를 실험합니다. 제출 코드의 샘플 검증은 공개 샘플 증례로 채점한 참고 점수를 우리 팀에만 보여 주며, 리더보드에는 반영되지 않습니다. 샘플 검증은 가상 환자·진찰 판정·채점에 공식 평가(gpt-6.1-sol)보다 가벼운 gpt-6-luna를 쓰므로, 이 참고 점수는 실제 점수와 다를 수 있습니다. 리더보드 점수는 하루 3회까지 요청할 수 있는 공식 평가(예선 리더보드 5증례)에서만 나오며, 예선 마지막 최종 평가는 10증례로 채점합니다.</p>
+  <ul class="bullet-list">
+    <li>예선은 평가 서버에 준비된 고정 LLM <code>openai/gpt-6-luna</code>를 사용하며(2026-10-13부터. 그 전의 <code>openai/gpt-oss-20b</code>는 제공자 응답 지연이 잦아 교체), 모델 파일은 제출하지 않습니다. 본선 모델은 A6000 48GB급 GPU 한 장에서 로드·실행되어야 합니다.</li>
+    <li>제출 파일: <code>run.py</code>와 <code>requirements.txt</code>를 포함한 ZIP 파일, 최대 50MB</li>
+    <li>샘플 검증은 공식 평가 횟수를 사용하지 않습니다. 리더보드 제출은 샘플 검증 없이도 할 수 있습니다.</li>
+    <li>채점 증례 원문과 실행 산출물은 참가자에게 제공하지 않습니다.</li>
+  </ul>
+  <a class="text-link" href="/docs/">개발 가이드 보기 <svg class="icon"><use href="#i-arrow"/></svg></a>
+</section>
+</div>
+  
+</div>
+<div class="mobile-apply"><span>N.O.V.A. 2026</span><a class="button button-primary" href="/login/">참가자 로그인 <svg class="icon"><use href="#i-arrow"/></svg></a></div>
+
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a class="brand" href="/"><svg width="26" height="26" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 1 24.5 14 39 20 24.5 25 20 39 15 25 1 20 15 14Z" fill="currentColor"/><circle cx="20" cy="20" r="4.2" fill="white"/></svg><span>N.O.V.A.<span class="brand-year">2026</span></span></a>
+        <p>대화형 의료 진단 AI 에이전트 대회</p>
+        <p class="footer-fullname">Navigating Optimal clinical decisions via Virtual-patient Agents</p>
+      </div>
+      <dl class="footer-meta">
+        <div><dt>주최 · 주관</dt><dd>분당서울대학교병원 의료인공지능센터, 엘리스(elice)</dd></div>
+        <div><dt>후원</dt><dd>경기도경제과학진흥원, 정보통신기획평가원, 한국보건산업진흥원</dd></div>
+        <div><dt>문의</dt><dd><a href="/cdn-cgi/l/email-protection#b2d3dbc1dcc7d0daf2d5dfd3dbde9cd1dddf"><span class="__cf_email__" data-cfemail="88e9e1fbe6fdeae0c8efe5e9e1e4a6ebe7e5">[email&#160;protected]</span></a></dd></div>
+      </dl>
+    </div>
+    <div class="footer-bottom"><span>© 2026 분당서울대학교병원 의료인공지능센터</span><span>일정·일일 한도 기준 KST (UTC+9)</span></div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body></html>

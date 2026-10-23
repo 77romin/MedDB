@@ -1,0 +1,120 @@
+{
+  "source": "user-provided screenshot",
+  "mode": "official_leaderboard",
+  "submission": "submission_E2_hybrid_care.zip",
+  "zip_sha256": "dbe1570ef5608314cb134a0bf66acf13ca842d07cd986bfbf64bd9e5989d13ac",
+  "scores": {
+    "total": 67.132,
+    "information": 12.9,
+    "reasoning": 12.0,
+    "tests_followup": 6.75,
+    "safety": 15.0,
+    "communication": 7.1,
+    "efficiency": 13.38
+  },
+  "cases": [
+    {
+      "turns": 42,
+      "seconds": 249
+    },
+    {
+      "turns": 45,
+      "seconds": 267
+    },
+    {
+      "turns": 42,
+      "seconds": 365
+    },
+    {
+      "turns": 37,
+      "seconds": 209
+    },
+    {
+      "turns": 39,
+      "seconds": 197
+    }
+  ],
+  "mean_turns": 41,
+  "mean_seconds": 257.4,
+  "upstream_commit_inspected": "63743a8b8a2e278b426d18fc040e880740318ae3",
+  "zip_matches_upstream_verified": false,
+  "sample_validation_2026_10_19": {
+    "source": "user-provided screenshots",
+    "mode": "official_sample_validation",
+    "cases": [
+      "C01",
+      "C10",
+      "C03"
+    ],
+    "e2": {
+      "submission": "submission_E2_hybrid_care.zip",
+      "zip_sha256": "dbe1570ef5608314cb134a0bf66acf13ca842d07cd986bfbf64bd9e5989d13ac",
+      "scores": {
+        "total": 77.714,
+        "information": 11.94,
+        "reasoning": 15.0,
+        "tests_followup": 8.64,
+        "safety": 15.0,
+        "communication": 7.72,
+        "efficiency": 19.42
+      },
+      "turns": [
+        45,
+        45,
+        32
+      ],
+      "seconds": [
+        198,
+        226,
+        113
+      ]
+    },
+    "v0_9_7": {
+      "submission": "submission_v097_nova_harness.zip",
+      "zip_sha256": "24eac6d6e34fd0415146d6d0e180d8742f240d7cfeeb48e65cea799d2bc145ca",
+      "scores": {
+        "total": 61.559,
+        "information": 11.0,
+        "reasoning": 15.0,
+        "tests_followup": 5.67,
+        "safety": 15.0,
+        "communication": 4.89,
+        "efficiency": 10.0
+      },
+      "turns": [
+        34,
+        44,
+        34
+      ],
+      "seconds": [
+        797,
+        608,
+        804
+      ]
+    },
+    "e2_calibrated": {
+      "submission": "submission_E2_calibrated.zip",
+      "zip_sha256": "f029f2a29320c7c0cb0f370a9a9efa827a99008d51a2be33b8682e881bd5a524",
+      "scores": {
+        "total": 74.69,
+        "information": 12.33,
+        "reasoning": 15.0,
+        "tests_followup": 8.17,
+        "safety": 12.5,
+        "communication": 7.11,
+        "efficiency": 19.58
+      },
+      "turns": [
+        44,
+        41,
+        32
+      ],
+      "seconds": [
+        207,
+        190,
+        129
+      ],
+      "decision": "rejected_safety_and_communication_regression"
+    }
+  }
+}

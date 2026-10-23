@@ -1,0 +1,35 @@
+{
+  "scope": "strict saved-session replay; no new API or official scores",
+  "sessions": [
+    {
+      "run": "20261023_033640_990306_main_B1",
+      "mode": "B1",
+      "all_model_inputs_actions_and_final_note_match": true
+    },
+    {
+      "run": "20261023_033640_991848_main_B1",
+      "mode": "B1",
+      "all_model_inputs_actions_and_final_note_match": true
+    },
+    {
+      "run": "20261023_033641_455548_main_B1",
+      "mode": "B1",
+      "all_model_inputs_actions_and_final_note_match": true
+    },
+    {
+      "run": "20261023_033646_445612_main_B1O1",
+      "mode": "B1O1",
+      "all_model_inputs_actions_and_final_note_match": true
+    },
+    {
+      "run": "20261023_033646_996694_main_B1O1",
+      "mode": "B1O1",
+      "all_model_inputs_actions_and_final_note_match": true
+    },
+    {
+      "run": "20261023_033647_017461_main_B1O1",
+      "mode": "B1O1",
+      "all_model_inputs_actions_and_final_note_match": true
+    }
+  ]
+}

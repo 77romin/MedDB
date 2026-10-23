@@ -1,0 +1,37 @@
+[
+  {
+    "id": "WEB-EVALUATION",
+    "source": "https://nova.snubhai.org/evaluation/",
+    "snapshot": "sources/evaluation.html",
+    "markdown": "01_evaluation.md",
+    "sha256": "9d87ca5142e4611625744c9efa68dfa5fffcf0a7fd50b2e6958bc30176dca3f6"
+  },
+  {
+    "id": "WEB-RULES",
+    "source": "https://nova.snubhai.org/rules/",
+    "snapshot": "sources/rules.html",
+    "markdown": "02_rules.md",
+    "sha256": "d223d92922eacae6f89b2cf350835693562fee0d49d3887050782b6a878ecbdd"
+  },
+  {
+    "id": "WEB-DOCS",
+    "source": "https://nova.snubhai.org/docs/",
+    "snapshot": "sources/docs.html",
+    "markdown": "03_docs.md",
+    "sha256": "5bfe51437c33f81582ad86d422b35d981abc3b37e32dcfbad163385df9095688"
+  },
+  {
+    "id": "PPT-OT",
+    "source": "/Users/mink/Downloads/2026Datathon_개회식.pptx",
+    "markdown": "04_ot.md",
+    "slides": 26,
+    "sha256": "bfc6c20f3fe74aa3fd93d6c878739513f52be16d2aef79e562dd944424be9641"
+  },
+  {
+    "id": "PPT-RUN_AGENT",
+    "source": "/Users/mink/Downloads/run_agent 실행 흐름과 agent 진료 실제 예시.pptx",
+    "markdown": "05_run_agent.md",
+    "slides": 22,
+    "sha256": "c865db9d2da64aca3c76b099d4686519ce788ebc41804473e0bbda9eefab0b04"
+  }
+]

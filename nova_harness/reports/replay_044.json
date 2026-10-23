@@ -1,0 +1,37 @@
+{
+  "scope": "saved real outputs only, not a fresh session or score",
+  "runs": [
+    {
+      "case": "C01",
+      "accepted_complete_items": 1,
+      "rejected_items": 4,
+      "unresolved_reasons": {
+        "lost timing": 1,
+        "invented anchors": 1,
+        "incomplete message": 2
+      },
+      "same_question_candidates_with_prior_nonambiguous_answer": 1,
+      "new_patient_actions": 0
+    },
+    {
+      "case": "C03",
+      "accepted_complete_items": 1,
+      "rejected_items": 2,
+      "unresolved_reasons": {
+        "incomplete message": 2
+      },
+      "same_question_candidates_with_prior_nonambiguous_answer": 0,
+      "new_patient_actions": 0
+    },
+    {
+      "case": "C10",
+      "accepted_complete_items": 2,
+      "rejected_items": 1,
+      "unresolved_reasons": {
+        "lost negation": 1
+      },
+      "same_question_candidates_with_prior_nonambiguous_answer": 0,
+      "new_patient_actions": 0
+    }
+  ]
+}

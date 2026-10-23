@@ -1,0 +1,195 @@
+{
+  "scope": "deterministic formatting replay on saved final notes; NO new API submission, clinical entailment or score claim",
+  "checked_sessions": 20,
+  "results": [
+    {
+      "run": "20261022_072602_455709_safety_session_R3b",
+      "unchanged_S_O_A": true,
+      "unchanged_non_education_numeric_tokens": true,
+      "actual_speech_echoed": true,
+      "input_note_not_mutated": true,
+      "changed_other_P_fields": [
+        "follow_up"
+      ]
+    },
+    {
+      "run": "20261022_072602_730520_safety_session_R3a",
+      "unchanged_S_O_A": true,
+      "unchanged_non_education_numeric_tokens": true,
+      "actual_speech_echoed": true,
+      "input_note_not_mutated": true,
+      "changed_other_P_fields": [
+        "disposition"
+      ]
+    },
+    {
+      "run": "20261022_073012_455488_safety_session_R3a_safety",
+      "unchanged_S_O_A": true,
+      "unchanged_non_education_numeric_tokens": true,
+      "actual_speech_echoed": true,
+      "input_note_not_mutated": true,
+      "changed_other_P_fields": []
+    },
+    {
+      "run": "20261022_073206_067446_safety_session_R3a_safety",
+      "unchanged_S_O_A": true,
+      "unchanged_non_education_numeric_tokens": true,
+      "actual_speech_echoed": true,
+      "input_note_not_mutated": true,
+      "changed_other_P_fields": []
+    },
+    {
+      "run": "20261022_073456_122278_safety_session_R3a_safety",
+      "unchanged_S_O_A": true,
+      "unchanged_non_education_numeric_tokens": true,
+      "actual_speech_echoed": true,
+      "input_note_not_mutated": true,
+      "changed_other_P_fields": []
+    },
+    {
+      "run": "20261022_073501_001947_safety_session_R3a_safety",
+      "unchanged_S_O_A": true,
+      "unchanged_non_education_numeric_tokens": true,
+      "actual_speech_echoed": true,
+      "input_note_not_mutated": true,
+      "changed_other_P_fields": [
+        "disposition",
+        "follow_up"
+      ]
+    },
+    {
+      "run": "20261022_073618_383575_safety_session_R3a_safety",
+      "unchanged_S_O_A": true,
+      "unchanged_non_education_numeric_tokens": true,
+      "actual_speech_echoed": true,
+      "input_note_not_mutated": true,
+      "changed_other_P_fields": []
+    },
+    {
+      "run": "20261022_074332_594266_safety_session_R3a_safety",
+      "unchanged_S_O_A": true,
+      "unchanged_non_education_numeric_tokens": true,
+      "actual_speech_echoed": true,
+      "input_note_not_mutated": true,
+      "changed_other_P_fields": [
+        "treatment"
+      ]
+    },
+    {
+      "run": "20261022_074333_604714_safety_session_R3a_safety",
+      "unchanged_S_O_A": true,
+      "unchanged_non_education_numeric_tokens": true,
+      "actual_speech_echoed": true,
+      "input_note_not_mutated": true,
+      "changed_other_P_fields": [
+        "follow_up"
+      ]
+    },
+    {
+      "run": "20261022_074334_461367_safety_session_R3a_safety",
+      "unchanged_S_O_A": true,
+      "unchanged_non_education_numeric_tokens": true,
+      "actual_speech_echoed": true,
+      "input_note_not_mutated": true,
+      "changed_other_P_fields": [
+        "treatment",
+        "follow_up"
+      ]
+    },
+    {
+      "run": "20261022_074945_763373_safety_session_R3a_safety",
+      "unchanged_S_O_A": true,
+      "unchanged_non_education_numeric_tokens": true,
+      "actual_speech_echoed": true,
+      "input_note_not_mutated": true,
+      "changed_other_P_fields": [
+        "treatment",
+        "follow_up"
+      ]
+    },
+    {
+      "run": "20261022_074946_432462_safety_session_R3a_safety",
+      "unchanged_S_O_A": true,
+      "unchanged_non_education_numeric_tokens": true,
+      "actual_speech_echoed": true,
+      "input_note_not_mutated": true,
+      "changed_other_P_fields": [
+        "follow_up"
+      ]
+    },
+    {
+      "run": "20261022_074946_553076_safety_session_R3a_safety",
+      "unchanged_S_O_A": true,
+      "unchanged_non_education_numeric_tokens": true,
+      "actual_speech_echoed": true,
+      "input_note_not_mutated": true,
+      "changed_other_P_fields": [
+        "treatment"
+      ]
+    },
+    {
+      "run": "20261022_080013_414935_safety_session_R3a_safety",
+      "unchanged_S_O_A": true,
+      "unchanged_non_education_numeric_tokens": true,
+      "actual_speech_echoed": true,
+      "input_note_not_mutated": true,
+      "changed_other_P_fields": [
+        "follow_up"
+      ]
+    },
+    {
+      "run": "20261022_080013_466229_safety_session_R3a_safety",
+      "unchanged_S_O_A": true,
+      "unchanged_non_education_numeric_tokens": true,
+      "actual_speech_echoed": true,
+      "input_note_not_mutated": true,
+      "changed_other_P_fields": [
+        "treatment"
+      ]
+    },
+    {
+      "run": "20261022_080014_034882_safety_session_R3a_safety",
+      "unchanged_S_O_A": true,
+      "unchanged_non_education_numeric_tokens": true,
+      "actual_speech_echoed": true,
+      "input_note_not_mutated": true,
+      "changed_other_P_fields": [
+        "follow_up"
+      ]
+    },
+    {
+      "run": "20261022_081024_824030_safety_session_R3a_safety",
+      "unchanged_S_O_A": true,
+      "unchanged_non_education_numeric_tokens": true,
+      "actual_speech_echoed": true,
+      "input_note_not_mutated": true,
+      "changed_other_P_fields": []
+    },
+    {
+      "run": "20261022_081025_511508_safety_session_R3a_safety",
+      "unchanged_S_O_A": true,
+      "unchanged_non_education_numeric_tokens": true,
+      "actual_speech_echoed": true,
+      "input_note_not_mutated": true,
+      "changed_other_P_fields": [
+        "treatment"
+      ]
+    },
+    {
+      "run": "20261022_081026_065409_safety_session_R3a_safety",
+      "unchanged_S_O_A": true,
+      "unchanged_non_education_numeric_tokens": true,
+      "actual_speech_echoed": true,
+      "input_note_not_mutated": true,
+      "changed_other_P_fields": []
+    },
+    {
+      "run": "20261022_082006_598639_safety_session_R3a_safety",
+      "unchanged_S_O_A": true,
+      "unchanged_non_education_numeric_tokens": true,
+      "actual_speech_echoed": true,
+      "input_note_not_mutated": true,
+      "changed_other_P_fields": []
+    }
+  ]
+}

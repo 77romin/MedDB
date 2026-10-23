@@ -1,0 +1,91 @@
+{
+  "scope": "live Doctor on fixed author-defined synthetic observations; no patient/official score",
+  "run": "20261023_020004_009998_observation_edges",
+  "fingerprint_unchanged": true,
+  "source_sha256": {
+    "nova_agent/observation_ledger.py": "a837e93cc889b5aacb0e9068e9ae8c9fc34dccc1244f9248a997ccf9441f2726",
+    "nova_agent/state.py": "fe6700c3d9b16554983ac7ef608546397079289752baa9174057b40cff29a4ef"
+  },
+  "cases": [
+    {
+      "id": "E01",
+      "expected": "?",
+      "actual": "?",
+      "matches_author_criterion": true,
+      "accepted_facts": 1,
+      "interpretation_failures": 0
+    },
+    {
+      "id": "E02",
+      "expected": "-",
+      "actual": "-",
+      "matches_author_criterion": true,
+      "accepted_facts": 2,
+      "interpretation_failures": 0
+    },
+    {
+      "id": "E03",
+      "expected": "?",
+      "actual": "?",
+      "matches_author_criterion": true,
+      "accepted_facts": 1,
+      "interpretation_failures": 0
+    },
+    {
+      "id": "E04",
+      "expected": "+",
+      "actual": "+",
+      "matches_author_criterion": true,
+      "accepted_facts": 1,
+      "interpretation_failures": 0
+    },
+    {
+      "id": "E05",
+      "expected": "?",
+      "actual": "?",
+      "matches_author_criterion": true,
+      "accepted_facts": 1,
+      "interpretation_failures": 0
+    },
+    {
+      "id": "V01",
+      "expected": "?",
+      "actual": "?",
+      "matches_author_criterion": true,
+      "accepted_facts": 2,
+      "interpretation_failures": 0
+    },
+    {
+      "id": "V02",
+      "expected": "-",
+      "actual": "-",
+      "matches_author_criterion": true,
+      "accepted_facts": 2,
+      "interpretation_failures": 0
+    },
+    {
+      "id": "V03",
+      "expected": "?",
+      "actual": "?",
+      "matches_author_criterion": true,
+      "accepted_facts": 1,
+      "interpretation_failures": 0
+    },
+    {
+      "id": "V04",
+      "expected": "+",
+      "actual": "+",
+      "matches_author_criterion": true,
+      "accepted_facts": 1,
+      "interpretation_failures": 0
+    },
+    {
+      "id": "V05",
+      "expected": "-",
+      "actual": "-",
+      "matches_author_criterion": true,
+      "accepted_facts": 2,
+      "interpretation_failures": 0
+    }
+  ]
+}

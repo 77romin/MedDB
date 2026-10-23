@@ -1,0 +1,98 @@
+{
+  "scope": "fixed saved observations with NEW Doctor calls; proposals NOT actual speech; single sequence per case, no official score",
+  "comparisons": [
+    {
+      "run": "20261022_072602_138421_paired_safety_C01",
+      "case": "C01",
+      "status": "excluded_expired_clock",
+      "same_observation_hash": true,
+      "identical_record_generation_inputs": true,
+      "record_request_hashes": [
+        "c4e6263be1af0a61fb25c87cd990b0c88f490cab286f27e6d07d3a5de1d4eaa2",
+        "c4e6263be1af0a61fb25c87cd990b0c88f490cab286f27e6d07d3a5de1d4eaa2"
+      ],
+      "arms": [
+        {
+          "mode": "R3a",
+          "query_attempts": 0,
+          "selector_attempts": 0,
+          "injected_documents": 0,
+          "selector_event_counts": {
+            "selection_skipped": 1
+          }
+        },
+        {
+          "mode": "R3b",
+          "query_attempts": 0,
+          "selector_attempts": 0,
+          "injected_documents": 0,
+          "selector_event_counts": {
+            "selection_skipped": 1
+          }
+        }
+      ]
+    },
+    {
+      "run": "20261022_072849_440126_paired_safety_C01-active-retrieval",
+      "case": "C01",
+      "status": "valid_model_only_comparison",
+      "same_observation_hash": true,
+      "identical_record_generation_inputs": true,
+      "record_request_hashes": [
+        "c4e6263be1af0a61fb25c87cd990b0c88f490cab286f27e6d07d3a5de1d4eaa2",
+        "c4e6263be1af0a61fb25c87cd990b0c88f490cab286f27e6d07d3a5de1d4eaa2"
+      ],
+      "arms": [
+        {
+          "mode": "R3a",
+          "query_attempts": 0,
+          "selector_attempts": 1,
+          "injected_documents": 0,
+          "selector_event_counts": {
+            "selection_completed": 1
+          }
+        },
+        {
+          "mode": "R3b",
+          "query_attempts": 1,
+          "selector_attempts": 1,
+          "injected_documents": 0,
+          "selector_event_counts": {
+            "selection_failed": 1
+          }
+        }
+      ]
+    },
+    {
+      "run": "20261022_073704_411774_paired_safety_second-fixed-observation",
+      "case": "C10",
+      "status": "valid_model_only_comparison",
+      "same_observation_hash": true,
+      "identical_record_generation_inputs": true,
+      "record_request_hashes": [
+        "d4a95713eb6fb52c0447b62326e7998dc719bcc3e1955c702eb7ed0cd6472c25",
+        "d4a95713eb6fb52c0447b62326e7998dc719bcc3e1955c702eb7ed0cd6472c25"
+      ],
+      "arms": [
+        {
+          "mode": "R3a",
+          "query_attempts": 0,
+          "selector_attempts": 1,
+          "injected_documents": 0,
+          "selector_event_counts": {
+            "selection_failed": 1
+          }
+        },
+        {
+          "mode": "R3b",
+          "query_attempts": 1,
+          "selector_attempts": 1,
+          "injected_documents": 0,
+          "selector_event_counts": {
+            "selection_completed": 1
+          }
+        }
+      ]
+    }
+  ]
+}

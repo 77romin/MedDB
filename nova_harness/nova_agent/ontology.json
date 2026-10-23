@@ -1,0 +1,214 @@
+{
+  "version": "0.1.2",
+  "status": "structural_seed_not_clinically_validated",
+  "description": "초진 정보 구조와 동의어 시드. 질환 확진·배제·치료 규칙 없음. 서버 진찰 목록을 의미하지 않음.",
+  "concepts": [
+    {
+      "id": "nova:history/onset",
+      "label": "발병 시점",
+      "aliases": [
+        "언제부터",
+        "시작",
+        "onset"
+      ],
+      "field": "hpi"
+    },
+    {
+      "id": "nova:history/course",
+      "label": "경과",
+      "aliases": [
+        "경과",
+        "변화",
+        "악화"
+      ],
+      "field": "hpi"
+    },
+    {
+      "id": "nova:history/character",
+      "label": "증상 양상",
+      "aliases": [
+        "양상",
+        "어떻게",
+        "부위"
+      ],
+      "field": "hpi"
+    },
+    {
+      "id": "nova:history/severity",
+      "label": "정도와 일상 영향",
+      "aliases": [
+        "정도",
+        "일상",
+        "강도"
+      ],
+      "field": "hpi"
+    },
+    {
+      "id": "nova:history/associated",
+      "label": "동반 증상",
+      "aliases": [
+        "동반",
+        "증상",
+        "ros"
+      ],
+      "field": "ros"
+    },
+    {
+      "id": "nova:history/past",
+      "label": "과거력",
+      "aliases": [
+        "기저질환",
+        "과거력",
+        "병력"
+      ],
+      "field": "pmh"
+    },
+    {
+      "id": "nova:medication/name",
+      "label": "복용 약 이름",
+      "aliases": [
+        "약 이름",
+        "약물",
+        "복용약"
+      ],
+      "field": "pmh"
+    },
+    {
+      "id": "nova:medication/actual_use",
+      "label": "실제 용량·횟수·시점",
+      "aliases": [
+        "몇 알",
+        "복용량",
+        "용량"
+      ],
+      "field": "pmh",
+      "conditional": "medication reported"
+    },
+    {
+      "id": "nova:history/allergy",
+      "label": "알레르기",
+      "aliases": [
+        "알러지",
+        "allergy"
+      ],
+      "field": "pmh"
+    },
+    {
+      "id": "nova:history/family",
+      "label": "가족력",
+      "aliases": [
+        "가족",
+        "family history"
+      ],
+      "field": "fh"
+    },
+    {
+      "id": "nova:history/social",
+      "label": "사회력",
+      "aliases": [
+        "흡연",
+        "음주",
+        "직업"
+      ],
+      "field": "sh"
+    },
+    {
+      "id": "nova:medication/last_dose",
+      "label": "마지막 복용 시점",
+      "aliases": [
+        "마지막 복용",
+        "최근 복용"
+      ],
+      "field": "pmh"
+    },
+    {
+      "id": "nova:medication/change_over_time",
+      "label": "효과·복용량 변화",
+      "aliases": [
+        "효과 변화",
+        "용량 변화"
+      ],
+      "field": "pmh"
+    },
+    {
+      "id": "nova:medication/missed_dose_effect",
+      "label": "감량·미복용 시 변화",
+      "aliases": [
+        "거르면",
+        "줄이면"
+      ],
+      "field": "pmh"
+    },
+    {
+      "id": "nova:medication/control",
+      "label": "복용 조절의 어려움",
+      "aliases": [
+        "조절",
+        "줄이기 어려움"
+      ],
+      "field": "pmh"
+    },
+    {
+      "id": "nova:history/function",
+      "label": "일상 기능 영향",
+      "aliases": [
+        "일상",
+        "생활 손상"
+      ],
+      "field": "hpi"
+    },
+    {
+      "id": "nova:history/concerns",
+      "label": "환자의 걱정과 기대",
+      "aliases": [
+        "걱정",
+        "두려움",
+        "기대"
+      ],
+      "field": "hpi"
+    }
+  ],
+  "relations": [
+    {
+      "subject": "nova:medication/name",
+      "predicate": "requires_clarification",
+      "object": "nova:medication/actual_use",
+      "condition": "medication use is present",
+      "source": "local information-completeness design; not a treatment guideline"
+    },
+    {
+      "subject": "nova:medication/actual_use",
+      "predicate": "consider_clarification",
+      "object": "nova:medication/last_dose",
+      "condition": "medication is reported; prioritize by safety, duration, and diagnostic relevance",
+      "source": "information-completeness design; not a diagnosis or treatment rule"
+    },
+    {
+      "subject": "nova:medication/actual_use",
+      "predicate": "consider_clarification",
+      "object": "nova:medication/change_over_time",
+      "condition": "medication is reported; prioritize by safety, duration, and diagnostic relevance",
+      "source": "information-completeness design; not a diagnosis or treatment rule"
+    },
+    {
+      "subject": "nova:medication/actual_use",
+      "predicate": "consider_clarification",
+      "object": "nova:medication/missed_dose_effect",
+      "condition": "medication is reported; prioritize by safety, duration, and diagnostic relevance",
+      "source": "information-completeness design; not a diagnosis or treatment rule"
+    },
+    {
+      "subject": "nova:medication/actual_use",
+      "predicate": "consider_clarification",
+      "object": "nova:medication/control",
+      "condition": "medication is reported; prioritize by safety, duration, and diagnostic relevance",
+      "source": "information-completeness design; not a diagnosis or treatment rule"
+    }
+  ],
+  "communication_slots": [
+    "empathy",
+    "assessment",
+    "plan",
+    "safety_net"
+  ]
+}

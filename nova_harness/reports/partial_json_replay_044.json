@@ -1,0 +1,7 @@
+{
+  "scope": "actual truncated response replay, not patient delivery",
+  "recovered_closed_items": 6,
+  "accepted": 6,
+  "rejected": 0,
+  "partial_array_recovered": true
+}

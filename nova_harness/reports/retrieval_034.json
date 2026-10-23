@@ -1,0 +1,287 @@
+{
+  "index_sha256": "d19a4a7d69b5b7e9e9f8c87240a94c30804ac51dd8933838020a486d5c3787b7",
+  "purpose": "engineering regression queries; not held-out accuracy or clinical performance",
+  "queries": [
+    {
+      "query": "asthma",
+      "r1": {
+        "seconds": 0.015,
+        "results": [
+          {
+            "title": "Asthma",
+            "chunk_id": "c5d615ab43bbd1019827e18a"
+          },
+          {
+            "title": "Expert Panel Report 2: Guidelines for the Diagnosis and Management of Asthma",
+            "chunk_id": "f12d1857a4c5c45ad259ca6a"
+          }
+        ]
+      },
+      "r2": {
+        "seconds": 0.0481,
+        "results": [
+          {
+            "title": "Asthma",
+            "chunk_id": "c5d615ab43bbd1019827e18a"
+          },
+          {
+            "title": "Expert Panel Report 2: Guidelines for the Diagnosis and Management of Asthma",
+            "chunk_id": "f12d1857a4c5c45ad259ca6a"
+          }
+        ]
+      }
+    },
+    {
+      "query": "Graves hyperthyroidism",
+      "r1": {
+        "seconds": 0.0167,
+        "results": [
+          {
+            "title": "2022 갑상선질환에서 골건강 평가 및 관리 권고안",
+            "chunk_id": "adc2ca185ef4dc2f10e3dbe9"
+          },
+          {
+            "title": "대한갑상선학회 갑상선결절 진료권고안 2024",
+            "chunk_id": "46b3553cb92d5a7cfe595c12"
+          }
+        ]
+      },
+      "r2": {
+        "seconds": 0.0178,
+        "results": [
+          {
+            "title": "The Diagnosis and Management of Hyperthyroidism in Korea: Consensus Report of the Korean Thyroid Association",
+            "chunk_id": "6479a3d05ae8c39269ecab15"
+          },
+          {
+            "title": "2025 Korean Thyroid Association Management Guidelines for Radioactive Iodine Therapy in Patients with Hyperthyroidism",
+            "chunk_id": "78e3a2eec318e2f288182bd2"
+          }
+        ]
+      }
+    },
+    {
+      "query": "insomnia benzodiazepine dependence",
+      "r1": {
+        "seconds": 0.0139,
+        "results": [
+          {
+            "title": "Clinical Guidelines for the Use of Buprenorphine in the Treatment of Opioid Addiction",
+            "chunk_id": "7fa4e75651bcd974b630e83b"
+          },
+          {
+            "title": "VA/DoD CPG: Management of Substance Use Disorder (SUD) — Full Guideline (2021)",
+            "chunk_id": "886e79ab5fbd0809bb92374b"
+          }
+        ]
+      },
+      "r2": {
+        "seconds": 0.0363,
+        "results": [
+          {
+            "title": "Benzodiazepine receptor agonist deprescribing principles for long-term use and dependence: modified Delphi recommendations from a multi-disciplinary expert panel",
+            "chunk_id": "0f7efd2452d2f51eed8814d5"
+          },
+          {
+            "title": "Joint Clinical Practice Guideline on Benzodiazepine Tapering: Considerations When Risks Outweigh Benefits",
+            "chunk_id": "15021d98e799d42629ddb534"
+          }
+        ]
+      }
+    },
+    {
+      "query": "hypertension",
+      "r1": {
+        "seconds": 0.0129,
+        "results": [
+          {
+            "title": "Home blood pressure monitoring and equity challenges of the 2025 ACC/AHA hypertension guideline in Africa",
+            "chunk_id": "c45560dc547f7fc79e3ed2d4"
+          },
+          {
+            "title": "The 2022 focused update of the 2018 Korean Hypertension Society Guidelines for the management of hypertension",
+            "chunk_id": "319238578531e5c73e3590f3"
+          }
+        ]
+      },
+      "r2": {
+        "seconds": 0.0474,
+        "results": [
+          {
+            "title": "2013 Korean Society of Hypertension guidelines for the management of hypertension. Part II—treatments of hypertension",
+            "chunk_id": "831a31d53e9cadbb09dc6e23"
+          },
+          {
+            "title": "2013 Korean Society of Hypertension guidelines for the management of hypertension: part I–epidemiology and diagnosis of hypertension",
+            "chunk_id": "fe9cbb355efd0a6367b1a6a3"
+          }
+        ]
+      }
+    },
+    {
+      "query": "diabetes mellitus",
+      "r1": {
+        "seconds": 0.0129,
+        "results": [
+          {
+            "title": "Antihyperglycemic Agent Therapy for Adult Patients with Type 2 Diabetes Mellitus 2017: A Position Statement of the Korean Diabetes Association",
+            "chunk_id": "b0aca24612400990d9a470f0"
+          },
+          {
+            "title": "Recommendations for Using Real-Time Continuous Glucose Monitoring (rtCGM) Data for Insulin Adjustments in Type 1 Diabetes",
+            "chunk_id": "caf3b9903e0835aac0ef4fcf"
+          }
+        ]
+      },
+      "r2": {
+        "seconds": 0.0562,
+        "results": [
+          {
+            "title": "Antihyperglycemic Agent Therapy for Adult Patients with Type 2 Diabetes Mellitus 2017: A Position Statement of the Korean Diabetes Association",
+            "chunk_id": "b0aca24612400990d9a470f0"
+          },
+          {
+            "title": "Quality of Clinical Practice Guidelines for Glycemic Control in Type 2 Diabetes Mellitus",
+            "chunk_id": "256395075220c3ce2855fade"
+          }
+        ]
+      }
+    },
+    {
+      "query": "rheumatoid arthritis",
+      "r1": {
+        "seconds": 0.0134,
+        "results": [
+          {
+            "title": "2023 American College of Rheumatology (ACR)/American College of Chest Physicians (CHEST) Guideline for the Screening and Monitoring of Interstitial Lung Disease in People with Systemic Autoimmune Rheumatic Diseases",
+            "chunk_id": "42625543e74a6b84fbaaf046"
+          },
+          {
+            "title": "2023 American College of Rheumatology (ACR)/American College of Chest Physicians (CHEST) Guideline for the Screening and Monitoring of Interstitial Lung Disease in People with Systemic Autoimmune Rheumatic Diseases",
+            "chunk_id": "f4aa7ac970e945abe380587e"
+          }
+        ]
+      },
+      "r2": {
+        "seconds": 0.0303,
+        "results": [
+          {
+            "title": "Recommendations for optimizing methotrexate treatment for patients with rheumatoid arthritis",
+            "chunk_id": "7b4d30022d3d672df9700358"
+          },
+          {
+            "title": "Recommendations for the treatment of rheumatoid arthritis in Saudi Arabia: adolopment of the 2021 American College of Rheumatology guidelines",
+            "chunk_id": "9507f1ab2ca84a00717ddee5"
+          }
+        ]
+      }
+    },
+    {
+      "query": "tuberculosis",
+      "r1": {
+        "seconds": 0.0134,
+        "results": [
+          {
+            "title": "Treatment of Drug-Resistant Tuberculosis. An Official ATS/CDC/ERS/IDSA Clinical Practice Guideline",
+            "chunk_id": "6ac1c3955a11b53b692ce9bb"
+          },
+          {
+            "title": "Updates on the Treatment of Drug-Susceptible and Drug-Resistant Tuberculosis: An Official ATS/CDC/ERS/IDSA Clinical Practice Guideline",
+            "chunk_id": "60f60f53832bd70aaa97cc7b"
+          }
+        ]
+      },
+      "r2": {
+        "seconds": 0.0334,
+        "results": [
+          {
+            "title": "Treatment of Drug-Resistant Tuberculosis. An Official ATS/CDC/ERS/IDSA Clinical Practice Guideline",
+            "chunk_id": "6ac1c3955a11b53b692ce9bb"
+          },
+          {
+            "title": "Updates on the Treatment of Drug-Susceptible and Drug-Resistant Tuberculosis: An Official ATS/CDC/ERS/IDSA Clinical Practice Guideline",
+            "chunk_id": "60f60f53832bd70aaa97cc7b"
+          }
+        ]
+      }
+    },
+    {
+      "query": "epilepsy",
+      "r1": {
+        "seconds": 0.0191,
+        "results": [
+          {
+            "title": "American Epilepsy Society Clinical Practice Guideline: Infantile Epilepsy",
+            "chunk_id": "72f46fc572b1209368edbd31"
+          },
+          {
+            "title": "Korean Academy of Medical Sciences Pediatric Impairment Guideline for Brain Lesion",
+            "chunk_id": "00f75582dfad5253839a89a0"
+          }
+        ]
+      },
+      "r2": {
+        "seconds": 0.0295,
+        "results": [
+          {
+            "title": "American Epilepsy Society Clinical Practice Guideline: Infantile Epilepsy",
+            "chunk_id": "ed90ccca67cd05cd628e9da1"
+          },
+          {
+            "title": "A roadmap for SHANK3-related Epilepsy Research: recommendations from the 2023 strategic planning workshop",
+            "chunk_id": "5d56446bd7e54f77fd17a2b6"
+          }
+        ]
+      }
+    },
+    {
+      "query": "migraine",
+      "r1": {
+        "seconds": 0.0159,
+        "results": [
+          {
+            "title": "Migraine",
+            "chunk_id": "266df55a494a5aa0e0266bdd"
+          },
+          {
+            "title": "Preventive treatment in migraine and the new US guidelines",
+            "chunk_id": "931091cacfc36dd9e394badf"
+          }
+        ]
+      },
+      "r2": {
+        "seconds": 0.037,
+        "results": [
+          {
+            "title": "Migraine",
+            "chunk_id": "88e55c367d55e8eb4d15ba0b"
+          },
+          {
+            "title": "Preventive treatment in migraine and the new US guidelines",
+            "chunk_id": "931091cacfc36dd9e394badf"
+          }
+        ]
+      }
+    },
+    {
+      "query": "성장 지연",
+      "r1": {
+        "seconds": 0.0175,
+        "results": [
+          {
+            "title": "대한 소아알레르기 호흡기학회 아토피피부염 연구회",
+            "chunk_id": "693f890d3f0eeb76e9e86b82"
+          },
+          {
+            "title": "Transfusion guidelines in pediatric patients",
+            "chunk_id": "2488875dfaa57bbdb0f911b7"
+          }
+        ]
+      },
+      "r2": {
+        "seconds": 0.0127,
+        "results": []
+      }
+    }
+  ]
+}

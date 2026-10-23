@@ -1,0 +1,32 @@
+{
+  "scope": "strict full-session saved-response replay through the new linker; no score",
+  "sessions": [
+    {
+      "run": "20261023_011735_823267_safety_session_R3a_question_link",
+      "source_sha256": "26707ac110949dbf8c4a4c53a1c88b7dd1d0125013c1d598d05690113737a997",
+      "remaining": 0,
+      "all_model_inputs_actions_and_final_note_match": true,
+      "link_event_counts": {
+        "question_link_abstained": 8
+      },
+      "abstention_reasons": {
+        "unmapped": 4,
+        "compound": 3,
+        "historical_scope": 1
+      }
+    },
+    {
+      "run": "20261023_011738_589773_safety_session_R3a_coverage_order",
+      "source_sha256": "75daa29ce7b7c270f6b2d7d1084ad9dfed8f55b561949d91de915a345d61bb85",
+      "remaining": 0,
+      "all_model_inputs_actions_and_final_note_match": true,
+      "link_event_counts": {
+        "question_link_abstained": 5
+      },
+      "abstention_reasons": {
+        "unmapped": 4,
+        "compound": 1
+      }
+    }
+  ]
+}

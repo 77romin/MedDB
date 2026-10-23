@@ -1,0 +1,203 @@
+{
+  "scope": "frozen R3a_obligations_fixed development API audit, not official scoring/clinical completeness",
+  "runtime_unchanged_during_batch": true,
+  "current_runtime_matches_frozen": false,
+  "runs": [
+    {
+      "obligation_events": [
+        {
+          "event": "obligation_validation",
+          "accepted": 9,
+          "rejected": 0
+        },
+        {
+          "event": "base_group_not_scheduled",
+          "reason": "turn_budget"
+        }
+      ],
+      "historical_rejected_items": 0,
+      "s1_unresolved_closing_fields": [],
+      "s1_repair_failures": 0,
+      "s1_rejected_addendum_groups": 0,
+      "case_label": "C01",
+      "run": "20261022_220012_025206_safety_session_R3a_obligations_fixed",
+      "runtime_matches_frozen": true,
+      "completed": true,
+      "elapsed_seconds": 360.65,
+      "max_server_turn": 50,
+      "doctor_attempted_request_ids": 19,
+      "doctor_successful_request_ids": 19,
+      "errors": {},
+      "truncated_completions": 0,
+      "deterministic_final_plan_and_performed_render_matches": true,
+      "raw_generated_obligations": 9,
+      "individually_valid_rows": 9,
+      "rejection_reasons": {},
+      "registered_obligations_by_version": [
+        9,
+        1,
+        1
+      ],
+      "sent_obligations_by_version": [
+        9,
+        0,
+        0
+      ],
+      "consecutive_same_question_same_nonempty_reply_distinct_request": 1,
+      "exact_duplicate_all_messages": 1,
+      "exact_duplicate_post_record_messages": 0,
+      "coverage_verified": false
+    },
+    {
+      "obligation_events": [
+        {
+          "event": "obligation_validation",
+          "accepted": 2,
+          "rejected": 1
+        },
+        {
+          "event": "obligation_repair",
+          "attempts": 1,
+          "accepted_new": 0,
+          "still_rejected": 0,
+          "not_repaired": 1
+        }
+      ],
+      "historical_rejected_items": 1,
+      "s1_unresolved_closing_fields": [],
+      "s1_repair_failures": 0,
+      "s1_rejected_addendum_groups": 0,
+      "case_label": "C03",
+      "run": "20261022_220012_025223_safety_session_R3a_obligations_fixed",
+      "runtime_matches_frozen": true,
+      "completed": true,
+      "elapsed_seconds": 256.536,
+      "max_server_turn": 41,
+      "doctor_attempted_request_ids": 16,
+      "doctor_successful_request_ids": 16,
+      "errors": {},
+      "truncated_completions": 0,
+      "deterministic_final_plan_and_performed_render_matches": true,
+      "raw_generated_obligations": 3,
+      "individually_valid_rows": 2,
+      "rejection_reasons": {
+        "lost negation": 1
+      },
+      "registered_obligations_by_version": [
+        2
+      ],
+      "sent_obligations_by_version": [
+        2
+      ],
+      "consecutive_same_question_same_nonempty_reply_distinct_request": 0,
+      "exact_duplicate_all_messages": 0,
+      "exact_duplicate_post_record_messages": 0,
+      "coverage_verified": false
+    },
+    {
+      "obligation_events": [
+        {
+          "event": "obligation_validation",
+          "accepted": 3,
+          "rejected": 1
+        },
+        {
+          "event": "obligation_repair",
+          "attempts": 1,
+          "accepted_new": 0,
+          "still_rejected": 0,
+          "not_repaired": 1
+        },
+        {
+          "event": "base_group_not_scheduled",
+          "reason": "turn_budget"
+        }
+      ],
+      "historical_rejected_items": 1,
+      "s1_unresolved_closing_fields": [
+        "safety"
+      ],
+      "s1_repair_failures": 0,
+      "s1_rejected_addendum_groups": 0,
+      "case_label": "C10",
+      "run": "20261022_220012_025209_safety_session_R3a_obligations_fixed",
+      "runtime_matches_frozen": true,
+      "completed": true,
+      "elapsed_seconds": 407.408,
+      "max_server_turn": 49,
+      "doctor_attempted_request_ids": 35,
+      "doctor_successful_request_ids": 35,
+      "errors": {},
+      "truncated_completions": 0,
+      "deterministic_final_plan_and_performed_render_matches": true,
+      "raw_generated_obligations": 4,
+      "individually_valid_rows": 3,
+      "rejection_reasons": {
+        "lost negation": 1
+      },
+      "registered_obligations_by_version": [
+        3
+      ],
+      "sent_obligations_by_version": [
+        3
+      ],
+      "consecutive_same_question_same_nonempty_reply_distinct_request": 0,
+      "exact_duplicate_all_messages": 0,
+      "exact_duplicate_post_record_messages": 0,
+      "coverage_verified": false
+    }
+  ],
+  "model_review": {
+    "scope": "source-checked development model opinion; counts are not scores/comparable across cases",
+    "reviews": [
+      {
+        "case_label": "C01",
+        "validated": true,
+        "attempts": 1,
+        "checked_obligations": 10,
+        "delivery": {
+          "covered": 7,
+          "partial": 2,
+          "missing": 1
+        },
+        "final_consistency": {
+          "preserved": 10
+        },
+        "unspoken_completed_claims": 0,
+        "repetition_groups": 2
+      },
+      {
+        "case_label": "C03",
+        "validated": true,
+        "attempts": 1,
+        "checked_obligations": 10,
+        "delivery": {
+          "covered": 7,
+          "missing": 1,
+          "partial": 2
+        },
+        "final_consistency": {
+          "preserved": 10
+        },
+        "unspoken_completed_claims": 0,
+        "repetition_groups": 2
+      },
+      {
+        "case_label": "C10",
+        "validated": true,
+        "attempts": 1,
+        "checked_obligations": 10,
+        "delivery": {
+          "partial": 5,
+          "missing": 4,
+          "covered": 1
+        },
+        "final_consistency": {
+          "preserved": 10
+        },
+        "unspoken_completed_claims": 0,
+        "repetition_groups": 1
+      }
+    ]
+  }
+}

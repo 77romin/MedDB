@@ -1,0 +1,32 @@
+{
+  "scope": "strict saved full-session replay; not new patient/model or official scoring runs",
+  "sessions": [
+    {
+      "run": "20261023_070541_297010_safety_session_R3a_plan_delivery",
+      "source_sha256": "d3b2701809b447fd566bda6c4a781e755870c4b1261e7b7d3ff8414f05dd69b5",
+      "all_model_inputs_actions_and_final_note_match": true,
+      "remaining": 0,
+      "observed_sources": 24,
+      "validated_facts": 7,
+      "plan_groups": 1
+    },
+    {
+      "run": "20261023_070542_255625_safety_session_R3a_plan_delivery",
+      "source_sha256": "daefc7174c4b50b548e5691cc46281f7b4b0ed19cfc4e5ba2c138e82f51c6507",
+      "all_model_inputs_actions_and_final_note_match": true,
+      "remaining": 0,
+      "observed_sources": 33,
+      "validated_facts": 16,
+      "plan_groups": 2
+    },
+    {
+      "run": "20261023_070543_014431_safety_session_R3a_plan_delivery",
+      "source_sha256": "220fe342d41d4d9bbd6b39ee7ead334901eb77cb0cc41f06544f221201804086",
+      "all_model_inputs_actions_and_final_note_match": true,
+      "remaining": 0,
+      "observed_sources": 39,
+      "validated_facts": 17,
+      "plan_groups": 3
+    }
+  ]
+}

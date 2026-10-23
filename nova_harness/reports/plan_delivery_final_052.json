@@ -1,0 +1,512 @@
+{
+  "scope": "public development sessions; anchor/delivery checks are not clinical completeness or official scores",
+  "sessions": [
+    {
+      "run": "20261023_071156_028643_safety_session_R3a_plan_delivery",
+      "case": "C01",
+      "mode": "R3a_plan_delivery",
+      "completed": true,
+      "max_server_turn": 42,
+      "elapsed_seconds": 320.728,
+      "doctor_attempted_request_ids": 35,
+      "doctor_successful_request_ids": 35,
+      "prompt_tokens": 53084,
+      "completion_tokens": 12789,
+      "errors": {},
+      "truncated_completions": 0,
+      "runtime_sha256": {
+        "nova_agent/observation_ledger.py": "1f433f085ae03fa8b4e8e57b86ce290c5a738e8af0c41660489a07134d215dd8",
+        "nova_agent/e2_observation_state.py": "11606a8f2e090962f0d7ef09087929c9280c856983ad4a7e8daaf772b0e14263",
+        "nova_agent/state.py": "fe6700c3d9b16554983ac7ef608546397079289752baa9174057b40cff29a4ef",
+        "nova_agent/coverage_order.py": "8b8b4f5afd5b03dac6be08c0bd068d7255235107bd0f2e8082ff0a4046ef2d3d",
+        "nova_agent/response_state.py": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee"
+      },
+      "runtime_matches_current": true,
+      "fingerprint_unchanged": true,
+      "extraction_requests": 20,
+      "extraction_evidence_ids_unique": 20,
+      "observation_events": {
+        "observation_validated": 20,
+        "observation_raw_only": 18,
+        "answer_contract": 16
+      },
+      "accepted_facts": 19,
+      "fact_subjects": {
+        "patient": 18,
+        "family": 1
+      },
+      "fact_temporality": {
+        "current": 14,
+        "unknown": 1,
+        "past": 2,
+        "conditional": 2
+      },
+      "fact_scope": {
+        "full": 10,
+        "partial": 9
+      },
+      "binary_projectable_facts": 7,
+      "answer_status_counts": {
+        "partial": 8,
+        "complete": 5
+      },
+      "validation_rejection_reasons": {
+        "absence needs explicit negative response; positive answer cannot deny another symptom": 1
+      },
+      "qualified_facts": 7,
+      "rejected_fact_rows": 1,
+      "source_quotes_verified": 19,
+      "record_requests": 1,
+      "record_requests_with_same_ledger": 1,
+      "last_kb_feature_counts": {
+        "+": 2,
+        "-": 1,
+        "?": 6
+      },
+      "last_patient_current_counts": {
+        "+": 2,
+        "-": 1,
+        "?": 6
+      },
+      "unresolved_conflicts": 0,
+      "target_responses": 21,
+      "clarification_observed": 3,
+      "literal_question_repeats": 0,
+      "successful_post_record_speech": 5,
+      "plan_delivery": {
+        "groups": 11,
+        "states": {
+          "unresolved": 11
+        },
+        "render_states": {
+          "rejected": 11
+        },
+        "source_fields": {
+          "treatment": 4,
+          "education": 2,
+          "follow_up": 5
+        },
+        "critical_groups": 10,
+        "critical_delivered": 0,
+        "plan_changed": false,
+        "coverage_verified": false,
+        "events": [
+          {
+            "event": "inventory",
+            "version": "08fb92a8f2df24b5dde93da49f8b2118f24174c1ef3367a6454695054f7ad181",
+            "accepted": 11,
+            "rejected": 0,
+            "coverage_verified": false
+          },
+          {
+            "event": "render_rejected",
+            "id": "dd544c8d915dc05324cc",
+            "reason": "lost condition/action"
+          },
+          {
+            "event": "render_rejected",
+            "id": "f98d3756b329a0ed6f93",
+            "reason": "lost condition/action"
+          },
+          {
+            "event": "render_rejected",
+            "id": "e4ba3a632796b28deecb",
+            "reason": "lost condition/action"
+          },
+          {
+            "event": "render_rejected",
+            "id": "7a74bf023b50a4872090",
+            "reason": "lost condition/action"
+          },
+          {
+            "event": "render_rejected",
+            "id": "76c1946118a74eb74102",
+            "reason": "incomplete message"
+          },
+          {
+            "event": "render_rejected",
+            "id": "aee5ea223e8e85b9ed30",
+            "reason": "conditional source without condition"
+          },
+          {
+            "event": "render_rejected",
+            "id": "9a69cc22c214a69cf898",
+            "reason": "lost condition/action"
+          },
+          {
+            "event": "render_rejected",
+            "id": "9570ff43b4f76e827851",
+            "reason": "lost condition/action"
+          },
+          {
+            "event": "render_rejected",
+            "id": "1d7df0edd51edea6254f",
+            "reason": "lost condition/action"
+          },
+          {
+            "event": "render_rejected",
+            "id": "5f97f9bad5ac5f522bfe",
+            "reason": "incomplete message"
+          },
+          {
+            "event": "render_rejected",
+            "id": "c7ddec1c38fd0cfa71f7",
+            "reason": "lost condition/action"
+          },
+          {
+            "event": "group_unscheduled",
+            "id": "dd544c8d915dc05324cc",
+            "reason": "no_valid_rendering"
+          },
+          {
+            "event": "group_unscheduled",
+            "id": "f98d3756b329a0ed6f93",
+            "reason": "no_valid_rendering"
+          },
+          {
+            "event": "group_unscheduled",
+            "id": "e4ba3a632796b28deecb",
+            "reason": "no_valid_rendering"
+          },
+          {
+            "event": "group_unscheduled",
+            "id": "7a74bf023b50a4872090",
+            "reason": "no_valid_rendering"
+          },
+          {
+            "event": "group_unscheduled",
+            "id": "76c1946118a74eb74102",
+            "reason": "no_valid_rendering"
+          },
+          {
+            "event": "group_unscheduled",
+            "id": "9a69cc22c214a69cf898",
+            "reason": "no_valid_rendering"
+          },
+          {
+            "event": "group_unscheduled",
+            "id": "9570ff43b4f76e827851",
+            "reason": "no_valid_rendering"
+          },
+          {
+            "event": "group_unscheduled",
+            "id": "1d7df0edd51edea6254f",
+            "reason": "no_valid_rendering"
+          },
+          {
+            "event": "group_unscheduled",
+            "id": "5f97f9bad5ac5f522bfe",
+            "reason": "no_valid_rendering"
+          },
+          {
+            "event": "group_unscheduled",
+            "id": "c7ddec1c38fd0cfa71f7",
+            "reason": "no_valid_rendering"
+          },
+          {
+            "event": "group_unscheduled",
+            "id": "aee5ea223e8e85b9ed30",
+            "reason": "no_valid_rendering"
+          }
+        ],
+        "performed_lines_match_acknowledged_speech": true,
+        "performed_lines": 3,
+        "source_sha256": "a60cd27b43406baf9100cb46189017b321a9628e2ff53f35fd40ce8524aab356",
+        "source_matches_current": true
+      }
+    },
+    {
+      "run": "20261023_071156_757063_safety_session_R3a_plan_delivery",
+      "case": "C10",
+      "mode": "R3a_plan_delivery",
+      "completed": true,
+      "max_server_turn": 50,
+      "elapsed_seconds": 333.284,
+      "doctor_attempted_request_ids": 44,
+      "doctor_successful_request_ids": 44,
+      "prompt_tokens": 53922,
+      "completion_tokens": 11474,
+      "errors": {},
+      "truncated_completions": 0,
+      "runtime_sha256": {
+        "nova_agent/observation_ledger.py": "1f433f085ae03fa8b4e8e57b86ce290c5a738e8af0c41660489a07134d215dd8",
+        "nova_agent/e2_observation_state.py": "11606a8f2e090962f0d7ef09087929c9280c856983ad4a7e8daaf772b0e14263",
+        "nova_agent/state.py": "fe6700c3d9b16554983ac7ef608546397079289752baa9174057b40cff29a4ef",
+        "nova_agent/coverage_order.py": "8b8b4f5afd5b03dac6be08c0bd068d7255235107bd0f2e8082ff0a4046ef2d3d",
+        "nova_agent/response_state.py": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee"
+      },
+      "runtime_matches_current": true,
+      "fingerprint_unchanged": true,
+      "extraction_requests": 18,
+      "extraction_evidence_ids_unique": 18,
+      "observation_events": {
+        "observation_validated": 18,
+        "observation_raw_only": 23,
+        "answer_contract": 14
+      },
+      "accepted_facts": 15,
+      "fact_subjects": {
+        "patient": 15
+      },
+      "fact_temporality": {
+        "current": 14,
+        "past": 1
+      },
+      "fact_scope": {
+        "full": 12,
+        "partial": 3
+      },
+      "binary_projectable_facts": 8,
+      "answer_status_counts": {
+        "complete": 10,
+        "partial": 3
+      },
+      "validation_rejection_reasons": {
+        "absence needs explicit negative response; positive answer cannot deny another symptom": 1
+      },
+      "qualified_facts": 10,
+      "rejected_fact_rows": 1,
+      "source_quotes_verified": 15,
+      "record_requests": 1,
+      "record_requests_with_same_ledger": 1,
+      "last_kb_feature_counts": {
+        "+": 4,
+        "-": 2,
+        "?": 5
+      },
+      "last_patient_current_counts": {
+        "+": 4,
+        "-": 2,
+        "?": 5
+      },
+      "unresolved_conflicts": 0,
+      "target_responses": 21,
+      "clarification_observed": 1,
+      "literal_question_repeats": 0,
+      "successful_post_record_speech": 14,
+      "plan_delivery": {
+        "groups": 11,
+        "states": {
+          "sent_success": 9,
+          "unresolved": 2
+        },
+        "render_states": {
+          "validated": 9,
+          "rejected": 2
+        },
+        "source_fields": {
+          "follow_up": 7,
+          "education": 4
+        },
+        "critical_groups": 10,
+        "critical_delivered": 9,
+        "plan_changed": false,
+        "coverage_verified": false,
+        "events": [
+          {
+            "event": "inventory",
+            "version": "58950368a21c58a31e19de5954d3fb6927416d7e1b6d6af328d96d96520dfe82",
+            "accepted": 11,
+            "rejected": 1,
+            "coverage_verified": false
+          },
+          {
+            "event": "render_rejected",
+            "id": "434550bf0ad74b776c72",
+            "reason": "incomplete message"
+          },
+          {
+            "event": "render_rejected",
+            "id": "1a13eb18a5203c6835d7",
+            "reason": "lost condition/action"
+          },
+          {
+            "event": "group_unscheduled",
+            "id": "434550bf0ad74b776c72",
+            "reason": "no_valid_rendering"
+          },
+          {
+            "event": "group_unscheduled",
+            "id": "1a13eb18a5203c6835d7",
+            "reason": "no_valid_rendering"
+          }
+        ],
+        "performed_lines_match_acknowledged_speech": true,
+        "performed_lines": 12,
+        "source_sha256": "a60cd27b43406baf9100cb46189017b321a9628e2ff53f35fd40ce8524aab356",
+        "source_matches_current": true
+      }
+    },
+    {
+      "run": "20261023_071156_869072_safety_session_R3a_plan_delivery",
+      "case": "C03",
+      "mode": "R3a_plan_delivery",
+      "completed": true,
+      "max_server_turn": 32,
+      "elapsed_seconds": 235.376,
+      "doctor_attempted_request_ids": 25,
+      "doctor_successful_request_ids": 25,
+      "prompt_tokens": 40380,
+      "completion_tokens": 9134,
+      "errors": {},
+      "truncated_completions": 0,
+      "runtime_sha256": {
+        "nova_agent/observation_ledger.py": "1f433f085ae03fa8b4e8e57b86ce290c5a738e8af0c41660489a07134d215dd8",
+        "nova_agent/e2_observation_state.py": "11606a8f2e090962f0d7ef09087929c9280c856983ad4a7e8daaf772b0e14263",
+        "nova_agent/state.py": "fe6700c3d9b16554983ac7ef608546397079289752baa9174057b40cff29a4ef",
+        "nova_agent/coverage_order.py": "8b8b4f5afd5b03dac6be08c0bd068d7255235107bd0f2e8082ff0a4046ef2d3d",
+        "nova_agent/response_state.py": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee"
+      },
+      "runtime_matches_current": true,
+      "fingerprint_unchanged": true,
+      "extraction_requests": 12,
+      "extraction_evidence_ids_unique": 12,
+      "observation_events": {
+        "observation_validated": 12,
+        "observation_raw_only": 16,
+        "answer_contract": 11
+      },
+      "accepted_facts": 10,
+      "fact_subjects": {
+        "patient": 7,
+        "family": 3
+      },
+      "fact_temporality": {
+        "current": 2,
+        "past": 8
+      },
+      "fact_scope": {
+        "full": 6,
+        "partial": 4
+      },
+      "binary_projectable_facts": 6,
+      "answer_status_counts": {
+        "complete": 6,
+        "partial": 3
+      },
+      "validation_rejection_reasons": {
+        "fact lacks an exact patient-response quote, known concept, or assertion": 1
+      },
+      "qualified_facts": 3,
+      "rejected_fact_rows": 1,
+      "source_quotes_verified": 10,
+      "record_requests": 1,
+      "record_requests_with_same_ledger": 1,
+      "last_kb_feature_counts": {
+        "-": 4,
+        "+": 1,
+        "?": 2
+      },
+      "last_patient_current_counts": {
+        "-": 2,
+        "?": 5
+      },
+      "unresolved_conflicts": 0,
+      "target_responses": 18,
+      "clarification_observed": 2,
+      "literal_question_repeats": 0,
+      "successful_post_record_speech": 5,
+      "plan_delivery": {
+        "groups": 7,
+        "states": {
+          "unresolved": 7
+        },
+        "render_states": {
+          "rejected": 7
+        },
+        "source_fields": {
+          "disposition": 1,
+          "education": 4,
+          "follow_up": 2
+        },
+        "critical_groups": 1,
+        "critical_delivered": 0,
+        "plan_changed": false,
+        "coverage_verified": false,
+        "events": [
+          {
+            "event": "inventory",
+            "version": "4d364ea7a787ab75fa336478ccf519ab6b6e893948634303f324123fb72004bc",
+            "accepted": 7,
+            "rejected": 0,
+            "coverage_verified": false
+          },
+          {
+            "event": "render_rejected",
+            "id": "ab77f9bf810e0e6ba310",
+            "reason": "lost condition/action"
+          },
+          {
+            "event": "render_rejected",
+            "id": "7d57507f9707fdbe1eec",
+            "reason": "incomplete message"
+          },
+          {
+            "event": "render_rejected",
+            "id": "f550dfb27caa30194a34",
+            "reason": "lost condition/action"
+          },
+          {
+            "event": "render_rejected",
+            "id": "d92544320c18b2f2ce25",
+            "reason": "lost condition/action"
+          },
+          {
+            "event": "render_rejected",
+            "id": "4eaeab70aadf49751ef8",
+            "reason": "lost condition/action"
+          },
+          {
+            "event": "render_rejected",
+            "id": "3a652afc2eb7685b4836",
+            "reason": "lost condition/action"
+          },
+          {
+            "event": "render_rejected",
+            "id": "34d8931e7269584a6893",
+            "reason": "conditional source without condition"
+          },
+          {
+            "event": "group_unscheduled",
+            "id": "ab77f9bf810e0e6ba310",
+            "reason": "no_valid_rendering"
+          },
+          {
+            "event": "group_unscheduled",
+            "id": "7d57507f9707fdbe1eec",
+            "reason": "no_valid_rendering"
+          },
+          {
+            "event": "group_unscheduled",
+            "id": "f550dfb27caa30194a34",
+            "reason": "no_valid_rendering"
+          },
+          {
+            "event": "group_unscheduled",
+            "id": "d92544320c18b2f2ce25",
+            "reason": "no_valid_rendering"
+          },
+          {
+            "event": "group_unscheduled",
+            "id": "4eaeab70aadf49751ef8",
+            "reason": "no_valid_rendering"
+          },
+          {
+            "event": "group_unscheduled",
+            "id": "3a652afc2eb7685b4836",
+            "reason": "no_valid_rendering"
+          },
+          {
+            "event": "group_unscheduled",
+            "id": "34d8931e7269584a6893",
+            "reason": "no_valid_rendering"
+          }
+        ],
+        "performed_lines_match_acknowledged_speech": true,
+        "performed_lines": 3,
+        "source_sha256": "a60cd27b43406baf9100cb46189017b321a9628e2ff53f35fd40ce8524aab356",
+        "source_matches_current": true
+      }
+    }
+  ]
+}

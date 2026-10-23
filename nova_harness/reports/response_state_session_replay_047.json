@@ -1,0 +1,33 @@
+{
+  "scope": "strict final-source replay of saved C03/C10 sessions; no new model or patient interaction",
+  "runs": [
+    {
+      "run": "20261023_001814_238498_safety_session_R3a_response_state",
+      "source_sha256": "eeadfcbcec11faaf9b60e5e83e9355b0c08ede027dff5929659f2c64902b5b83",
+      "all_requests_and_final_note_match": true,
+      "remaining": 0,
+      "observed_replies": 28
+    },
+    {
+      "run": "20261023_001817_422022_safety_session_R3a",
+      "source_sha256": "ae6fd16641438c2905f7df40888dc4990edba227f3704ba8fa6e49de435ac605",
+      "all_requests_and_final_note_match": true,
+      "remaining": 0,
+      "observed_replies": 28
+    },
+    {
+      "run": "20261023_002455_428558_safety_session_R3a_response_state",
+      "source_sha256": "f637b99190cc35cf41e6f92893424a899073bb24b2634e7338e81e05095d767a",
+      "all_requests_and_final_note_match": true,
+      "remaining": 0,
+      "observed_replies": 32
+    },
+    {
+      "run": "20261023_002456_230620_safety_session_R3a",
+      "source_sha256": "245e130dc9b1f160dad2aa4a1a245af86db11960e6394a7af990ffd12cec8074",
+      "all_requests_and_final_note_match": true,
+      "remaining": 0,
+      "observed_replies": 33
+    }
+  ]
+}

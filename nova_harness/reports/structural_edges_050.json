@@ -1,0 +1,174 @@
+{
+  "scope": "synthetic deterministic component diagnostics, not clinical/official performance",
+  "scope_limits": [
+    "Expected behavior is specified by the author for these simple propositions, not an external clinical gold standard.",
+    "Original E2/R3a and optional overlays are labeled separately; do not pool failures across versions.",
+    "Original upstream defects are not newly introduced patch effects.",
+    "No conclusion that these cases caused the official safety/information scores.",
+    "Raw transcript remains available to final E2 SOAP generation; helper errors do not prove final SOAP necessarily wrong."
+  ],
+  "source_sha256": {
+    "vendor/meddb/examples/consult_skeleton.py": "65d9c24fc24ed0980d515b8394ed395f236c3a220b840f72a4fa5c7504cf6ab1",
+    "vendor/meddb/examples/hybrid_agent.py": "59d6f45e9a9395b56e5218ed855e1780514b4b082e540c5238278a67d02f2b67",
+    "vendor/meddb/examples/hybrid_comm.py": "bfe77b82a8dd4d7f3a2b2450d24f2572a889b07c310041654e689cc447f51e32",
+    "vendor/meddb/meddb/coverage.py": "5628b2439fe580bca5b0bca63b1017ede144f10896533a11b2e0902be96f0f78",
+    "nova_agent/response_state.py": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee",
+    "nova_agent/question_link.py": "2d425bd63d38e341ba6ec60c61c632e19d77ca714816b9db0507e5393e18eeb9",
+    "nova_agent/safety_trace.py": "435665f934ed753060ff48762bac7d8d527087c9501b9940794ae9ac0cdeec6f"
+  },
+  "cases": [
+    {
+      "id": "E01",
+      "layer": "response_interpretation",
+      "synthetic_input": {
+        "question": "복통이 있나요?",
+        "answer": "설사는 없어요.",
+        "finding": "복통"
+      },
+      "expected": "?",
+      "actual": "-",
+      "status": "reproduced_defect",
+      "scope": "Existing E2 deterministic read_answer path; no Doctor call"
+    },
+    {
+      "id": "E02",
+      "layer": "response_interpretation",
+      "synthetic_input": {
+        "question": "지금 설사가 있나요?",
+        "answer": "예전에는 있었지만 지금은 없어요.",
+        "finding": "설사"
+      },
+      "expected": "-",
+      "actual": "+",
+      "status": "reproduced_defect",
+      "scope": "Existing E2 deterministic read_answer path; no Doctor call"
+    },
+    {
+      "id": "E03",
+      "layer": "response_interpretation",
+      "synthetic_input": {
+        "question": "설사가 있나요?",
+        "answer": "거의 없어요.",
+        "finding": "설사"
+      },
+      "expected": "?",
+      "actual": "-",
+      "status": "reproduced_defect",
+      "scope": "Existing E2 deterministic read_answer path; no Doctor call"
+    },
+    {
+      "id": "E04",
+      "layer": "response_interpretation",
+      "synthetic_input": {
+        "question": "설사가 있나요?",
+        "answer": "아니요, 없다는 뜻이 아니라 설사가 있어요.",
+        "finding": "설사"
+      },
+      "expected": "+",
+      "actual": "-",
+      "status": "reproduced_defect",
+      "scope": "Existing E2 deterministic read_answer path; no Doctor call"
+    },
+    {
+      "id": "E05",
+      "layer": "subject_scope",
+      "synthetic_input": "어머니는 두근거림이 있어요.",
+      "expected": "Must not assert palpitations in the patient",
+      "actual": {
+        "patient_present": [
+          "palpitations"
+        ],
+        "patient_absent": []
+      },
+      "status": "reproduced_defect",
+      "scope": "Existing E2 Tracker.note_seen and MedDB aliases; not final SOAP"
+    },
+    {
+      "id": "E06",
+      "layer": "coverage_completion",
+      "synthetic_input": {
+        "target": "sleep_hours",
+        "answer": "잘 모르겠어요"
+      },
+      "expected": "Original E2 should retain a clarification opportunity",
+      "actual": false,
+      "status": "reproduced_defect",
+      "scope": "Original coverage queue; raw answer remains but target is suppressed"
+    },
+    {
+      "id": "E07",
+      "layer": "coverage_completion",
+      "synthetic_input": {
+        "target": "sleep_hours",
+        "answer": "잘 모르겠어요"
+      },
+      "expected": "47th response-state candidate retains bounded clarification",
+      "actual": true,
+      "status": "satisfied",
+      "scope": "Response-state overlay only; counterexample to claiming every layer still fails"
+    },
+    {
+      "id": "E08",
+      "layer": "question_scope",
+      "synthetic_input": "기침이 2주 넘게 계속된 적 있나요?",
+      "expected": null,
+      "actual": {
+        "target": null,
+        "reason": "historical_scope"
+      },
+      "status": "satisfied",
+      "scope": "49th linker; no clinical answer inferred"
+    },
+    {
+      "id": "E09",
+      "layer": "question_scope",
+      "synthetic_input": "기침이 2주 넘게 계속되고 있나요?",
+      "expected": "chronic_cough",
+      "actual": {
+        "target": "chronic_cough",
+        "reason": "bounded_variant"
+      },
+      "status": "satisfied",
+      "scope": "49th linker; no clinical answer inferred"
+    },
+    {
+      "id": "E10",
+      "layer": "question_scope",
+      "synthetic_input": "설사를 자주 하시나요?",
+      "expected": null,
+      "actual": {
+        "target": null,
+        "reason": "unmapped"
+      },
+      "status": "satisfied",
+      "scope": "49th linker; no clinical answer inferred"
+    },
+    {
+      "id": "E11",
+      "layer": "action_acknowledgment",
+      "synthetic_input": "SAY request fails before acknowledged response",
+      "expected": "No successful observation",
+      "actual": 0,
+      "status": "satisfied",
+      "scope": "Passive TimelineClient helper; not a server retry/idempotency test"
+    },
+    {
+      "id": "E12",
+      "layer": "plan_to_speech",
+      "synthetic_input": {
+        "plan_warning": "흉통이나 호흡곤란이 새로 생기면 지체하지 말고 즉시 응급진료를 받으세요.",
+        "model_generated_safety": "흉통이나 호흡곤란이 새로 생기면 지체하지 말고 즉시 응급진료를 받으세요."
+      },
+      "expected": "Condition and urgency should survive the speech preparation stage",
+      "actual": [
+        "가능성을 설명할게요.",
+        "검사 계획을 설명할게요.",
+        "결과 확인을 위해 다시 오세요.",
+        "갑자기 더 힘들어지면 바로 진료받으세요.",
+        "걱정도 확인하겠습니다."
+      ],
+      "status": "reproduced_defect",
+      "scope": "Original R3a/E2 closing helper with injected synthetic output, not delivered speech or S3"
+    }
+  ]
+}

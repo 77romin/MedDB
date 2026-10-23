@@ -1,0 +1,185 @@
+"""Graph-derived collection coverage. Attempts and model-resolved observations stay distinct."""
+from .validation import action_key
+
+
+EXAM_RESULT_COVERS = {
+    'ex_growth_velocity': {
+        'source_target': 'meddb:ex_growth_chart',
+        'required_terms': ('성장속도', '중간부모키'),
+    },
+}
+
+
+class CoveragePlanner:
+    def __init__(self, advisor, state):
+        self.advisor = advisor
+        self.state = state
+        self.initial = {}
+        self.secondary_selected = None
+
+    def secondary_complaint(self):
+        primary = self.advisor.complaint
+        if not primary: return None
+        present, absent = set(), set()
+        for fact in self.state.facts:
+            if fact.get('subject','patient') != 'patient': continue
+            fid = fact['concept_id'].removeprefix('meddb:')
+            if fact['assertion']=='present':present.add(fid)
+            if fact['assertion']=='absent':absent.add(fid)
+        # Explicit concept identity only; no substring inference from unrelated patient text.
+        if self.secondary_selected is not None:
+            return next((c for c in self.advisor.graph['complaints']
+                         if c['id']==self.secondary_selected and c['id'] in present-absent),None)
+        chosen = next((c for c in self.advisor.graph['complaints']
+                       if c['id'] != primary['id'] and c['id'] in present-absent), None)
+        if chosen:self.secondary_selected=chosen['id']
+        return chosen
+
+    def actions(self):
+        a = self.advisor
+        if not a.complaint:
+            return []
+        rows = []
+        def add(fid, priority, purpose):
+            row = a.slots.get(fid) or a.findings.get(fid) or a.exams.get(fid)
+            if not row or not a.fits(row) or (fid == 'ex_tanner' and (a.age is None or a.age < 10)):
+                return
+            kind = 'EXAM' if fid in a.exams else 'SAY'
+            text = row.get('action' if kind == 'EXAM' else 'ask')
+            if not text or len(text) > 30 or any(r['target'] == 'meddb:'+fid for r in rows):
+                return
+            rows.append({'type':kind, 'content':text, 'target':'meddb:'+fid,
+                         'priority':priority, 'purpose':purpose, 'communication':[]})
+        for fid in a.complaint.get('slots', []): add(fid, 1, '주호소 경과')
+        secondary = self.secondary_complaint()
+        if secondary:
+            for fid in secondary.get('ask',[])[:4]: add(fid,1.5,'동반 증상 평가: '+secondary['ko'])
+            for fid in secondary.get('exams',[])[:2]: add(fid,2.4,'동반 증상 진찰: '+secondary['ko'])
+        for fid in a.complaint.get('ask', []): add(fid, 2, '주호소 구분')
+        ranked = a.context(self.state)['hypotheses']
+        if ranked and ranked[0]['heuristic_score'] >= 4 and len(ranked[0]['supported']) >= 2:
+            disease = a.diseases[ranked[0]['id']]
+            count = 0
+            for fid in (disease.get('key') or [])+(disease.get('support') or []):
+                row = a.findings.get(fid)
+                if not row or row.get('kind') == 'sign':
+                    continue
+                if any(r['target'] == 'meddb:'+fid for r in rows):
+                    continue
+                add(fid, 2.5, '지지된 가설 구분')
+                count += 1
+                if count >= 4: break
+        for fid in a.complaint.get('exams', []): add(fid, 3, '주호소 표적 진찰')
+        for fid in a.graph.get('background', []): add(fid, 4, '기본 병력')
+        return sorted(rows, key=lambda r:r['priority'])
+
+    def target_for(self, kind, text):
+        key = action_key(kind, text)
+        return next((a['target'] for a in self.actions() if action_key(a['type'], a['content']) == key), '')
+
+    def accept_initial(self, items):
+        if not isinstance(items, list):
+            return
+        allowed = {a['target'] for a in self.actions() if a['type'] == 'SAY'}
+        opening = str(self.state.initial.get('opening', ''))
+        for item in items[:8]:
+            if not isinstance(item, dict): continue
+            target, quote = item.get('target'), item.get('quote')
+            if isinstance(target,str) and target in allowed and isinstance(quote, str) and len(quote.strip()) >= 2 and quote in opening:
+                self.initial[target] = quote  # Source verified; semantic mapping is still model-proposed.
+
+    def status(self, action):
+        target = action['target']
+        facts = [f for f in self.state.facts if f['concept_id'] == target]
+        polarities = {f['assertion'] for f in facts if f['assertion'] in {'present','absent'}}
+        if len(polarities) > 1:
+            return 'conflicting'
+        if polarities:
+            return 'resolved_model_extracted'
+        if target in self.initial:
+            return 'initial_model_mapped'
+        attempted = any(e.target == target or action_key(e.action, e.question) == action_key(action['type'], action['content'])
+                        for e in self.state.evidence)
+        if action['type'] == 'EXAM' and attempted:
+            return 'exam_result_obtained'
+        if action['type'] == 'EXAM':
+            rule = EXAM_RESULT_COVERS.get(target.removeprefix('meddb:'))
+            if rule and any(e.action == 'EXAM' and e.target == rule['source_target']
+                            and all(term in e.response.replace(' ', '') for term in rule['required_terms'])
+                            for e in self.state.evidence):
+                return 'exam_result_semantically_covered'
+        if action['type'] == 'EXAM':
+            sources = {e.id:e for e in self.state.evidence}
+            if any(self.state.concepts.get(f['concept_id'],{}).get('exam_target') == target
+                   and f['assertion'] in {'present','absent'} and f.get('evidence_id') in sources
+                   and sources[f['evidence_id']].action == 'EXAM' for f in self.state.facts):
+                return 'exam_result_model_mapped'
+        if attempted or facts:
+            return 'attempted_unresolved'
+        if action_key(action['type'], action['content']) in self.state.seen:
+            return 'rejected_or_attempted'
+        return 'unasked'
+
+    def snapshot(self, compact=False):
+        actions = self.actions()
+        observations = [{**a, 'status':self.status(a), 'initial_quote':self.initial.get(a['target'])} for a in actions]
+        if compact:
+            observations = [{k:r[k] for k in ('target','status')} for r in observations]
+        secondary = self.secondary_complaint()
+        return {'observations':observations,
+                'performed_exams':[{'target':a['target'],'status':self.status(a)} for a in actions
+                                   if a['type']=='EXAM' and self.status(a) in {'exam_result_obtained','exam_result_model_mapped','exam_result_semantically_covered'}],
+                'secondary_complaint':secondary['id'] if secondary else None,
+                'next_unasked': [a for a in actions if self.status(a) == 'unasked'][:4],
+                'objective_next':[a for a in actions if a['type']=='EXAM' and self.status(a)=='unasked'][:2],
+                'warning':'Coverage is collection status, not diagnosis or clinical verification. Unknown/partial answers are unresolved.'}
+
+    def urgent_exit(self, proposal):
+        valid = {'initial'} | {e.id for e in self.state.evidence}
+        ids = proposal.get('urgency_evidence_ids', [])
+        return (proposal.get('urgent_exit') is True and isinstance(ids, list) and bool(ids)
+                and all(isinstance(eid, str) and eid in valid for eid in ids)
+                and isinstance(proposal.get('urgent_reason'), str) and bool(proposal['urgent_reason'].strip()))
+
+    def choose(self, proposal, remaining, reserve):
+        if not isinstance(proposal,dict):
+            return proposal, None
+        if str(proposal.get('type','')).upper() == 'EXAM':
+            target = proposal.get('target') or self.target_for('EXAM',proposal.get('content',''))
+            action = next((a for a in self.actions() if a['target']==target and a['type']=='EXAM'),None)
+            if action and self.status(action) in {'exam_result_obtained','exam_result_model_mapped','exam_result_semantically_covered'}:
+                sources = {e.id:e for e in self.state.evidence}
+                related = [e for e in self.state.evidence if e.action=='EXAM' and e.target==target]
+                related += [sources[f['evidence_id']] for f in self.state.facts
+                            if self.state.concepts.get(f['concept_id'],{}).get('exam_target')==target
+                            and f.get('evidence_id') in sources and sources[f['evidence_id']].action=='EXAM']
+                latest = max((e.turn for e in related),default=self.state.turns_used)
+                ids = proposal.get('reassessment_evidence_ids',[])
+                justified = (isinstance(proposal.get('reassessment_reason'),str) and bool(proposal['reassessment_reason'].strip())
+                             and isinstance(ids,list) and bool(ids)
+                             and all(isinstance(eid,str) and eid in sources and sources[eid].turn>latest for eid in ids))
+                if not justified:
+                    raise ValueError('exam already obtained for this target; choose another action or cite newer evidence and reassessment_reason')
+        pending = [a for a in self.actions() if self.status(a) == 'unasked']
+        if not pending:
+            return proposal, None
+        urgent = self.urgent_exit(proposal)
+        kind = str(proposal.get('type', '')).upper()
+        if kind not in {'SAY','EXAM','DONE'}:
+            return proposal, None
+        tags = proposal.get('communication', [])
+        tags = [tags] if isinstance(tags, str) else tags if isinstance(tags, list) else []
+        # A valid core choice should not be displaced by the late-turn queue rule.
+        if kind == 'EXAM' and not tags:
+            core = next((a for a in pending if a['type']==kind and (a['target']==proposal.get('target')
+                        or (isinstance(proposal.get('content'),str) and action_key(kind,proposal['content'])==action_key(kind,a['content'])))), None)
+            if core:
+                canonical = {**proposal,'content':core['content'],'target':core['target']}
+                event = None if canonical.get('content')==proposal.get('content') else {
+                    'reason':'canonical_target_action','original':proposal,'target':core['target']}
+                return canonical,event
+        # Coverage is advice, not a compulsory checklist. In particular an untagged
+        # safety question outside the graph must never be replaced by background history.
+        # Source-linked urgent exit remains available to the planner, but no longer
+        # serves as a prerequisite for escaping the queue.
+        return proposal, None

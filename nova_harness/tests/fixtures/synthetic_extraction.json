@@ -1,0 +1,216 @@
+{
+  "scope": "synthetic_extraction_counterexamples_not_clinically_validated",
+  "cases": [
+    {
+      "id": "synthetic_01",
+      "question": "오늘 약을 두 번 복용했나요?",
+      "response": "아니요. 오늘은 한 번만 먹었어요.",
+      "proposed_fact": {
+        "concept_id": "test:observation",
+        "evidence_id": "e1",
+        "quote": "오늘은 한 번만 먹었어요.",
+        "assertion": "present",
+        "attribute": "dose_count",
+        "value": "한 번",
+        "time_anchor": "오늘"
+      },
+      "expected_accept": true,
+      "reason": "질문의 두 번을 차용하지 않고 답변에서 확인되는 한 번과 오늘을 추출했다."
+    },
+    {
+      "id": "synthetic_02",
+      "question": "복용하는 한 알의 함량이 10 mg인가요?",
+      "response": "10 mg이 아니라 5 mg이에요.",
+      "proposed_fact": {
+        "concept_id": "test:observation",
+        "evidence_id": "e1",
+        "quote": "10 mg이 아니라 5 mg이에요.",
+        "assertion": "present",
+        "attribute": "strength",
+        "value": "5",
+        "unit": "mg"
+      },
+      "expected_accept": true,
+      "reason": "비교 부정의 대상인 10 mg과 실제로 긍정한 5 mg을 구분했다. 두 수치가 모두 인용문에 있으므로 단순 인용 일치만으로는 올바른 함량을 판별할 수 없다."
+    },
+    {
+      "id": "synthetic_03",
+      "question": "하루에 몇 번 복용하며, 복용한 기간은 얼마나 되나요?",
+      "response": "하루에 두 번 먹어요. 얼마나 오래 먹었는지는 기억나지 않아요.",
+      "proposed_fact": {
+        "concept_id": "test:observation",
+        "evidence_id": "e1",
+        "quote": "하루에 두 번 먹어요.",
+        "assertion": "present",
+        "attribute": "frequency",
+        "value": "하루에 두 번"
+      },
+      "expected_accept": true,
+      "reason": "일부만 답한 응답에서 확인 가능한 빈도만 추출했다. 기억하지 못하는 복용 기간까지 추정하지 않았다."
+    },
+    {
+      "id": "synthetic_04",
+      "question": "마지막 복용은 오늘 오전 8시였나요?",
+      "response": "아니요, 마지막으로 먹은 건 어제 밤 9시예요.",
+      "proposed_fact": {
+        "concept_id": "test:observation",
+        "evidence_id": "e1",
+        "quote": "마지막으로 먹은 건 어제 밤 9시예요.",
+        "assertion": "present",
+        "attribute": "last_dose",
+        "value": "밤 9시",
+        "time_anchor": "어제"
+      },
+      "expected_accept": true,
+      "reason": "질문에 제시된 오늘 오전 8시 대신 답변의 어제 밤 9시를 사용했다. 상대 날짜를 임의의 달력 날짜로 변환하지 않았다."
+    },
+    {
+      "id": "synthetic_05",
+      "question": "이 약을 3주 동안 복용했나요?",
+      "response": "복용 기간은 모르겠어요.",
+      "proposed_fact": {
+        "concept_id": "test:observation",
+        "evidence_id": "e1",
+        "quote": "복용 기간은 모르겠어요.",
+        "assertion": "unknown",
+        "attribute": "duration",
+        "value": "모르겠어요"
+      },
+      "expected_accept": true,
+      "reason": "복용 기간에 대한 명시적인 모름을 unknown으로 보존했다. 질문의 3주를 답변의 사실로 옮기지 않았다."
+    },
+    {
+      "id": "synthetic_06",
+      "question": "본인은 이 약을 얼마나 자주 복용하나요?",
+      "response": "어머니는 매일 드시지만 저는 복용하지 않아요.",
+      "proposed_fact": {
+        "concept_id": "test:observation",
+        "evidence_id": "e1",
+        "quote": "저는 복용하지 않아요.",
+        "assertion": "absent",
+        "attribute": "frequency",
+        "value": "복용하지 않아요"
+      },
+      "expected_accept": true,
+      "reason": "본인의 비복용 진술을 추출하고 어머니의 매일 복용과 구분했다. absent는 본인의 복용 여부에 대한 부정이며, 이를 수치 빈도 0으로 임의 변환하지 않았다."
+    },
+    {
+      "id": "synthetic_07",
+      "question": "오늘 세 번 복용했나요?",
+      "response": "오늘은 한 번만 먹었어요.",
+      "proposed_fact": {
+        "concept_id": "test:observation",
+        "evidence_id": "e1",
+        "quote": "오늘은 한 번만 먹었어요.",
+        "assertion": "present",
+        "attribute": "dose_count",
+        "value": "세 번",
+        "time_anchor": "오늘"
+      },
+      "expected_accept": false,
+      "reason": "세 번은 질문에서 빌린 값이며 답변은 한 번만 복용했다고 한다. 인용문 자체가 답변의 부분문자열이어도 제안된 value를 지지하지 않는다."
+    },
+    {
+      "id": "synthetic_08",
+      "question": "한 알의 함량은 얼마인가요?",
+      "response": "포장에 적힌 숫자는 5예요. 단위는 모르겠어요.",
+      "proposed_fact": {
+        "concept_id": "test:observation",
+        "evidence_id": "e1",
+        "quote": "포장에 적힌 숫자는 5예요. 단위는 모르겠어요.",
+        "assertion": "present",
+        "attribute": "strength",
+        "value": "5",
+        "unit": "mg"
+      },
+      "expected_accept": false,
+      "reason": "답변에 없는 단위 mg를 추가했다. 숫자 5의 인용 일치는 함량 단위나 그 숫자가 실제 함량이라는 의미까지 보증하지 않는다."
+    },
+    {
+      "id": "synthetic_09",
+      "question": "마지막 복용이 오늘 밤 9시였나요?",
+      "response": "마지막으로 먹은 시각은 밤 9시예요. 어느 날인지는 기억 안 나요.",
+      "proposed_fact": {
+        "concept_id": "test:observation",
+        "evidence_id": "e1",
+        "quote": "마지막으로 먹은 시각은 밤 9시예요.",
+        "assertion": "present",
+        "attribute": "last_dose",
+        "value": "밤 9시",
+        "time_anchor": "오늘"
+      },
+      "expected_accept": false,
+      "reason": "시각은 확인되지만 날짜는 알 수 없다. 질문의 오늘을 time_anchor로 차용했으며, 시각에 대한 부분 답변을 날짜까지 확인된 것으로 확장했다."
+    },
+    {
+      "id": "synthetic_10",
+      "question": "복용한 기간이 2주인가요?",
+      "response": "2주인지 아닌지 모르겠어요.",
+      "proposed_fact": {
+        "concept_id": "test:observation",
+        "evidence_id": "e1",
+        "quote": "2주인지 아닌지 모르겠어요.",
+        "assertion": "present",
+        "attribute": "duration",
+        "value": "2",
+        "unit": "주"
+      },
+      "expected_accept": false,
+      "reason": "기간에 대한 unknown을 양성 사실로 바꿨다. 2와 주가 인용문에 실제로 등장해도 불확실성의 범위 안에 있으므로 단순 인용 일치는 의미적 지지를 보증하지 않는다."
+    },
+    {
+      "id": "synthetic_11",
+      "question": "다른 약보다 덜 자주 먹는다면, 오늘은 전혀 복용하지 않은 건가요?",
+      "response": "다른 약보다 덜 자주 먹는 건 아니에요. 오늘 몇 번 먹었는지는 모르겠어요.",
+      "proposed_fact": {
+        "concept_id": "test:observation",
+        "evidence_id": "e1",
+        "quote": "다른 약보다 덜 자주 먹는 건 아니에요.",
+        "assertion": "absent",
+        "attribute": "dose_count",
+        "value": "전혀 복용하지 않은",
+        "time_anchor": "오늘"
+      },
+      "expected_accept": false,
+      "reason": "value는 질문에서 빌렸으며 답변은 오늘의 복용 횟수를 모른다고 했다. 인용문은 비교 관계를 부정할 뿐 복용 자체를 부정하지 않는다. 정확한 부분문자열 인용만으로 부정의 대상을 판별할 수 없다는 한계가 있다."
+    },
+    {
+      "id": "synthetic_12",
+      "question": "본인은 오늘 두 번 복용했나요?",
+      "response": "어머니는 오늘 두 번 드셨어요. 제가 오늘 몇 번 먹었는지는 모르겠어요.",
+      "proposed_fact": {
+        "concept_id": "test:observation",
+        "evidence_id": "e1",
+        "quote": "어머니는 오늘 두 번 드셨어요.",
+        "assertion": "present",
+        "attribute": "dose_count",
+        "value": "두 번",
+        "time_anchor": "오늘"
+      },
+      "expected_accept": false,
+      "reason": "본인의 횟수는 unknown인데 가족의 값을 옮겨 본인의 양성 사실로 만들었다. 값과 시간이 인용문에 모두 일치하더라도 경험 주체가 다르므로, 단순 인용 일치는 질문 대상에 대한 근거를 보증하지 않는다."
+    },
+    {
+      "id": "promoted_holdout_comparison_13",
+      "question": "한 알의 함량이 5mg보다 적나요?",
+      "response": "5mg보다 적다는 뜻은 아니고, 정확한 함량은 몰라요.",
+      "proposed_fact": {
+        "concept_id": "test:observation",
+        "evidence_id": "e1",
+        "quote": "5mg보다 적다는 뜻은 아니고",
+        "assertion": "present",
+        "attribute": "strength",
+        "value": "5",
+        "unit": "mg"
+      },
+      "expected_accept": false,
+      "reason": "단순 인용 일치가 의미를 보증하지 않는 반례다. 5mg은 비교 기준으로 등장하며, 비교 표현의 부정이 정확히 5mg이라는 진술을 뜻하지 않는다. 답변은 정확한 함량을 모른다고도 명시한다."
+    }
+  ],
+  "provenance": {
+    "model": "openai/gpt-6.1-sol",
+    "purpose": "offline synthetic extraction regression examples; not clinical cases or independent validation",
+    "date": "2026-10-18",
+    "manual_review": "Inspected source/value/subject strings; no clinical correctness claim."
+  }
+}

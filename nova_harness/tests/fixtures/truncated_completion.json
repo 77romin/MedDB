@@ -1,0 +1,19 @@
+{
+  "model": "openai/gpt-6-luna",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"facts\":[{\"concept_id\":\"nova:history/onset\",\"evidence_id\":\"e1\",\"quote\":\"7년 전부터 잠을 잘 못 잤어요.\",\"assertion\":\"present\",\"subject\":\"patient\",\"temporality\":\"7년 전부터\"},{\"concept_id\":\"nova:history/character\",\"evidence_id\":\"e2\",\"quote\":\"잠들기도 어렵고 자주 깨요.\",\"assertion\":\"present\",\"subject\":\"patient\",\"temporality\":\"현재\"},{\"concept_id\":\"nova:history/severity\",\"evidence_id\":\"e3\",\"quote\":\"낮에 졸려 집안일하다 잠들어요.\",\"assertion\":\"present\",\"subject\":\"patient\",\"temporality\":\"현재\"},{\"concept_id\":\"nova:medication/name\",\"evidence_id\":\"e5\",\"quote\":\"스틸녹스, 졸피뎀이에요.\",\"assertion\":\"present\",\"subject\":\"patient\",\"temporality\":\"현재 또는 최근\"},{\"concept_id\":\"nova:medication/actual_use\",\"evidence_id\":\"e6\",\"quote\":\"자기 전엔 40mg 먹어요.\",\"assertion\":\"present\",\"subject\":\"patient\",\"temporality\":\"미확인\"},{\"concept_id\":\"nova:medication/actual_use\",\"evidence_id\":\"e7\",\"quote\":\"매일 밤 먹어요.\",\"assertion\":\"present\",\"subject\":\"patient\",\"temporality\":\"현재\"},{\"concept_id\":\"nova:medication/actual_use\",\"evidence_id\":\"e8\",\"quote\":\"최근 일 년쯤 됐어요.\",\"assertion\":\"present\",\"subject\":\"patient\",\"temporality\":\"최근 일 년쯤\"},{\"concept_id\":\"nova:medication/name\",\"evidence_id\":\"e9\",\"quote\":\"가끔 수면유도제도 같이 먹어요.\",\"assertion\":\"present\",\"subject\":\"patient\",\"temporality\":\"현재 또는 최근\"},{\"concept_id\":\"nova:medication/name\",\"evidence_id\":\"e10\",\"quote\":\"이름은 잘 기억이 안 나요.\",\"assertion\":\"unknown\",\"subject\":\"patient\",\"temporality\":\"현재\"},{\"concept_id\":\"nova:history/severity\",\"evidence_id\":\"e11\",\"quote\":\"아니요, 그 정도는 아니에요.\",\"assertion\":\"absent\",\"subject\":\"patient\",\"temporality\":\"현재\"}],\"hypotheses\":[{\"diagnosis\":\"만성 불면 증상\",\"evidence_ids\":[\"e1\",\"e2\",\"e3\"],\"missing\":\"원인과 동반 증상 확인 필요\"},{\"diagnosis\":\"수면제 관련 과도한 진정 위험\",\"evidence_ids\":[\"e3\",\"e6\",\"e7\",\"e8\",\"e9\"],\"missing\":\"함께 복용하는 약의 성분·용량 및 복용 시점\"}],\"next_action\":{\"type\":\"DONE\",\"content\":\"졸피뎀 "
+      },
+      "finish_reason": "length"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 3242,
+    "completion_tokens": 2048,
+    "total_tokens": 5290
+  },
+  "fixture_scope": "public-sample output truncation; no credentials"
+}

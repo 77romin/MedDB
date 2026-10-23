@@ -1,0 +1,35 @@
+{
+  "scope": "strict saved-response integration replay, not a score or clinical effect test",
+  "runs": [
+    {
+      "run": "20261023_005558_684026_safety_session_R3a_coverage_order",
+      "source_sha256": "a49f95bda70ac8dcc2c4a9f9b649320d4cc29795b247fda5ee27f04ff9f3784b",
+      "remaining": 0,
+      "all_model_inputs_actions_and_final_note_match": true
+    },
+    {
+      "run": "20261023_005604_342366_safety_session_R3a_coverage_order",
+      "source_sha256": "90c59003b828bbd82c73e8321f7c7304dc200dde560d088c465f94627e9efd94",
+      "remaining": 0,
+      "all_model_inputs_actions_and_final_note_match": true
+    },
+    {
+      "run": "20261023_005607_090991_safety_session_R3a_response_state",
+      "source_sha256": "ca5028bfd221c6f84ac1b6035a25704cb3a23abb83210044faad9319924f5eeb",
+      "remaining": 0,
+      "all_model_inputs_actions_and_final_note_match": true
+    },
+    {
+      "run": "20261023_005755_412671_safety_session_R3a_coverage_order",
+      "source_sha256": "1fe8e15c6dc70d4ca4fa8b18e9db722b27a701d4e77c4fda4feebcc05cf88c08",
+      "remaining": 0,
+      "all_model_inputs_actions_and_final_note_match": true
+    },
+    {
+      "run": "20261023_005758_003996_safety_session_R3a_response_state",
+      "source_sha256": "2f040a21b318bed95ac3fc11bd07719e299b864115ad83c794f0db48e55d3de0",
+      "remaining": 0,
+      "all_model_inputs_actions_and_final_note_match": true
+    }
+  ]
+}

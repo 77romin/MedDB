@@ -1,0 +1,16 @@
+variant,total,information,reasoning,tests_followup,safety,communication,efficiency,source
+E2,77.714,11.94,15,8.64,15,7.72,19.42,reports/official_reference.json
+H0.9.7,61.559,11,15,5.67,15,4.89,10,reports/development_013.md
+E2-Cal,74.69,12.33,15,8.17,12.5,7.11,19.58,reports/development_014.md
+E2-Realloc,69.759,12.26,15,6.86,10,6.22,19.42,reports/development_019.md
+E2-Ledger,76.634,11.52,15,8.86,15,6.83,19.42,reports/analysis_022.md
+E2-VQ,71.555,12.04,15,8.39,10,6.5,19.63,reports/analysis_031.md
+E2-Shadow,71.834,12,15,8.44,10,6.83,19.55,reports/analysis_031.md
+R1,71.761,11.48,15,8.89,10,6.39,20,reports/development_034.md
+R2,70.801,10.38,15,8.67,10,7.44,19.31,reports/analysis_035.md
+R3a,76.29,12.04,15,8.64,15,6.72,18.89,reports/analysis_037.md
+R3b,71.363,10.75,15,8.64,10,7.56,19.42,reports/analysis_040.md
+R4,67.312,11.13,15,8,7.5,6.39,19.29,reports/analysis_040.md
+S3,71.739,11.14,15,8.89,10,8.17,18.54,reports/analysis_046.md
+Q1,65.288,10.04,12.78,7.97,13.75,7.72,13.02,reports/analysis_056.md
+B1O1,77.498,12.37,14.44,8.61,15,8.06,19.02,reports/analysis_059.md

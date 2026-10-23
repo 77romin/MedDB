@@ -1,0 +1,71 @@
+{
+  "scope": "independent public development sessions; no official score or clinical correctness assertion",
+  "caveats": [
+    "Generated question scope may differ even with the same topic.",
+    "An abstention is not a successful link; proposed is not observed.",
+    "Zero observed links cannot establish live benefit of the new path.",
+    "Different patient/model responses prevent attributing turn/cost differences solely to code."
+  ],
+  "sessions": [
+    {
+      "run": "20261023_011735_823267_safety_session_R3a_question_link",
+      "mode": "R3a_question_link",
+      "case_uuid": "35dd8b69-2531-454e-bb8c-fb8030293447",
+      "completed": true,
+      "max_server_turn": 44,
+      "elapsed_seconds": 426.175,
+      "doctor_attempted_request_ids": 31,
+      "doctor_successful_request_ids": 31,
+      "errors": {},
+      "truncated_completions": 0,
+      "runtime_sha256": {
+        "nova_agent/question_link.py": "2d425bd63d38e341ba6ec60c61c632e19d77ca714816b9db0507e5393e18eeb9",
+        "nova_agent/e2_question_link.py": "4eb6dfc277ce3abed94e07495264f72d59b05c9e97631637aff071136775f658",
+        "nova_agent/coverage_order.py": "8b8b4f5afd5b03dac6be08c0bd068d7255235107bd0f2e8082ff0a4046ef2d3d",
+        "nova_agent/response_state.py": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee"
+      },
+      "runtime_matches_current": true,
+      "fingerprint_unchanged": true,
+      "link_events": {
+        "question_link_abstained": 8
+      },
+      "abstention_reasons": {
+        "unmapped": 4,
+        "compound": 3,
+        "historical_scope": 1
+      },
+      "observed_link_targets": {},
+      "observed_link_count": 0,
+      "observed_link_has_successful_speech": null,
+      "target_response_count": 20,
+      "literal_question_repeats": 0
+    },
+    {
+      "run": "20261023_011738_589773_safety_session_R3a_coverage_order",
+      "mode": "R3a_coverage_order",
+      "case_uuid": "35dd8b69-2531-454e-bb8c-fb8030293447",
+      "completed": true,
+      "max_server_turn": 38,
+      "elapsed_seconds": 266.019,
+      "doctor_attempted_request_ids": 19,
+      "doctor_successful_request_ids": 19,
+      "errors": {},
+      "truncated_completions": 0,
+      "runtime_sha256": {
+        "nova_agent/question_link.py": "2d425bd63d38e341ba6ec60c61c632e19d77ca714816b9db0507e5393e18eeb9",
+        "nova_agent/e2_question_link.py": "4eb6dfc277ce3abed94e07495264f72d59b05c9e97631637aff071136775f658",
+        "nova_agent/coverage_order.py": "8b8b4f5afd5b03dac6be08c0bd068d7255235107bd0f2e8082ff0a4046ef2d3d",
+        "nova_agent/response_state.py": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee"
+      },
+      "runtime_matches_current": true,
+      "fingerprint_unchanged": true,
+      "link_events": {},
+      "abstention_reasons": {},
+      "observed_link_targets": {},
+      "observed_link_count": 0,
+      "observed_link_has_successful_speech": null,
+      "target_response_count": 21,
+      "literal_question_repeats": 0
+    }
+  ]
+}

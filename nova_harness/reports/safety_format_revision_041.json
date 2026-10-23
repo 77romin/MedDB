@@ -1,0 +1,38 @@
+{
+  "live_validation_runs": [
+    "20261022_081024_824030_safety_session_R3a_safety",
+    "20261022_081026_065409_safety_session_R3a_safety",
+    "20261022_081025_511508_safety_session_R3a_safety",
+    "20261022_082006_598639_safety_session_R3a_safety"
+  ],
+  "live_runtime_hashes_by_run": {
+    "20261022_081024_824030_safety_session_R3a_safety": {
+      "nova_agent/safety_trace.py": "f6f12fd1430b88f4383f557a021b90d625c22436a7bb22379a31209a3701fec2",
+      "nova_agent/safety_delivery.py": "ee8c3abac610fe9d445b7252793e105fea05adf2247c74f348800d7ab5a23401",
+      "nova_agent/e2_safety_delivery.py": "3ae7979d0c806f74556bf4a989043424ff0602da7b0b9cfa28851e56a425197f"
+    },
+    "20261022_081026_065409_safety_session_R3a_safety": {
+      "nova_agent/safety_trace.py": "f6f12fd1430b88f4383f557a021b90d625c22436a7bb22379a31209a3701fec2",
+      "nova_agent/safety_delivery.py": "ee8c3abac610fe9d445b7252793e105fea05adf2247c74f348800d7ab5a23401",
+      "nova_agent/e2_safety_delivery.py": "3ae7979d0c806f74556bf4a989043424ff0602da7b0b9cfa28851e56a425197f"
+    },
+    "20261022_081025_511508_safety_session_R3a_safety": {
+      "nova_agent/safety_trace.py": "f6f12fd1430b88f4383f557a021b90d625c22436a7bb22379a31209a3701fec2",
+      "nova_agent/safety_delivery.py": "ee8c3abac610fe9d445b7252793e105fea05adf2247c74f348800d7ab5a23401",
+      "nova_agent/e2_safety_delivery.py": "3ae7979d0c806f74556bf4a989043424ff0602da7b0b9cfa28851e56a425197f"
+    },
+    "20261022_082006_598639_safety_session_R3a_safety": {
+      "nova_agent/safety_trace.py": "f6f12fd1430b88f4383f557a021b90d625c22436a7bb22379a31209a3701fec2",
+      "nova_agent/safety_delivery.py": "0aa75943db570fcac18fb028261db194a7d2aca25a4ea1853e34aab4645c39a3",
+      "nova_agent/e2_safety_delivery.py": "b973a18823ec97bf69ec3b19050cd3a4ca3160ff8c96b6d09715e5fec0439311"
+    }
+  },
+  "current_runtime_hashes": {
+    "nova_agent/safety_trace.py": "f6f12fd1430b88f4383f557a021b90d625c22436a7bb22379a31209a3701fec2",
+    "nova_agent/safety_delivery.py": "0aa75943db570fcac18fb028261db194a7d2aca25a4ea1853e34aab4645c39a3",
+    "nova_agent/e2_safety_delivery.py": "62d3f371bcb06c517c3534452b95f1ac1abc56a20c40a30b387c8b804902cc16"
+  },
+  "pre_cleanup_source_reconstruction_sha256": "b973a18823ec97bf69ec3b19050cd3a4ca3160ff8c96b6d09715e5fec0439311",
+  "scope": "Three whole-case API validations plus targeted C10 available-turn regression. C01/C03 budget change replay is unchanged. The final 권고 completion-verb addition occurs only in DIAGNOSE note formatting; source reconstruction verifies no other code difference after C10 regression. It has unit/saved-note replay checks, not a fresh API submission.",
+  "only_final_DIAGNOSE_note_recommendation_verb_cleanup_after_C10_regression": true
+}

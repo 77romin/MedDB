@@ -1,0 +1,161 @@
+{
+  "scope": "frozen final S2 development API audit, not official scoring/clinical completeness",
+  "runtime_unchanged_during_batch": true,
+  "current_runtime_matches_frozen": true,
+  "runs": [
+    {
+      "s1_unresolved_closing_fields": [
+        "safety",
+        "follow_up"
+      ],
+      "s1_repair_failures": 1,
+      "s1_rejected_addendum_groups": 1,
+      "case_label": "C01",
+      "run": "20261022_092548_014628_safety_session_R3a_obligations",
+      "runtime_matches_frozen": true,
+      "completed": true,
+      "elapsed_seconds": 337.172,
+      "max_server_turn": 50,
+      "doctor_attempted_request_ids": 22,
+      "doctor_successful_request_ids": 22,
+      "errors": {},
+      "truncated_completions": 0,
+      "deterministic_final_plan_and_performed_render_matches": true,
+      "raw_generated_obligations": 5,
+      "individually_valid_rows": 1,
+      "rejection_reasons": {
+        "lost timing": 1,
+        "invented anchors": 1,
+        "incomplete message": 2
+      },
+      "registered_obligations_by_version": [
+        0
+      ],
+      "sent_obligations_by_version": [
+        0
+      ],
+      "consecutive_same_question_same_nonempty_reply_distinct_request": 1,
+      "exact_duplicate_all_messages": 1,
+      "exact_duplicate_post_record_messages": 0,
+      "coverage_verified": false
+    },
+    {
+      "s1_unresolved_closing_fields": [],
+      "s1_repair_failures": 0,
+      "s1_rejected_addendum_groups": 0,
+      "case_label": "C03",
+      "run": "20261022_092548_014630_safety_session_R3a_obligations",
+      "runtime_matches_frozen": true,
+      "completed": true,
+      "elapsed_seconds": 216.686,
+      "max_server_turn": 38,
+      "doctor_attempted_request_ids": 14,
+      "doctor_successful_request_ids": 14,
+      "errors": {},
+      "truncated_completions": 0,
+      "deterministic_final_plan_and_performed_render_matches": true,
+      "raw_generated_obligations": 3,
+      "individually_valid_rows": 1,
+      "rejection_reasons": {
+        "incomplete message": 2
+      },
+      "registered_obligations_by_version": [
+        0
+      ],
+      "sent_obligations_by_version": [
+        0
+      ],
+      "consecutive_same_question_same_nonempty_reply_distinct_request": 0,
+      "exact_duplicate_all_messages": 0,
+      "exact_duplicate_post_record_messages": 0,
+      "coverage_verified": false
+    },
+    {
+      "s1_unresolved_closing_fields": [
+        "safety",
+        "follow_up"
+      ],
+      "s1_repair_failures": 0,
+      "s1_rejected_addendum_groups": 1,
+      "case_label": "C10",
+      "run": "20261022_092548_014637_safety_session_R3a_obligations",
+      "runtime_matches_frozen": true,
+      "completed": true,
+      "elapsed_seconds": 315.318,
+      "max_server_turn": 45,
+      "doctor_attempted_request_ids": 32,
+      "doctor_successful_request_ids": 32,
+      "errors": {},
+      "truncated_completions": 0,
+      "deterministic_final_plan_and_performed_render_matches": true,
+      "raw_generated_obligations": 3,
+      "individually_valid_rows": 2,
+      "rejection_reasons": {
+        "lost negation": 1
+      },
+      "registered_obligations_by_version": [
+        0
+      ],
+      "sent_obligations_by_version": [
+        0
+      ],
+      "consecutive_same_question_same_nonempty_reply_distinct_request": 0,
+      "exact_duplicate_all_messages": 0,
+      "exact_duplicate_post_record_messages": 0,
+      "coverage_verified": false
+    }
+  ],
+  "model_review": {
+    "scope": "source-checked development model opinion; counts are not scores/comparable across cases",
+    "reviews": [
+      {
+        "case_label": "C01",
+        "validated": true,
+        "attempts": 1,
+        "checked_obligations": 10,
+        "delivery": {
+          "covered": 1,
+          "partial": 6,
+          "missing": 3
+        },
+        "final_consistency": {
+          "preserved": 10
+        },
+        "unspoken_completed_claims": 0,
+        "repetition_groups": 0
+      },
+      {
+        "case_label": "C03",
+        "validated": true,
+        "attempts": 1,
+        "checked_obligations": 10,
+        "delivery": {
+          "covered": 6,
+          "missing": 1,
+          "partial": 3
+        },
+        "final_consistency": {
+          "preserved": 10
+        },
+        "unspoken_completed_claims": 0,
+        "repetition_groups": 0
+      },
+      {
+        "case_label": "C10",
+        "validated": true,
+        "attempts": 1,
+        "checked_obligations": 10,
+        "delivery": {
+          "partial": 7,
+          "missing": 2,
+          "covered": 1
+        },
+        "final_consistency": {
+          "preserved": 10
+        },
+        "unspoken_completed_claims": 0,
+        "repetition_groups": 0
+      }
+    ]
+  }
+}

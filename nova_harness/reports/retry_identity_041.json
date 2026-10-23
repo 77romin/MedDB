@@ -1,0 +1,8 @@
+{
+  "scope": "controlled lost-reply transport test; no clinical assessment or score",
+  "http_action_attempts": 2,
+  "same_nonempty_action_id": true,
+  "server_turn_delta": 1,
+  "acknowledged_speech_count": 1,
+  "simulated_failure_count": 1
+}

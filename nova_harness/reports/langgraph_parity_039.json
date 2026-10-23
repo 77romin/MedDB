@@ -1,0 +1,80 @@
+[
+  {
+    "trace_name": "20261020_004440_598870_meddb_e2_ledger",
+    "synthetic_valid": false,
+    "identical_requests": 20,
+    "identical_actions": true,
+    "nodes": [
+      "context",
+      "plan_and_retrieve",
+      "select",
+      "generate",
+      "audit"
+    ]
+  },
+  {
+    "trace_name": "20261020_004440_598870_meddb_e2_ledger",
+    "synthetic_valid": true,
+    "identical_requests": 20,
+    "identical_actions": true,
+    "nodes": [
+      "context",
+      "plan_and_retrieve",
+      "select",
+      "generate",
+      "audit"
+    ]
+  },
+  {
+    "trace_name": "20261020_004936_372121_meddb_e2_ledger",
+    "synthetic_valid": false,
+    "identical_requests": 14,
+    "identical_actions": true,
+    "nodes": [
+      "context",
+      "plan_and_retrieve",
+      "select",
+      "generate",
+      "audit"
+    ]
+  },
+  {
+    "trace_name": "20261020_004936_372121_meddb_e2_ledger",
+    "synthetic_valid": true,
+    "identical_requests": 14,
+    "identical_actions": true,
+    "nodes": [
+      "context",
+      "plan_and_retrieve",
+      "select",
+      "generate",
+      "audit"
+    ]
+  },
+  {
+    "trace_name": "20261020_004937_808955_meddb_e2_ledger",
+    "synthetic_valid": false,
+    "identical_requests": 30,
+    "identical_actions": true,
+    "nodes": [
+      "context",
+      "plan_and_retrieve",
+      "select",
+      "generate",
+      "audit"
+    ]
+  },
+  {
+    "trace_name": "20261020_004937_808955_meddb_e2_ledger",
+    "synthetic_valid": true,
+    "identical_requests": 30,
+    "identical_actions": true,
+    "nodes": [
+      "context",
+      "plan_and_retrieve",
+      "select",
+      "generate",
+      "audit"
+    ]
+  }
+]

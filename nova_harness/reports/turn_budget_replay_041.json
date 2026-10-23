@@ -1,0 +1,17 @@
+{
+  "scope": "same real saved coverage responses; validates unchanged outputs on C01/C03, not a new patient interaction or clinical score",
+  "results": [
+    {
+      "case": "C01",
+      "run": "20261022_081024_824030_safety_session_R3a_safety",
+      "unchanged_validated_messages": true,
+      "sentences": 2
+    },
+    {
+      "case": "C03",
+      "run": "20261022_081026_065409_safety_session_R3a_safety",
+      "unchanged_validated_messages": true,
+      "sentences": 2
+    }
+  ]
+}

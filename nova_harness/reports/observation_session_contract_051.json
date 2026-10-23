@@ -1,0 +1,186 @@
+{
+  "scope": "independent public development whole sessions; no official scores or clinical correctness certification",
+  "caveats": [
+    "Different patient/model responses prevent causal inference from turns or cost.",
+    "Quote validation establishes source provenance, not semantic accuracy.",
+    "Family/past/conditional facts are retained but do not fill the patient-current binary view.",
+    "Extra extraction calls may trade latency/efficiency against interpretation quality.",
+    "Same record ledger input is not proof that the final SOAP faithfully represents every fact."
+  ],
+  "sessions": [
+    {
+      "run": "20261023_020008_610383_safety_session_R3a_observation_state",
+      "case": "C03",
+      "mode": "R3a_observation_state",
+      "completed": true,
+      "max_server_turn": 35,
+      "elapsed_seconds": 232.237,
+      "doctor_attempted_request_ids": 21,
+      "doctor_successful_request_ids": 21,
+      "prompt_tokens": 27487,
+      "completion_tokens": 6934,
+      "errors": {},
+      "truncated_completions": 0,
+      "runtime_sha256": {
+        "nova_agent/observation_ledger.py": "a837e93cc889b5aacb0e9068e9ae8c9fc34dccc1244f9248a997ccf9441f2726",
+        "nova_agent/e2_observation_state.py": "2444cafd95f6f540e5e7c3199e442fee96709b5353723de4e103fda86426d625",
+        "nova_agent/state.py": "fe6700c3d9b16554983ac7ef608546397079289752baa9174057b40cff29a4ef",
+        "nova_agent/coverage_order.py": "8b8b4f5afd5b03dac6be08c0bd068d7255235107bd0f2e8082ff0a4046ef2d3d",
+        "nova_agent/response_state.py": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee"
+      },
+      "runtime_matches_current": true,
+      "fingerprint_unchanged": true,
+      "extraction_requests": 11,
+      "extraction_evidence_ids_unique": 11,
+      "observation_events": {
+        "observation_validated": 11,
+        "observation_raw_only": 20,
+        "answer_contract": 10
+      },
+      "accepted_facts": 7,
+      "fact_subjects": {
+        "patient": 4,
+        "family": 2,
+        "unknown": 1
+      },
+      "fact_temporality": {
+        "current": 2,
+        "past": 5
+      },
+      "fact_scope": {
+        "full": 3,
+        "partial": 4
+      },
+      "qualified_facts": 1,
+      "rejected_fact_rows": 3,
+      "source_quotes_verified": 7,
+      "record_requests": 1,
+      "record_requests_with_same_ledger": 1,
+      "last_patient_current_counts": {
+        "-": 2,
+        "?": 4
+      },
+      "unresolved_conflicts": 0,
+      "target_responses": 17,
+      "clarification_observed": 3,
+      "literal_question_repeats": 0,
+      "successful_post_record_speech": 8
+    },
+    {
+      "run": "20261023_020012_642867_safety_session_R3a_observation_state",
+      "case": "C01",
+      "mode": "R3a_observation_state",
+      "completed": true,
+      "max_server_turn": 20,
+      "elapsed_seconds": 315.457,
+      "doctor_attempted_request_ids": 13,
+      "doctor_successful_request_ids": 13,
+      "prompt_tokens": 14123,
+      "completion_tokens": 5796,
+      "errors": {
+        "PROVIDER_UNAVAILABLE": 8
+      },
+      "truncated_completions": 0,
+      "runtime_sha256": {
+        "nova_agent/observation_ledger.py": "a837e93cc889b5aacb0e9068e9ae8c9fc34dccc1244f9248a997ccf9441f2726",
+        "nova_agent/e2_observation_state.py": "2444cafd95f6f540e5e7c3199e442fee96709b5353723de4e103fda86426d625",
+        "nova_agent/state.py": "fe6700c3d9b16554983ac7ef608546397079289752baa9174057b40cff29a4ef",
+        "nova_agent/coverage_order.py": "8b8b4f5afd5b03dac6be08c0bd068d7255235107bd0f2e8082ff0a4046ef2d3d",
+        "nova_agent/response_state.py": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee"
+      },
+      "runtime_matches_current": true,
+      "fingerprint_unchanged": true,
+      "extraction_requests": 8,
+      "extraction_evidence_ids_unique": 8,
+      "observation_events": {
+        "observation_validated": 8,
+        "observation_raw_only": 13,
+        "answer_contract": 5
+      },
+      "accepted_facts": 3,
+      "fact_subjects": {
+        "patient": 3
+      },
+      "fact_temporality": {
+        "current": 3
+      },
+      "fact_scope": {
+        "full": 2,
+        "partial": 1
+      },
+      "qualified_facts": 0,
+      "rejected_fact_rows": 2,
+      "source_quotes_verified": 3,
+      "record_requests": 1,
+      "record_requests_with_same_ledger": 1,
+      "last_patient_current_counts": {
+        "+": 1,
+        "?": 1
+      },
+      "unresolved_conflicts": 0,
+      "target_responses": 9,
+      "clarification_observed": 1,
+      "literal_question_repeats": 0,
+      "successful_post_record_speech": 8
+    },
+    {
+      "run": "20261023_020015_456373_safety_session_R3a_observation_state",
+      "case": "C10",
+      "mode": "R3a_observation_state",
+      "completed": true,
+      "max_server_turn": 45,
+      "elapsed_seconds": 383.877,
+      "doctor_attempted_request_ids": 41,
+      "doctor_successful_request_ids": 41,
+      "prompt_tokens": 44563,
+      "completion_tokens": 9752,
+      "errors": {},
+      "truncated_completions": 0,
+      "runtime_sha256": {
+        "nova_agent/observation_ledger.py": "a837e93cc889b5aacb0e9068e9ae8c9fc34dccc1244f9248a997ccf9441f2726",
+        "nova_agent/e2_observation_state.py": "2444cafd95f6f540e5e7c3199e442fee96709b5353723de4e103fda86426d625",
+        "nova_agent/state.py": "fe6700c3d9b16554983ac7ef608546397079289752baa9174057b40cff29a4ef",
+        "nova_agent/coverage_order.py": "8b8b4f5afd5b03dac6be08c0bd068d7255235107bd0f2e8082ff0a4046ef2d3d",
+        "nova_agent/response_state.py": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee"
+      },
+      "runtime_matches_current": true,
+      "fingerprint_unchanged": true,
+      "extraction_requests": 17,
+      "extraction_evidence_ids_unique": 17,
+      "observation_events": {
+        "observation_validated": 17,
+        "observation_raw_only": 19,
+        "answer_contract": 15
+      },
+      "accepted_facts": 17,
+      "fact_subjects": {
+        "patient": 17
+      },
+      "fact_temporality": {
+        "current": 14,
+        "conditional": 1,
+        "unknown": 1,
+        "past": 1
+      },
+      "fact_scope": {
+        "full": 12,
+        "partial": 5
+      },
+      "qualified_facts": 9,
+      "rejected_fact_rows": 0,
+      "source_quotes_verified": 17,
+      "record_requests": 1,
+      "record_requests_with_same_ledger": 1,
+      "last_patient_current_counts": {
+        "+": 4,
+        "-": 3,
+        "?": 5
+      },
+      "unresolved_conflicts": 0,
+      "target_responses": 21,
+      "clarification_observed": 2,
+      "literal_question_repeats": 0,
+      "successful_post_record_speech": 8
+    }
+  ]
+}

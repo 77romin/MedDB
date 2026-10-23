@@ -1,0 +1,44 @@
+{
+  "scope": "strict full-session saved-response replay through the new linker; no score",
+  "sessions": [
+    {
+      "run": "20261023_005558_684026_safety_session_R3a_coverage_order",
+      "source_sha256": "a49f95bda70ac8dcc2c4a9f9b649320d4cc29795b247fda5ee27f04ff9f3784b",
+      "remaining": 0,
+      "all_model_inputs_actions_and_final_note_match": true,
+      "link_event_counts": {
+        "question_link_abstained": 8
+      },
+      "abstention_reasons": {
+        "not_single_question": 1,
+        "unmapped": 7
+      }
+    },
+    {
+      "run": "20261023_005604_342366_safety_session_R3a_coverage_order",
+      "source_sha256": "90c59003b828bbd82c73e8321f7c7304dc200dde560d088c465f94627e9efd94",
+      "remaining": 0,
+      "all_model_inputs_actions_and_final_note_match": true,
+      "link_event_counts": {
+        "question_link_abstained": 10
+      },
+      "abstention_reasons": {
+        "unmapped": 10
+      }
+    },
+    {
+      "run": "20261023_005755_412671_safety_session_R3a_coverage_order",
+      "source_sha256": "1fe8e15c6dc70d4ca4fa8b18e9db722b27a701d4e77c4fda4feebcc05cf88c08",
+      "remaining": 0,
+      "all_model_inputs_actions_and_final_note_match": true,
+      "link_event_counts": {
+        "question_link_abstained": 9
+      },
+      "abstention_reasons": {
+        "unmapped": 5,
+        "compound": 3,
+        "historical_scope": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "scope": "same real saved Doctor response; delivery proposals only, no new patient interaction or score",
+  "baseline_generic_safety": true,
+  "candidate_preserved_complete_warning_sentences": 2,
+  "preserved_sentence_lengths": [
+    23,
+    28
+  ],
+  "baseline_message_count": 5,
+  "candidate_message_count": 6,
+  "additional_model_calls": 0,
+  "all_candidate_messages_within_30": true
+}

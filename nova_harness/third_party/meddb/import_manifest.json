@@ -1,0 +1,21 @@
+{
+  "repository": "https://github.com/SSAFY16-S11-NOVA2026/MedDB",
+  "commit": "63743a8b8a2e278b426d18fc040e880740318ae3",
+  "source_files": {
+    "meddb/data/common.json": "950c8f4585a12fe39ca4955926bf108525653ed1a06714b1472899e21ae9feb5",
+    "meddb/data/slots.json": "9590a7a7efa5c2bbf32b3262228f25d0093fbddf964b0a4b25e0e4551e665b5c",
+    "meddb/data/exams.json": "ad1ba57d31890b4c75555578add9b2544125ec3bb4fb7db8dfa60f682a15d3c7",
+    "meddb/data/findings.json": "c8ff31b5fc5f31aa5861fa19027eca68288f9fa51938d062debd16a14eb1d9da",
+    "meddb/data/diseases.json": "7afd40327361e18eb7ad48e9d027dad908cebe07e11b0f4c8266a7c5389fbb74",
+    "meddb/data/complaints.json": "1d35d176c68f55668e2d076860f8287b90c287e04fb584de0f3edac70631fd3e"
+  },
+  "output_sha256": "ba72454bb0382cd2a1cf9381c274f16cb5c006bf0abd0c1191b54ee30c4a22b8",
+  "counts": {
+    "slots": 19,
+    "exams": 56,
+    "findings": 289,
+    "complaints": 19,
+    "diseases": 134
+  },
+  "scope": "team-authored clinical structure only; no upstream evaluation material or treatment plans"
+}

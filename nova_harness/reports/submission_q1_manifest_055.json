@@ -1,0 +1,17 @@
+{
+  "zip": "submission_Q1_model_questions.zip",
+  "bytes": 43325680,
+  "files": 62,
+  "sha256": "1e0cd8e81b6f1a0f6c6ae1d2206b1796b317e3b43ce63e4f43d9e0d3d44c8c54",
+  "base_sha256": "73570513ccda66c360ade7d73a6b415a56667748cc607d10442cdd57a3500dc8",
+  "scope": "User-requested Q1 sample comparison; model questions on R3a observation state; not uploaded; official improvement unconfirmed",
+  "runtime_sha256": {
+    "nova_agent/safety_trace.py": "435665f934ed753060ff48762bac7d8d527087c9501b9940794ae9ac0cdeec6f",
+    "nova_agent/response_state.py": "19b482f02cca8217a62e7b63809d160af94202ca9373d789c3a992ede0e5c6ee",
+    "nova_agent/coverage_order.py": "8b8b4f5afd5b03dac6be08c0bd068d7255235107bd0f2e8082ff0a4046ef2d3d",
+    "nova_agent/state.py": "fe6700c3d9b16554983ac7ef608546397079289752baa9174057b40cff29a4ef",
+    "nova_agent/observation_ledger.py": "1f433f085ae03fa8b4e8e57b86ce290c5a738e8af0c41660489a07134d215dd8",
+    "nova_agent/e2_observation_state.py": "11606a8f2e090962f0d7ef09087929c9280c856983ad4a7e8daaf772b0e14263",
+    "nova_agent/model_question_policy.py": "b233c672e8f8888efcf66bec7b1f521fed29998973aca558c246c7e034395c4e"
+  }
+}
