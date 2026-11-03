@@ -1,0 +1,386 @@
+{
+  "scope": "2026-11-08 retrospective audit of published aggregates plus five synthetic code demonstrations; no raw session logs available in this checkout",
+  "source_sha256": {
+    "nova_harness/reports/b1_rebase_sessions_057.json": "1b444ea04646b039ffa74f6f68bc8ae85d8d3809ecbf6b0560e4f9b3ff7ebb74",
+    "nova_harness/reports/b1_rebase_replay_057.json": "e829e15e3f7127be9209df9bf44e74fc21a0057b361c2805250458a1178caf7e",
+    "nova_harness/reports/submission_b1o1_replay_058.json": "7ea992a223c75132ec1407a28f3c676162190ed0219bdf4a354cc963a70483a7",
+    "nova_harness/reports/closing_replay_041.json": "529767bd2dfe4cf0f9e432d760674632cee3cea798c5fae9c2e4b702098dc895",
+    "nova_harness/reports/plan_delivery_final_052.json": "5876b28c71d481c92e584184e87e5f4e649a1f487cb583e4cd46ee901108d5cf",
+    "nova_harness/docs/paper/sample_scores.json": "402f10a31109f34c3cba7384d8b76599b310cc95ccf591ffc352e21f2fe7d8b4",
+    "examples/reader_b1_observed.py": "1a94aaa4038356d1b2c3b9845881ea81f8683244bca8bf8ff6191329246b6aef",
+    "examples/reader_g.py": "eecc613770a76166fbfdfdab171727da6983a94c37d7894bd848734b222f2862",
+    "examples/agent_b1.py": "d748c86e0cab1235608c32cabfdf6f3bd44033503eedf58331a87912f713f348",
+    "examples/hybrid_agent.py": "871ce158e1bc4f884923504e77dbe1b9112ca3a64878b078be6700199a5ca621",
+    "meddb/api.py": "e7903bdae699e3beb4ad703793a417a3c4a1102fdb54d3cf3660dac12cf207f2",
+    "meddb/data/findings.json": "8e6f68633027377897ca155c010f40e67cc5680b55aac1d9b08a77cddb7f2a4d"
+  },
+  "b1_comparison": {
+    "B1": [
+      {
+        "case": "C01",
+        "completed": true,
+        "max_server_turn": 40,
+        "elapsed_seconds": 330.834,
+        "doctor_attempted_request_ids": 38,
+        "prompt_tokens": 39390,
+        "errors": {
+          "EXAM_NOT_SPECIFIC": 1
+        }
+      },
+      {
+        "case": "C03",
+        "completed": true,
+        "max_server_turn": 40,
+        "elapsed_seconds": 336.574,
+        "doctor_attempted_request_ids": 39,
+        "prompt_tokens": 46193,
+        "errors": {
+          "EXAM_NOT_SPECIFIC": 2,
+          "PROVIDER_RESPONSE_INVALID": 1
+        }
+      },
+      {
+        "case": "C10",
+        "completed": true,
+        "max_server_turn": 41,
+        "elapsed_seconds": 271.158,
+        "doctor_attempted_request_ids": 34,
+        "prompt_tokens": 41859,
+        "errors": {
+          "EXAM_NOT_SPECIFIC": 1
+        }
+      }
+    ],
+    "B1O1": [
+      {
+        "case": "C01",
+        "completed": true,
+        "max_server_turn": 41,
+        "elapsed_seconds": 371.561,
+        "doctor_attempted_request_ids": 40,
+        "prompt_tokens": 41518,
+        "errors": {
+          "PROVIDER_RESPONSE_INVALID": 1
+        }
+      },
+      {
+        "case": "C03",
+        "completed": true,
+        "max_server_turn": 39,
+        "elapsed_seconds": 305.717,
+        "doctor_attempted_request_ids": 34,
+        "prompt_tokens": 42520,
+        "errors": {
+          "EXAM_NOT_SPECIFIC": 2
+        }
+      },
+      {
+        "case": "C10",
+        "completed": true,
+        "max_server_turn": 41,
+        "elapsed_seconds": 296.323,
+        "doctor_attempted_request_ids": 35,
+        "prompt_tokens": 42887,
+        "errors": {
+          "EXAM_NOT_SPECIFIC": 1
+        }
+      }
+    ]
+  },
+  "b1o1_observations": {
+    "unit": "reader observation row, not atomic fact or all session speech",
+    "total": 69,
+    "states": {
+      "explicit": 15,
+      "raw_only": 45,
+      "scoped_or_uncertain": 9
+    },
+    "single_question_link": 0,
+    "explicit_row_fraction": 0.217391,
+    "interpretation_additional_model_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "historical_replay_evidence": {
+    "scope": "read published historical replay results; raw replay was not rerun",
+    "sessions": 6,
+    "all_match": true,
+    "extracted_zip_sessions": 3,
+    "all_extracted_zip_match": true
+  },
+  "synthetic_processing_examples": [
+    {
+      "id": "bare_yes",
+      "scope": "synthetic input executed through current reader and deterministic S draft; not a patient session or final LLM SOAP",
+      "prior_hand_tremor_positive": false,
+      "observation": {
+        "question": "손이 떨리시나요?",
+        "answer": "네, 있어요.",
+        "turn": 1,
+        "links": [
+          {
+            "id": "hand_tremor",
+            "verdict": "+"
+          }
+        ],
+        "status": "single_question_link"
+      },
+      "tracker": {
+        "present": [
+          "hand_tremor"
+        ],
+        "absent": [],
+        "unknown": [],
+        "conflicts": []
+      },
+      "draft_S": {
+        "cc": "C.C : 체중 감소 / Onset : ( )",
+        "hpi": "발생 시점 ( )\n동반 증상: 손떨림",
+        "pmh": "과거력 ( )\n복용 약물 ( )\n알레르기 ( )",
+        "fh": "가족력 ( )",
+        "sh": "흡연 ( )\n과음 ( )",
+        "ros": "신경: 손떨림 (+)\n소화기: 식욕 증가 ( )\n내분비: 더위 못 견딤 ( ), 다뇨·다음 ( )\n심혈관: 두근거림 ( )\n전신: 야간 발한 ( )"
+      }
+    },
+    {
+      "id": "partial_denial",
+      "scope": "synthetic input executed through current reader and deterministic S draft; not a patient session or final LLM SOAP",
+      "prior_hand_tremor_positive": false,
+      "observation": {
+        "question": "손이 떨리시나요?",
+        "answer": "아니요, 자주는 아니에요.",
+        "turn": 1,
+        "links": [],
+        "status": "scoped_or_uncertain"
+      },
+      "tracker": {
+        "present": [],
+        "absent": [],
+        "unknown": [],
+        "conflicts": []
+      },
+      "draft_S": {
+        "cc": "C.C : 체중 감소 / Onset : ( )",
+        "hpi": "발생 시점 ( )",
+        "pmh": "과거력 ( )\n복용 약물 ( )\n알레르기 ( )",
+        "fh": "가족력 ( )",
+        "sh": "흡연 ( )\n과음 ( )",
+        "ros": "소화기: 식욕 증가 ( )\n내분비: 더위 못 견딤 ( ), 다뇨·다음 ( )\n심혈관: 두근거림 ( )\n신경: 손떨림 ( )\n전신: 야간 발한 ( )"
+      }
+    },
+    {
+      "id": "family_scope",
+      "scope": "synthetic input executed through current reader and deterministic S draft; not a patient session or final LLM SOAP",
+      "prior_hand_tremor_positive": false,
+      "observation": {
+        "question": "손이 떨리시나요?",
+        "answer": "아버지가 손을 떠세요.",
+        "turn": 1,
+        "links": [],
+        "status": "scoped_or_uncertain"
+      },
+      "tracker": {
+        "present": [],
+        "absent": [],
+        "unknown": [],
+        "conflicts": []
+      },
+      "draft_S": {
+        "cc": "C.C : 체중 감소 / Onset : ( )",
+        "hpi": "발생 시점 ( )",
+        "pmh": "과거력 ( )\n복용 약물 ( )\n알레르기 ( )",
+        "fh": "가족력 ( )",
+        "sh": "흡연 ( )\n과음 ( )",
+        "ros": "소화기: 식욕 증가 ( )\n내분비: 더위 못 견딤 ( ), 다뇨·다음 ( )\n심혈관: 두근거림 ( )\n신경: 손떨림 ( )\n전신: 야간 발한 ( )"
+      }
+    },
+    {
+      "id": "other_symptom",
+      "scope": "synthetic input executed through current reader and deterministic S draft; not a patient session or final LLM SOAP",
+      "prior_hand_tremor_positive": false,
+      "observation": {
+        "question": "손이 떨리시나요?",
+        "answer": "설사는 없어요.",
+        "turn": 1,
+        "links": [
+          {
+            "id": "diarrhea",
+            "verdict": "-"
+          }
+        ],
+        "status": "explicit"
+      },
+      "tracker": {
+        "present": [],
+        "absent": [
+          "diarrhea"
+        ],
+        "unknown": [],
+        "conflicts": []
+      },
+      "draft_S": {
+        "cc": "C.C : 체중 감소 / Onset : ( )",
+        "hpi": "발생 시점 ( )",
+        "pmh": "과거력 ( )\n복용 약물 ( )\n알레르기 ( )",
+        "fh": "가족력 ( )",
+        "sh": "흡연 ( )\n과음 ( )",
+        "ros": "소화기: 설사 (-), 식욕 증가 ( )\n내분비: 더위 못 견딤 ( ), 다뇨·다음 ( )\n심혈관: 두근거림 ( )\n신경: 손떨림 ( )\n전신: 야간 발한 ( )"
+      }
+    },
+    {
+      "id": "conflict",
+      "scope": "synthetic input executed through current reader and deterministic S draft; not a patient session or final LLM SOAP",
+      "prior_hand_tremor_positive": true,
+      "observation": {
+        "question": "손이 떨리시나요?",
+        "answer": "아니요, 없어요.",
+        "turn": 1,
+        "links": [
+          {
+            "id": "hand_tremor",
+            "verdict": "-"
+          }
+        ],
+        "status": "single_question_link"
+      },
+      "tracker": {
+        "present": [],
+        "absent": [],
+        "unknown": [
+          "hand_tremor"
+        ],
+        "conflicts": [
+          "hand_tremor"
+        ]
+      },
+      "draft_S": {
+        "cc": "C.C : 체중 감소 / Onset : ( )",
+        "hpi": "발생 시점 ( )",
+        "pmh": "과거력 ( )\n복용 약물 ( )\n알레르기 ( )",
+        "fh": "가족력 ( )",
+        "sh": "흡연 ( )\n과음 ( )",
+        "ros": "소화기: 식욕 증가 ( )\n내분비: 더위 못 견딤 ( ), 다뇨·다음 ( )\n심혈관: 두근거림 ( )\n신경: 손떨림 ( )\n전신: 야간 발한 ( )"
+      }
+    }
+  ],
+  "historical_saved_response_closing": {
+    "scope": "same real saved Doctor response; delivery proposals only, no new patient interaction or score",
+    "baseline_generic_safety": true,
+    "candidate_preserved_complete_warning_sentences": 2,
+    "preserved_sentence_lengths": [
+      23,
+      28
+    ],
+    "baseline_message_count": 5,
+    "candidate_message_count": 6,
+    "additional_model_calls": 0,
+    "all_candidate_messages_within_30": true
+  },
+  "historical_unadopted_plan_delivery": [
+    {
+      "case": "C01",
+      "inventoried_groups": 11,
+      "sent_success": 0,
+      "unresolved": 11,
+      "max_server_turn": 42,
+      "performed_lines_match_acknowledged_speech": true,
+      "coverage_verified": false
+    },
+    {
+      "case": "C03",
+      "inventoried_groups": 7,
+      "sent_success": 0,
+      "unresolved": 7,
+      "max_server_turn": 32,
+      "performed_lines_match_acknowledged_speech": true,
+      "coverage_verified": false
+    },
+    {
+      "case": "C10",
+      "inventoried_groups": 11,
+      "sent_success": 9,
+      "unresolved": 2,
+      "max_server_turn": 50,
+      "performed_lines_match_acknowledged_speech": true,
+      "coverage_verified": false
+    }
+  ],
+  "sample_score_selection": [
+    {
+      "id": "E2",
+      "total": 77.714,
+      "scores": [
+        11.94,
+        15,
+        8.64,
+        15,
+        7.72,
+        19.42
+      ],
+      "source": "reports/official_reference.json"
+    },
+    {
+      "id": "E2-Ledger",
+      "total": 76.634,
+      "scores": [
+        11.52,
+        15,
+        8.86,
+        15,
+        6.83,
+        19.42
+      ],
+      "source": "reports/analysis_022.md"
+    },
+    {
+      "id": "R3a",
+      "total": 76.29,
+      "scores": [
+        12.04,
+        15,
+        8.64,
+        15,
+        6.72,
+        18.89
+      ],
+      "source": "reports/analysis_037.md"
+    },
+    {
+      "id": "Q1",
+      "total": 65.288,
+      "scores": [
+        10.04,
+        12.78,
+        7.97,
+        13.75,
+        7.72,
+        13.02
+      ],
+      "source": "reports/analysis_056.md"
+    },
+    {
+      "id": "B1O1",
+      "total": 77.498,
+      "scores": [
+        12.37,
+        14.44,
+        8.61,
+        15,
+        8.06,
+        19.02
+      ],
+      "source": "reports/analysis_059.md"
+    }
+  ],
+  "unmeasured": {
+    "reader_semantic_accuracy": null,
+    "appropriateness_of_abstention": null,
+    "major_fact_soap_recall": null,
+    "soap_statement_evidence_precision": null,
+    "semantic_question_repetition": null,
+    "clinical_safety": null,
+    "b1o1_reader_causal_score_effect": null
+  }
+}
