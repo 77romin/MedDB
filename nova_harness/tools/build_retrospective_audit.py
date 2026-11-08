@@ -29,6 +29,11 @@ def build():
         'examples/agent_b1.py', 'examples/hybrid_agent.py',
         'meddb/api.py', 'meddb/data/findings.json',
     ]
+    sources += ['nova_harness/reports/submission_b1o1_manifest_058.json',
+                'nova_harness/tools/build_retrospective_audit.py', 'meddb/kb.py',
+                'examples/consult_skeleton.py']
+    sources += [p.relative_to(ROOT).as_posix() for p in sorted((ROOT / 'meddb/data').glob('*.json'))
+                if p.relative_to(ROOT).as_posix() not in sources]
     def load(name):
         return json.loads((ROOT / name).read_text(encoding='utf-8'))
 
@@ -93,6 +98,9 @@ def build():
     return {
         'scope': '2026-11-08 retrospective audit of published aggregates plus five synthetic code demonstrations; no raw session logs available in this checkout',
         'source_sha256': {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() for p in sources},
+        'frozen_runtime_file_matches': {
+            p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() == expected
+            for p, expected in load('nova_harness/reports/submission_b1o1_manifest_058.json')['runtime_sha256'].items()},
         'b1_comparison': modes,
         'b1o1_observations': {'unit': 'reader observation row, not atomic fact or all session speech',
             'total': total, 'states': dict(sorted(states.items())),

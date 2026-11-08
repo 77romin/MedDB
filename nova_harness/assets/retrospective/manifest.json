@@ -1,0 +1,85 @@
+{
+  "scope": "Retrospective figures authored on the connected local Excalidraw canvas through MCP; historical unrelated canvas elements excluded from saved scenes",
+  "authored_on": "2026-11-08",
+  "interface": "mcp__excalidraw",
+  "canvas_preservation": "Snapshot before-meddb-paper-20261108, then append meddb-r1 through meddb-r4 in x=3000..4900; existing 148 elements preserved",
+  "verification": "Each figure screenshot visually inspected. Figure 4 grid width corrected before export. Korean text uses system font fallback; glyphs may differ across systems.",
+  "figures": [
+    {
+      "id": 1,
+      "basename": "fig01_final_architecture",
+      "element_count": 39,
+      "png_dimensions": [
+        3880,
+        2280
+      ],
+      "sha256": {
+        "fig01_final_architecture.excalidraw": "4c30bb7a56fa237f40c7325f200e242025047457fd9ab528540e4378c2144d1b",
+        "fig01_final_architecture.png": "e11ffb04b71b73cf600ec7404c31a458ef9ef11add678b03d0e471f93bc55f4e",
+        "fig01_final_architecture.svg": "eef784079b7f3f27ebfc262facb0c3356dd49c1fb2b357533cdf8d18f6e3285f"
+      }
+    },
+    {
+      "id": 2,
+      "basename": "fig02_processing_cases",
+      "element_count": 28,
+      "png_dimensions": [
+        3880,
+        2080
+      ],
+      "sha256": {
+        "fig02_processing_cases.excalidraw": "52533feebf52f5a2ee94ec29ae202901cb7430d0079c9f0806d3f4233b6f462d",
+        "fig02_processing_cases.png": "fb8180ad209e7cdf9d20e0f3db2411f71c6fe14e04db9ff0b29317e708badc6b",
+        "fig02_processing_cases.svg": "7f165dcc6b8fae5ca681d81272f3c649f9d86f9610440b9e112c2988f616a5b4"
+      }
+    },
+    {
+      "id": 3,
+      "basename": "fig03_log_audit",
+      "element_count": 24,
+      "png_dimensions": [
+        3880,
+        2080
+      ],
+      "sha256": {
+        "fig03_log_audit.excalidraw": "7bf3f54c668ed8639911714282cd5edc1234302ba9633e0b00ff8536db2f3f4b",
+        "fig03_log_audit.png": "7aab5fe48fe1364a9a06e42d903f2947f5cd3d8fda017ddd8225dc4c28fa07f4",
+        "fig03_log_audit.svg": "63800aa15e8408629dad7da91caec20da031d24bac77f1c32d8320100f5f40fc"
+      }
+    },
+    {
+      "id": 4,
+      "basename": "fig04_sample_comparison",
+      "element_count": 32,
+      "png_dimensions": [
+        3880,
+        2080
+      ],
+      "sha256": {
+        "fig04_sample_comparison.excalidraw": "356a69e6c9edeb23f5ab420eb69f7887c7ca1a3225ab1b8da233095250317222",
+        "fig04_sample_comparison.png": "53ff28f388f3aafc1913293ff873c9fe46c109038dd53f6d828165a5009ea602",
+        "fig04_sample_comparison.svg": "8114b8e3de8df1dcbe1a965b3afef8dc0e9fa4244c8e7b2995fcf78e53d7ad18"
+      }
+    }
+  ],
+  "evidence": {
+    "fig01": [
+      "examples/agent_b1.py",
+      "examples/reader_b1_observed.py",
+      "examples/hybrid_agent.py",
+      "nova_harness/docs/paper/ontology_statistics.json"
+    ],
+    "fig02": [
+      "nova_harness/docs/paper/retrospective_audit.json",
+      "nova_harness/reports/closing_replay_041.json",
+      "nova_harness/reports/development_041.md"
+    ],
+    "fig03": [
+      "nova_harness/reports/b1_rebase_sessions_057.json",
+      "nova_harness/reports/plan_delivery_final_052.json"
+    ],
+    "fig04": [
+      "nova_harness/docs/paper/sample_scores.json"
+    ]
+  }
+}

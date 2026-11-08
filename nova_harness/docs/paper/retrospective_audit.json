@@ -12,7 +12,28 @@
     "examples/agent_b1.py": "d748c86e0cab1235608c32cabfdf6f3bd44033503eedf58331a87912f713f348",
     "examples/hybrid_agent.py": "871ce158e1bc4f884923504e77dbe1b9112ca3a64878b078be6700199a5ca621",
     "meddb/api.py": "e7903bdae699e3beb4ad703793a417a3c4a1102fdb54d3cf3660dac12cf207f2",
-    "meddb/data/findings.json": "8e6f68633027377897ca155c010f40e67cc5680b55aac1d9b08a77cddb7f2a4d"
+    "meddb/data/findings.json": "8e6f68633027377897ca155c010f40e67cc5680b55aac1d9b08a77cddb7f2a4d",
+    "nova_harness/reports/submission_b1o1_manifest_058.json": "659126788cf163307a9b0c655d543865a89b3fa05a26421966cbd1bf267a86d9",
+    "nova_harness/tools/build_retrospective_audit.py": "c59b0a7feeec8758936ecb97a68129386387c094a52c4d13651dd2e4e0a55c33",
+    "meddb/kb.py": "102e28d094f39404468511536be7142a21b064dd2fd81f144b401e6c5b412ce4",
+    "examples/consult_skeleton.py": "65d9c24fc24ed0980d515b8394ed395f236c3a220b840f72a4fa5c7504cf6ab1",
+    "meddb/data/ask_split.json": "dfc263180ccf09bef0b7917a9aab5363c3d0dc932d9146044de812127abb664b",
+    "meddb/data/common.json": "950c8f4585a12fe39ca4955926bf108525653ed1a06714b1472899e21ae9feb5",
+    "meddb/data/complaints.json": "590e94a9badddf7472b8fdebf2324b46c85494ecb1f3c08e8346eb37a19f9d51",
+    "meddb/data/diseases.json": "c49f99466a8e38a322415ac4b290d1e60711e22666553312a71d0aa1986ffdd8",
+    "meddb/data/exams.json": "ad1ba57d31890b4c75555578add9b2544125ec3bb4fb7db8dfa60f682a15d3c7",
+    "meddb/data/ext_ddxplus.json": "752163da414a93979dcf6da60de3a5364294f92c765d182d8ca9ab8de7571f34",
+    "meddb/data/ext_guidelines.json": "14b322ea88d3a3a58b0271a0ef530ebf324998891947bf705fe15dc2bad3b131",
+    "meddb/data/followups.json": "3121afb9989959de9342eb8f2039224bfee02d4366544cb397bffe89dabc3fc8",
+    "meddb/data/protocols.json": "84cf35e3299553912538bbedd2518a07ce21d41c71f03d722fd332004de1f2c2",
+    "meddb/data/slots.json": "9590a7a7efa5c2bbf32b3262228f25d0093fbddf964b0a4b25e0e4551e665b5c"
+  },
+  "frozen_runtime_file_matches": {
+    "examples/agent_b1.py": true,
+    "examples/agent_b1_observed.py": true,
+    "examples/reader_b1_observed.py": true,
+    "examples/reader_g.py": true,
+    "examples/agent_r1.py": true
   },
   "b1_comparison": {
     "B1": [
