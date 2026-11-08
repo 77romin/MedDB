@@ -5,4 +5,5 @@
 - [기존 지식 DB 사용 안내](../docs/README_knowledge_archive.md)
 - [기존 하네스 개발 안내](docs/README_development_archive.md)
 - [전체 실험 보고서](docs/paper/experiment_inventory.md)
+- [후향적 감사 자료](docs/paper/retrospective_audit.json) · [고찰 편찬 보고](reports/documentation_061.md)
 - [의사결정 이력](DECISIONS.md)
